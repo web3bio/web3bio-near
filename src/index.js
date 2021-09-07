@@ -1,12 +1,25 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import App from './App'
-import { initContract } from './utils'
+import { Router, Switch, Route } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+import Page from './Page'
+import { initContract } from './util/utils'
+
+const history = createBrowserHistory()
 
 window.nearInitPromise = initContract()
   .then(() => {
     ReactDOM.render(
-      <App />,
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact render={(props) => (
+            <App {...props} />
+          )} />
+          <Route path="/:owner" render={(props) => (
+            <Page {...props} wallet={window.walletConnection} contract={window.contract} />
+          )} />
+        </Switch>
+      </Router>,
       document.querySelector('#root')
     )
   })

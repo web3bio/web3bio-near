@@ -1,5 +1,5 @@
-import { connect, Contract, keyStores, WalletConnection } from 'near-api-js'
-import getConfig from './config'
+import { connect, Contract, keyStores, WalletConnection, WalletAccount } from 'near-api-js'
+import getConfig from '../config'
 
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
@@ -14,13 +14,13 @@ export async function initContract() {
 
   // Getting the Account ID. If still unauthorized, it's just empty string
   window.accountId = window.walletConnection.getAccountId()
-
+  
   // Initializing our contract APIs by contract name and configuration
   window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.
-    viewMethods: ['getGreeting'],
+    viewMethods: ['getRecordByOwner'],
     // Change methods can modify the state. But you don't receive the returned value when called.
-    changeMethods: ['setGreeting'],
+    changeMethods: ['setRecordByOwner'],
   })
 }
 
@@ -35,5 +35,6 @@ export function login() {
   // user's behalf.
   // This works by creating a new access key for the user's account and storing
   // the private key in localStorage.
-  window.walletConnection.requestSignIn(nearConfig.contractName)
+  const appTitle = 'Web3.bio';
+  window.walletConnection.requestSignIn(nearConfig.contractName,appTitle)
 }
