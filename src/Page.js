@@ -1,9 +1,5 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
-import * as nearApi from 'near-api-js'
-import { KeyPair } from 'near-api-js'
-import { nearTo, nearToInt, toNear, BOATLOAD_OF_GAS, DROP_GAS, NETWORK_ID, ACCESS_KEY_ALLOWANCE } from './util/near-util'
-
 import getConfig from './config'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
@@ -13,27 +9,37 @@ class Page extends Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
+      pageOwner: null,
+      pageBio: new Object()
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
-    this.updateUser = this.updateUser.bind(this);
+    this.setBio = this.setBio.bind(this);
   }
 
   async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn();
+    let loggedIn = this.props.wallet.isSignedIn()
+    let pageOwner = this.props.match.params.owner
+    const pageBio = await this.getBio(pageOwner)
+    this.setState({
+      pageOwner: this.props.match.params.owner,
+      pageBio: pageBio
+    })
+    console.log(pageBio.name)
+    
     if (loggedIn) {
       this.signedInFlow();
     } else {
       this.signedOutFlow();
     }
-    this.setState({ currentUser: window.accountId })
   }
 
   async signedInFlow() {
     this.setState({
       login: true,
+      currentUser: window.accountId
     })
     const accountId = await this.props.wallet.getAccountId()
     if (window.location.search.includes("account_id")) {
@@ -49,9 +55,35 @@ class Page extends Component {
     )
   }
 
-  async updateUser() {
-    await window.getCurrentUser()
-    this.setState({ currentUser: window.accountId })
+  async setBio() {
+    // const newRecords = new Records(email, expiration, settings, premium, name, avatar, description, website, location);
+    try {
+      // make an update call to the smart contract
+      await window.contract.setRecordByOwner({
+        email: "testnet@google.org",
+        expiration: 233,
+        settings: "settings",
+        premium: true,
+        name: "Google",
+        avatar: "avatar",
+        description: "Search",
+        website: "website",
+        location: "location"
+      })
+    } catch (e) {
+      console.log(
+        'Something went wrong! '
+      )
+      throw e
+    } finally {
+      console.log("🚀")
+    }
+  }
+
+  async getBio(pageOwner) {
+    return await window.contract.getRecordByOwner({
+      owner: pageOwner
+    })
   }
 
   requestSignOut() {
@@ -71,21 +103,21 @@ class Page extends Component {
   }
 
   render() {
-
     const {
-      state,
-      updateUser
+      state
     } = this
     const {
-      currentUser
+      currentUser,
+      pageOwner,
+      pageBio
     } = state
-
-    console.log(state)
+    console.log(pageBio.email)
 
     return (
       <div className="App-header">
         <div className="image-wrapper">
-          NEAR
+          NEAR - {currentUser} - {pageOwner}
+          <h2>{pageBio.email}</h2>
         </div>
         <div>
         </div>
@@ -93,6 +125,8 @@ class Page extends Component {
           {this.state.login ? 
             <div>
               <button onClick={this.requestSignOut}>Log out</button>
+              <button onClick={this.setBio}>Set Bio</button>
+              {/* <button onClick={}>Get Bio</button> */}
             </div>
             : <button onClick={this.requestSignIn}>Log in with NEAR</button>}
         </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Switch, Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
+import App from './App'
 import Page from './Page'
 import { initContract } from './util/utils'
 
@@ -13,7 +14,7 @@ window.nearInitPromise = initContract()
       <Router history={history}>
         <Switch>
           <Route path="/" exact render={(props) => (
-            <App {...props} />
+            <App {...props} wallet={window.walletConnection} contract={window.contract} />
           )} />
           <Route path="/:owner" render={(props) => (
             <Page {...props} wallet={window.walletConnection} contract={window.contract} />

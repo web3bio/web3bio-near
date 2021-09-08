@@ -2,6 +2,7 @@ import { Context, logging, storage } from 'near-sdk-as'
 import { Records, recordsByOwner } from "./models"
 
 const DEFAULT_MESSAGE = 'Hello'
+const DEBUG = false;
 
 // getRecordByOwner for owner
 export function getRecordByOwner(owner: string): Records | null  {
@@ -10,12 +11,25 @@ export function getRecordByOwner(owner: string): Records | null  {
   if (!recordList) {
     return null;
   }
-  return recordList;
+  return recordList
 }
 
 // setRecordByOwner for owner
-export function setRecordByOwner(newRecordList: Records): void {
-  const owner = Context.sender
+export function setRecordByOwner(
+  email: string,
+  expiration: u32,
+  settings: string,
+  premium: boolean,
+  name: string,
+  avatar: string,
+  description: string,
+  website: string,
+  location: string
+): void {
+  const owner = Context.sender;
+
+  const newRecordList = new Records(email, expiration, settings, premium, name, avatar, description, website, location);
+
   recordsByOwner.set(owner, newRecordList);
   logging.log("setRecordByOwner: " + owner);
 }
