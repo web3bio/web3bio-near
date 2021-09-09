@@ -4,6 +4,7 @@ import { Router, Switch, Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import App from './App'
 import Page from './Page'
+import './assets/scss/web3bio.scss'
 import { initContract } from './util/utils'
 
 const history = createBrowserHistory()

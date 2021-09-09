@@ -1,0 +1,132 @@
+// Variables and mixins
+@import "variables";
+@import "mixins";
+
+/*! Spectre.css | MIT License | github.com/picturepan2/spectre */
+// Reset and dependencies
+@import "normalize";
+@import "base";
+
+// Elements
+@import "typography";
+@import "asian";
+@import "tables";
+@import "buttons";
+@import "forms";
+@import "labels";
+@import "codes";
+@import "media";
+
+// Layout
+@import "layout";
+@import "hero";
+@import "navbar";
+
+// Components
+@import "accordions";
+@import "avatars";
+@import "badges";
+@import "breadcrumbs";
+@import "bars";
+@import "cards";
+@import "chips";
+@import "dropdowns";
+@import "empty";
+@import "markdown";
+@import "menus";
+@import "modals";
+@import "navs";
+@import "pagination";
+@import "panels";
+@import "popovers";
+@import "steps";
+@import "tabs";
+@import "tiles";
+@import "toasts";
+@import "tooltips";
+
+// Utility classes
+@import "animations";
+@import "utilities";
+
+/*! Web3bio.css | MIT License */
+body {
+  overflow-x: hidden;
+}
+
+.web3bio-container {
+  min-height: 100vh;
+  padding: 1rem 0;
+  width: 100vw;
+}
+
+.web3bio-cover {
+  background: url('../img/demo-banner.jpg') no-repeat center top;
+  background-size: cover;
+  display: block;
+  filter: blur(5rem);
+  height: 18rem;
+  position: fixed;
+  width: 100vw;
+  z-index: -1;
+}
+
+.web3bio-header {
+  position: fixed;
+  top: 1rem;
+  width: 100vw;
+}
+
+.web3bio-logo {
+  align-items: center;
+  background: $light-color;
+  border-radius: .8rem;
+  box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .25);
+  color: $dark-color;
+  cursor: pointer;
+  display: flex;
+  height: 3rem;
+  padding: .4rem;
+  transition: all .3s ease;
+  width: 3rem;
+
+  &:focus,
+  &:hover {
+    box-shadow: 0 .6rem .8rem rgba(0, 0, 0, .35);
+    color: $dark-color;
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: .8rem;
+    font-weight: 900;
+    letter-spacing: -.05rem;
+    line-height: .8rem;
+    margin: 0;
+  }
+}
+
+.web3bio-profile {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+
+  .profile-avatar {
+    border: .2rem solid $light-color;
+    box-shadow: 0 .3rem 1.2rem rgba(0, 0, 0, .15);
+  }
+
+  .profile-name {
+    color: $dark-color;
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-top: 1rem;
+  }
+
+  .profile-description {
+    color: $dark-color;
+    font-size: .8rem;
+    font-weight: 500;
+  }
+}
