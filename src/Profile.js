@@ -129,7 +129,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { currentUser, loading, pageBio, pageStatus } = this.state
+    const { login, currentUser, loading, pageBio, pageStatus } = this.state
     let social = new Object(pageBio.social)
     let crypto = new Object(pageBio.crypto)
 
@@ -148,7 +148,7 @@ class Profile extends Component {
                   <h1>WEB3<br/>BIO</h1>
                 </Link>
                 <div className="web3bio-account">
-                  { this.state.login ? 
+                  { login ? 
                     <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
@@ -158,60 +158,62 @@ class Profile extends Component {
             </div>
           </div>
         </div>
-        <div className="web3bio-content container grid-sm">
-          { !loading ? 
-            <div className="web3bio-profile">
-              { pageStatus ? 
-                <>
-                { pageBio.avatar ? 
-                  <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
-                :
-                  <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
-                }
-                <h2 className="profile-name">{pageBio.name}</h2>
-                <h3 className="profile-description">{pageBio.description}</h3>
-                <SocialLinks social={social} />
-                </>
-                :
-                <>
-                  <div className="web3bio-hero">
-                    <div className="container grid-sm">
-                      <div className="columns">
-                        <div className="column col-12">
-                          <h1>The page you’re looking for doesn’t exist.</h1>
-                          {this.state.login ? 
-                            <div className="web3bio-hero-input input-group">
-                              <span className="input-group-addon addon-lg text-bold">web3.bio/
-                                <span className="text-dark">{currentUser}</span>
-                              </span>
-                              <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
-                            </div>
-                            :
-                            <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
-                              <span className="input-group-addon addon-lg text-bold">web3.bio/
-                                <span className="text-gray">name.near</span>
-                              </span>
-                              <button className="btn btn-lg input-group-btn">Login and Claim</button>
-                            </div>
-                          }
-                          <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+        { !loading ? 
+          <>
+            { pageStatus ? 
+              <div className="web3bio-content container grid-sm">
+                <div className="web3bio-profile">
+                  { pageBio.avatar ? 
+                    <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
+                  :
+                    <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
+                  }
+                  <h2 className="profile-name">{pageBio.name}</h2>
+                  <h3 className="profile-description">{pageBio.description}</h3>
+                  <SocialLinks social={social} />
+                </div>
+              </div>
+              :
+              <div className="web3bio-hero container grid-sm">
+                <div className="container grid-sm">
+                  <div className="columns">
+                    <div className="column col-12">
+                      <h1>The page you’re looking for doesn’t exist.</h1>
+                      { login ? 
+                        <div className="web3bio-hero-input input-group">
+                          <span className="input-group-addon addon-lg text-bold">web3.bio/
+                            <span className="text-dark">{currentUser}</span>
+                          </span>
+                          <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                         </div>
-                      </div>
+                        :
+                        <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
+                          <span className="input-group-addon addon-lg text-bold">web3.bio/
+                            <span className="text-gray">name.near</span>
+                          </span>
+                          <button className="btn btn-lg input-group-btn">Login and Claim</button>
+                        </div>
+                      }
+                      <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
                     </div>
                   </div>
-                </>
-              }
-            </div>
+                </div>
+              </div>
+            }
+          </>
           :
-            <div className="loading loading-lg"></div>
-          }
-        </div>
+          <div className="web3bio-content container grid-sm">
+            <div className="web3bio-profile">
+              <div className="loading loading-lg"></div>
+            </div>
+          </div>
+        }
         
         <div className="web3bio-footer text-center">
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <a className="btn btn-primary" href="/">Claim your <strong>Web3.bio</strong> page</a>
+                <Link className="btn btn-primary" to="/">Claim your <strong>Web3.bio</strong> page</Link>
                 <div className="mt-2 text-bold">Built with &hearts; &amp; <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
               </div>
             </div>

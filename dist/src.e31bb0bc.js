@@ -35052,9 +35052,9 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       className: "btn btn-primary",
-      href: "/"
+      to: "/"
     }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2 text-bold"
     }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {
@@ -35379,6 +35379,7 @@ class Profile extends _react.Component {
 
   render() {
     const {
+      login,
       currentUser,
       loading,
       pageBio,
@@ -35406,17 +35407,17 @@ class Profile extends _react.Component {
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
-    }, this.state.login ? /*#__PURE__*/_react.default.createElement("button", {
+    }, login ? /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mr-1",
       onClick: this.requestSignOut
     }, "Logout") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
-    }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
-    }, !loading ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
-    }, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
       src: pageBio.avatar,
       className: "profile-avatar avatar avatar-xl"
     }) : /*#__PURE__*/_react.default.createElement("div", {
@@ -35428,15 +35429,15 @@ class Profile extends _react.Component {
       className: "profile-description"
     }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
       social: social
-    })) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero"
+    }))) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "The page you\u2019re looking for doesn\u2019t exist."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "input-group-addon addon-lg text-bold"
@@ -35456,9 +35457,13 @@ class Profile extends _react.Component {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement("div", {
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds.")))))) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "loading loading-lg"
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-footer text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35466,9 +35471,9 @@ class Profile extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       className: "btn btn-primary",
-      href: "/"
+      to: "/"
     }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2 text-bold"
     }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {
@@ -35515,7 +35520,9 @@ class Dashboard extends _react.Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      pageBio: new Object()
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -35526,6 +35533,15 @@ class Dashboard extends _react.Component {
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn();
+    let pageOwner = this.props.match.params.owner;
+    const pageBio = await this.getBio(pageOwner);
+
+    if (pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      });
+    }
 
     if (loggedIn) {
       this.signedInFlow();
@@ -35556,16 +35572,21 @@ class Dashboard extends _react.Component {
       twitter: "https://twitter.com/picturepan2",
       github: "https://github.com/picturepan2"
     });
+    let newCrypto = new Object({
+      btc: "xxx",
+      eth: "xxx"
+    });
     let newRecords = new Object({
       email: "testnet@near.org",
-      settings: "settings",
+      settings: "royal",
       premium: true,
       name: "Yan Zhu",
       avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
       description: "is creating products, code and jokes.",
       website: "website",
       location: "Shanghai",
-      social: newSocial
+      social: newSocial,
+      crypto: newCrypto
     });
 
     try {
@@ -35580,9 +35601,19 @@ class Dashboard extends _react.Component {
   }
 
   async getBio(pageOwner) {
-    return await window.contract.getRecordByOwner({
-      owner: pageOwner
-    });
+    try {
+      // make an update call to the smart contract
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      });
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
   }
 
   requestSignOut() {
@@ -35604,14 +35635,19 @@ class Dashboard extends _react.Component {
 
   render() {
     const {
+      login,
       currentUser,
-      pageBio
+      loading,
+      pageBio,
+      pageStatus
     } = this.state;
     let social = new Object(pageBio.social);
-    console.log();
+    let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
+    }, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-cover ${pageBio.settings}`
+    }) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
@@ -35627,24 +35663,37 @@ class Dashboard extends _react.Component {
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
-    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    }, login ? /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mr-1",
       onClick: this.requestSignOut
-    }, "Logout"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-1",
-      onClick: this.setBio
-    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+    }, "Logout") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
-    }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero"
+    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: pageBio.avatar,
+      className: "profile-avatar avatar avatar-xl"
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-xl",
+      "data-initial": pageBio.name
+    }), /*#__PURE__*/_react.default.createElement("h2", {
+      className: "profile-name"
+    }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
+      className: "profile-description"
+    }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
+      social: social
+    }))) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your", /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "input-group-addon addon-lg text-bold"
@@ -35664,7 +35713,13 @@ class Dashboard extends _react.Component {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds.")))))) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "loading loading-lg"
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-footer text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35672,9 +35727,9 @@ class Dashboard extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       className: "btn btn-primary",
-      href: "/"
+      to: "/"
     }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2 text-bold"
     }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {

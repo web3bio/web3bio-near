@@ -133,7 +133,7 @@ class App extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <a className="btn btn-primary" href="/">Claim your <strong>Web3.bio</strong> page</a>
+                <Link className="btn btn-primary" to="/">Claim your <strong>Web3.bio</strong> page</Link>
                 <div className="mt-2 text-bold">Built with &hearts; &amp; <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
               </div>
             </div>
