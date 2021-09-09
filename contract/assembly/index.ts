@@ -1,5 +1,5 @@
 import { Context, logging, storage } from 'near-sdk-as'
-import { Records, Social, recordsByOwner } from "./models"
+import { Records, Social, Crypto, recordsByOwner } from "./models"
 
 const DEBUG = false;
 
@@ -23,7 +23,8 @@ export function setRecordByOwner(
   description: string,
   website: string,
   location: string,
-  social: Social
+  social: Social,
+  crypto: Crypto
 ): void {
   const owner = Context.sender;
 
@@ -36,7 +37,8 @@ export function setRecordByOwner(
     description,
     website,
     location,
-    social
+    social,
+    crypto
   );
 
   recordsByOwner.set(owner, newRecordList);

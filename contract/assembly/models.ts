@@ -1,6 +1,6 @@
 import { context, PersistentMap } from "near-sdk-as";
 
-const PROTOCOL_VERSION = "3";
+const PROTOCOL_VERSION = "4";
 
 @nearBindgen
 export class Records {
@@ -17,6 +17,7 @@ export class Records {
     public website: string,
     public location: string,
     public social: Social = new Social(),
+    public crypto: Crypto = new Crypto(),
   ) {
       this.owner = context.sender;
       this.expiration = 233
@@ -36,6 +37,22 @@ export class Social {
     public discord: string = "",
     public patreon: string = "",
     public paypal: string = ""
+  ) {}
+}
+
+@nearBindgen
+export class Crypto {
+  constructor(
+    public btc: string = "",
+    public eth: string = "",
+    public dot: string = "",
+    public near: string = "",
+    public sol: string = "",
+    public bsc: string = "",
+    public eos: string = "",
+    public bch: string = "",
+    public ltc: string = "",
+    public heco: string = ""
   ) {}
 }
 

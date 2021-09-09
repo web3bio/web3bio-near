@@ -2996,8 +2996,10 @@ body {
     width: 3rem; }
     .web3bio-profile .profile-social-item:focus, .web3bio-profile .profile-social-item:hover {
       box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1); }
+      .web3bio-profile .profile-social-item:focus .profile-social-icon, .web3bio-profile .profile-social-item:hover .profile-social-icon {
+        transform: scale(1.05); }
     .web3bio-profile .profile-social-item:active .profile-social-icon {
-      transform: scale(0.85); }
+      transform: scale(0.95); }
     .web3bio-profile .profile-social-item .profile-social-icon {
       color: #1e5af6;
       display: block;

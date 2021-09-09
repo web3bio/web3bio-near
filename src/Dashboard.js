@@ -4,7 +4,7 @@ import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
-class Page extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -123,43 +123,10 @@ class Page extends Component {
             </div>
           </div>
         </div>
-        <div className="web3bio-content container grid-sm">
-          <div className="web3bio-profile">
-            {pageBio.avatar ? 
-              <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
-            :
-              <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
-            }
-            <h2 className="profile-name">{pageBio.name}</h2>
-            <h3 className="profile-description">{pageBio.description}</h3>
-            <SocialLinks social={social} />
-          </div>
-        </div>
-        <div className="container grid-lg">
-          <div className="columns">
-            <div className="column col-12">
-              <div className="header-wrapper">
-                
-              </div>
-              <div className="login">
-                {this.state.login ? 
-                  <div>
-                    <button className="btn mr-2" onClick={this.requestSignOut}>Log out</button>
-                    <button className="btn ml-2 mr-2" onClick={this.setBio}>Set Bio</button>
-                    {/* <button onClick={}>Get Bio</button> */}
-                  </div>
-                  : <button className="btn mr-2" onClick={this.requestSignIn}>Log in with NEAR</button>}
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="image-wrapper"></div>
-
       </div>
     )
   }
 
 }
 
-export default Page;
+export default Dashboard;

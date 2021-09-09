@@ -34823,7 +34823,810 @@ try {
   }
 }
 
-},{}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
+},{}],"config.js":[function(require,module,exports) {
+const CONTRACT_NAME = "awe.testnet" || 'your-awesome-project';
+
+function getConfig(env) {
+  switch (env) {
+    case 'production':
+    case 'mainnet':
+      return {
+        networkId: 'mainnet',
+        nodeUrl: 'https://rpc.mainnet.near.org',
+        contractName: CONTRACT_NAME,
+        walletUrl: 'https://wallet.near.org',
+        helperUrl: 'https://helper.mainnet.near.org',
+        explorerUrl: 'https://explorer.mainnet.near.org'
+      };
+
+    case 'development':
+    case 'testnet':
+      return {
+        networkId: 'testnet',
+        nodeUrl: 'https://rpc.testnet.near.org',
+        contractName: CONTRACT_NAME,
+        walletUrl: 'https://wallet.testnet.near.org',
+        helperUrl: 'https://helper.testnet.near.org',
+        explorerUrl: 'https://explorer.testnet.near.org'
+      };
+
+    case 'betanet':
+      return {
+        networkId: 'betanet',
+        nodeUrl: 'https://rpc.betanet.near.org',
+        contractName: CONTRACT_NAME,
+        walletUrl: 'https://wallet.betanet.near.org',
+        helperUrl: 'https://helper.betanet.near.org',
+        explorerUrl: 'https://explorer.betanet.near.org'
+      };
+
+    case 'local':
+      return {
+        networkId: 'local',
+        nodeUrl: 'http://localhost:3030',
+        keyPath: `${"/Users/yanzhu"}/.near/validator_key.json`,
+        walletUrl: 'http://localhost:4000/wallet',
+        contractName: CONTRACT_NAME
+      };
+
+    case 'test':
+    case 'ci':
+      return {
+        networkId: 'shared-test',
+        nodeUrl: 'https://rpc.ci-testnet.near.org',
+        contractName: CONTRACT_NAME,
+        masterAccount: 'test.near'
+      };
+
+    case 'ci-betanet':
+      return {
+        networkId: 'shared-test-staging',
+        nodeUrl: 'https://rpc.ci-betanet.near.org',
+        contractName: CONTRACT_NAME,
+        masterAccount: 'test.near'
+      };
+
+    default:
+      throw Error(`Unconfigured environment '${env}'. Can be configured in src/config.js.`);
+  }
+}
+
+module.exports = getConfig;
+},{}],"App.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _config = _interopRequireDefault(require("./config"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class App extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      pageBio: new Object()
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.setBio = this.setBio.bind(this);
+  }
+
+  async componentDidMount() {
+    let loggedIn = this.props.wallet.isSignedIn();
+
+    if (loggedIn) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  async setBio() {
+    let newSocial = new Object({
+      twitter: "https://twitter.com/picturepan2",
+      github: "https://github.com/picturepan2"
+    });
+    let newRecords = new Object({
+      email: "testnet@near.org",
+      settings: "settings",
+      premium: true,
+      name: "Yan Zhu",
+      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
+      description: "is creating products, code and jokes.",
+      website: "website",
+      location: "Shanghai",
+      social: newSocial
+    });
+
+    try {
+      // make an update call to the smart contract
+      await window.contract.setRecordByOwner(newRecords);
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      console.log("🚀");
+    }
+  }
+
+  async getBio(pageOwner) {
+    return await window.contract.getRecordByOwner({
+      owner: pageOwner
+    });
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  render() {
+    const {
+      currentUser,
+      pageBio
+    } = this.state;
+    let social = new Object(pageBio.social);
+    console.log();
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-container"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-header"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      className: "web3bio-logo",
+      href: "/",
+      title: currentUser
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "login mt-2"
+    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mr-1",
+      onClick: this.requestSignOut
+    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1 mr-1",
+      onClick: this.setBio
+    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mr-1",
+      onClick: this.requestSignIn
+    }, "Log in with NEAR")))))));
+  }
+
+}
+
+var _default = App;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js"}],"assets/icons/twitter.svg":[function(require,module,exports) {
+module.exports = "/twitter.f2da1eec.svg";
+},{}],"assets/icons/facebook.svg":[function(require,module,exports) {
+module.exports = "/facebook.b48d22fd.svg";
+},{}],"assets/icons/linkedin.svg":[function(require,module,exports) {
+module.exports = "/linkedin.15978cba.svg";
+},{}],"assets/icons/github.svg":[function(require,module,exports) {
+module.exports = "/github.373d19b5.svg";
+},{}],"assets/icons/telegram.svg":[function(require,module,exports) {
+module.exports = "/telegram.d5997881.svg";
+},{}],"assets/icons/instagram.svg":[function(require,module,exports) {
+module.exports = "/instagram.79162530.svg";
+},{}],"assets/icons/youtube.svg":[function(require,module,exports) {
+module.exports = "/youtube.af9355a8.svg";
+},{}],"assets/icons/discord.svg":[function(require,module,exports) {
+module.exports = "/discord.31d09d1b.svg";
+},{}],"assets/icons/paypal.svg":[function(require,module,exports) {
+module.exports = "/paypal.c4a1ad78.svg";
+},{}],"assets/icons/patreon.svg":[function(require,module,exports) {
+module.exports = "/patreon.663071f8.svg";
+},{}],"components/SocialLinks.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _twitter = _interopRequireDefault(require("../assets/icons/twitter.svg"));
+
+var _facebook = _interopRequireDefault(require("../assets/icons/facebook.svg"));
+
+var _linkedin = _interopRequireDefault(require("../assets/icons/linkedin.svg"));
+
+var _github = _interopRequireDefault(require("../assets/icons/github.svg"));
+
+var _telegram = _interopRequireDefault(require("../assets/icons/telegram.svg"));
+
+var _instagram = _interopRequireDefault(require("../assets/icons/instagram.svg"));
+
+var _youtube = _interopRequireDefault(require("../assets/icons/youtube.svg"));
+
+var _discord = _interopRequireDefault(require("../assets/icons/discord.svg"));
+
+var _paypal = _interopRequireDefault(require("../assets/icons/paypal.svg"));
+
+var _patreon = _interopRequireDefault(require("../assets/icons/patreon.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class SocialLinks extends _react.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {
+      social
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-social"
+    }, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.twitter,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item twitter"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _twitter.default,
+      className: "profile-social-icon icon"
+    })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.facebook,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item facebook"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _facebook.default,
+      className: "profile-social-icon icon",
+      alt: "Facebook"
+    })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.linkedin,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item linkedin"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _linkedin.default,
+      className: "profile-social-icon icon",
+      alt: "LinkedIn"
+    })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.github,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item github"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _github.default,
+      className: "profile-social-icon icon",
+      alt: "GitHub"
+    })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.telegram,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item telegram"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _telegram.default,
+      className: "profile-social-icon icon",
+      alt: "Telegram"
+    })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.instagram,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item instagram"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _instagram.default,
+      className: "profile-social-icon icon",
+      alt: "Instagram"
+    })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.youtube,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item youtube"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _youtube.default,
+      className: "profile-social-icon icon",
+      alt: "YouTube"
+    })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.discord,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item discord"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _discord.default,
+      className: "profile-social-icon icon",
+      alt: "Discord"
+    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.paypal,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item paypal"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _paypal.default,
+      className: "profile-social-icon icon",
+      alt: "PayPal"
+    })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.patreon,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item patreon"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _patreon.default,
+      className: "profile-social-icon icon",
+      alt: "Patreon"
+    })) : null);
+  }
+
+}
+
+var _default = SocialLinks;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Profile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class Profile extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      pageBio: new Object()
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.setBio = this.setBio.bind(this);
+  }
+
+  async componentDidMount() {
+    let loggedIn = this.props.wallet.isSignedIn();
+    let pageOwner = this.props.match.params.owner;
+    const pageBio = await this.getBio(pageOwner);
+    this.setState({
+      pageBio: pageBio
+    });
+
+    if (loggedIn) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  async setBio() {
+    let newSocial = new Object({
+      twitter: "https://twitter.com/picturepan2",
+      github: "https://github.com/picturepan2"
+    });
+    let newCrypto = new Object({
+      btc: "xxx",
+      eth: "xxx"
+    });
+    let newRecords = new Object({
+      email: "testnet@near.org",
+      settings: "settings",
+      premium: true,
+      name: "Yan Zhu",
+      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
+      description: "is creating products, code and jokes.",
+      website: "website",
+      location: "Shanghai",
+      social: newSocial,
+      crypto: newCrypto
+    });
+
+    try {
+      // make an update call to the smart contract
+      await window.contract.setRecordByOwner(newRecords);
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      console.log("🚀");
+    }
+  }
+
+  async getBio(pageOwner) {
+    return await window.contract.getRecordByOwner({
+      owner: pageOwner
+    });
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  render() {
+    const {
+      currentUser,
+      pageBio
+    } = this.state;
+    let social = new Object(pageBio.social);
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-container"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-header"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      className: "web3bio-logo",
+      href: "/",
+      title: currentUser
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: pageBio.avatar,
+      className: "profile-avatar avatar avatar-xl"
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-xl",
+      "data-initial": pageBio.name
+    }), /*#__PURE__*/_react.default.createElement("h2", {
+      className: "profile-name"
+    }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
+      className: "profile-description"
+    }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
+      social: social
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "header-wrapper"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "login"
+    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mr-1",
+      onClick: this.requestSignOut
+    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1 mr-1",
+      onClick: this.setBio
+    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mr-1",
+      onClick: this.requestSignIn
+    }, "Log in with NEAR"))))));
+  }
+
+}
+
+var _default = Profile;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"Dashboard.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class Dashboard extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      pageBio: new Object()
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.setBio = this.setBio.bind(this);
+  }
+
+  async componentDidMount() {
+    let loggedIn = this.props.wallet.isSignedIn();
+    let pageOwner = this.props.match.params.owner;
+    const pageBio = await this.getBio(pageOwner);
+    this.setState({
+      pageBio: pageBio
+    });
+
+    if (loggedIn) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  async setBio() {
+    let newSocial = new Object({
+      twitter: "https://twitter.com/picturepan2",
+      github: "https://github.com/picturepan2"
+    });
+    let newRecords = new Object({
+      email: "testnet@near.org",
+      settings: "settings",
+      premium: true,
+      name: "Yan Zhu",
+      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
+      description: "is creating products, code and jokes.",
+      website: "website",
+      location: "Shanghai",
+      social: newSocial
+    });
+
+    try {
+      // make an update call to the smart contract
+      await window.contract.setRecordByOwner(newRecords);
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      console.log("🚀");
+    }
+  }
+
+  async getBio(pageOwner) {
+    return await window.contract.getRecordByOwner({
+      owner: pageOwner
+    });
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  render() {
+    const {
+      currentUser,
+      pageBio
+    } = this.state;
+    let social = new Object(pageBio.social);
+    console.log();
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-container"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-header"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      className: "web3bio-logo",
+      href: "/",
+      title: currentUser
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))));
+  }
+
+}
+
+var _default = Dashboard;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"assets/scss/web3bio.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"./../img/demo-banner.jpg":[["demo-banner.c7ae644a.jpg","assets/img/demo-banner.jpg"],"assets/img/demo-banner.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyStore = void 0;
@@ -57746,76 +58549,7 @@ exports.keyStores = __importStar(require("./key_stores/browser-index"));
 __exportStar(require("./common-index"), exports);
 require("error-polyfill");
 
-},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js","error-polyfill":"../node_modules/error-polyfill/index.js"}],"config.js":[function(require,module,exports) {
-const CONTRACT_NAME = "awe.testnet" || 'your-awesome-project';
-
-function getConfig(env) {
-  switch (env) {
-    case 'production':
-    case 'mainnet':
-      return {
-        networkId: 'mainnet',
-        nodeUrl: 'https://rpc.mainnet.near.org',
-        contractName: CONTRACT_NAME,
-        walletUrl: 'https://wallet.near.org',
-        helperUrl: 'https://helper.mainnet.near.org',
-        explorerUrl: 'https://explorer.mainnet.near.org'
-      };
-
-    case 'development':
-    case 'testnet':
-      return {
-        networkId: 'testnet',
-        nodeUrl: 'https://rpc.testnet.near.org',
-        contractName: CONTRACT_NAME,
-        walletUrl: 'https://wallet.testnet.near.org',
-        helperUrl: 'https://helper.testnet.near.org',
-        explorerUrl: 'https://explorer.testnet.near.org'
-      };
-
-    case 'betanet':
-      return {
-        networkId: 'betanet',
-        nodeUrl: 'https://rpc.betanet.near.org',
-        contractName: CONTRACT_NAME,
-        walletUrl: 'https://wallet.betanet.near.org',
-        helperUrl: 'https://helper.betanet.near.org',
-        explorerUrl: 'https://explorer.betanet.near.org'
-      };
-
-    case 'local':
-      return {
-        networkId: 'local',
-        nodeUrl: 'http://localhost:3030',
-        keyPath: `${"/Users/yanzhu"}/.near/validator_key.json`,
-        walletUrl: 'http://localhost:4000/wallet',
-        contractName: CONTRACT_NAME
-      };
-
-    case 'test':
-    case 'ci':
-      return {
-        networkId: 'shared-test',
-        nodeUrl: 'https://rpc.ci-testnet.near.org',
-        contractName: CONTRACT_NAME,
-        masterAccount: 'test.near'
-      };
-
-    case 'ci-betanet':
-      return {
-        networkId: 'shared-test-staging',
-        nodeUrl: 'https://rpc.ci-betanet.near.org',
-        contractName: CONTRACT_NAME,
-        masterAccount: 'test.near'
-      };
-
-    default:
-      throw Error(`Unconfigured environment '${env}'. Can be configured in src/config.js.`);
-  }
-}
-
-module.exports = getConfig;
-},{}],"util/utils.js":[function(require,module,exports) {
+},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js","error-polyfill":"../node_modules/error-polyfill/index.js"}],"util/utils.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -57868,603 +58602,7 @@ function login() {
   const appTitle = 'Web3.bio';
   window.walletConnection.requestSignIn(nearConfig.contractName, appTitle);
 }
-},{"near-api-js":"../node_modules/near-api-js/lib/browser-index.js","../config":"config.js"}],"App.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = App;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireDefault(require("react"));
-
-var _utils = require("./util/utils");
-
-var _config = _interopRequireDefault(require("./config"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-const {
-  networkId
-} = (0, _config.default)("development" || 'development');
-
-function App() {
-  // use React Hooks to store greeting in component state
-  const [greeting, setGreeting] = _react.default.useState(); // when the user has not yet interacted with the form, disable the button
-
-
-  const [buttonDisabled, setButtonDisabled] = _react.default.useState(true); // after submitting the form, we want to show Notification
-
-
-  const [showNotification, setShowNotification] = _react.default.useState(false); // The useEffect hook can be used to fire side-effects during render
-  // Learn more: https://reactjs.org/docs/hooks-intro.html
-
-
-  _react.default.useEffect(() => {
-    // in this case, we only care to query the contract when signed in
-    if (window.walletConnection.isSignedIn()) {
-      // window.contract is set by initContract in index.js
-      window.contract.getGreeting({
-        accountId: window.accountId
-      }).then(greetingFromContract => {
-        setGreeting(greetingFromContract);
-      });
-    }
-  }, // The second argument to useEffect tells React when to re-run the effect
-  // Use an empty array to specify "only run on first render"
-  // This works because signing into NEAR Wallet reloads the page
-  []); // if not signed in, return early with sign-in prompt
-
-
-  if (!window.walletConnection.isSignedIn()) {
-    return /*#__PURE__*/_react.default.createElement("main", null, /*#__PURE__*/_react.default.createElement("h1", null, "Welcome to NEAR!"), /*#__PURE__*/_react.default.createElement("p", null, "To make use of the NEAR blockchain, you need to sign in. The button below will sign you in using NEAR Wallet."), /*#__PURE__*/_react.default.createElement("p", null, "By default, when your app runs in \"development\" mode, it connects to a test network (\"testnet\") wallet. This works just like the main network (\"mainnet\") wallet, but the NEAR Tokens on testnet aren't convertible to other currencies \u2013 they're just for testing!"), /*#__PURE__*/_react.default.createElement("p", null, "Go ahead and click the button below to try it out:"), /*#__PURE__*/_react.default.createElement("p", {
-      style: {
-        textAlign: 'center',
-        marginTop: '2.5em'
-      }
-    }, /*#__PURE__*/_react.default.createElement("button", {
-      onClick: _utils.login
-    }, "Sign in")));
-  }
-
-  return (
-    /*#__PURE__*/
-    // use React Fragment, <>, to avoid wrapping elements in unnecessary divs
-    _react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
-      className: "link",
-      style: {
-        float: 'right'
-      },
-      onClick: _utils.logout
-    }, "Sign out"), /*#__PURE__*/_react.default.createElement("main", null, /*#__PURE__*/_react.default.createElement("h1", null, /*#__PURE__*/_react.default.createElement("label", {
-      htmlFor: "greeting",
-      style: {
-        color: 'var(--secondary)',
-        borderBottom: '2px solid var(--secondary)'
-      }
-    }, greeting), ' '
-    /* React trims whitespace around tags; insert literal space character when needed */
-    , window.accountId, "!"), /*#__PURE__*/_react.default.createElement("form", {
-      onSubmit: async event => {
-        event.preventDefault(); // get elements from the form using their id attribute
-
-        const {
-          fieldset,
-          greeting
-        } = event.target.elements; // hold onto new user-entered value from React's SynthenticEvent for use after `await` call
-
-        const newGreeting = greeting.value; // disable the form while the value gets updated on-chain
-
-        fieldset.disabled = true;
-
-        try {
-          // make an update call to the smart contract
-          await window.contract.setGreeting({
-            // pass the value that the user entered in the greeting field
-            message: newGreeting
-          });
-        } catch (e) {
-          alert('Something went wrong! ' + 'Maybe you need to sign out and back in? ' + 'Check your browser console for more info.');
-          throw e;
-        } finally {
-          // re-enable the form, whether the call succeeded or failed
-          fieldset.disabled = false;
-        } // update local `greeting` variable to match persisted value
-
-
-        setGreeting(newGreeting); // show Notification
-
-        setShowNotification(true); // remove Notification again after css animation completes
-        // this allows it to be shown again next time the form is submitted
-
-        setTimeout(() => {
-          setShowNotification(false);
-        }, 11000);
-      }
-    }, /*#__PURE__*/_react.default.createElement("fieldset", {
-      id: "fieldset"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      htmlFor: "greeting",
-      style: {
-        display: 'block',
-        color: 'var(--gray)',
-        marginBottom: '0.5em'
-      }
-    }, "Change greeting"), /*#__PURE__*/_react.default.createElement("div", {
-      style: {
-        display: 'flex'
-      }
-    }, /*#__PURE__*/_react.default.createElement("input", {
-      autoComplete: "off",
-      defaultValue: greeting,
-      id: "greeting",
-      onChange: e => setButtonDisabled(e.target.value === greeting),
-      style: {
-        flex: 1
-      }
-    }), /*#__PURE__*/_react.default.createElement("button", {
-      disabled: buttonDisabled,
-      style: {
-        borderRadius: '0 5px 5px 0'
-      }
-    }, "Save")))), /*#__PURE__*/_react.default.createElement("p", null, "Look at that! A Hello World app! This greeting is stored on the NEAR blockchain. Check it out:"), /*#__PURE__*/_react.default.createElement("ol", null, /*#__PURE__*/_react.default.createElement("li", null, "Look in ", /*#__PURE__*/_react.default.createElement("code", null, "src/App.js"), " and ", /*#__PURE__*/_react.default.createElement("code", null, "src/utils.js"), " \u2013 you'll see ", /*#__PURE__*/_react.default.createElement("code", null, "getGreeting"), " and ", /*#__PURE__*/_react.default.createElement("code", null, "setGreeting"), " being called on ", /*#__PURE__*/_react.default.createElement("code", null, "contract"), ". What's this?"), /*#__PURE__*/_react.default.createElement("li", null, "Ultimately, this ", /*#__PURE__*/_react.default.createElement("code", null, "contract"), " code is defined in ", /*#__PURE__*/_react.default.createElement("code", null, "assembly/main.ts"), " \u2013 this is the source code for your ", /*#__PURE__*/_react.default.createElement("a", {
-      target: "_blank",
-      rel: "noreferrer",
-      href: "https://docs.near.org/docs/roles/developer/contracts/intro"
-    }, "smart contract"), "."), /*#__PURE__*/_react.default.createElement("li", null, "When you run ", /*#__PURE__*/_react.default.createElement("code", null, "yarn dev"), ", the code in ", /*#__PURE__*/_react.default.createElement("code", null, "assembly/main.ts"), " gets deployed to the NEAR testnet. You can see how this happens by looking in ", /*#__PURE__*/_react.default.createElement("code", null, "package.json"), " at the ", /*#__PURE__*/_react.default.createElement("code", null, "scripts"), " section to find the ", /*#__PURE__*/_react.default.createElement("code", null, "dev"), " command.")), /*#__PURE__*/_react.default.createElement("hr", null), /*#__PURE__*/_react.default.createElement("p", null, "To keep learning, check out ", /*#__PURE__*/_react.default.createElement("a", {
-      target: "_blank",
-      rel: "noreferrer",
-      href: "https://docs.near.org"
-    }, "the NEAR docs"), " or look through some ", /*#__PURE__*/_react.default.createElement("a", {
-      target: "_blank",
-      rel: "noreferrer",
-      href: "https://examples.near.org"
-    }, "example apps"), ".")), showNotification && /*#__PURE__*/_react.default.createElement(Notification, null))
-  );
-} // this component gets rendered by App after the form is submitted
-
-
-function Notification() {
-  const urlPrefix = `https://explorer.${networkId}.near.org/accounts`;
-  return /*#__PURE__*/_react.default.createElement("aside", null, /*#__PURE__*/_react.default.createElement("a", {
-    target: "_blank",
-    rel: "noreferrer",
-    href: `${urlPrefix}/${window.accountId}`
-  }, window.accountId), ' '
-  /* React trims whitespace around tags; insert literal space character when needed */
-  , "called method: 'setGreeting' in contract:", ' ', /*#__PURE__*/_react.default.createElement("a", {
-    target: "_blank",
-    rel: "noreferrer",
-    href: `${urlPrefix}/${window.contract.contractId}`
-  }, window.contract.contractId), /*#__PURE__*/_react.default.createElement("footer", null, /*#__PURE__*/_react.default.createElement("div", null, "\u2714 Succeeded"), /*#__PURE__*/_react.default.createElement("div", null, "Just now")));
-}
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./util/utils":"util/utils.js","./config":"config.js"}],"assets/icons/twitter.svg":[function(require,module,exports) {
-module.exports = "/twitter.f2da1eec.svg";
-},{}],"assets/icons/facebook.svg":[function(require,module,exports) {
-module.exports = "/facebook.b48d22fd.svg";
-},{}],"assets/icons/linkedin.svg":[function(require,module,exports) {
-module.exports = "/linkedin.15978cba.svg";
-},{}],"assets/icons/github.svg":[function(require,module,exports) {
-module.exports = "/github.373d19b5.svg";
-},{}],"assets/icons/telegram.svg":[function(require,module,exports) {
-module.exports = "/telegram.d5997881.svg";
-},{}],"assets/icons/instagram.svg":[function(require,module,exports) {
-module.exports = "/instagram.79162530.svg";
-},{}],"assets/icons/youtube.svg":[function(require,module,exports) {
-module.exports = "/youtube.af9355a8.svg";
-},{}],"assets/icons/discord.svg":[function(require,module,exports) {
-module.exports = "/discord.31d09d1b.svg";
-},{}],"assets/icons/paypal.svg":[function(require,module,exports) {
-module.exports = "/paypal.c4a1ad78.svg";
-},{}],"assets/icons/patreon.svg":[function(require,module,exports) {
-module.exports = "/patreon.663071f8.svg";
-},{}],"components/SocialLinks.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _twitter = _interopRequireDefault(require("../assets/icons/twitter.svg"));
-
-var _facebook = _interopRequireDefault(require("../assets/icons/facebook.svg"));
-
-var _linkedin = _interopRequireDefault(require("../assets/icons/linkedin.svg"));
-
-var _github = _interopRequireDefault(require("../assets/icons/github.svg"));
-
-var _telegram = _interopRequireDefault(require("../assets/icons/telegram.svg"));
-
-var _instagram = _interopRequireDefault(require("../assets/icons/instagram.svg"));
-
-var _youtube = _interopRequireDefault(require("../assets/icons/youtube.svg"));
-
-var _discord = _interopRequireDefault(require("../assets/icons/discord.svg"));
-
-var _paypal = _interopRequireDefault(require("../assets/icons/paypal.svg"));
-
-var _patreon = _interopRequireDefault(require("../assets/icons/patreon.svg"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-class SocialLinks extends _react.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {
-      social
-    } = this.props;
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-social"
-    }, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.twitter,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item twitter"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _twitter.default,
-      className: "profile-social-icon icon"
-    })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.facebook,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item facebook"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _facebook.default,
-      className: "profile-social-icon icon",
-      alt: "Facebook"
-    })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.linkedin,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item linkedin"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _linkedin.default,
-      className: "profile-social-icon icon",
-      alt: "LinkedIn"
-    })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.github,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item github"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _github.default,
-      className: "profile-social-icon icon",
-      alt: "GitHub"
-    })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.telegram,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item telegram"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _telegram.default,
-      className: "profile-social-icon icon",
-      alt: "Telegram"
-    })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.instagram,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item instagram"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _instagram.default,
-      className: "profile-social-icon icon",
-      alt: "Instagram"
-    })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.youtube,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item youtube"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _youtube.default,
-      className: "profile-social-icon icon",
-      alt: "YouTube"
-    })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.discord,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item discord"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _discord.default,
-      className: "profile-social-icon icon",
-      alt: "Discord"
-    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.paypal,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item paypal"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _paypal.default,
-      className: "profile-social-icon icon",
-      alt: "PayPal"
-    })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.patreon,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item patreon"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _patreon.default,
-      className: "profile-social-icon icon",
-      alt: "Patreon"
-    })) : null);
-  }
-
-}
-
-var _default = SocialLinks;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Page.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _config = _interopRequireDefault(require("./config"));
-
-var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class Page extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      currentUser: window.accountId,
-      pageBio: new Object()
-    };
-    this.signedInFlow = this.signedInFlow.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
-    this.requestSignOut = this.requestSignOut.bind(this);
-    this.signedOutFlow = this.signedOutFlow.bind(this);
-    this.setBio = this.setBio.bind(this);
-  }
-
-  async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn();
-    let pageOwner = this.props.match.params.owner;
-    const pageBio = await this.getBio(pageOwner);
-    this.setState({
-      pageBio: pageBio
-    });
-
-    if (loggedIn) {
-      this.signedInFlow();
-    } else {
-      this.signedOutFlow();
-    }
-  }
-
-  async signedInFlow() {
-    this.setState({
-      login: true,
-      currentUser: window.accountId
-    });
-    const accountId = await this.props.wallet.getAccountId();
-
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-  }
-
-  async requestSignIn() {
-    const appTitle = 'Web3.bio';
-    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  async setBio() {
-    let newSocial = new Object({
-      twitter: "https://twitter.com/picturepan2",
-      github: "https://github.com/picturepan2"
-    });
-    let newRecords = new Object({
-      email: "testnet@near.org",
-      settings: "settings",
-      premium: true,
-      name: "Yan Zhu",
-      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
-      description: "is creating products, code and jokes.",
-      website: "website",
-      location: "Shanghai",
-      social: newSocial
-    });
-
-    try {
-      // make an update call to the smart contract
-      await window.contract.setRecordByOwner(newRecords);
-    } catch (e) {
-      console.log('Something went wrong! ');
-      throw e;
-    } finally {
-      console.log("🚀");
-    }
-  }
-
-  async getBio(pageOwner) {
-    return await window.contract.getRecordByOwner({
-      owner: pageOwner
-    });
-  }
-
-  requestSignOut() {
-    this.props.wallet.signOut();
-    setTimeout(this.signedOutFlow, 500);
-    console.log("after sign out", this.props.wallet.isSignedIn());
-  }
-
-  signedOutFlow() {
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-
-    this.setState({
-      login: false,
-      currentUser: null
-    });
-  }
-
-  render() {
-    const {
-      currentUser,
-      pageBio
-    } = this.state;
-    let social = new Object(pageBio.social);
-    console.log();
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-header"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
-      className: "web3bio-logo",
-      href: "/",
-      title: currentUser
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile"
-    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
-      src: pageBio.avatar,
-      className: "profile-avatar avatar avatar-xl"
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-avatar avatar avatar-xl",
-      "data-initial": pageBio.name
-    }), /*#__PURE__*/_react.default.createElement("h2", {
-      className: "profile-name"
-    }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
-      className: "profile-description"
-    }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
-      social: social
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "header-wrapper"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "login"
-    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-2",
-      onClick: this.requestSignOut
-    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-2 mr-2",
-      onClick: this.setBio
-    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-2",
-      onClick: this.requestSignIn
-    }, "Log in with NEAR"))))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "image-wrapper"
-    }));
-  }
-
-}
-
-var _default = Page;
-exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"assets/scss/web3bio.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./../img/demo-banner.jpg":[["demo-banner.c7ae644a.jpg","assets/img/demo-banner.jpg"],"assets/img/demo-banner.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"index.js":[function(require,module,exports) {
+},{"near-api-js":"../node_modules/near-api-js/lib/browser-index.js","../config":"config.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -58477,7 +58615,9 @@ var _history = require("history");
 
 var _App = _interopRequireDefault(require("./App"));
 
-var _Page = _interopRequireDefault(require("./Page"));
+var _Profile = _interopRequireDefault(require("./Profile"));
+
+var _Dashboard = _interopRequireDefault(require("./Dashboard"));
 
 require("./assets/scss/web3bio.scss");
 
@@ -58499,14 +58639,21 @@ window.nearInitPromise = (0, _utils.initContract)().then(() => {
       contract: window.contract
     }))
   }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/dashboard",
+    exact: true,
+    render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
+      wallet: window.walletConnection,
+      contract: window.contract
+    }))
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
     path: "/:owner",
-    render: props => /*#__PURE__*/_react.default.createElement(_Page.default, _extends({}, props, {
+    render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
       wallet: window.walletConnection,
       contract: window.contract
     }))
   }))), document.querySelector('#root'));
 }).catch(console.error);
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./Page":"Page.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -58534,7 +58681,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58352" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52041" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

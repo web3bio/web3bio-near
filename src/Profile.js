@@ -1,9 +1,10 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import getConfig from './config'
+import SocialLinks from './components/SocialLinks'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
-class App extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -20,6 +21,11 @@ class App extends Component {
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn()
+    let pageOwner = this.props.match.params.owner
+    const pageBio = await this.getBio(pageOwner)
+    this.setState({
+      pageBio: pageBio
+    })
     
     if (loggedIn) {
       this.signedInFlow();
@@ -52,6 +58,10 @@ class App extends Component {
       twitter: "https://twitter.com/picturepan2",
       github: "https://github.com/picturepan2"
     })
+    let newCrypto = new Object({
+      btc: "xxx",
+      eth: "xxx"
+    })
     let newRecords = new Object({
         email: "testnet@near.org",
         settings: "settings",
@@ -61,7 +71,8 @@ class App extends Component {
         description: "is creating products, code and jokes.",
         website: "website",
         location: "Shanghai",
-        social: newSocial
+        social: newSocial,
+        crypto: newCrypto
       })
     try {
       // make an update call to the smart contract
@@ -101,7 +112,6 @@ class App extends Component {
   render() {
     const { currentUser, pageBio } = this.state
     let social = new Object(pageBio.social)
-    console.log()
 
     return (
       <div className="web3bio-container">
@@ -113,21 +123,45 @@ class App extends Component {
                 <a className="web3bio-logo" href="/" title={currentUser}>
                   <h1>WEB3<br/>BIO</h1>
                 </a>
-                <div className="login mt-2">
-                  {this.state.login ? 
-                    <div>
-                      <button className="btn mr-1" onClick={this.requestSignOut}>Log out</button>
-                      <button className="btn ml-1 mr-1" onClick={this.setBio}>Set Bio</button>
-                    </div>
-                    : <button className="btn mr-1" onClick={this.requestSignIn}>Log in with NEAR</button>}
-                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className="web3bio-content container grid-sm">
+          <div className="web3bio-profile">
+            {pageBio.avatar ? 
+              <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
+            :
+              <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
+            }
+            <h2 className="profile-name">{pageBio.name}</h2>
+            <h3 className="profile-description">{pageBio.description}</h3>
+            <SocialLinks social={social} />
+          </div>
+        </div>
+        <div className="container grid-lg">
+          <div className="columns">
+            <div className="column col-12">
+              <div className="header-wrapper">
+                
+              </div>
+              <div className="login">
+                {this.state.login ? 
+                  <div>
+                    <button className="btn mr-1" onClick={this.requestSignOut}>Log out</button>
+                    <button className="btn ml-1 mr-1" onClick={this.setBio}>Set Bio</button>
+                    {/* <button onClick={}>Get Bio</button> */}
+                  </div>
+                  : <button className="btn mr-1" onClick={this.requestSignIn}>Log in with NEAR</button>}
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     )
   }
+
 }
 
-export default App;
+export default Profile;

@@ -151,11 +151,15 @@ body {
     &:focus,
     &:hover {
       box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
+
+      .profile-social-icon {
+        transform: scale(1.05);
+      }
     }
 
     &:active {
       .profile-social-icon {
-        transform: scale(.85);
+        transform: scale(.95);
       }
     }
 
