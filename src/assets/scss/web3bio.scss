@@ -64,7 +64,7 @@ body {
   background: url('../img/demo-banner.jpg') no-repeat center top;
   background-size: cover;
   display: block;
-  filter: blur(5rem);
+  filter: blur(4rem);
   height: 18rem;
   position: fixed;
   width: 100vw;
@@ -128,5 +128,43 @@ body {
     color: $dark-color;
     font-size: .8rem;
     font-weight: 500;
+  }
+
+  .profile-social {
+    display: flex;
+    margin: 1rem auto;
+  }
+
+  .profile-social-item {
+    align-items: center;
+    background: $light-color;
+    border-radius: .6rem;
+    box-shadow: 0 .2rem .4rem rgba(0, 0, 0, .05);
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    margin: 0 .5rem;
+    padding: .4rem;
+    transition: all .3s ease;
+    width: 3rem;
+
+    &:focus,
+    &:hover {
+      box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
+    }
+
+    &:active {
+      .profile-social-icon {
+        transform: scale(.85);
+      }
+    }
+
+    .profile-social-icon {
+      color: $primary-color;
+      display: block;
+      height: 1.4rem;
+      transition: all .3s ease;
+      width: 1.4rem;
+    }
   }
 }

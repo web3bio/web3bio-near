@@ -58040,7 +58040,170 @@ function Notification() {
     href: `${urlPrefix}/${window.contract.contractId}`
   }, window.contract.contractId), /*#__PURE__*/_react.default.createElement("footer", null, /*#__PURE__*/_react.default.createElement("div", null, "\u2714 Succeeded"), /*#__PURE__*/_react.default.createElement("div", null, "Just now")));
 }
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./util/utils":"util/utils.js","./config":"config.js"}],"Page.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./util/utils":"util/utils.js","./config":"config.js"}],"assets/icons/twitter.svg":[function(require,module,exports) {
+module.exports = "/twitter.f2da1eec.svg";
+},{}],"assets/icons/facebook.svg":[function(require,module,exports) {
+module.exports = "/facebook.b48d22fd.svg";
+},{}],"assets/icons/linkedin.svg":[function(require,module,exports) {
+module.exports = "/linkedin.15978cba.svg";
+},{}],"assets/icons/github.svg":[function(require,module,exports) {
+module.exports = "/github.373d19b5.svg";
+},{}],"assets/icons/telegram.svg":[function(require,module,exports) {
+module.exports = "/telegram.d5997881.svg";
+},{}],"assets/icons/instagram.svg":[function(require,module,exports) {
+module.exports = "/instagram.79162530.svg";
+},{}],"assets/icons/youtube.svg":[function(require,module,exports) {
+module.exports = "/youtube.af9355a8.svg";
+},{}],"assets/icons/discord.svg":[function(require,module,exports) {
+module.exports = "/discord.31d09d1b.svg";
+},{}],"assets/icons/paypal.svg":[function(require,module,exports) {
+module.exports = "/paypal.c4a1ad78.svg";
+},{}],"assets/icons/patreon.svg":[function(require,module,exports) {
+module.exports = "/patreon.663071f8.svg";
+},{}],"components/SocialLinks.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _twitter = _interopRequireDefault(require("../assets/icons/twitter.svg"));
+
+var _facebook = _interopRequireDefault(require("../assets/icons/facebook.svg"));
+
+var _linkedin = _interopRequireDefault(require("../assets/icons/linkedin.svg"));
+
+var _github = _interopRequireDefault(require("../assets/icons/github.svg"));
+
+var _telegram = _interopRequireDefault(require("../assets/icons/telegram.svg"));
+
+var _instagram = _interopRequireDefault(require("../assets/icons/instagram.svg"));
+
+var _youtube = _interopRequireDefault(require("../assets/icons/youtube.svg"));
+
+var _discord = _interopRequireDefault(require("../assets/icons/discord.svg"));
+
+var _paypal = _interopRequireDefault(require("../assets/icons/paypal.svg"));
+
+var _patreon = _interopRequireDefault(require("../assets/icons/patreon.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class SocialLinks extends _react.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {
+      social
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-social"
+    }, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.twitter,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item twitter"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _twitter.default,
+      className: "profile-social-icon icon"
+    })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.facebook,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item facebook"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _facebook.default,
+      className: "profile-social-icon icon",
+      alt: "Facebook"
+    })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.linkedin,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item linkedin"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _linkedin.default,
+      className: "profile-social-icon icon",
+      alt: "LinkedIn"
+    })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.github,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item github"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _github.default,
+      className: "profile-social-icon icon",
+      alt: "GitHub"
+    })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.telegram,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item telegram"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _telegram.default,
+      className: "profile-social-icon icon",
+      alt: "Telegram"
+    })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.instagram,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item instagram"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _instagram.default,
+      className: "profile-social-icon icon",
+      alt: "Instagram"
+    })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.youtube,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item youtube"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _youtube.default,
+      className: "profile-social-icon icon",
+      alt: "YouTube"
+    })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.discord,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item discord"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _discord.default,
+      className: "profile-social-icon icon",
+      alt: "Discord"
+    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.paypal,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item paypal"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _paypal.default,
+      className: "profile-social-icon icon",
+      alt: "PayPal"
+    })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.patreon,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item patreon"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _patreon.default,
+      className: "profile-social-icon icon",
+      alt: "Patreon"
+    })) : null);
+  }
+
+}
+
+var _default = SocialLinks;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Page.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -58053,6 +58216,8 @@ require("regenerator-runtime/runtime");
 var _react = _interopRequireWildcard(require("react"));
 
 var _config = _interopRequireDefault(require("./config"));
+
+var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -58068,7 +58233,6 @@ class Page extends _react.Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      pageOwner: null,
       pageBio: new Object()
     };
     this.signedInFlow = this.signedInFlow.bind(this);
@@ -58083,7 +58247,6 @@ class Page extends _react.Component {
     let pageOwner = this.props.match.params.owner;
     const pageBio = await this.getBio(pageOwner);
     this.setState({
-      pageOwner: this.props.match.params.owner,
       pageBio: pageBio
     });
 
@@ -58112,16 +58275,20 @@ class Page extends _react.Component {
   }
 
   async setBio() {
+    let newSocial = new Object({
+      twitter: "https://twitter.com/picturepan2",
+      github: "https://github.com/picturepan2"
+    });
     let newRecords = new Object({
       email: "testnet@near.org",
-      expiration: 233,
       settings: "settings",
       premium: true,
       name: "Yan Zhu",
       avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
       description: "is creating products, code and jokes.",
       website: "website",
-      location: "location"
+      location: "Shanghai",
+      social: newSocial
     });
 
     try {
@@ -58160,13 +58327,11 @@ class Page extends _react.Component {
 
   render() {
     const {
-      state
-    } = this;
-    const {
       currentUser,
-      pageOwner,
       pageBio
-    } = state;
+    } = this.state;
+    let social = new Object(pageBio.social);
+    console.log();
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -58197,7 +58362,9 @@ class Page extends _react.Component {
       className: "profile-name"
     }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
       className: "profile-description"
-    }, pageBio.description))), /*#__PURE__*/_react.default.createElement("div", {
+    }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
+      social: social
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
@@ -58225,7 +58392,7 @@ class Page extends _react.Component {
 
 var _default = Page;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -58367,7 +58534,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57101" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58352" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

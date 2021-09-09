@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import getConfig from './config'
+import SocialLinks from './components/SocialLinks'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Page extends Component {
@@ -9,7 +10,6 @@ class Page extends Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      pageOwner: null,
       pageBio: new Object()
     }
     this.signedInFlow = this.signedInFlow.bind(this);
@@ -24,7 +24,6 @@ class Page extends Component {
     let pageOwner = this.props.match.params.owner
     const pageBio = await this.getBio(pageOwner)
     this.setState({
-      pageOwner: this.props.match.params.owner,
       pageBio: pageBio
     })
     
@@ -55,16 +54,20 @@ class Page extends Component {
   }
 
   async setBio() {
+    let newSocial = new Object({
+      twitter: "https://twitter.com/picturepan2",
+      github: "https://github.com/picturepan2"
+    })
     let newRecords = new Object({
         email: "testnet@near.org",
-        expiration: 233,
         settings: "settings",
         premium: true,
         name: "Yan Zhu",
         avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
         description: "is creating products, code and jokes.",
         website: "website",
-        location: "location"
+        location: "Shanghai",
+        social: newSocial
       })
     try {
       // make an update call to the smart contract
@@ -102,14 +105,9 @@ class Page extends Component {
   }
 
   render() {
-    const {
-      state
-    } = this
-    const {
-      currentUser,
-      pageOwner,
-      pageBio
-    } = state
+    const { currentUser, pageBio } = this.state
+    let social = new Object(pageBio.social)
+    console.log()
 
     return (
       <div className="web3bio-container">
@@ -127,12 +125,14 @@ class Page extends Component {
         </div>
         <div className="web3bio-content container grid-sm">
           <div className="web3bio-profile">
-              {pageBio.avatar ? 
-                <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
-              :
-                <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>}
-              <h2 className="profile-name">{pageBio.name}</h2>
-              <h3 className="profile-description">{pageBio.description}</h3>
+            {pageBio.avatar ? 
+              <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
+            :
+              <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
+            }
+            <h2 className="profile-name">{pageBio.name}</h2>
+            <h3 className="profile-description">{pageBio.description}</h3>
+            <SocialLinks social={social} />
           </div>
         </div>
         <div className="container grid-lg">
