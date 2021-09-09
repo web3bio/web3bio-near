@@ -34919,14 +34919,12 @@ class App extends _react.Component {
     super(props);
     this.state = {
       login: false,
-      currentUser: window.accountId,
-      pageBio: new Object()
+      currentUser: window.accountId
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
-    this.setBio = this.setBio.bind(this);
   }
 
   async componentDidMount() {
@@ -34956,40 +34954,6 @@ class App extends _react.Component {
     await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
   }
 
-  async setBio() {
-    let newSocial = new Object({
-      twitter: "https://twitter.com/picturepan2",
-      github: "https://github.com/picturepan2"
-    });
-    let newRecords = new Object({
-      email: "testnet@near.org",
-      settings: "settings",
-      premium: true,
-      name: "Yan Zhu",
-      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
-      description: "is creating products, code and jokes.",
-      website: "website",
-      location: "Shanghai",
-      social: newSocial
-    });
-
-    try {
-      // make an update call to the smart contract
-      await window.contract.setRecordByOwner(newRecords);
-    } catch (e) {
-      console.log('Something went wrong! ');
-      throw e;
-    } finally {
-      console.log("🚀");
-    }
-  }
-
-  async getBio(pageOwner) {
-    return await window.contract.getRecordByOwner({
-      owner: pageOwner
-    });
-  }
-
   requestSignOut() {
     this.props.wallet.signOut();
     setTimeout(this.signedOutFlow, 500);
@@ -35009,10 +34973,8 @@ class App extends _react.Component {
 
   render() {
     const {
-      currentUser,
-      pageBio
+      currentUser
     } = this.state;
-    let social = new Object(pageBio.social);
     console.log();
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
@@ -35031,17 +34993,62 @@ class App extends _react.Component {
       href: "/",
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "login mt-2"
+      className: "web3bio-account"
     }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mr-1",
       onClick: this.requestSignOut
     }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-1 mr-1",
+      className: "btn ml-1",
       onClick: this.setBio
     }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-1",
+      className: "btn",
       onClick: this.requestSignIn
-    }, "Log in with NEAR")))))));
+    }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your", /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-bold"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-dark"
+    }, currentUser)), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-lg input-group-btn"
+    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group c-hand",
+      onClick: this.requestSignIn
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-bold"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-gray"
+    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-lg input-group-btn"
+    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-2"
+    }, "Claim your page with NEAR account in seconds."))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-footer text-center"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      className: "btn btn-primary",
+      href: "/"
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-2 text-bold"
+    }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://near.org",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "NEAR"), " "))))));
   }
 
 }
@@ -35293,7 +35300,7 @@ class Profile extends _react.Component {
     });
     let newRecords = new Object({
       email: "testnet@near.org",
-      settings: "settings",
+      settings: "royal",
       premium: true,
       name: "Yan Zhu",
       avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
@@ -35344,9 +35351,12 @@ class Profile extends _react.Component {
       pageBio
     } = this.state;
     let social = new Object(pageBio.social);
+    let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
+    }, pageBio.settings ? /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-cover ${pageBio.settings}`
+    }) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
@@ -35360,7 +35370,18 @@ class Profile extends _react.Component {
       className: "web3bio-logo",
       href: "/",
       title: currentUser
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-account"
+    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mr-1",
+      onClick: this.requestSignOut
+    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1",
+      onClick: this.setBio
+    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignIn
+    }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
@@ -35377,25 +35398,24 @@ class Profile extends _react.Component {
     }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
       social: social
     }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-footer text-center"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "header-wrapper"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "login"
-    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-1",
-      onClick: this.requestSignOut
-    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-1 mr-1",
-      onClick: this.setBio
-    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-1",
-      onClick: this.requestSignIn
-    }, "Log in with NEAR"))))));
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      className: "btn btn-primary",
+      href: "/"
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-2 text-bold"
+    }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://near.org",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "NEAR"), " "))))));
   }
 
 }
@@ -35547,7 +35567,18 @@ class Dashboard extends _react.Component {
       className: "web3bio-logo",
       href: "/",
       title: currentUser
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))));
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-account"
+    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mr-1",
+      onClick: this.requestSignOut
+    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1",
+      onClick: this.setBio
+    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignIn
+    }, "Login with NEAR")))))));
   }
 
 }
@@ -35626,7 +35657,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../img/demo-banner.jpg":[["demo-banner.c7ae644a.jpg","assets/img/demo-banner.jpg"],"assets/img/demo-banner.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
+},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyStore = void 0;

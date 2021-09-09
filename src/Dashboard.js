@@ -112,17 +112,27 @@ class Dashboard extends Component {
     return (
       <div className="web3bio-container">
         <div className="web3bio-cover"></div>
+
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <a className="web3bio-logo" href="/" title={currentUser}>
+              <a className="web3bio-logo" href="/" title={currentUser}>
                   <h1>WEB3<br/>BIO</h1>
                 </a>
+                <div className="web3bio-account">
+                  {this.state.login ? 
+                    <div>
+                      <button className="btn mr-1" onClick={this.requestSignOut}>Log out</button>
+                      <button className="btn ml-1" onClick={this.setBio}>Set Bio</button>
+                    </div>
+                    : <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>}
+                </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     )
   }

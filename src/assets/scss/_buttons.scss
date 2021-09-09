@@ -24,14 +24,15 @@
   }
   &:focus,
   &:hover {
-    background: lighten($bg-color, 5%);
+    background: $primary-color;
+    border-color: $primary-color-dark;
     box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .25);
-    color: $dark-color;
+    color: $light-color;
     text-decoration: none;
   }
   &:active,
   &.active {
-    background: $bg-color;
+    background: $primary-color-dark;
     text-decoration: none;
     &.loading {
       &::after {
