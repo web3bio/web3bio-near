@@ -35389,11 +35389,7 @@ class Profile extends _react.Component {
     let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
-    }, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.settings}`
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35413,7 +35409,9 @@ class Profile extends _react.Component {
     }, "Logout") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
-    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
+    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-cover ${pageBio.settings}`
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
@@ -35429,7 +35427,9 @@ class Profile extends _react.Component {
       className: "profile-description"
     }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
       social: social
-    }))) : /*#__PURE__*/_react.default.createElement("div", {
+    })))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
@@ -35457,7 +35457,7 @@ class Profile extends _react.Component {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds.")))))) : /*#__PURE__*/_react.default.createElement("div", {
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"

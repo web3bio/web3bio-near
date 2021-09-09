@@ -135,11 +135,6 @@ class Profile extends Component {
 
     return (
       <div className="web3bio-container">
-        { pageStatus ? 
-          <div className={`web3bio-cover ${pageBio.settings}`}></div>
-          :
-          <div className="web3bio-cover"></div>
-        }
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
@@ -161,44 +156,50 @@ class Profile extends Component {
         { !loading ? 
           <>
             { pageStatus ? 
-              <div className="web3bio-content container grid-sm">
-                <div className="web3bio-profile">
-                  { pageBio.avatar ? 
-                    <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
-                  :
-                    <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
-                  }
-                  <h2 className="profile-name">{pageBio.name}</h2>
-                  <h3 className="profile-description">{pageBio.description}</h3>
-                  <SocialLinks social={social} />
+              <>
+                <div className={`web3bio-cover ${pageBio.settings}`}></div>
+                <div className="web3bio-content container grid-sm">
+                  <div className="web3bio-profile">
+                    { pageBio.avatar ? 
+                      <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
+                    :
+                      <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
+                    }
+                    <h2 className="profile-name">{pageBio.name}</h2>
+                    <h3 className="profile-description">{pageBio.description}</h3>
+                    <SocialLinks social={social} />
+                  </div>
                 </div>
-              </div>
+              </>
               :
-              <div className="web3bio-hero container grid-sm">
-                <div className="container grid-sm">
-                  <div className="columns">
-                    <div className="column col-12">
-                      <h1>The page you’re looking for doesn’t exist.</h1>
-                      { login ? 
-                        <div className="web3bio-hero-input input-group">
-                          <span className="input-group-addon addon-lg text-bold">web3.bio/
-                            <span className="text-dark">{currentUser}</span>
-                          </span>
-                          <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
-                        </div>
-                        :
-                        <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
-                          <span className="input-group-addon addon-lg text-bold">web3.bio/
-                            <span className="text-gray">name.near</span>
-                          </span>
-                          <button className="btn btn-lg input-group-btn">Login and Claim</button>
-                        </div>
-                      }
-                      <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+              <>
+                <div className="web3bio-cover"></div>
+                <div className="web3bio-hero container grid-sm">
+                  <div className="container grid-sm">
+                    <div className="columns">
+                      <div className="column col-12">
+                        <h1>The page you’re looking for doesn’t exist.</h1>
+                        { login ? 
+                          <div className="web3bio-hero-input input-group">
+                            <span className="input-group-addon addon-lg text-bold">web3.bio/
+                              <span className="text-dark">{currentUser}</span>
+                            </span>
+                            <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
+                          </div>
+                          :
+                          <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
+                            <span className="input-group-addon addon-lg text-bold">web3.bio/
+                              <span className="text-gray">name.near</span>
+                            </span>
+                            <button className="btn btn-lg input-group-btn">Login and Claim</button>
+                          </div>
+                        }
+                        <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </>
             }
           </>
           :
