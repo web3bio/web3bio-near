@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
@@ -10,7 +11,9 @@ class Profile extends Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      pageBio: new Object()
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -22,10 +25,14 @@ class Profile extends Component {
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn()
     let pageOwner = this.props.match.params.owner
+
     const pageBio = await this.getBio(pageOwner)
-    this.setState({
-      pageBio: pageBio
-    })
+    if (pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      })
+    }
     
     if (loggedIn) {
       this.signedInFlow();
@@ -88,9 +95,21 @@ class Profile extends Component {
   }
 
   async getBio(pageOwner) {
-    return await window.contract.getRecordByOwner({
-      owner: pageOwner
-    })
+    try {
+      // make an update call to the smart contract
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      })
+    } catch (e) {
+      console.log(
+        'Something went wrong! '
+      )
+      throw e
+    } finally {
+      this.setState({
+        loading: false
+      })
+    }
   }
 
   requestSignOut() {
@@ -110,13 +129,13 @@ class Profile extends Component {
   }
 
   render() {
-    const { currentUser, pageBio } = this.state
+    const { currentUser, loading, pageBio, pageStatus } = this.state
     let social = new Object(pageBio.social)
     let crypto = new Object(pageBio.crypto)
 
     return (
       <div className="web3bio-container">
-        { pageBio.settings ? 
+        { pageStatus ? 
           <div className={`web3bio-cover ${pageBio.settings}`}></div>
           :
           <div className="web3bio-cover"></div>
@@ -125,15 +144,12 @@ class Profile extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <a className="web3bio-logo" href="/" title={currentUser}>
+                <Link to="/" className="web3bio-logo" title={currentUser}>
                   <h1>WEB3<br/>BIO</h1>
-                </a>
+                </Link>
                 <div className="web3bio-account">
                   { this.state.login ? 
-                    <div>
-                      <button className="btn mr-1" onClick={this.requestSignOut}>Log out</button>
-                      <button className="btn ml-1" onClick={this.setBio}>Set Bio</button>
-                    </div>
+                    <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
                   }
@@ -143,16 +159,52 @@ class Profile extends Component {
           </div>
         </div>
         <div className="web3bio-content container grid-sm">
-          <div className="web3bio-profile">
-            { pageBio.avatar ? 
-              <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
-            :
-              <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
-            }
-            <h2 className="profile-name">{pageBio.name}</h2>
-            <h3 className="profile-description">{pageBio.description}</h3>
-            <SocialLinks social={social} />
-          </div>
+          { !loading ? 
+            <div className="web3bio-profile">
+              { pageStatus ? 
+                <>
+                { pageBio.avatar ? 
+                  <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
+                :
+                  <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
+                }
+                <h2 className="profile-name">{pageBio.name}</h2>
+                <h3 className="profile-description">{pageBio.description}</h3>
+                <SocialLinks social={social} />
+                </>
+                :
+                <>
+                  <div className="web3bio-hero">
+                    <div className="container grid-sm">
+                      <div className="columns">
+                        <div className="column col-12">
+                          <h1>The page you’re looking for doesn’t exist.</h1>
+                          {this.state.login ? 
+                            <div className="web3bio-hero-input input-group">
+                              <span className="input-group-addon addon-lg text-bold">web3.bio/
+                                <span className="text-dark">{currentUser}</span>
+                              </span>
+                              <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
+                            </div>
+                            :
+                            <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
+                              <span className="input-group-addon addon-lg text-bold">web3.bio/
+                                <span className="text-gray">name.near</span>
+                              </span>
+                              <button className="btn btn-lg input-group-btn">Login and Claim</button>
+                            </div>
+                          }
+                          <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              }
+            </div>
+          :
+            <div className="loading loading-lg"></div>
+          }
         </div>
         
         <div className="web3bio-footer text-center">

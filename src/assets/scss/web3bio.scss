@@ -130,11 +130,15 @@ body {
   }
 }
 
+.web3bio-content {
+  min-height: 75vh;
+}
+
 .web3bio-profile {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1rem;
+  padding: 0 1rem 2rem 1rem;
 
   .profile-avatar {
     border: .2rem solid $light-color;
@@ -240,8 +244,4 @@ body {
       padding: .5rem 1rem .5rem 5rem;
     }
   }
-}
-
-.web3bio-footer {
-
 }

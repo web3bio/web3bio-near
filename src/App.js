@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import getConfig from './config'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
@@ -73,13 +74,13 @@ class App extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <a className="web3bio-logo" href="/" title={currentUser}>
+                <Link to="/" className="web3bio-logo" title={currentUser}>
                   <h1>WEB3<br/>BIO</h1>
-                </a>
+                </Link>
                 <div className="web3bio-account">
                   {this.state.login ? 
                     <div>
-                      <button className="btn mr-1" onClick={this.requestSignOut}>Log out</button>
+                      <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
                       <button className="btn ml-1" onClick={this.setBio}>Set Bio</button>
                     </div>
                     :
@@ -102,7 +103,7 @@ class App extends Component {
                     <span className="input-group-addon addon-lg text-bold">web3.bio/
                       <span className="text-dark">{currentUser}</span>
                     </span>
-                    <button className="btn btn-lg input-group-btn">Claim your page</button>
+                    <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                   </div>
                   :
                   <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
@@ -112,7 +113,17 @@ class App extends Component {
                     <button className="btn btn-lg input-group-btn">Login and Claim</button>
                   </div>
                 }
-                <div className="mt-2">Claim your page with NEAR account in seconds.</div>
+                <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="web3bio-content">
+          <div className="container grid-sm">
+            <div className="columns">
+              <div className="column col-12">
+                <Link to="/yantestyan.testnet" className="btn btn-lg input-group-btn">Yan</Link>
               </div>
             </div>
           </div>

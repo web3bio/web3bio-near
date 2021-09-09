@@ -34904,6 +34904,8 @@ require("regenerator-runtime/runtime");
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _config = _interopRequireDefault(require("./config"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -34988,16 +34990,16 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
       className: "web3bio-logo",
-      href: "/",
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
     }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mr-1",
       onClick: this.requestSignOut
-    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
+    }, "Logout"), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn ml-1",
       onClick: this.setBio
     }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
@@ -35017,7 +35019,8 @@ class App extends _react.Component {
       className: "input-group-addon addon-lg text-bold"
     }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
       className: "text-dark"
-    }, currentUser)), /*#__PURE__*/_react.default.createElement("button", {
+    }, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/dashboard",
       className: "btn btn-lg input-group-btn"
     }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group c-hand",
@@ -35030,7 +35033,18 @@ class App extends _react.Component {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2"
-    }, "Claim your page with NEAR account in seconds."))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yantestyan.testnet",
+      className: "btn btn-lg input-group-btn"
+    }, "Yan"))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-footer text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35055,7 +35069,7 @@ class App extends _react.Component {
 
 var _default = App;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js"}],"assets/icons/twitter.svg":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js"}],"assets/icons/twitter.svg":[function(require,module,exports) {
 module.exports = "/twitter.f2da1eec.svg";
 },{}],"assets/icons/facebook.svg":[function(require,module,exports) {
 module.exports = "/facebook.b48d22fd.svg";
@@ -35230,6 +35244,8 @@ require("regenerator-runtime/runtime");
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactRouterDom = require("react-router-dom");
+
 var _config = _interopRequireDefault(require("./config"));
 
 var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
@@ -35248,7 +35264,9 @@ class Profile extends _react.Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      pageBio: new Object()
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -35261,9 +35279,13 @@ class Profile extends _react.Component {
     let loggedIn = this.props.wallet.isSignedIn();
     let pageOwner = this.props.match.params.owner;
     const pageBio = await this.getBio(pageOwner);
-    this.setState({
-      pageBio: pageBio
-    });
+
+    if (pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      });
+    }
 
     if (loggedIn) {
       this.signedInFlow();
@@ -35323,9 +35345,19 @@ class Profile extends _react.Component {
   }
 
   async getBio(pageOwner) {
-    return await window.contract.getRecordByOwner({
-      owner: pageOwner
-    });
+    try {
+      // make an update call to the smart contract
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      });
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
   }
 
   requestSignOut() {
@@ -35348,13 +35380,15 @@ class Profile extends _react.Component {
   render() {
     const {
       currentUser,
-      pageBio
+      loading,
+      pageBio,
+      pageStatus
     } = this.state;
     let social = new Object(pageBio.social);
     let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
-    }, pageBio.settings ? /*#__PURE__*/_react.default.createElement("div", {
+    }, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
       className: `web3bio-cover ${pageBio.settings}`
     }) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover"
@@ -35366,26 +35400,23 @@ class Profile extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
       className: "web3bio-logo",
-      href: "/",
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
-    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    }, this.state.login ? /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mr-1",
       onClick: this.requestSignOut
-    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-1",
-      onClick: this.setBio
-    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+    }, "Logout") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
+    }, !loading ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
-    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+    }, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
       src: pageBio.avatar,
       className: "profile-avatar avatar avatar-xl"
     }) : /*#__PURE__*/_react.default.createElement("div", {
@@ -35397,7 +35428,37 @@ class Profile extends _react.Component {
       className: "profile-description"
     }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
       social: social
-    }))), /*#__PURE__*/_react.default.createElement("div", {
+    })) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "The page you\u2019re looking for doesn\u2019t exist."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-bold"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-dark"
+    }, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/dashboard",
+      className: "btn btn-lg input-group-btn"
+    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group c-hand",
+      onClick: this.requestSignIn
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-bold"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-gray"
+    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-lg input-group-btn"
+    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-2"
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "loading loading-lg"
+    })), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-footer text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35422,7 +35483,7 @@ class Profile extends _react.Component {
 
 var _default = Profile;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"Dashboard.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"Dashboard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35433,6 +35494,8 @@ exports.default = void 0;
 require("regenerator-runtime/runtime");
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
 
 var _config = _interopRequireDefault(require("./config"));
 
@@ -35463,11 +35526,6 @@ class Dashboard extends _react.Component {
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn();
-    let pageOwner = this.props.match.params.owner;
-    const pageBio = await this.getBio(pageOwner);
-    this.setState({
-      pageBio: pageBio
-    });
 
     if (loggedIn) {
       this.signedInFlow();
@@ -35563,29 +35621,75 @@ class Dashboard extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
       className: "web3bio-logo",
-      href: "/",
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
     }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mr-1",
       onClick: this.requestSignOut
-    }, "Log out"), /*#__PURE__*/_react.default.createElement("button", {
+    }, "Logout"), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn ml-1",
       onClick: this.setBio
     }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
-    }, "Login with NEAR")))))));
+    }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your", /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-bold"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-dark"
+    }, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/dashboard",
+      className: "btn btn-lg input-group-btn"
+    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group c-hand",
+      onClick: this.requestSignIn
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-bold"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-gray"
+    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-lg input-group-btn"
+    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-2"
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-footer text-center"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      className: "btn btn-primary",
+      href: "/"
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-2 text-bold"
+    }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://near.org",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "NEAR"), " "))))));
   }
 
 }
 
 var _default = Dashboard;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {

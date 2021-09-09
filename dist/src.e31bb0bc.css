@@ -2645,7 +2645,7 @@ a.text-error:visited {
   position: relative; }
   .loading::after {
     animation: loading 500ms infinite linear;
-    border: 0.1rem solid #4620E1;
+    border: 0.1rem solid #fff;
     border-radius: 50%;
     border-right-color: transparent;
     border-top-color: transparent;
@@ -2975,11 +2975,14 @@ body {
     line-height: .8rem;
     margin: 0; }
 
+.web3bio-content {
+  min-height: 75vh; }
+
 .web3bio-profile {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 2rem 1rem; }
+  padding: 0 1rem 2rem 1rem; }
   .web3bio-profile .profile-avatar {
     border: 0.2rem solid #fff;
     box-shadow: 0 0.3rem 1.2rem rgba(0, 0, 0, 0.15); }

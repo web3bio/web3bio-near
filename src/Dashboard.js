@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
@@ -21,11 +22,6 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn()
-    let pageOwner = this.props.match.params.owner
-    const pageBio = await this.getBio(pageOwner)
-    this.setState({
-      pageBio: pageBio
-    })
     
     if (loggedIn) {
       this.signedInFlow();
@@ -117,17 +113,57 @@ class Dashboard extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-              <a className="web3bio-logo" href="/" title={currentUser}>
+                <Link to="/" className="web3bio-logo" title={currentUser}>
                   <h1>WEB3<br/>BIO</h1>
-                </a>
+                </Link>
                 <div className="web3bio-account">
                   {this.state.login ? 
                     <div>
-                      <button className="btn mr-1" onClick={this.requestSignOut}>Log out</button>
+                      <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
                       <button className="btn ml-1" onClick={this.setBio}>Set Bio</button>
                     </div>
-                    : <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>}
+                    :
+                    <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
+                  }
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="web3bio-hero">
+          <div className="container grid-sm">
+            <div className="columns">
+              <div className="column col-12">
+                <h1>One Link For Your<br/><strong>Web3</strong> Profile</h1>
+                <h2>All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
+                {this.state.login ? 
+                  <div className="web3bio-hero-input input-group">
+                    <span className="input-group-addon addon-lg text-bold">web3.bio/
+                      <span className="text-dark">{currentUser}</span>
+                    </span>
+                    <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
+                  </div>
+                  :
+                  <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
+                    <span className="input-group-addon addon-lg text-bold">web3.bio/
+                      <span className="text-gray">name.near</span>
+                    </span>
+                    <button className="btn btn-lg input-group-btn">Login and Claim</button>
+                  </div>
+                }
+                <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="web3bio-footer text-center">
+          <div className="container grid-lg">
+            <div className="columns">
+              <div className="column col-12">
+                <a className="btn btn-primary" href="/">Claim your <strong>Web3.bio</strong> page</a>
+                <div className="mt-2 text-bold">Built with &hearts; &amp; <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
               </div>
             </div>
           </div>
