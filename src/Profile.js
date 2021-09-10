@@ -27,7 +27,7 @@ class Profile extends Component {
     let pageOwner = this.props.match.params.owner
 
     const pageBio = await this.getBio(pageOwner)
-    if (pageBio) {
+    if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
         pageStatus: true

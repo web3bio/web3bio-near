@@ -12,12 +12,14 @@ class Dashboard extends Component {
       currentUser: window.accountId,
       loading: true,
       pageBio: new Object(),
-      pageStatus: false
+      pageStatus: false,
+      formChanged: false
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.setBio = this.setBio.bind(this);
   }
 
@@ -26,7 +28,7 @@ class Dashboard extends Component {
     let pageOwner = window.accountId
 
     const pageBio = await this.getBio(pageOwner)
-    if (pageBio) {
+    if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
         pageStatus: true
@@ -126,8 +128,14 @@ class Dashboard extends Component {
     })
   }
 
+  handleChange() {
+    this.setState({
+      formChanged: true
+    })
+  }
+
   render() {
-    const { login, currentUser, loading, pageBio, pageStatus } = this.state
+    const { login, currentUser, loading, pageBio, pageStatus, formChanged } = this.state
     let social = new Object(pageBio.social)
     let crypto = new Object(pageBio.crypto)
 
@@ -178,71 +186,72 @@ class Dashboard extends Component {
                         <legend className="h5 text-bold">Profile</legend>
                         <div className="form-group">
                           <label className="form-label" for="name">Name</label>
-                          <input className="form-input input-lg" type="text" id="name" placeholder="Name" defaultValue={pageBio.name} required />
+                          <input className="form-input input-lg" type="text" id="name" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="description">Bio</label>
-                          <textarea className="form-input input-lg" id="description" placeholder="Description" defaultValue={pageBio.description} maxlength="160" />
+                          <textarea className="form-input input-lg" id="description" placeholder="Description" defaultValue={pageBio.description} maxlength="160" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="avatar">Avatar</label>
-                          <input className="form-input input-lg" type="text" id="avatar" placeholder="Avatar URL" defaultValue={pageBio.avatar} />
+                          <input className="form-input input-lg" type="text" id="avatar" placeholder="Avatar URL" defaultValue={pageBio.avatar} onChange={this.handleChange} />
                           <div class="form-input-hint">NFT avatars support is coming soon.</div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="email">Email</label>
-                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={pageBio.email} />
+                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={pageBio.email} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="website">Website</label>
-                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={pageBio.website} />
+                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={pageBio.website} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="location">Location</label>
-                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxlength="30" />
+                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxlength="30" onChange={this.handleChange} />
                         </div>
                       </fieldset>
+
                       <fieldset id="social">
                         <legend className="h5 text-bold">Social</legend>
                         <div className="form-group">
                           <label className="form-label" for="twitter">Twitter</label>
-                          <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="facebook">Facebook</label>
-                          <input className="form-input input-lg" type="text" id="facebook" placeholder="https://facebook.com/" defaultValue={social.facebook} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="facebook" placeholder="https://facebook.com/" defaultValue={social.facebook} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="linkedin">LinkedIn</label>
-                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linked} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linked} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="github">GitHub</label>
-                          <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="telegram">Telegram</label>
-                          <input className="form-input input-lg" type="text" id="telegram" placeholder="https://t.me/" defaultValue={social.telegram} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="telegram" placeholder="https://t.me/" defaultValue={social.telegram} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="instagram">Instagram</label>
-                          <input className="form-input input-lg" type="text" id="instagram" placeholder="https://instagram.com/" defaultValue={social.instagram} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="instagram" placeholder="https://instagram.com/" defaultValue={social.instagram} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="youtube">YouTube</label>
-                          <input className="form-input input-lg" type="text" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="discord">Discord</label>
-                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="patreon">Patreon</label>
-                          <input className="form-input input-lg" type="text" id="patreon" placeholder="https://patreon.com/" defaultValue={social.patreon} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="patreon" placeholder="https://patreon.com/" defaultValue={social.patreon} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="paypal">PayPal</label>
-                          <input className="form-input input-lg" type="text" id="paypal" placeholder="https://paypal.me/" defaultValue={social.paypal} maxlength="120" />
+                          <input className="form-input input-lg" type="text" id="paypal" placeholder="https://paypal.me/" defaultValue={social.paypal} maxlength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <div class="form-input-hint">
@@ -255,19 +264,19 @@ class Dashboard extends Component {
                         <legend className="h5 text-bold">Crypto addresses</legend>
                         <div className="form-group">
                           <label className="form-label" for="btc">Bitcoin</label>
-                          <input className="form-input input-lg" type="text" id="btc" defaultValue={crypto.btc} />
+                          <input className="form-input input-lg" type="text" id="btc" defaultValue={crypto.btc} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="eth">Ethereum</label>
-                          <input className="form-input input-lg" type="text" id="eth" defaultValue={crypto.eth} />
+                          <input className="form-input input-lg" type="text" id="eth" defaultValue={crypto.eth} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="near">NEAR</label>
-                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} />
+                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} readonly />
                         </div>
                         <div className="form-group">
                           <label className="form-label" for="dot">Polkadot</label>
-                          <input className="form-input input-lg" type="text" id="dot" defaultValue={crypto.dot} />
+                          <input className="form-input input-lg" type="text" id="dot" defaultValue={crypto.dot} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <div class="form-input-hint">
@@ -287,9 +296,8 @@ class Dashboard extends Component {
                       </fieldset>
 
                       <div className="web3bio-settings-footer">
-                        <button className="btn btn-lg btn-block">Update</button>
+                        <button className="btn btn-lg btn-block" disabled={!formChanged}>Update</button>
                       </div>
-
                     </form>
                     
                   </div>

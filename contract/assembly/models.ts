@@ -43,18 +43,21 @@ export class Social {
 
 @nearBindgen
 export class Crypto {
+  near: string
+
   constructor(
     public btc: string = "",
     public eth: string = "",
     public dot: string = "",
-    public near: string = "",
     public sol: string = "",
     public bsc: string = "",
     public eos: string = "",
     public bch: string = "",
     public ltc: string = "",
     public heco: string = ""
-  ) {}
+  ) {
+    this.near = context.sender
+  }
 }
 
 export const recordsByOwner = new PersistentMap<string, Records>("Records");

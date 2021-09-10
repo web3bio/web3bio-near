@@ -35288,7 +35288,7 @@ class Profile extends _react.Component {
     let pageOwner = this.props.match.params.owner;
     const pageBio = await this.getBio(pageOwner);
 
-    if (pageBio) {
+    if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
         pageStatus: true
@@ -35528,12 +35528,14 @@ class Dashboard extends _react.Component {
       currentUser: window.accountId,
       loading: true,
       pageBio: new Object(),
-      pageStatus: false
+      pageStatus: false,
+      formChanged: false
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.setBio = this.setBio.bind(this);
   }
 
@@ -35542,7 +35544,7 @@ class Dashboard extends _react.Component {
     let pageOwner = window.accountId;
     const pageBio = await this.getBio(pageOwner);
 
-    if (pageBio) {
+    if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
         pageStatus: true
@@ -35638,13 +35640,20 @@ class Dashboard extends _react.Component {
     });
   }
 
+  handleChange() {
+    this.setState({
+      formChanged: true
+    });
+  }
+
   render() {
     const {
       login,
       currentUser,
       loading,
       pageBio,
-      pageStatus
+      pageStatus,
+      formChanged
     } = this.state;
     let social = new Object(pageBio.social);
     let crypto = new Object(pageBio.crypto);
@@ -35721,7 +35730,8 @@ class Dashboard extends _react.Component {
       id: "name",
       placeholder: "Name",
       defaultValue: pageBio.name,
-      required: true
+      required: true,
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35732,7 +35742,8 @@ class Dashboard extends _react.Component {
       id: "description",
       placeholder: "Description",
       defaultValue: pageBio.description,
-      maxlength: "160"
+      maxlength: "160",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35743,7 +35754,8 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "avatar",
       placeholder: "Avatar URL",
-      defaultValue: pageBio.avatar
+      defaultValue: pageBio.avatar,
+      onChange: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
       class: "form-input-hint"
     }, "NFT avatars support is coming soon.")), /*#__PURE__*/_react.default.createElement("div", {
@@ -35757,7 +35769,8 @@ class Dashboard extends _react.Component {
       id: "email",
       placeholder: "Email",
       pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,14}$",
-      defaultValue: pageBio.email
+      defaultValue: pageBio.email,
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35768,7 +35781,8 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "website",
       placeholder: "https://",
-      defaultValue: pageBio.website
+      defaultValue: pageBio.website,
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35780,7 +35794,8 @@ class Dashboard extends _react.Component {
       id: "location",
       placeholder: "The Moon",
       defaultValue: pageBio.location,
-      maxlength: "30"
+      maxlength: "30",
+      onChange: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "social"
     }, /*#__PURE__*/_react.default.createElement("legend", {
@@ -35796,7 +35811,8 @@ class Dashboard extends _react.Component {
       id: "twitter",
       placeholder: "https://twitter.com/",
       defaultValue: social.twitter,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35808,7 +35824,8 @@ class Dashboard extends _react.Component {
       id: "facebook",
       placeholder: "https://facebook.com/",
       defaultValue: social.facebook,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35820,7 +35837,8 @@ class Dashboard extends _react.Component {
       id: "linkedin",
       placeholder: "https://linkedin.com/",
       defaultValue: social.linked,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35832,7 +35850,8 @@ class Dashboard extends _react.Component {
       id: "github",
       placeholder: "https://github.com/",
       defaultValue: social.github,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35844,7 +35863,8 @@ class Dashboard extends _react.Component {
       id: "telegram",
       placeholder: "https://t.me/",
       defaultValue: social.telegram,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35856,7 +35876,8 @@ class Dashboard extends _react.Component {
       id: "instagram",
       placeholder: "https://instagram.com/",
       defaultValue: social.instagram,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35868,7 +35889,8 @@ class Dashboard extends _react.Component {
       id: "youtube",
       placeholder: "https://youtube.com/",
       defaultValue: social.youtube,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35880,7 +35902,8 @@ class Dashboard extends _react.Component {
       id: "discord",
       placeholder: "https://discord.com/",
       defaultValue: social.discord,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35892,7 +35915,8 @@ class Dashboard extends _react.Component {
       id: "patreon",
       placeholder: "https://patreon.com/",
       defaultValue: social.patreon,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35904,7 +35928,8 @@ class Dashboard extends _react.Component {
       id: "paypal",
       placeholder: "https://paypal.me/",
       defaultValue: social.paypal,
-      maxlength: "120"
+      maxlength: "120",
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35926,7 +35951,8 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "btc",
-      defaultValue: crypto.btc
+      defaultValue: crypto.btc,
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35936,7 +35962,8 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "eth",
-      defaultValue: crypto.eth
+      defaultValue: crypto.eth,
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35946,7 +35973,8 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "near",
-      defaultValue: crypto.near
+      defaultValue: crypto.near,
+      readonly: true
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -35956,7 +35984,8 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "dot",
-      defaultValue: crypto.dot
+      defaultValue: crypto.dot,
+      onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35981,7 +36010,8 @@ class Dashboard extends _react.Component {
     }, "Permanently delete your page and your profile data."))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings-footer"
     }, /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn btn-lg btn-block"
+      className: "btn btn-lg btn-block",
+      disabled: !formChanged
     }, "Update")))))))) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -59142,7 +59172,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63242" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51278" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
