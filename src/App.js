@@ -80,8 +80,8 @@ class App extends Component {
                 <div className="web3bio-account">
                   {this.state.login ? 
                     <div>
-                      <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
-                      <button className="btn ml-1" onClick={this.setBio}>Set Bio</button>
+                      <Link className="btn mr-1" to="/dashboard">Manage</Link>
+                      <button className="btn ml-1" onClick={this.requestSignOut}>Logout</button>
                     </div>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>

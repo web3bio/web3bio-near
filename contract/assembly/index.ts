@@ -17,7 +17,6 @@ export function getRecordByOwner(owner: string): Records | null  {
 export function setRecordByOwner(
   email: string,
   settings: string,
-  premium: boolean,
   name: string,
   avatar: string,
   description: string,
@@ -31,7 +30,6 @@ export function setRecordByOwner(
   const newRecordList = new Records(
     email,
     settings,
-    premium,
     name,
     avatar,
     description,

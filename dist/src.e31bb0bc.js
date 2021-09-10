@@ -34996,13 +34996,13 @@ class App extends _react.Component {
       title: currentUser
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
-    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement("button", {
+    }, this.state.login ? /*#__PURE__*/_react.default.createElement("div", null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       className: "btn mr-1",
-      onClick: this.requestSignOut
-    }, "Logout"), /*#__PURE__*/_react.default.createElement("button", {
+      to: "/dashboard"
+    }, "Manage"), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn ml-1",
-      onClick: this.setBio
-    }, "Set Bio")) : /*#__PURE__*/_react.default.createElement("button", {
+      onClick: this.requestSignOut
+    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
@@ -35404,7 +35404,7 @@ class Profile extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
     }, login ? /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-1",
+      className: "btn",
       onClick: this.requestSignOut
     }, "Logout") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
@@ -35504,8 +35504,6 @@ var _reactRouterDom = require("react-router-dom");
 
 var _config = _interopRequireDefault(require("./config"));
 
-var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -35533,7 +35531,7 @@ class Dashboard extends _react.Component {
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn();
-    let pageOwner = this.props.match.params.owner;
+    let pageOwner = window.accountId;
     const pageBio = await this.getBio(pageOwner);
 
     if (pageBio) {
@@ -35579,7 +35577,6 @@ class Dashboard extends _react.Component {
     let newRecords = new Object({
       email: "testnet@near.org",
       settings: "royal",
-      premium: true,
       name: "Yan Zhu",
       avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
       description: "is creating products, code and jokes.",
@@ -35645,11 +35642,7 @@ class Dashboard extends _react.Component {
     let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
-    }, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.settings}`
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35664,56 +35657,109 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
     }, login ? /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mr-1",
+      className: "btn",
       onClick: this.requestSignOut
     }, "Logout") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
       onClick: this.requestSignIn
-    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
+    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile"
-    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
-      src: pageBio.avatar,
-      className: "profile-avatar avatar avatar-xl"
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-avatar avatar avatar-xl",
-      "data-initial": pageBio.name
-    }), /*#__PURE__*/_react.default.createElement("h2", {
-      className: "profile-name"
-    }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
-      className: "profile-description"
-    }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
-      social: social
-    }))) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero-input input-group"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content-title text-center mb-2"
+    }, "Manage your Web3.bio"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "text-center"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "btn",
+      target: "_blank"
     }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg text-bold"
-    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-dark"
-    }, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/dashboard",
-      className: "btn btn-lg input-group-btn"
-    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero-input input-group c-hand",
-      onClick: this.requestSignIn
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg text-bold"
-    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("span", {
       className: "text-gray"
-    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn btn-lg input-group-btn"
-    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds.")))))) : /*#__PURE__*/_react.default.createElement("div", {
+    }, "web3.bio/"), currentUser)), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings"
+    }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("fieldset", null, /*#__PURE__*/_react.default.createElement("legend", {
+      className: "h5 text-bold"
+    }, "Profile"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "name"
+    }, "Name"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "name",
+      placeholder: "Name",
+      defaultValue: pageBio.name,
+      required: true
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "description"
+    }, "Bio"), /*#__PURE__*/_react.default.createElement("textarea", {
+      className: "form-input input-lg",
+      id: "description",
+      placeholder: "Description",
+      defaultValue: pageBio.description,
+      maxlength: "160"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "avatar"
+    }, "Avatar"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "avatar",
+      placeholder: "Avatar URL",
+      defaultValue: pageBio.avatar
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      class: "form-input-hint"
+    }, "NFT avatars support is coming soon.")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "email"
+    }, "Email"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "email",
+      placeholder: "Email",
+      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,14}$",
+      defaultValue: pageBio.email
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "website"
+    }, "Website"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "website",
+      placeholder: "https://",
+      defaultValue: pageBio.website
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "location"
+    }, "Location"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "location",
+      placeholder: "The Moon",
+      defaultValue: pageBio.location,
+      maxlength: "30"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn"
+    }, "Update"))))))))) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
@@ -35732,7 +35778,9 @@ class Dashboard extends _react.Component {
       to: "/"
     }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2 text-bold"
-    }, "Built with \u2665 & ", /*#__PURE__*/_react.default.createElement("a", {
+    }, "Built with \u2665 ", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-gray"
+    }, "&"), " ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://near.org",
       target: "_blank",
       rel: "noopener noreferrer",
@@ -35744,7 +35792,7 @@ class Dashboard extends _react.Component {
 
 var _default = Dashboard;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -58871,7 +58919,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52041" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63242" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

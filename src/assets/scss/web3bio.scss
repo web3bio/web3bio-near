@@ -29,7 +29,6 @@
 @import "breadcrumbs";
 @import "bars";
 @import "cards";
-@import "chips";
 @import "dropdowns";
 @import "empty";
 @import "markdown";
@@ -37,9 +36,6 @@
 @import "modals";
 @import "navs";
 @import "pagination";
-@import "panels";
-@import "popovers";
-@import "steps";
 @import "tabs";
 @import "tiles";
 @import "toasts";
@@ -132,6 +128,11 @@ body {
 
 .web3bio-content {
   min-height: 75vh;
+
+  .web3bio-content-title {
+    font-size: 1.2rem;
+    font-weight: 900;
+  }
 }
 
 .web3bio-profile {
@@ -244,4 +245,13 @@ body {
       padding: .5rem 1rem .5rem 5rem;
     }
   }
+}
+
+.web3bio-settings {
+  background: $light-color;
+  border-radius: $border-radius;
+  box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
+  margin: 2rem 0;
+  padding: 1rem 2rem 2rem 2rem;
+  width: 100%;
 }

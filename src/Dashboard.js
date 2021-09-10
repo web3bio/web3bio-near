@@ -2,7 +2,6 @@ import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import getConfig from './config'
-import SocialLinks from './components/SocialLinks'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Dashboard extends Component {
@@ -24,7 +23,7 @@ class Dashboard extends Component {
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn()
-    let pageOwner = this.props.match.params.owner
+    let pageOwner = window.accountId
 
     const pageBio = await this.getBio(pageOwner)
     if (pageBio) {
@@ -72,7 +71,6 @@ class Dashboard extends Component {
     let newRecords = new Object({
         email: "testnet@near.org",
         settings: "royal",
-        premium: true,
         name: "Yan Zhu",
         avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
         description: "is creating products, code and jokes.",
@@ -135,11 +133,7 @@ class Dashboard extends Component {
 
     return (
       <div className="web3bio-container">
-        { pageStatus ? 
-          <div className={`web3bio-cover ${pageBio.settings}`}></div>
-          :
-          <div className="web3bio-cover"></div>
-        }
+
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
@@ -149,7 +143,7 @@ class Dashboard extends Component {
                 </Link>
                 <div className="web3bio-account">
                   { login ? 
-                    <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
+                    <button className="btn" onClick={this.requestSignOut}>Logout</button>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
                   }
@@ -158,48 +152,56 @@ class Dashboard extends Component {
             </div>
           </div>
         </div>
+
         { !loading ? 
           <>
-            { pageStatus ? 
-              <div className="web3bio-content container grid-sm">
-                <div className="web3bio-profile">
-                  { pageBio.avatar ? 
-                    <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
-                  :
-                    <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
-                  }
-                  <h2 className="profile-name">{pageBio.name}</h2>
-                  <h3 className="profile-description">{pageBio.description}</h3>
-                  <SocialLinks social={social} />
-                </div>
-              </div>
-              :
-              <div className="web3bio-hero container grid-sm">
-                <div className="container grid-sm">
-                  <div className="columns">
-                    <div className="column col-12">
-                      <h1>The page you’re looking for doesn’t exist.</h1>
-                      { login ? 
-                        <div className="web3bio-hero-input input-group">
-                          <span className="input-group-addon addon-lg text-bold">web3.bio/
-                            <span className="text-dark">{currentUser}</span>
-                          </span>
-                          <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
+            <div className="web3bio-cover"></div>
+            <div className="web3bio-content container grid-sm">
+              <div className="columns">
+                <div className="column col-12">
+                  <div className="web3bio-content-title text-center mb-2">Manage your Web3.bio</div>
+                  <div className="text-center">
+                    <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-gray">web3.bio/</span>{currentUser}</Link>
+                  </div>
+                  <div className="web3bio-settings">
+                    <form>
+                      <fieldset>
+                        <legend className="h5 text-bold">Profile</legend>
+                        <div className="form-group">
+                          <label className="form-label" for="name">Name</label>
+                          <input className="form-input input-lg" type="text" id="name" placeholder="Name" defaultValue={pageBio.name} required />
                         </div>
-                        :
-                        <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
-                          <span className="input-group-addon addon-lg text-bold">web3.bio/
-                            <span className="text-gray">name.near</span>
-                          </span>
-                          <button className="btn btn-lg input-group-btn">Login and Claim</button>
+                        <div className="form-group">
+                          <label className="form-label" for="description">Bio</label>
+                          <textarea className="form-input input-lg" id="description" placeholder="Description" defaultValue={pageBio.description} maxlength="160" />
                         </div>
-                      }
-                      <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
-                    </div>
+                        <div className="form-group">
+                          <label className="form-label" for="avatar">Avatar</label>
+                          <input className="form-input input-lg" type="text" id="avatar" placeholder="Avatar URL" defaultValue={pageBio.avatar} />
+                          <div class="form-input-hint">NFT avatars support is coming soon.</div>
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="email">Email</label>
+                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={pageBio.email} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="website">Website</label>
+                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={pageBio.website} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="location">Location</label>
+                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxlength="30" />
+                        </div>
+                        <div className="form-group">
+                          <button className="btn">Update</button>
+                        </div>
+                      </fieldset>
+                    </form>
+                    
                   </div>
                 </div>
               </div>
-            }
+            </div>
           </>
           :
           <div className="web3bio-content container grid-sm">
@@ -214,7 +216,7 @@ class Dashboard extends Component {
             <div className="columns">
               <div className="column col-12">
                 <Link className="btn btn-primary" to="/">Claim your <strong>Web3.bio</strong> page</Link>
-                <div className="mt-2 text-bold">Built with &hearts; &amp; <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
+                <div className="mt-2 text-bold">Built with &hearts; <span className="text-gray">&amp;</span> <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
               </div>
             </div>
           </div>

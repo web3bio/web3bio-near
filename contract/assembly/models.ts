@@ -4,13 +4,13 @@ const PROTOCOL_VERSION = "4";
 
 @nearBindgen
 export class Records {
-  owner: string;
-  expiration: u32;
+  owner: string
+  expiration: u32
+  premium: boolean
   
   constructor(
     public email: string,
     public settings: string,
-    public premium: boolean,
     public name: string,
     public avatar: string,
     public description: string,
@@ -19,8 +19,9 @@ export class Records {
     public social: Social = new Social(),
     public crypto: Crypto = new Crypto(),
   ) {
-      this.owner = context.sender;
+      this.owner = context.sender
       this.expiration = 233
+      this.premium = false
     }
 }
 

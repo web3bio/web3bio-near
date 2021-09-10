@@ -135,6 +135,7 @@ class Profile extends Component {
 
     return (
       <div className="web3bio-container">
+
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
@@ -144,7 +145,7 @@ class Profile extends Component {
                 </Link>
                 <div className="web3bio-account">
                   { login ? 
-                    <button className="btn mr-1" onClick={this.requestSignOut}>Logout</button>
+                    <button className="btn" onClick={this.requestSignOut}>Logout</button>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
                   }
@@ -153,6 +154,7 @@ class Profile extends Component {
             </div>
           </div>
         </div>
+        
         { !loading ? 
           <>
             { pageStatus ? 
