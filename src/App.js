@@ -96,7 +96,7 @@ class App extends Component {
           <div className="container grid-sm">
             <div className="columns">
               <div className="column col-12">
-                <h1>One Link For Your<br/><strong>Web3</strong> Profile</h1>
+                <h1>One Link For Your <strong>Web3</strong> Profile</h1>
                 <h2>All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
                 {this.state.login ? 
                   <div className="web3bio-hero-input input-group">
@@ -114,6 +114,17 @@ class App extends Component {
                   </div>
                 }
                 <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="web3bio-hero">
+          <div className="container grid-sm">
+            <div className="columns">
+              <div className="column col-12">
+                <h1>Your profile.<br/>Decentralized.<br/>on NEAR Protocol.</h1>
+                <h2>Web3.bio has no ads and will not sell your data.</h2>
               </div>
             </div>
           </div>

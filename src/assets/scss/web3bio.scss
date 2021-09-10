@@ -14,16 +14,12 @@
 @import "buttons";
 @import "forms";
 @import "labels";
-@import "codes";
 @import "media";
 
 // Layout
 @import "layout";
-@import "hero";
-@import "navbar";
 
 // Components
-@import "accordions";
 @import "avatars";
 @import "badges";
 @import "breadcrumbs";
@@ -37,7 +33,6 @@
 @import "navs";
 @import "pagination";
 @import "tabs";
-@import "tiles";
 @import "toasts";
 @import "tooltips";
 
@@ -203,7 +198,6 @@ body {
 }
 
 .web3bio-hero {
-  min-height: 75vh;
   padding: 3rem 0;
   text-align: center;
 
@@ -252,6 +246,13 @@ body {
   border-radius: $border-radius;
   box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
   margin: 2rem 0;
-  padding: 1rem 2rem 2rem 2rem;
+  padding: 1rem 2rem;
   width: 100%;
+
+  .form-group-action {
+    background: $light-color;
+    bottom: 0;
+    padding: 1rem 0;
+    position: sticky;
+  }
 }

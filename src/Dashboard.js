@@ -192,8 +192,8 @@ class Dashboard extends Component {
                           <label className="form-label" for="location">Location</label>
                           <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxlength="30" />
                         </div>
-                        <div className="form-group">
-                          <button className="btn">Update</button>
+                        <div className="form-group form-group-action">
+                          <button className="btn btn-lg btn-block">Update</button>
                         </div>
                       </fieldset>
                     </form>

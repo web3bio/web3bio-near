@@ -35013,7 +35013,7 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your", /*#__PURE__*/_react.default.createElement("br", null), /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), this.state.login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "input-group-addon addon-lg text-bold"
@@ -35034,6 +35034,14 @@ class App extends _react.Component {
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2"
     }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "Your profile.", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized.", /*#__PURE__*/_react.default.createElement("br", null), "on NEAR Protocol."), /*#__PURE__*/_react.default.createElement("h2", null, "Web3.bio has no ads and will not sell your data."))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
@@ -35756,9 +35764,9 @@ class Dashboard extends _react.Component {
       defaultValue: pageBio.location,
       maxlength: "30"
     })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
+      className: "form-group form-group-action"
     }, /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn"
+      className: "btn btn-lg btn-block"
     }, "Update"))))))))) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
