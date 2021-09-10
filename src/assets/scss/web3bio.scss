@@ -125,7 +125,7 @@ body {
   min-height: 75vh;
 
   .web3bio-content-title {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: 900;
   }
 }
@@ -249,9 +249,16 @@ body {
   padding: 1rem 2rem;
   width: 100%;
 
-  .form-group-action {
+  form {
+    fieldset {
+      margin: 2rem 0 0 0;
+    }
+  }
+
+  .web3bio-settings-footer {
     background: $light-color;
     bottom: 0;
+    margin-top: 1rem;
     padding: 1rem 0;
     position: sticky;
   }

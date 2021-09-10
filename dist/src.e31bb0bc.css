@@ -787,6 +787,8 @@ textarea.form-input, textarea.form-input.input-lg, textarea.form-input.input-sm 
   .has-error .form-input-hint,
   .is-error + .form-input-hint {
     color: #e85600; }
+  .form-input-hint a {
+    color: #202020; }
 
 .form-select {
   appearance: none;
@@ -2738,7 +2740,7 @@ body {
 .web3bio-content {
   min-height: 75vh; }
   .web3bio-content .web3bio-content-title {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     font-weight: 900; }
 
 .web3bio-profile {
@@ -2824,9 +2826,12 @@ body {
   margin: 2rem 0;
   padding: 1rem 2rem;
   width: 100%; }
-  .web3bio-settings .form-group-action {
+  .web3bio-settings form fieldset {
+    margin: 2rem 0 0 0; }
+  .web3bio-settings .web3bio-settings-footer {
     background: #fff;
     bottom: 0;
+    margin-top: 1rem;
     padding: 1rem 0;
     position: sticky; }
 

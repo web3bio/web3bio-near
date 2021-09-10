@@ -35671,7 +35671,7 @@ class Dashboard extends _react.Component {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
+      className: `web3bio-cover ${pageBio.settings}`
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35690,7 +35690,25 @@ class Dashboard extends _react.Component {
       className: "text-gray"
     }, "web3.bio/"), currentUser)), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
-    }, /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("fieldset", null, /*#__PURE__*/_react.default.createElement("legend", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content-header text-center mt-2 mb-2"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "btn-group"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#profile",
+      className: "btn"
+    }, "Profile"), /*#__PURE__*/_react.default.createElement("a", {
+      href: "#social",
+      className: "btn"
+    }, "Social"), /*#__PURE__*/_react.default.createElement("a", {
+      href: "#crypto",
+      className: "btn"
+    }, "Crypto"), /*#__PURE__*/_react.default.createElement("a", {
+      href: "#settings",
+      className: "btn"
+    }, "Settings"))), /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "profile"
+    }, /*#__PURE__*/_react.default.createElement("legend", {
       className: "h5 text-bold"
     }, "Profile"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -35763,11 +35781,208 @@ class Dashboard extends _react.Component {
       placeholder: "The Moon",
       defaultValue: pageBio.location,
       maxlength: "30"
+    }))), /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "social"
+    }, /*#__PURE__*/_react.default.createElement("legend", {
+      className: "h5 text-bold"
+    }, "Social"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "twitter"
+    }, "Twitter"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "twitter",
+      placeholder: "https://twitter.com/",
+      defaultValue: social.twitter,
+      maxlength: "120"
     })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group form-group-action"
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "facebook"
+    }, "Facebook"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "facebook",
+      placeholder: "https://facebook.com/",
+      defaultValue: social.facebook,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "linkedin"
+    }, "LinkedIn"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "linkedin",
+      placeholder: "https://linkedin.com/",
+      defaultValue: social.linked,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "github"
+    }, "GitHub"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "github",
+      placeholder: "https://github.com/",
+      defaultValue: social.github,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "telegram"
+    }, "Telegram"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "telegram",
+      placeholder: "https://t.me/",
+      defaultValue: social.telegram,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "instagram"
+    }, "Instagram"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "instagram",
+      placeholder: "https://instagram.com/",
+      defaultValue: social.instagram,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "youtube"
+    }, "YouTube"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "youtube",
+      placeholder: "https://youtube.com/",
+      defaultValue: social.youtube,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "discord"
+    }, "Discord"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "discord",
+      placeholder: "https://discord.com/",
+      defaultValue: social.discord,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "patreon"
+    }, "Patreon"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "patreon",
+      placeholder: "https://patreon.com/",
+      defaultValue: social.patreon,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "paypal"
+    }, "PayPal"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "paypal",
+      placeholder: "https://paypal.me/",
+      defaultValue: social.paypal,
+      maxlength: "120"
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      class: "form-input-hint"
+    }, "Request more social support? Please contact ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://twitter.com/picturepan2",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "@picturepan2"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "crypto"
+    }, /*#__PURE__*/_react.default.createElement("legend", {
+      className: "h5 text-bold"
+    }, "Crypto addresses"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "btc"
+    }, "Bitcoin"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "btc",
+      defaultValue: crypto.btc
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "eth"
+    }, "Ethereum"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "eth",
+      defaultValue: crypto.eth
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "near"
+    }, "NEAR"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "near",
+      defaultValue: crypto.near
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      for: "dot"
+    }, "Polkadot"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "dot",
+      defaultValue: crypto.dot
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      class: "form-input-hint"
+    }, "Request more crypto support? Please contact ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://twitter.com/picturepan2",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "@picturepan2"), ".", /*#__PURE__*/_react.default.createElement("br", null), "NFT collection widget is coming soon."))), /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "settings"
+    }, /*#__PURE__*/_react.default.createElement("legend", {
+      className: "h5 text-bold"
+    }, "Settings"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label"
+    }, "Danger Zone"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      disabled: true
+    }, "Delete data"), /*#__PURE__*/_react.default.createElement("div", {
+      class: "form-input-hint"
+    }, "Permanently delete your page and your profile data."))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-footer"
     }, /*#__PURE__*/_react.default.createElement("button", {
       className: "btn btn-lg btn-block"
-    }, "Update"))))))))) : /*#__PURE__*/_react.default.createElement("div", {
+    }, "Update")))))))) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"

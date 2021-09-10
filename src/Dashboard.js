@@ -155,7 +155,7 @@ class Dashboard extends Component {
 
         { !loading ? 
           <>
-            <div className="web3bio-cover"></div>
+            <div className={`web3bio-cover ${pageBio.settings}`}></div>
             <div className="web3bio-content container grid-sm">
               <div className="columns">
                 <div className="column col-12">
@@ -163,9 +163,18 @@ class Dashboard extends Component {
                   <div className="text-center">
                     <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-gray">web3.bio/</span>{currentUser}</Link>
                   </div>
+                  
                   <div className="web3bio-settings">
+                    <div className="web3bio-content-header text-center mt-2 mb-2">
+                      <div className="btn-group">
+                        <a href="#profile" className="btn">Profile</a>
+                        <a href="#social" className="btn">Social</a>
+                        <a href="#crypto" className="btn">Crypto</a>
+                        <a href="#settings" className="btn">Settings</a>
+                      </div>
+                    </div>
                     <form>
-                      <fieldset>
+                      <fieldset id="profile">
                         <legend className="h5 text-bold">Profile</legend>
                         <div className="form-group">
                           <label className="form-label" for="name">Name</label>
@@ -192,10 +201,95 @@ class Dashboard extends Component {
                           <label className="form-label" for="location">Location</label>
                           <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxlength="30" />
                         </div>
-                        <div className="form-group form-group-action">
-                          <button className="btn btn-lg btn-block">Update</button>
+                      </fieldset>
+                      <fieldset id="social">
+                        <legend className="h5 text-bold">Social</legend>
+                        <div className="form-group">
+                          <label className="form-label" for="twitter">Twitter</label>
+                          <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="facebook">Facebook</label>
+                          <input className="form-input input-lg" type="text" id="facebook" placeholder="https://facebook.com/" defaultValue={social.facebook} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="linkedin">LinkedIn</label>
+                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linked} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="github">GitHub</label>
+                          <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="telegram">Telegram</label>
+                          <input className="form-input input-lg" type="text" id="telegram" placeholder="https://t.me/" defaultValue={social.telegram} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="instagram">Instagram</label>
+                          <input className="form-input input-lg" type="text" id="instagram" placeholder="https://instagram.com/" defaultValue={social.instagram} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="youtube">YouTube</label>
+                          <input className="form-input input-lg" type="text" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="discord">Discord</label>
+                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="patreon">Patreon</label>
+                          <input className="form-input input-lg" type="text" id="patreon" placeholder="https://patreon.com/" defaultValue={social.patreon} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="paypal">PayPal</label>
+                          <input className="form-input input-lg" type="text" id="paypal" placeholder="https://paypal.me/" defaultValue={social.paypal} maxlength="120" />
+                        </div>
+                        <div className="form-group">
+                          <div class="form-input-hint">
+                            Request more social support? Please contact <a href="https://twitter.com/picturepan2" target="_blank" rel="noopener noreferrer">@picturepan2</a>.
+                          </div>
                         </div>
                       </fieldset>
+
+                      <fieldset id="crypto">
+                        <legend className="h5 text-bold">Crypto addresses</legend>
+                        <div className="form-group">
+                          <label className="form-label" for="btc">Bitcoin</label>
+                          <input className="form-input input-lg" type="text" id="btc" defaultValue={crypto.btc} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="eth">Ethereum</label>
+                          <input className="form-input input-lg" type="text" id="eth" defaultValue={crypto.eth} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="near">NEAR</label>
+                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" for="dot">Polkadot</label>
+                          <input className="form-input input-lg" type="text" id="dot" defaultValue={crypto.dot} />
+                        </div>
+                        <div className="form-group">
+                          <div class="form-input-hint">
+                            Request more crypto support? Please contact <a href="https://twitter.com/picturepan2" target="_blank" rel="noopener noreferrer">@picturepan2</a>.<br/>
+                            NFT collection widget is coming soon.
+                          </div>
+                        </div>
+                      </fieldset>
+
+                      <fieldset id="settings">
+                        <legend className="h5 text-bold">Settings</legend>
+                        <div className="form-group">
+                          <label className="form-label">Danger Zone</label>
+                          <button className="btn" disabled>Delete data</button>
+                          <div class="form-input-hint">Permanently delete your page and your profile data.</div>
+                        </div>
+                      </fieldset>
+
+                      <div className="web3bio-settings-footer">
+                        <button className="btn btn-lg btn-block">Update</button>
+                      </div>
+
                     </form>
                     
                   </div>
