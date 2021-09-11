@@ -792,7 +792,7 @@ textarea.form-input, textarea.form-input.input-lg, textarea.form-input.input-sm 
 
 .form-select {
   appearance: none;
-  border: 0.1rem solid lightgray;
+  border: 0.1rem solid #202020;
   border-radius: 0.4rem;
   color: inherit;
   font-size: 0.7rem;
@@ -2776,7 +2776,8 @@ body {
     transition: all .3s ease;
     width: 3rem; }
     .web3bio-profile .profile-social-item:focus, .web3bio-profile .profile-social-item:hover {
-      box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1); }
+      box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+      transform: translateY(-0.1rem); }
       .web3bio-profile .profile-social-item:focus .profile-social-icon, .web3bio-profile .profile-social-item:hover .profile-social-icon {
         transform: scale(1.05); }
     .web3bio-profile .profile-social-item:active .profile-social-icon {
@@ -2827,7 +2828,7 @@ body {
   padding: 1rem 2rem;
   width: 100%; }
   .web3bio-settings form fieldset {
-    margin: 2rem 0 0 0; }
+    margin: 1rem 0 0 0; }
   .web3bio-settings .web3bio-settings-footer {
     background: #fff;
     bottom: 0;

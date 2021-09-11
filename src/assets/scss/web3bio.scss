@@ -175,6 +175,7 @@ body {
     &:focus,
     &:hover {
       box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
+      transform: translateY(-.1rem);
 
       .profile-social-icon {
         transform: scale(1.05);
@@ -251,7 +252,7 @@ body {
 
   form {
     fieldset {
-      margin: 2rem 0 0 0;
+      margin: 1rem 0 0 0;
     }
   }
 

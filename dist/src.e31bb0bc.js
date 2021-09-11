@@ -35280,7 +35280,6 @@ class Profile extends _react.Component {
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
-    this.setBio = this.setBio.bind(this);
   }
 
   async componentDidMount() {
@@ -35317,39 +35316,6 @@ class Profile extends _react.Component {
   async requestSignIn() {
     const appTitle = 'Web3.bio';
     await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  async setBio() {
-    let newSocial = new Object({
-      twitter: "https://twitter.com/picturepan2",
-      github: "https://github.com/picturepan2"
-    });
-    let newCrypto = new Object({
-      btc: "xxx",
-      eth: "xxx"
-    });
-    let newRecords = new Object({
-      email: "testnet@near.org",
-      settings: "royal",
-      premium: true,
-      name: "Yan Zhu",
-      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
-      description: "is creating products, code and jokes.",
-      website: "website",
-      location: "Shanghai",
-      social: newSocial,
-      crypto: newCrypto
-    });
-
-    try {
-      // make an update call to the smart contract
-      await window.contract.setRecordByOwner(newRecords);
-    } catch (e) {
-      console.log('Something went wrong! ');
-      throw e;
-    } finally {
-      console.log("🚀");
-    }
   }
 
   async getBio(pageOwner) {
@@ -35393,7 +35359,7 @@ class Profile extends _react.Component {
       pageBio,
       pageStatus
     } = this.state;
-    let social = new Object(pageBio.social);
+    let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
@@ -35536,7 +35502,9 @@ class Dashboard extends _react.Component {
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.setBio = this.setBio.bind(this);
+    this.delBio = this.delBio.bind(this);
   }
 
   async componentDidMount() {
@@ -35576,21 +35544,12 @@ class Dashboard extends _react.Component {
   }
 
   async setBio() {
-    let newSocial = new Object({
-      twitter: "https://twitter.com/picturepan2",
-      github: "https://github.com/picturepan2"
-    });
-    let newCrypto = new Object({
-      btc: "xxx",
-      eth: "xxx"
-    });
     let newRecords = new Object({
-      email: "testnet@near.org",
       settings: "royal",
       name: "Yan Zhu",
       avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
       description: "is creating products, code and jokes.",
-      website: "website",
+      website: "",
       location: "Shanghai",
       social: newSocial,
       crypto: newCrypto
@@ -35623,6 +35582,21 @@ class Dashboard extends _react.Component {
     }
   }
 
+  async delBio() {
+    if (!window.confirm(`Permanently delete your page and profile data for ${this.state.currentUser}?`)) {
+      return;
+    }
+
+    try {
+      return await window.contract.delRecordByOwner({
+        owner: this.state.currentUser
+      });
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    }
+  }
+
   requestSignOut() {
     this.props.wallet.signOut();
     setTimeout(this.signedOutFlow, 500);
@@ -35643,6 +35617,29 @@ class Dashboard extends _react.Component {
   handleChange() {
     this.setState({
       formChanged: true
+    });
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let newSocial = new Object({
+      twitter: event.target.twitter.value,
+      facebook: event.target.facebook.value,
+      linkedin: event.target.linkedin.value,
+      github: event.target.github.value,
+      telegram: event.target.telegram.value,
+      instagram: event.target.instagram.value,
+      youtube: event.target.youtube.value,
+      discord: event.target.discord.value,
+      patreon: event.target.patreon.value,
+      paypal: event.target.paypal.value
+    });
+    newSocial = Object.fromEntries(Object.entries(newSocial).filter(([_, v]) => v != "" && v != null));
+    console.log(newSocial);
+    let newCrypto = new Object({
+      btc: event.target.btc.value,
+      eth: event.target.eth.value,
+      dot: event.target.dot.value
     });
   }
 
@@ -35699,23 +35696,9 @@ class Dashboard extends _react.Component {
       className: "text-gray"
     }, "web3.bio/"), currentUser)), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content-header text-center mt-2 mb-2"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "btn-group"
-    }, /*#__PURE__*/_react.default.createElement("a", {
-      href: "#profile",
-      className: "btn"
-    }, "Profile"), /*#__PURE__*/_react.default.createElement("a", {
-      href: "#social",
-      className: "btn"
-    }, "Social"), /*#__PURE__*/_react.default.createElement("a", {
-      href: "#crypto",
-      className: "btn"
-    }, "Crypto"), /*#__PURE__*/_react.default.createElement("a", {
-      href: "#settings",
-      className: "btn"
-    }, "Settings"))), /*#__PURE__*/_react.default.createElement("form", null, /*#__PURE__*/_react.default.createElement("fieldset", {
+    }, /*#__PURE__*/_react.default.createElement("form", {
+      onSubmit: this.handleSubmit
+    }, /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "profile"
     }, /*#__PURE__*/_react.default.createElement("legend", {
       className: "h5 text-bold"
@@ -35723,7 +35706,7 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "name"
+      htmlFor: "name"
     }, "Name"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35736,19 +35719,19 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "description"
+      htmlFor: "description"
     }, "Bio"), /*#__PURE__*/_react.default.createElement("textarea", {
       className: "form-input input-lg",
       id: "description",
       placeholder: "Description",
       defaultValue: pageBio.description,
-      maxlength: "160",
+      maxLength: "160",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "avatar"
+      htmlFor: "avatar"
     }, "Avatar"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35757,12 +35740,12 @@ class Dashboard extends _react.Component {
       defaultValue: pageBio.avatar,
       onChange: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
-      class: "form-input-hint"
+      className: "form-input-hint"
     }, "NFT avatars support is coming soon.")), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "email"
+      htmlFor: "email"
     }, "Email"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35775,7 +35758,7 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "website"
+      htmlFor: "website"
     }, "Website"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35787,16 +35770,38 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "location"
+      htmlFor: "location"
     }, "Location"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "location",
       placeholder: "The Moon",
       defaultValue: pageBio.location,
-      maxlength: "30",
+      maxLength: "30",
       onChange: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("fieldset", {
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "settings"
+    }, "Theme"), /*#__PURE__*/_react.default.createElement("select", {
+      className: "form-select select-lg",
+      id: "settings",
+      defaultValue: pageBio.settings,
+      onChange: this.handleChange
+    }, /*#__PURE__*/_react.default.createElement("option", {
+      value: "royal"
+    }, "Royal"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "flax"
+    }, "Flax"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "witchhaze"
+    }, "Witch Haze"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "salmon"
+    }, "Salmon"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "mauve"
+    }, "Mauve"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "shalimar"
+    }, "Shalimar")))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "social"
     }, /*#__PURE__*/_react.default.createElement("legend", {
       className: "h5 text-bold"
@@ -35804,136 +35809,136 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "twitter"
+      htmlFor: "twitter"
     }, "Twitter"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "twitter",
       placeholder: "https://twitter.com/",
       defaultValue: social.twitter,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "facebook"
+      htmlFor: "facebook"
     }, "Facebook"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "facebook",
       placeholder: "https://facebook.com/",
       defaultValue: social.facebook,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "linkedin"
+      htmlFor: "linkedin"
     }, "LinkedIn"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "linkedin",
       placeholder: "https://linkedin.com/",
       defaultValue: social.linked,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "github"
+      htmlFor: "github"
     }, "GitHub"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "github",
       placeholder: "https://github.com/",
       defaultValue: social.github,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "telegram"
+      htmlFor: "telegram"
     }, "Telegram"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "telegram",
       placeholder: "https://t.me/",
       defaultValue: social.telegram,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "instagram"
+      htmlFor: "instagram"
     }, "Instagram"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "instagram",
       placeholder: "https://instagram.com/",
       defaultValue: social.instagram,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "youtube"
+      htmlFor: "youtube"
     }, "YouTube"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "youtube",
       placeholder: "https://youtube.com/",
       defaultValue: social.youtube,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "discord"
+      htmlFor: "discord"
     }, "Discord"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "discord",
       placeholder: "https://discord.com/",
       defaultValue: social.discord,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "patreon"
+      htmlFor: "patreon"
     }, "Patreon"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "patreon",
       placeholder: "https://patreon.com/",
       defaultValue: social.patreon,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "paypal"
+      htmlFor: "paypal"
     }, "PayPal"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "paypal",
       placeholder: "https://paypal.me/",
       defaultValue: social.paypal,
-      maxlength: "120",
+      maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      class: "form-input-hint"
+      className: "form-input-hint"
     }, "Request more social support? Please contact ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://twitter.com/picturepan2",
       target: "_blank",
@@ -35946,7 +35951,7 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "btc"
+      htmlFor: "btc"
     }, "Bitcoin"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35957,7 +35962,7 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "eth"
+      htmlFor: "eth"
     }, "Ethereum"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35968,18 +35973,18 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "near"
+      htmlFor: "near"
     }, "NEAR"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "near",
       defaultValue: crypto.near,
-      readonly: true
+      readOnly: true
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      for: "dot"
+      htmlFor: "dot"
     }, "Polkadot"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
@@ -35989,30 +35994,30 @@ class Dashboard extends _react.Component {
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      class: "form-input-hint"
+      className: "form-input-hint"
     }, "Request more crypto support? Please contact ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://twitter.com/picturepan2",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, "@picturepan2"), ".", /*#__PURE__*/_react.default.createElement("br", null), "NFT collection widget is coming soon."))), /*#__PURE__*/_react.default.createElement("fieldset", {
-      id: "settings"
-    }, /*#__PURE__*/_react.default.createElement("legend", {
+    }, "@picturepan2"), ".", /*#__PURE__*/_react.default.createElement("br", null), "NFT collection widget is coming soon."))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-footer"
+    }, /*#__PURE__*/_react.default.createElement("input", {
+      className: "btn btn-lg btn-block",
+      disabled: !formChanged,
+      type: "submit",
+      value: "Update"
+    })))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold"
-    }, "Settings"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Danger Zone"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label"
-    }, "Danger Zone"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn",
-      disabled: true
-    }, "Delete data"), /*#__PURE__*/_react.default.createElement("div", {
-      class: "form-input-hint"
-    }, "Permanently delete your page and your profile data."))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings-footer"
-    }, /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn btn-lg btn-block",
-      disabled: !formChanged
-    }, "Update")))))))) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-label mb-2"
+    }, "Permanently delete your page and profile data."), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mb-2",
+      onClick: this.delBio
+    }, "Delete data"))))))) : /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
@@ -59073,9 +59078,9 @@ async function initContract() {
 
   window.contract = await new _nearApiJs.Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.
-    viewMethods: ['getRecordByOwner', 'getGreeting'],
+    viewMethods: ['getRecordByOwner'],
     // Change methods can modify the state. But you don't receive the returned value when called.
-    changeMethods: ['setRecordByOwner', 'setGreeting']
+    changeMethods: ['setRecordByOwner', 'delRecordByOwner']
   });
 }
 
@@ -59172,7 +59177,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51278" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65171" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

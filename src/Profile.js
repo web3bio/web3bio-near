@@ -19,7 +19,6 @@ class Profile extends Component {
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
-    this.setBio = this.setBio.bind(this);
   }
 
   async componentDidMount() {
@@ -60,40 +59,6 @@ class Profile extends Component {
     )
   }
 
-  async setBio() {
-    let newSocial = new Object({
-      twitter: "https://twitter.com/picturepan2",
-      github: "https://github.com/picturepan2"
-    })
-    let newCrypto = new Object({
-      btc: "xxx",
-      eth: "xxx"
-    })
-    let newRecords = new Object({
-        email: "testnet@near.org",
-        settings: "royal",
-        premium: true,
-        name: "Yan Zhu",
-        avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
-        description: "is creating products, code and jokes.",
-        website: "website",
-        location: "Shanghai",
-        social: newSocial,
-        crypto: newCrypto
-      })
-    try {
-      // make an update call to the smart contract
-      await window.contract.setRecordByOwner(newRecords)
-    } catch (e) {
-      console.log(
-        'Something went wrong! '
-      )
-      throw e
-    } finally {
-      console.log("🚀")
-    }
-  }
-
   async getBio(pageOwner) {
     try {
       // make an update call to the smart contract
@@ -130,7 +95,7 @@ class Profile extends Component {
 
   render() {
     const { login, currentUser, loading, pageBio, pageStatus } = this.state
-    let social = new Object(pageBio.social)
+    let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
 
     return (
