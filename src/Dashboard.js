@@ -247,7 +247,7 @@ class Dashboard extends Component {
                         <legend className="h5 text-bold">Profile</legend>
                         <div className="form-group">
                           <label className="form-label" htmlFor="displayname">Name</label>
-                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} autoComplete="off" />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="description">Bio</label>

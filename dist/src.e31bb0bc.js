@@ -35041,7 +35041,7 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "Your profile.", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized.", /*#__PURE__*/_react.default.createElement("br", null), "on NEAR Protocol."), /*#__PURE__*/_react.default.createElement("h2", null, "Web3.bio has no ads and will not sell your data."))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "Your profile.", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized.", /*#__PURE__*/_react.default.createElement("br", null), "On NEAR Protocol."), /*#__PURE__*/_react.default.createElement("h2", null, "Web3.bio has no ads and will not sell your data."))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
@@ -35751,7 +35751,8 @@ class Dashboard extends _react.Component {
       placeholder: "Name",
       defaultValue: pageBio.name,
       required: true,
-      onChange: this.handleChange
+      onChange: this.handleChange,
+      autoComplete: "off"
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {

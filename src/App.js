@@ -123,7 +123,7 @@ class App extends Component {
           <div className="container grid-sm">
             <div className="columns">
               <div className="column col-12">
-                <h1>Your profile.<br/>Decentralized.<br/>on NEAR Protocol.</h1>
+                <h1>Your profile.<br/>Decentralized.<br/>On NEAR Protocol.</h1>
                 <h2>Web3.bio has no ads and will not sell your data.</h2>
               </div>
             </div>
