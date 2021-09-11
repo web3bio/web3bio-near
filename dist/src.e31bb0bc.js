@@ -35384,7 +35384,7 @@ class Profile extends _react.Component {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.settings}`
+      className: `web3bio-cover ${pageBio.theme}`
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35394,7 +35394,7 @@ class Profile extends _react.Component {
       className: "profile-avatar avatar avatar-xl"
     }) : /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-avatar avatar avatar-xl",
-      "data-initial": pageBio.name
+      "data-initial": ""
     }), /*#__PURE__*/_react.default.createElement("h2", {
       className: "profile-name"
     }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
@@ -35503,14 +35503,13 @@ class Dashboard extends _react.Component {
     this.signedOutFlow = this.signedOutFlow.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setBio = this.setBio.bind(this);
     this.delBio = this.delBio.bind(this);
   }
 
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn();
     let pageOwner = window.accountId;
-    const pageBio = await this.getBio(pageOwner);
+    let pageBio = await this.getBio(pageOwner);
 
     if (!!pageBio) {
       this.setState({
@@ -35543,29 +35542,6 @@ class Dashboard extends _react.Component {
     await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
   }
 
-  async setBio() {
-    let newRecords = new Object({
-      settings: "royal",
-      name: "Yan Zhu",
-      avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
-      description: "is creating products, code and jokes.",
-      website: "",
-      location: "Shanghai",
-      social: newSocial,
-      crypto: newCrypto
-    });
-
-    try {
-      // make an update call to the smart contract
-      await window.contract.setRecordByOwner(newRecords);
-    } catch (e) {
-      console.log('Something went wrong! ');
-      throw e;
-    } finally {
-      console.log("🚀");
-    }
-  }
-
   async getBio(pageOwner) {
     try {
       // make an update call to the smart contract
@@ -35579,6 +35555,18 @@ class Dashboard extends _react.Component {
       this.setState({
         loading: false
       });
+    }
+  }
+
+  async setBio(newRecords) {
+    try {
+      // make an update call to the smart contract
+      await window.contract.setRecordByOwner(newRecords);
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      console.log("🚀");
     }
   }
 
@@ -35620,9 +35608,11 @@ class Dashboard extends _react.Component {
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     let newSocial = new Object({
+      email: event.target.email.value,
+      website: event.target.website.value,
       twitter: event.target.twitter.value,
       facebook: event.target.facebook.value,
       linkedin: event.target.linkedin.value,
@@ -35635,12 +35625,31 @@ class Dashboard extends _react.Component {
       paypal: event.target.paypal.value
     });
     newSocial = Object.fromEntries(Object.entries(newSocial).filter(([_, v]) => v != "" && v != null));
-    console.log(newSocial);
     let newCrypto = new Object({
       btc: event.target.btc.value,
       eth: event.target.eth.value,
       dot: event.target.dot.value
     });
+    newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
+    let newRecords = new Object({
+      name: event.target.displayname.value,
+      avatar: event.target.avatar.value,
+      description: event.target.description.value,
+      location: event.target.location.value,
+      theme: event.target.theme.value,
+      records: newSocial,
+      crypto: newCrypto
+    });
+    await this.setBio(newRecords);
+    let pageOwner = this.state.currentUser;
+    let pageBio = await this.getBio(pageOwner);
+
+    if (!!pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      });
+    }
   }
 
   render() {
@@ -35652,7 +35661,7 @@ class Dashboard extends _react.Component {
       pageStatus,
       formChanged
     } = this.state;
-    let social = new Object(pageBio.social);
+    let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
@@ -35706,11 +35715,11 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      htmlFor: "name"
+      htmlFor: "displayname"
     }, "Name"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
-      id: "name",
+      id: "displayname",
       placeholder: "Name",
       defaultValue: pageBio.name,
       required: true,
@@ -35752,7 +35761,7 @@ class Dashboard extends _react.Component {
       id: "email",
       placeholder: "Email",
       pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,14}$",
-      defaultValue: pageBio.email,
+      defaultValue: social.email,
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -35764,7 +35773,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "website",
       placeholder: "https://",
-      defaultValue: pageBio.website,
+      defaultValue: social.website,
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -35783,11 +35792,11 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      htmlFor: "settings"
+      htmlFor: "theme"
     }, "Theme"), /*#__PURE__*/_react.default.createElement("select", {
       className: "form-select select-lg",
-      id: "settings",
-      defaultValue: pageBio.settings,
+      id: "theme",
+      defaultValue: pageBio.theme,
       onChange: this.handleChange
     }, /*#__PURE__*/_react.default.createElement("option", {
       value: "royal"
@@ -59177,7 +59186,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65171" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58552" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

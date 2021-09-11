@@ -9,11 +9,11 @@ export class Profile {
   premium: boolean
   
   constructor(
-    public theme: string,
     public name: string,
     public avatar: string,
     public description: string,
     public location: string,
+    public theme: string,
     public records: Records = new Records(),
     public crypto: Crypto = new Crypto(),
   ) {
@@ -48,13 +48,7 @@ export class Crypto {
   constructor(
     public btc: string = '',
     public eth: string = '',
-    public dot: string = '',
-    public sol: string = '',
-    public bsc: string = '',
-    public eos: string = '',
-    public bch: string = '',
-    public ltc: string = '',
-    public heco: string = ''
+    public dot: string = ''
   ) {
     this.near = context.sender
   }

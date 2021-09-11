@@ -21,7 +21,6 @@ class Dashboard extends Component {
     this.signedOutFlow = this.signedOutFlow.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.setBio = this.setBio.bind(this);
     this.delBio = this.delBio.bind(this);
   }
 
@@ -29,7 +28,7 @@ class Dashboard extends Component {
     let loggedIn = this.props.wallet.isSignedIn()
     let pageOwner = window.accountId
 
-    const pageBio = await this.getBio(pageOwner)
+    let pageBio = await this.getBio(pageOwner)
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
@@ -63,30 +62,6 @@ class Dashboard extends Component {
     )
   }
 
-  async setBio() {
-    let newRecords = new Object({
-        settings: "royal",
-        name: "Yan Zhu",
-        avatar: "https://z3.ax1x.com/2021/09/09/hLPcm4.png",
-        description: "is creating products, code and jokes.",
-        website: "",
-        location: "Shanghai",
-        social: newSocial,
-        crypto: newCrypto
-      })
-    try {
-      // make an update call to the smart contract
-      await window.contract.setRecordByOwner(newRecords)
-    } catch (e) {
-      console.log(
-        'Something went wrong! '
-      )
-      throw e
-    } finally {
-      console.log("🚀")
-    }
-  }
-
   async getBio(pageOwner) {
     try {
       // make an update call to the smart contract
@@ -102,6 +77,20 @@ class Dashboard extends Component {
       this.setState({
         loading: false
       })
+    }
+  }
+
+  async setBio(newRecords) {
+    try {
+      // make an update call to the smart contract
+      await window.contract.setRecordByOwner(newRecords)
+    } catch (e) {
+      console.log(
+        'Something went wrong! '
+      )
+      throw e
+    } finally {
+      console.log("🚀")
     }
   }
 
@@ -143,10 +132,12 @@ class Dashboard extends Component {
     })
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
     
     let newSocial = new Object({
+      email: event.target.email.value,
+      website: event.target.website.value,
       twitter: event.target.twitter.value,
       facebook: event.target.facebook.value,
       linkedin: event.target.linkedin.value,
@@ -159,17 +150,39 @@ class Dashboard extends Component {
       paypal: event.target.paypal.value
     })
     newSocial = Object.fromEntries(Object.entries(newSocial).filter(([_, v]) => v != "" && v != null));
-    console.log(newSocial)
+    
     let newCrypto = new Object({
       btc: event.target.btc.value,
       eth: event.target.eth.value,
       dot: event.target.dot.value,
     })
+    newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
+    
+    let newRecords = new Object({
+      name: event.target.displayname.value,
+      avatar: event.target.avatar.value,
+      description: event.target.description.value,
+      location: event.target.location.value,
+      theme: event.target.theme.value,
+      records: newSocial,
+      crypto: newCrypto
+    })
+
+    await this.setBio(newRecords)
+
+    let pageOwner = this.state.currentUser
+    let pageBio = await this.getBio(pageOwner)
+    if (!!pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      })
+    }
   }
 
   render() {
     const { login, currentUser, loading, pageBio, pageStatus, formChanged } = this.state
-    let social = new Object(pageBio.social)
+    let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
 
     return (
@@ -210,8 +223,8 @@ class Dashboard extends Component {
                       <fieldset id="profile">
                         <legend className="h5 text-bold">Profile</legend>
                         <div className="form-group">
-                          <label className="form-label" htmlFor="name">Name</label>
-                          <input className="form-input input-lg" type="text" id="name" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} />
+                          <label className="form-label" htmlFor="displayname">Name</label>
+                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="description">Bio</label>
@@ -224,19 +237,19 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="email">Email</label>
-                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={pageBio.email} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="website">Website</label>
-                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={pageBio.website} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={social.website} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="location">Location</label>
                           <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxLength="30" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
-                          <label className="form-label" htmlFor="settings">Theme</label>
-                          <select className="form-select select-lg" id="settings" defaultValue={pageBio.settings} onChange={this.handleChange}>
+                          <label className="form-label" htmlFor="theme">Theme</label>
+                          <select className="form-select select-lg" id="theme" defaultValue={pageBio.theme} onChange={this.handleChange}>
                             <option value="royal">Royal</option>
                             <option value="flax">Flax</option>
                             <option value="witchhaze">Witch Haze</option>

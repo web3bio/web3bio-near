@@ -124,13 +124,13 @@ class Profile extends Component {
           <>
             { pageStatus ? 
               <>
-                <div className={`web3bio-cover ${pageBio.settings}`}></div>
+                <div className={`web3bio-cover ${pageBio.theme}`}></div>
                 <div className="web3bio-content container grid-sm">
                   <div className="web3bio-profile">
                     { pageBio.avatar ? 
                       <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
                     :
-                      <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name}></div>
+                      <div className="profile-avatar avatar avatar-xl" data-initial=""></div>
                     }
                     <h2 className="profile-name">{pageBio.name}</h2>
                     <h3 className="profile-description">{pageBio.description}</h3>
