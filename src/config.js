@@ -1,4 +1,4 @@
-const CONTRACT_NAME = process.env.CONTRACT_NAME ||'your-awesome-project'
+const CONTRACT_NAME = process.env.CONTRACT_NAME ||'web3bio.near'
 
 function getConfig(env) {
   switch (env) {
