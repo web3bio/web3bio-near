@@ -75,19 +75,6 @@
     }
   }
 
-  // Button Link
-  &.btn-link {
-    background: transparent;
-    border-color: transparent;
-    color: $dark-color;
-    &:focus,
-    &:hover,
-    &:active,
-    &.active {
-      color: $link-color;
-    }
-  }
-
   // Button Sizes
   &.btn-sm {
     font-size: $font-size-sm;
@@ -105,21 +92,6 @@
   &.btn-block {
     display: block;
     width: 100%;
-  }
-
-  // Button Action
-  &.btn-action {
-    width: $control-size;
-    padding-left: 0;
-    padding-right: 0;
-
-    &.btn-sm {
-      width: $control-size-sm;
-    }
-
-    &.btn-lg {
-      width: $control-size-lg;
-    }
   }
 
   // Button Clear

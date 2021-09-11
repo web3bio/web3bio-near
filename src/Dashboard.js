@@ -1,7 +1,8 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import getConfig from './config'
+import Footer from './components/Footer'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Dashboard extends Component {
@@ -38,6 +39,7 @@ class Dashboard extends Component {
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme
       })
+      console.log(pageBio)
     }
     
     if (loggedIn) {
@@ -138,12 +140,9 @@ class Dashboard extends Component {
     if (event.target.id == 'avatar') {
       formAvatar = event.target.value
     }
-
     if (event.target.id == 'theme') {
       formTheme = event.target.value
     }
-
-    console.log(formTheme)
 
     this.setState({
       formChanged: true,
@@ -208,6 +207,10 @@ class Dashboard extends Component {
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
 
+    if (!login && !currentUser) {
+      return <Redirect to="/" />;
+    }
+
     return (
       <div className="web3bio-container">
 
@@ -215,7 +218,7 @@ class Dashboard extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <Link to="/" className="web3bio-logo" title={currentUser}>
+                <Link to="/" className="web3bio-logo" title="Web3.bio">
                   <h1>WEB3<br/>BIO</h1>
                 </Link>
                 <div className="web3bio-account">
@@ -264,7 +267,7 @@ class Dashboard extends Component {
                           <div className="form-input-hint">NFT avatars support is coming soon.</div>
                         </div>
                         <div className="form-group">
-                          <label className="form-label" htmlFor="email">Email</label>
+                          <label className="form-label" htmlFor="email">Email <small className="label">PUBLIC</small></label>
                           <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
@@ -340,16 +343,16 @@ class Dashboard extends Component {
                       <fieldset id="crypto">
                         <legend className="h5 text-bold">Crypto addresses</legend>
                         <div className="form-group">
+                          <label className="form-label" htmlFor="near">NEAR</label>
+                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} readOnly />
+                        </div>
+                        <div className="form-group">
                           <label className="form-label" htmlFor="btc">Bitcoin</label>
                           <input className="form-input input-lg" type="text" id="btc" defaultValue={crypto.btc} onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="eth">Ethereum</label>
                           <input className="form-input input-lg" type="text" id="eth" defaultValue={crypto.eth} onChange={this.handleChange} />
-                        </div>
-                        <div className="form-group">
-                          <label className="form-label" htmlFor="near">NEAR</label>
-                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} readOnly />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="dot">Polkadot</label>
@@ -372,7 +375,7 @@ class Dashboard extends Component {
                   <div className="web3bio-settings">
                     <div className="h5 text-bold">Danger Zone</div>
                     <div className="form-group">
-                      <label className="form-label mb-2">Permanently delete your page and profile data.</label>
+                      <label className="form-label mb-2">Permanently delete your page and profile data from <strong className="text-error">{currentUser}</strong>. This of course is not reversable.</label>
                       <button className="btn mb-2" onClick={this.delBio}>Delete data</button>
                     </div>
                   </div>
@@ -391,17 +394,7 @@ class Dashboard extends Component {
           </>
         }
         
-        <div className="web3bio-footer text-center">
-          <div className="container grid-lg">
-            <div className="columns">
-              <div className="column col-12">
-                <Link className="btn btn-primary" to="/">Claim your <strong>Web3.bio</strong> page</Link>
-                <div className="mt-2 text-bold">Built with &hearts; <span className="text-gray">&amp;</span> <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <Footer />
       </div>
     )
   }

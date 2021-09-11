@@ -65,7 +65,7 @@ $unit-24: 4.8rem !default;
 $html-font-size: 20px !default;
 $html-line-height: 1.5 !default;
 $font-size: .7rem !default;
-$font-size-sm: .6rem !default;
+$font-size-sm: .7rem !default;
 $font-size-lg: .8rem !default;
 $line-height: 1.2rem !default;
 
@@ -80,7 +80,7 @@ $control-size: $unit-9 !default;
 $control-size-sm: $unit-7 !default;
 $control-size-lg: $unit-12 !default;
 $control-padding-x: $unit-3 !default;
-$control-padding-x-sm: $unit-2 * .75 !default;
+$control-padding-x-sm: $unit-2 * .5 !default;
 $control-padding-x-lg: $unit-2 * 2 !default;
 $control-padding-y: ($control-size - $line-height) / 2 - $border-width !default;
 $control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width !default;

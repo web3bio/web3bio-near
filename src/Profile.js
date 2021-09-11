@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
+import Footer from './components/Footer'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Profile extends Component {
@@ -105,7 +106,7 @@ class Profile extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <Link to="/" className="web3bio-logo" title={currentUser}>
+                <Link to="/" className="web3bio-logo" title="Web3.bio">
                   <h1>WEB3<br/>BIO</h1>
                 </Link>
                 <div className="web3bio-account">
@@ -146,22 +147,22 @@ class Profile extends Component {
                     <div className="columns">
                       <div className="column col-12">
                         <h1>The page you’re looking for doesn’t exist.</h1>
+                        <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
                         { login ? 
                           <div className="web3bio-hero-input input-group">
-                            <span className="input-group-addon addon-lg text-bold">web3.bio/
-                              <span className="text-dark">{currentUser}</span>
+                            <span className="input-group-addon addon-lg text-left">web3.bio/
+                              <strong className="text-dark">{currentUser}</strong>
                             </span>
                             <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                           </div>
                           :
                           <div className="web3bio-hero-input input-group c-hand" onClick={this.requestSignIn}>
-                            <span className="input-group-addon addon-lg text-bold">web3.bio/
-                              <span className="text-gray">name.near</span>
+                            <span className="input-group-addon addon-lg text-left">web3.bio/
+                              <strong className="text-gray">name.near</strong>
                             </span>
                             <button className="btn btn-lg input-group-btn">Login and Claim</button>
                           </div>
                         }
-                        <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
                       </div>
                     </div>
                   </div>
@@ -180,17 +181,7 @@ class Profile extends Component {
           </>
         }
         
-        <div className="web3bio-footer text-center">
-          <div className="container grid-lg">
-            <div className="columns">
-              <div className="column col-12">
-                <Link className="btn btn-primary" to="/">Claim your <strong>Web3.bio</strong> page</Link>
-                <div className="mt-2 text-bold">Built with &hearts; &amp; <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        <Footer />
       </div>
     )
   }

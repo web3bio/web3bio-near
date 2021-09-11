@@ -10,7 +10,6 @@ import IconDiscord from '../assets/icons/discord.svg'
 import IconPaypal from '../assets/icons/paypal.svg'
 import IconPatreon from '../assets/icons/patreon.svg'
 
-
 class SocialLinks extends Component {
   constructor(props) {
     super(props);

@@ -16,6 +16,10 @@
     @include label-variant($light-color, $primary-color);
   }
 
+  &.label-dark {
+    @include label-variant($light-color, $dark-color);
+  }
+
   &.label-secondary {
     @include label-variant($primary-color, $secondary-color);
   }
