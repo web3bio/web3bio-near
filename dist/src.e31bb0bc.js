@@ -35431,13 +35431,15 @@ class Profile extends _react.Component {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement("div", {
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "loading loading-lg"
-    }))), /*#__PURE__*/_react.default.createElement("div", {
+    })))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-footer text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35495,7 +35497,9 @@ class Dashboard extends _react.Component {
       loading: true,
       pageBio: new Object(),
       pageStatus: false,
-      formChanged: false
+      formChanged: false,
+      formAvatar: '',
+      formTheme: ''
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -35514,7 +35518,9 @@ class Dashboard extends _react.Component {
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
-        pageStatus: true
+        pageStatus: true,
+        formAvatar: pageBio.avatar,
+        formTheme: pageBio.theme
       });
     }
 
@@ -35566,7 +35572,9 @@ class Dashboard extends _react.Component {
       console.log('Something went wrong! ');
       throw e;
     } finally {
-      console.log("🚀");
+      this.setState({
+        loading: true
+      });
     }
   }
 
@@ -35602,9 +35610,23 @@ class Dashboard extends _react.Component {
     });
   }
 
-  handleChange() {
+  handleChange(event) {
+    let formAvatar = this.state.formAvatar;
+    let formTheme = this.state.formTheme;
+
+    if (event.target.id == 'avatar') {
+      formAvatar = event.target.value;
+    }
+
+    if (event.target.id == 'theme') {
+      formTheme = event.target.value;
+    }
+
+    console.log(formTheme);
     this.setState({
-      formChanged: true
+      formChanged: true,
+      formAvatar: formAvatar,
+      formTheme: formTheme
     });
   }
 
@@ -35640,6 +35662,7 @@ class Dashboard extends _react.Component {
       records: newSocial,
       crypto: newCrypto
     });
+    console.log(newRecords);
     await this.setBio(newRecords);
     let pageOwner = this.state.currentUser;
     let pageBio = await this.getBio(pageOwner);
@@ -35647,7 +35670,9 @@ class Dashboard extends _react.Component {
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
-        pageStatus: true
+        pageStatus: true,
+        formAvatar: pageBio.avatar,
+        formTheme: pageBio.theme
       });
     }
   }
@@ -35659,7 +35684,9 @@ class Dashboard extends _react.Component {
       loading,
       pageBio,
       pageStatus,
-      formChanged
+      formChanged,
+      formAvatar,
+      formTheme
     } = this.state;
     let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
@@ -35686,7 +35713,7 @@ class Dashboard extends _react.Component {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.settings}`
+      className: `web3bio-cover ${formTheme}`
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35706,7 +35733,8 @@ class Dashboard extends _react.Component {
     }, "web3.bio/"), currentUser)), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
     }, /*#__PURE__*/_react.default.createElement("form", {
-      onSubmit: this.handleSubmit
+      onSubmit: this.handleSubmit,
+      autoComplete: "off"
     }, /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "profile"
     }, /*#__PURE__*/_react.default.createElement("legend", {
@@ -35741,11 +35769,17 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "avatar"
-    }, "Avatar"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Avatar"), formAvatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: formAvatar,
+      className: "profile-avatar avatar avatar-lg mb-2 mt-2"
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-lg mb-2 mt-2",
+      "data-initial": ""
+    }), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "avatar",
-      placeholder: "Avatar URL",
+      placeholder: "https://",
       defaultValue: pageBio.avatar,
       onChange: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
@@ -36026,13 +36060,15 @@ class Dashboard extends _react.Component {
     }, "Permanently delete your page and profile data."), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mb-2",
       onClick: this.delBio
-    }, "Delete data"))))))) : /*#__PURE__*/_react.default.createElement("div", {
+    }, "Delete data"))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "loading loading-lg"
-    }))), /*#__PURE__*/_react.default.createElement("div", {
+    })))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-footer text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"

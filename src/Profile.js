@@ -170,11 +170,14 @@ class Profile extends Component {
             }
           </>
           :
-          <div className="web3bio-content container grid-sm">
-            <div className="web3bio-profile">
-              <div className="loading loading-lg"></div>
+          <>
+            <div className="web3bio-cover"></div>
+            <div className="web3bio-content container grid-sm">
+              <div className="web3bio-profile">
+                <div className="loading loading-lg"></div>
+              </div>
             </div>
-          </div>
+          </>
         }
         
         <div className="web3bio-footer text-center">

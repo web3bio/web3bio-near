@@ -3,6 +3,7 @@
   @include avatar-base();
   background: transparent;
   border-radius: 50%;
+  box-shadow: 0 .3rem 1.2rem rgba(0, 0, 0, .15);
   color: rgba($light-color, .85);
   display: inline-block;
   font-weight: 300;

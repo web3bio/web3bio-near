@@ -13,7 +13,9 @@ class Dashboard extends Component {
       loading: true,
       pageBio: new Object(),
       pageStatus: false,
-      formChanged: false
+      formChanged: false,
+      formAvatar: '',
+      formTheme: ''
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -32,7 +34,9 @@ class Dashboard extends Component {
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
-        pageStatus: true
+        pageStatus: true,
+        formAvatar: pageBio.avatar,
+        formTheme: pageBio.theme
       })
     }
     
@@ -90,7 +94,9 @@ class Dashboard extends Component {
       )
       throw e
     } finally {
-      console.log("🚀")
+      this.setState({
+        loading: true
+      })
     }
   }
 
@@ -126,9 +132,23 @@ class Dashboard extends Component {
     })
   }
 
-  handleChange() {
+  handleChange(event) {
+    let formAvatar = this.state.formAvatar
+    let formTheme = this.state.formTheme
+    if (event.target.id == 'avatar') {
+      formAvatar = event.target.value
+    }
+
+    if (event.target.id == 'theme') {
+      formTheme = event.target.value
+    }
+
+    console.log(formTheme)
+
     this.setState({
-      formChanged: true
+      formChanged: true,
+      formAvatar: formAvatar,
+      formTheme: formTheme
     })
   }
 
@@ -167,6 +187,7 @@ class Dashboard extends Component {
       records: newSocial,
       crypto: newCrypto
     })
+    console.log(newRecords)
 
     await this.setBio(newRecords)
 
@@ -175,13 +196,15 @@ class Dashboard extends Component {
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
-        pageStatus: true
+        pageStatus: true,
+        formAvatar: pageBio.avatar,
+        formTheme: pageBio.theme
       })
     }
   }
 
   render() {
-    const { login, currentUser, loading, pageBio, pageStatus, formChanged } = this.state
+    const { login, currentUser, loading, pageBio, pageStatus, formChanged, formAvatar, formTheme } = this.state
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
 
@@ -209,7 +232,7 @@ class Dashboard extends Component {
 
         { !loading ? 
           <>
-            <div className={`web3bio-cover ${pageBio.settings}`}></div>
+            <div className={`web3bio-cover ${formTheme}`}></div>
             <div className="web3bio-content container grid-sm">
               <div className="columns">
                 <div className="column col-12">
@@ -219,7 +242,7 @@ class Dashboard extends Component {
                   </div>
                   
                   <div className="web3bio-settings">
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit} autoComplete="off">
                       <fieldset id="profile">
                         <legend className="h5 text-bold">Profile</legend>
                         <div className="form-group">
@@ -232,7 +255,12 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="avatar">Avatar</label>
-                          <input className="form-input input-lg" type="text" id="avatar" placeholder="Avatar URL" defaultValue={pageBio.avatar} onChange={this.handleChange} />
+                          { formAvatar ? 
+                            <img src={formAvatar} className="profile-avatar avatar avatar-lg mb-2 mt-2" />
+                          :
+                            <div className="profile-avatar avatar avatar-lg mb-2 mt-2" data-initial=""></div>
+                          }
+                          <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onChange={this.handleChange} />
                           <div className="form-input-hint">NFT avatars support is coming soon.</div>
                         </div>
                         <div className="form-group">
@@ -353,11 +381,14 @@ class Dashboard extends Component {
             </div>
           </>
           :
-          <div className="web3bio-content container grid-sm">
-            <div className="web3bio-profile">
-              <div className="loading loading-lg"></div>
+          <>
+            <div className="web3bio-cover"></div>
+            <div className="web3bio-content container grid-sm">
+              <div className="web3bio-profile">
+                <div className="loading loading-lg"></div>
+              </div>
             </div>
-          </div>
+          </>
         }
         
         <div className="web3bio-footer text-center">
