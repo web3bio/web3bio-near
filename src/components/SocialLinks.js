@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import IconWebsite from '../assets/icons/website.svg'
+import IconEmail from '../assets/icons/email.svg'
 import IconTwitter from '../assets/icons/twitter.svg'
 import IconFacebook from '../assets/icons/facebook.svg'
 import IconLinkedin from '../assets/icons/linkedin.svg'
@@ -20,6 +22,16 @@ class SocialLinks extends Component {
 
     return (
       <div className="profile-social">
+        {social.website? 
+          <a href={social.website} target="_blank" rel="noopener noreferrer" className="profile-social-item website">
+            <img src={IconWebsite} className="profile-social-icon icon" />
+          </a> : null
+        }
+        {social.email? 
+          <a href={`mailto:${social.email}`} target="_blank" rel="noopener noreferrer" className="profile-social-item email">
+            <img src={IconEmail} className="profile-social-icon icon" />
+          </a> : null
+        }
         {social.twitter? 
           <a href={social.twitter} target="_blank" rel="noopener noreferrer" className="profile-social-item twitter">
             <img src={IconTwitter} className="profile-social-icon icon" />

@@ -35245,7 +35245,11 @@ class App extends _react.Component {
 
 var _default = App;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"assets/icons/twitter.svg":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"assets/icons/website.svg":[function(require,module,exports) {
+module.exports = "/website.2914ab5e.svg";
+},{}],"assets/icons/email.svg":[function(require,module,exports) {
+module.exports = "/email.b0f0adbd.svg";
+},{}],"assets/icons/twitter.svg":[function(require,module,exports) {
 module.exports = "/twitter.f2da1eec.svg";
 },{}],"assets/icons/facebook.svg":[function(require,module,exports) {
 module.exports = "/facebook.b48d22fd.svg";
@@ -35274,6 +35278,10 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _website = _interopRequireDefault(require("../assets/icons/website.svg"));
+
+var _email = _interopRequireDefault(require("../assets/icons/email.svg"));
 
 var _twitter = _interopRequireDefault(require("../assets/icons/twitter.svg"));
 
@@ -35312,7 +35320,23 @@ class SocialLinks extends _react.Component {
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-social"
-    }, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
+    }, social.website ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.website,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item website"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _website.default,
+      className: "profile-social-icon icon"
+    })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `mailto:${social.email}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item email"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _email.default,
+      className: "profile-social-icon icon"
+    })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.twitter,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -35408,7 +35432,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35458,6 +35482,7 @@ class Profile extends _react.Component {
     const pageBio = await this.getBio(pageOwner);
 
     if (!!pageBio) {
+      document.title = `${pageBio.name} - Web3.bio`;
       this.setState({
         pageBio: pageBio,
         pageStatus: true
@@ -36951,6 +36976,7 @@ class Dashboard extends _react.Component {
   }
 
   async componentDidMount() {
+    document.title = "Manage your profile - Web3.bio";
     let loggedIn = this.props.wallet.isSignedIn();
     let pageOwner = window.accountId;
     let pageBio = await this.getBio(pageOwner);
@@ -37107,6 +37133,7 @@ class Dashboard extends _react.Component {
       this.setState({
         pageBio: pageBio,
         pageStatus: true,
+        formChanged: false,
         formLoading: false,
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme
@@ -37167,7 +37194,7 @@ class Dashboard extends _react.Component {
       className: "column col-12"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content-title text-center mb-4"
-    }, "Manage your Web3.bio"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Manage your profile"), /*#__PURE__*/_react.default.createElement("div", {
       className: "text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "btn-group"
@@ -37176,7 +37203,7 @@ class Dashboard extends _react.Component {
       className: "btn",
       target: "_blank"
     }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-gray"
+      className: "text-opacity"
     }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       className: "btn",
       "data-clipboard-text": `https://web3.bio/${currentUser}`
@@ -37291,7 +37318,7 @@ class Dashboard extends _react.Component {
     }, "Theme"), /*#__PURE__*/_react.default.createElement("select", {
       className: "form-select select-lg",
       id: "theme",
-      defaultValue: pageBio.theme,
+      value: formTheme,
       onChange: this.handleChange
     }, /*#__PURE__*/_react.default.createElement("option", {
       value: "royal"

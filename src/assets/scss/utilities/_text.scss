@@ -46,6 +46,10 @@
   font-size: 1.2em;
 }
 
+.text-opacity {
+  opacity: .5;
+}
+
 // Text overflow utilities
 .text-ellipsis {
   @include text-ellipsis();

@@ -2440,6 +2440,9 @@ a.text-error:visited {
 .text-large {
   font-size: 1.2em; }
 
+.text-opacity {
+  opacity: .5; }
+
 .text-ellipsis {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2669,12 +2672,12 @@ body {
     .web3bio-settings form fieldset:first-child {
       margin-top: 1rem; }
   .web3bio-settings .web3bio-settings-footer {
-    background: #fff;
-    margin-top: 1rem;
     padding: 1rem 0; }
     .web3bio-settings .web3bio-settings-footer.active {
       bottom: 0;
       position: sticky; }
+      .web3bio-settings .web3bio-settings-footer.active .btn {
+        box-shadow: 0 0.2rem 2rem #fff; }
 
 .web3bio-footer {
   top: calc(100vh - 3rem);

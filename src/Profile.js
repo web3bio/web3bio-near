@@ -28,6 +28,8 @@ class Profile extends Component {
 
     const pageBio = await this.getBio(pageOwner)
     if (!!pageBio) {
+      document.title = `${pageBio.name} - Web3.bio`
+      
       this.setState({
         pageBio: pageBio,
         pageStatus: true

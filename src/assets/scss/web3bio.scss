@@ -351,13 +351,15 @@ body {
   }
 
   .web3bio-settings-footer {
-    background: $light-color;
-    margin-top: 1rem;
     padding: 1rem 0;
     
     &.active {
       bottom: 0;
       position: sticky;
+
+      .btn {
+        box-shadow: 0 .2rem 2rem $light-color;
+      }
     }
   }
 }

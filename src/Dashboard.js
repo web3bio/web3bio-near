@@ -31,6 +31,8 @@ class Dashboard extends Component {
   }
 
   async componentDidMount() {
+    document.title = "Manage your profile - Web3.bio"
+
     let loggedIn = this.props.wallet.isSignedIn()
     let pageOwner = window.accountId
 
@@ -195,6 +197,7 @@ class Dashboard extends Component {
       this.setState({
         pageBio: pageBio,
         pageStatus: true,
+        formChanged: false,
         formLoading: false,
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme
@@ -241,10 +244,10 @@ class Dashboard extends Component {
             <div className="web3bio-content container grid-sm">
               <div className="columns">
                 <div className="column col-12">
-                  <div className="web3bio-content-title text-center mb-4">Manage your Web3.bio</div>
+                  <div className="web3bio-content-title text-center mb-4">Manage your profile</div>
                   <div className="text-center">
                     <div className="btn-group">
-                        <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-gray">web3.bio/</span>{currentUser}</Link>
+                        <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
                         <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
                           <img src={IconCopy} className="profile-copy-icon icon" />
                         </Clipboard>
@@ -288,7 +291,7 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="theme">Theme</label>
-                          <select className="form-select select-lg" id="theme" defaultValue={pageBio.theme} onChange={this.handleChange}>
+                          <select className="form-select select-lg" id="theme" value={formTheme} onChange={this.handleChange}>
                             <option value="royal">Royal</option>
                             <option value="flax">Flax</option>
                             <option value="witchhaze">Witch Haze</option>
