@@ -3,6 +3,8 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import getConfig from './config'
 import Footer from './components/Footer'
+import Clipboard from 'react-clipboard.js'
+import IconCopy from './assets/icons/copy.svg'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Dashboard extends Component {
@@ -15,6 +17,7 @@ class Dashboard extends Component {
       pageBio: new Object(),
       pageStatus: false,
       formChanged: false,
+      formLoading: false,
       formAvatar: '',
       formTheme: ''
     }
@@ -39,7 +42,6 @@ class Dashboard extends Component {
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme
       })
-      console.log(pageBio)
     }
     
     if (loggedIn) {
@@ -70,7 +72,6 @@ class Dashboard extends Component {
 
   async getBio(pageOwner) {
     try {
-      // make an update call to the smart contract
       return await window.contract.getRecordByOwner({
         owner: pageOwner
       })
@@ -88,17 +89,12 @@ class Dashboard extends Component {
 
   async setBio(newRecords) {
     try {
-      // make an update call to the smart contract
       await window.contract.setRecordByOwner(newRecords)
     } catch (e) {
       console.log(
         'Something went wrong! '
       )
       throw e
-    } finally {
-      this.setState({
-        loading: true
-      })
     }
   }
 
@@ -153,6 +149,9 @@ class Dashboard extends Component {
 
   async handleSubmit(event) {
     event.preventDefault();
+    this.setState({
+      formLoading: true
+    })
     
     let newSocial = new Object({
       email: event.target.email.value,
@@ -196,6 +195,7 @@ class Dashboard extends Component {
       this.setState({
         pageBio: pageBio,
         pageStatus: true,
+        formLoading: false,
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme
       })
@@ -203,7 +203,7 @@ class Dashboard extends Component {
   }
 
   render() {
-    const { login, currentUser, loading, pageBio, pageStatus, formChanged, formAvatar, formTheme } = this.state
+    const { login, currentUser, loading, pageBio, pageStatus, formChanged, formLoading, formAvatar, formTheme } = this.state
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
 
@@ -223,7 +223,9 @@ class Dashboard extends Component {
                 </Link>
                 <div className="web3bio-account">
                   { login ? 
-                    <button className="btn" onClick={this.requestSignOut}>Logout</button>
+                    <>
+                      <button className="btn" onClick={this.requestSignOut}>Logout</button>
+                    </>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
                   }
@@ -239,9 +241,14 @@ class Dashboard extends Component {
             <div className="web3bio-content container grid-sm">
               <div className="columns">
                 <div className="column col-12">
-                  <div className="web3bio-content-title text-center mb-2">Manage your Web3.bio</div>
+                  <div className="web3bio-content-title text-center mb-4">Manage your Web3.bio</div>
                   <div className="text-center">
-                    <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-gray">web3.bio/</span>{currentUser}</Link>
+                    <div className="btn-group">
+                        <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-gray">web3.bio/</span>{currentUser}</Link>
+                        <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
+                          <img src={IconCopy} className="profile-copy-icon icon" />
+                        </Clipboard>
+                      </div>
                   </div>
                   
                   <div className="web3bio-settings">
@@ -259,12 +266,13 @@ class Dashboard extends Component {
                         <div className="form-group">
                           <label className="form-label" htmlFor="avatar">Avatar</label>
                           { formAvatar ? 
-                            <img src={formAvatar} className="profile-avatar avatar avatar-lg mb-2 mt-2" />
+                            <img src={formAvatar} className="profile-avatar avatar avatar-lg mb-4 mt-2" />
                           :
-                            <div className="profile-avatar avatar avatar-lg mb-2 mt-2" data-initial=""></div>
+                            <div className="profile-avatar avatar avatar-lg mb-4 mt-2" data-initial=""></div>
                           }
                           <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onChange={this.handleChange} />
-                          <div className="form-input-hint">NFT avatars support is coming soon.</div>
+                          <div className="form-input-hint">You may use free photo hostings like <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-dark">IMGBB</a> for avatars.</div>
+                          
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="email">Email <small className="label">PUBLIC</small></label>
@@ -366,8 +374,8 @@ class Dashboard extends Component {
                         </div>
                       </fieldset>
 
-                      <div className="web3bio-settings-footer">
-                        <input className="btn btn-lg btn-block" disabled={!formChanged} type="submit" value="Update" />
+                      <div className={`web3bio-settings-footer ${formChanged ? "active" : ""}`}>
+                        <button className={`btn btn-lg btn-block ${formLoading ? "loading" : ""}`} disabled={!formChanged} type="submit">Update</button>
                       </div>
                     </form>
                   </div>

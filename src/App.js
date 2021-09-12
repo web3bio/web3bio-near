@@ -101,9 +101,7 @@ class App extends Component {
                 <h2 className="text-bold">All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
                 { login ? 
                   <div className="web3bio-hero-input input-group">
-                    <span className="input-group-addon addon-lg text-left">web3.bio/
-                      <strong className="text-dark">{currentUser}</strong>
-                    </span>
+                    <input className="form-input input-group-input input-lg text-left" value={`web3.bio/${currentUser}`} readOnly />
                     <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                   </div>
                   :

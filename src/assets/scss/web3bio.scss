@@ -155,6 +155,12 @@ body {
   .web3bio-content-title {
     font-size: 1.6rem;
     font-weight: 900;
+    line-height: 2rem;
+  }
+
+  .profile-copy-icon {
+    height: 1rem;
+    margin-top: .1rem;
   }
 }
 
@@ -230,6 +236,7 @@ body {
   padding: 3rem 0;
   text-align: center;
 
+  .h1,
   h1 {
     color: $dark-color;
     font-size: 3.2rem;
@@ -238,6 +245,13 @@ body {
     line-height: 3.6rem;
     margin: 1rem 0;
 
+    @media screen and (max-width: $size-md) {
+      font-size: 2.4rem;
+      line-height: 2.8rem;
+    }
+  }
+
+  h1 {
     strong {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -259,11 +273,16 @@ body {
     display: flex;
     margin: 2rem auto;
     max-width: 24rem;
-    user-select: all;
-
+    
     .input-group-addon {
       border-color: $dark-color;
       flex: 1 1 auto;
+    }
+    
+    .input-group-input {
+      border-color: $dark-color;
+      flex: 1 1 auto;
+      user-select: all;
     }
 
     .btn-lg {
@@ -314,20 +333,32 @@ body {
   box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
   margin: 2rem 0;
   padding: 1rem 2rem;
-  width: 100%;
+  
+
+  @media screen and (max-width: $size-md) {
+    padding: 1rem;
+    margin: 2rem -1rem;
+  }
 
   form {
     fieldset {
-      margin: 1rem 0 0 0;
+      margin: 2rem 0 0 0;
+
+      &:first-child {
+        margin-top: 1rem;
+      }
     }
   }
 
   .web3bio-settings-footer {
     background: $light-color;
-    bottom: 0;
     margin-top: 1rem;
     padding: 1rem 0;
-    position: sticky;
+    
+    &.active {
+      bottom: 0;
+      position: sticky;
+    }
   }
 }
 

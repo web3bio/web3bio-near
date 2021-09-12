@@ -518,6 +518,11 @@ textarea.form-input {
 .form-input {
   &[readonly] {
     background-color: $bg-color;
+
+    &:focus {
+      border-color: $dark-color;
+      box-shadow: none;
+    }
   }
 }
 

@@ -9,7 +9,7 @@ class Footer extends Component {
           <div className="columns">
             <div className="column col-12">
               <Link className="btn btn-primary" to="/">Claim your <strong>Web3.bio</strong> page</Link>
-              <div className="mt-4 mb-4"><strong>&copy; 2021 <a href="https://web3.bio" className="text-dark">Web3.bio</a> · Proudly Built with <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> <span className="text-gray">&amp;</span> <span className="text-primary">&hearts;</span></strong></div>
+              <div className="mt-4 mb-4"><strong>&copy; 2021 <a href="https://web3.bio" className="text-dark">Web3.bio</a> · Proudly Built with <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark">NEAR</a> <span className="text-primary">&hearts;</span></strong></div>
             </div>
           </div>
         </div>

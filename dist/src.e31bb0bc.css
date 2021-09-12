@@ -605,9 +605,10 @@ html:lang(ko),
   box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.15);
   color: #fff;
   cursor: pointer;
-  display: inline-block;
+  display: inline-flex;
   font-size: 0.7rem;
   height: 1.8rem;
+  justify-content: center;
   line-height: 1.2rem;
   outline: none;
   padding: 0.2rem 0.6rem;
@@ -615,7 +616,6 @@ html:lang(ko),
   text-decoration: none;
   transition: background .2s, border .2s, box-shadow .2s, color .2s;
   user-select: none;
-  vertical-align: middle;
   white-space: nowrap; }
   .btn:focus {
     box-shadow: 0 0 0 0.1rem rgba(70, 32, 225, 0.2); }
@@ -660,7 +660,7 @@ html:lang(ko),
     height: 2.4rem;
     padding: 0.5rem 0.8rem; }
   .btn.btn-block {
-    display: block;
+    display: flex;
     width: 100%; }
   .btn.btn-clear {
     background: transparent;
@@ -1082,6 +1082,9 @@ textarea.form-input, textarea.form-input.input-lg, textarea.form-input.input-sm 
 
 .form-input[readonly] {
   background-color: #f9f9f9; }
+  .form-input[readonly]:focus {
+    border-color: #202020;
+    box-shadow: none; }
 
 input:disabled + .form-icon, input.disabled + .form-icon {
   background: #f1f1f1;
@@ -2541,7 +2544,11 @@ body {
   min-height: 50vh; }
   .web3bio-content .web3bio-content-title {
     font-size: 1.6rem;
-    font-weight: 900; }
+    font-weight: 900;
+    line-height: 2rem; }
+  .web3bio-content .profile-copy-icon {
+    height: 1rem;
+    margin-top: .1rem; }
 
 .web3bio-profile {
   align-items: center;
@@ -2592,6 +2599,7 @@ body {
 .web3bio-hero {
   padding: 3rem 0;
   text-align: center; }
+  .web3bio-hero .h1,
   .web3bio-hero h1 {
     color: #202020;
     font-size: 3.2rem;
@@ -2599,11 +2607,16 @@ body {
     letter-spacing: -.05rem;
     line-height: 3.6rem;
     margin: 1rem 0; }
-    .web3bio-hero h1 strong {
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(233deg, #3718b5, #DB35A6);
-      font-weight: 900; }
+    @media screen and (max-width: 840px) {
+      .web3bio-hero .h1,
+      .web3bio-hero h1 {
+        font-size: 2.4rem;
+        line-height: 2.8rem; } }
+  .web3bio-hero h1 strong {
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(233deg, #3718b5, #DB35A6);
+    font-weight: 900; }
   .web3bio-hero h2 {
     font-size: 1.2rem;
     margin: 1rem 0 2rem 0; }
@@ -2612,11 +2625,14 @@ body {
   .web3bio-hero .web3bio-hero-input {
     display: flex;
     margin: 2rem auto;
-    max-width: 24rem;
-    user-select: all; }
+    max-width: 24rem; }
     .web3bio-hero .web3bio-hero-input .input-group-addon {
       border-color: #202020;
       flex: 1 1 auto; }
+    .web3bio-hero .web3bio-hero-input .input-group-input {
+      border-color: #202020;
+      flex: 1 1 auto;
+      user-select: all; }
     .web3bio-hero .web3bio-hero-input .btn-lg:focus, .web3bio-hero .web3bio-hero-input .btn-lg:hover {
       background-image: linear-gradient(233deg, #3718b5, #DB35A6);
       border-color: #202020; }
@@ -2643,16 +2659,22 @@ body {
   border-radius: 0.4rem;
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
   margin: 2rem 0;
-  padding: 1rem 2rem;
-  width: 100%; }
+  padding: 1rem 2rem; }
+  @media screen and (max-width: 840px) {
+    .web3bio-settings {
+      padding: 1rem;
+      margin: 2rem -1rem; } }
   .web3bio-settings form fieldset {
-    margin: 1rem 0 0 0; }
+    margin: 2rem 0 0 0; }
+    .web3bio-settings form fieldset:first-child {
+      margin-top: 1rem; }
   .web3bio-settings .web3bio-settings-footer {
     background: #fff;
-    bottom: 0;
     margin-top: 1rem;
-    padding: 1rem 0;
-    position: sticky; }
+    padding: 1rem 0; }
+    .web3bio-settings .web3bio-settings-footer.active {
+      bottom: 0;
+      position: sticky; }
 
 .web3bio-footer {
   top: calc(100vh - 3rem);

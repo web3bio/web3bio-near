@@ -109,13 +109,6 @@ class Profile extends Component {
                 <Link to="/" className="web3bio-logo" title="Web3.bio">
                   <h1>WEB3<br/>BIO</h1>
                 </Link>
-                <div className="web3bio-account">
-                  { login ? 
-                    <button className="btn" onClick={this.requestSignOut}>Logout</button>
-                    :
-                    <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
-                  }
-                </div>
               </div>
             </div>
           </div>
@@ -150,9 +143,7 @@ class Profile extends Component {
                         <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
                         { login ? 
                           <div className="web3bio-hero-input input-group">
-                            <span className="input-group-addon addon-lg text-left">web3.bio/
-                              <strong className="text-dark">{currentUser}</strong>
-                            </span>
+                            <input className="form-input input-group-input input-lg text-left" value={`web3.bio/${currentUser}`} readOnly />
                             <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                           </div>
                           :
