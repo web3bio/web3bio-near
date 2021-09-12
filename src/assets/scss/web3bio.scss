@@ -171,6 +171,7 @@ body {
   padding: 0 1rem 2rem 1rem;
 
   .profile-avatar {
+    background: $light-color;
     border: .2rem solid $light-color;
     box-shadow: 0 .3rem 1.2rem rgba(0, 0, 0, .15);
   }
@@ -180,17 +181,21 @@ body {
     font-size: 1.2rem;
     font-weight: 800;
     margin-top: 1rem;
+    max-width: $size-sm;
   }
 
   .profile-description {
     color: $dark-color;
     font-size: .8rem;
     font-weight: 500;
+    max-width: $size-sm;
   }
 
   .profile-social {
     display: flex;
-    margin: 1rem auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: .5rem auto 1rem auto;
   }
 
   .profile-social-item {
@@ -201,7 +206,7 @@ body {
     display: flex;
     height: 3rem;
     justify-content: center;
-    margin: 0 .5rem;
+    margin: .5rem;
     padding: .4rem;
     transition: all .3s ease;
     width: 3rem;
@@ -365,6 +370,6 @@ body {
 }
 
 .web3bio-footer {
-  top: calc(100vh - 3rem);
+  top: 100vh;
   position: sticky;
 }

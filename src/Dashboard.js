@@ -45,6 +45,7 @@ class Dashboard extends Component {
         formTheme: pageBio.theme
       })
     }
+    console.log(pageBio)
     
     if (loggedIn) {
       this.signedInFlow();
@@ -314,7 +315,7 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="linkedin">LinkedIn</label>
-                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linked} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linkedin} maxLength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="github">GitHub</label>

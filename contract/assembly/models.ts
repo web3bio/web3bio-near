@@ -18,6 +18,7 @@ export class Profile {
     public crypto: Crypto = new Crypto(),
   ) {
       this.owner = context.sender
+      this.crypto.near = context.sender
       this.expiration = 0
       this.premium = false
     }
@@ -49,9 +50,7 @@ export class Crypto {
     public btc: string = '',
     public eth: string = '',
     public dot: string = ''
-  ) {
-    this.near = context.sender
-  }
+  ) {}
 }
 
 export const recordsByOwner = new PersistentMap<string, Profile>("Profile");

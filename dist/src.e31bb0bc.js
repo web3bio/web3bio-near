@@ -34922,7 +34922,7 @@ class Footer extends _react.Component {
       className: "btn btn-primary",
       to: "/"
     }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "mt-4 mb-4"
+      className: "mt-4 mb-2"
     }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://web3.bio",
       className: "text-dark"
@@ -35327,7 +35327,8 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item website"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _website.default,
-      className: "profile-social-icon icon"
+      className: "profile-social-icon icon",
+      alt: "Website"
     })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
       href: `mailto:${social.email}`,
       target: "_blank",
@@ -35335,7 +35336,8 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item email"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _email.default,
-      className: "profile-social-icon icon"
+      className: "profile-social-icon icon",
+      alt: "Email"
     })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.twitter,
       target: "_blank",
@@ -35343,7 +35345,8 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item twitter"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _twitter.default,
-      className: "profile-social-icon icon"
+      className: "profile-social-icon icon",
+      alt: "Twitter"
     })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.facebook,
       target: "_blank",
@@ -35573,16 +35576,13 @@ class Profile extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: `web3bio-cover ${pageBio.theme}`
     }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-sm"
+      className: "web3bio-content container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile"
-    }, pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+      className: "web3bio-profile text-center"
+    }, !!pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
       src: pageBio.avatar,
       className: "profile-avatar avatar avatar-xl"
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-avatar avatar avatar-xl",
-      "data-initial": ""
-    }), /*#__PURE__*/_react.default.createElement("h2", {
+    }) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null), /*#__PURE__*/_react.default.createElement("h2", {
       className: "profile-name"
     }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
       className: "profile-description"
@@ -36990,6 +36990,8 @@ class Dashboard extends _react.Component {
       });
     }
 
+    console.log(pageBio);
+
     if (loggedIn) {
       this.signedInFlow();
     } else {
@@ -37372,7 +37374,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "linkedin",
       placeholder: "https://linkedin.com/",
-      defaultValue: social.linked,
+      defaultValue: social.linkedin,
       maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -60691,7 +60693,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51963" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49603" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2559,20 +2559,25 @@ body {
   flex-direction: column;
   padding: 0 1rem 2rem 1rem; }
   .web3bio-profile .profile-avatar {
+    background: #fff;
     border: 0.2rem solid #fff;
     box-shadow: 0 0.3rem 1.2rem rgba(0, 0, 0, 0.15); }
   .web3bio-profile .profile-name {
     color: #202020;
     font-size: 1.2rem;
     font-weight: 800;
-    margin-top: 1rem; }
+    margin-top: 1rem;
+    max-width: 600px; }
   .web3bio-profile .profile-description {
     color: #202020;
     font-size: .8rem;
-    font-weight: 500; }
+    font-weight: 500;
+    max-width: 600px; }
   .web3bio-profile .profile-social {
     display: flex;
-    margin: 1rem auto; }
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: .5rem auto 1rem auto; }
   .web3bio-profile .profile-social-item {
     align-items: center;
     background: #fff;
@@ -2581,7 +2586,7 @@ body {
     display: flex;
     height: 3rem;
     justify-content: center;
-    margin: 0 .5rem;
+    margin: .5rem;
     padding: .4rem;
     transition: all .3s ease;
     width: 3rem; }
@@ -2680,7 +2685,7 @@ body {
         box-shadow: 0 0.2rem 2rem #fff; }
 
 .web3bio-footer {
-  top: calc(100vh - 3rem);
+  top: 100vh;
   position: sticky; }
 
 
