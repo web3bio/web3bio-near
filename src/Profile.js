@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
+import CryptoWidgets from './components/CryptoWidgets'
 import Footer from './components/Footer'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
@@ -116,7 +117,7 @@ class Profile extends Component {
                     { login ? 
                       <>
                         <Link className="btn mr-1" to="/dashboard">Manage</Link>
-                        <button className="btn" onClick={this.requestSignOut}>Logout</button>
+                        <button className="btn ml-1" onClick={this.requestSignOut}>Logout</button>
                       </>
                       :
                       <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
@@ -140,11 +141,18 @@ class Profile extends Component {
                     { !!pageBio.avatar ? 
                       <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
                       :
-                      <></>
+                      null
                     }
                     <h2 className="profile-name">{pageBio.name}</h2>
-                    <h3 className="profile-description">{pageBio.description}</h3>
+                    { !!pageBio.description ?
+                      <h3 className="profile-description">{pageBio.description}</h3>
+                      :
+                      <h3 className="profile-description">{pageBio.owner}</h3>
+                    }
+                    
                     <SocialLinks social={social} />
+
+                    <CryptoWidgets crypto={crypto} />
                   </div>
                 </div>
               </>

@@ -75,6 +75,32 @@
     }
   }
 
+  // Button Link
+  &.btn-link {
+    background: rgba($bg-color, .5);
+    border-color: rgba($bg-color-dark, .5);
+    box-shadow: 0 .1rem .4rem rgba($primary-color, .05);
+    color: $dark-color;
+    &:focus,
+    &:hover {
+      background: lighten($dark-color, 3%);
+      border-color: $dark-color;
+      color: $light-color;
+    }
+    &:active,
+    &.active {
+      background: darken($primary-color-dark, 4%);
+      border-color: darken($primary-color-dark, 7%);
+      color: $light-color;
+    }
+    &.loading {
+      &::after {
+        border-bottom-color: $light-color;
+        border-left-color: $light-color;
+      }
+    }
+  }
+
   // Button Sizes
   &.btn-sm {
     font-size: $font-size-sm;

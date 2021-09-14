@@ -98,7 +98,7 @@ class App extends Component {
             <div className="columns">
               <div className="column col-12">
                 <h1>One Link For Your <strong>Web3</strong> Profile</h1>
-                <h2 className="text-bold">All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
+                <h2>All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
                 { login ? 
                   <div className="web3bio-hero-input input-group">
                     <input className="form-input input-group-input input-lg text-left" value={`web3.bio/${currentUser}`} readOnly />
@@ -188,7 +188,7 @@ class App extends Component {
                     <div className="web3bio-action mx-auto text-bold">3</div>
                     </div>
                   <div className="h5 text-bold mt-2">Spread the link</div>
-                  <div className="h6 mt-2">Use your Web3.bio link on the Twitter bio, emails, and groups.</div>
+                  <div className="h6 mt-2">Use your Web3.bio link on the Twitter bio, emails, and groups, or even business cards.</div>
                 </div>
               </div>
             </div>

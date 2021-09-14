@@ -5,8 +5,7 @@
   border-radius: $border-radius;
   color: $light-color;
   display: block;
-  padding: $layout-spacing;
-  width: 100%;
+  padding: $layout-spacing $layout-spacing-lg;
 
   &.toast-primary {
     @include toast-variant($primary-color);

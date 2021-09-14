@@ -34919,7 +34919,7 @@ class Footer extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      className: "btn btn-primary",
+      className: "btn",
       to: "/"
     }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
       className: "ml-1 mr-1"
@@ -35066,9 +35066,7 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", {
-      className: "text-bold"
-    }, "All your profile, social accounts, crypto addresses and NFT collections in one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-group-input input-lg text-left",
@@ -35183,7 +35181,7 @@ class App extends _react.Component {
       className: "h5 text-bold mt-2"
     }, "Spread the link"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-2"
-    }, "Use your Web3.bio link on the Twitter bio, emails, and groups.")))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Use your Web3.bio link on the Twitter bio, emails, and groups, or even business cards.")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
@@ -35275,10 +35273,10 @@ module.exports = "/instagram.79162530.svg";
 module.exports = "/youtube.af9355a8.svg";
 },{}],"assets/icons/discord.svg":[function(require,module,exports) {
 module.exports = "/discord.31d09d1b.svg";
-},{}],"assets/icons/paypal.svg":[function(require,module,exports) {
-module.exports = "/paypal.c4a1ad78.svg";
 },{}],"assets/icons/patreon.svg":[function(require,module,exports) {
 module.exports = "/patreon.663071f8.svg";
+},{}],"assets/icons/paypal.svg":[function(require,module,exports) {
+module.exports = "/paypal.c4a1ad78.svg";
 },{}],"components/SocialLinks.js":[function(require,module,exports) {
 "use strict";
 
@@ -35311,9 +35309,9 @@ var _youtube = _interopRequireDefault(require("../assets/icons/youtube.svg"));
 
 var _discord = _interopRequireDefault(require("../assets/icons/discord.svg"));
 
-var _paypal = _interopRequireDefault(require("../assets/icons/paypal.svg"));
-
 var _patreon = _interopRequireDefault(require("../assets/icons/patreon.svg"));
+
+var _paypal = _interopRequireDefault(require("../assets/icons/paypal.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35331,12 +35329,13 @@ class SocialLinks extends _react.Component {
       social
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-social"
+      className: "profile-social profile-widget"
     }, social.website ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.website,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item website"
+      className: "profile-social-item website",
+      title: "Website"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _website.default,
       className: "profile-social-icon icon",
@@ -35345,7 +35344,8 @@ class SocialLinks extends _react.Component {
       href: `mailto:${social.email}`,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item email"
+      className: "profile-social-item email",
+      title: "Email"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _email.default,
       className: "profile-social-icon icon",
@@ -35354,7 +35354,8 @@ class SocialLinks extends _react.Component {
       href: social.twitter,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item twitter"
+      className: "profile-social-item twitter",
+      title: "Twitter"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _twitter.default,
       className: "profile-social-icon icon",
@@ -35363,7 +35364,8 @@ class SocialLinks extends _react.Component {
       href: social.facebook,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item facebook"
+      className: "profile-social-item facebook",
+      title: "Facebook"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _facebook.default,
       className: "profile-social-icon icon",
@@ -35372,7 +35374,8 @@ class SocialLinks extends _react.Component {
       href: social.linkedin,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item linkedin"
+      className: "profile-social-item linkedin",
+      title: "LinkedIn"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _linkedin.default,
       className: "profile-social-icon icon",
@@ -35381,7 +35384,8 @@ class SocialLinks extends _react.Component {
       href: social.github,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item github"
+      className: "profile-social-item github",
+      title: "GitHub"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _github.default,
       className: "profile-social-icon icon",
@@ -35390,7 +35394,8 @@ class SocialLinks extends _react.Component {
       href: social.medium,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item medium"
+      className: "profile-social-item medium",
+      title: "Medium"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _medium.default,
       className: "profile-social-icon icon",
@@ -35399,7 +35404,8 @@ class SocialLinks extends _react.Component {
       href: social.telegram,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item telegram"
+      className: "profile-social-item telegram",
+      title: "Telegram"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _telegram.default,
       className: "profile-social-icon icon",
@@ -35408,7 +35414,8 @@ class SocialLinks extends _react.Component {
       href: social.instagram,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item instagram"
+      className: "profile-social-item instagram",
+      title: "Instagram"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _instagram.default,
       className: "profile-social-icon icon",
@@ -35417,7 +35424,8 @@ class SocialLinks extends _react.Component {
       href: social.youtube,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item youtube"
+      className: "profile-social-item youtube",
+      title: "YouTube"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _youtube.default,
       className: "profile-social-icon icon",
@@ -35426,29 +35434,32 @@ class SocialLinks extends _react.Component {
       href: social.discord,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item discord"
+      className: "profile-social-item discord",
+      title: "Discord"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _discord.default,
       className: "profile-social-icon icon",
       alt: "Discord"
-    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.paypal,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item paypal"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _paypal.default,
-      className: "profile-social-icon icon",
-      alt: "PayPal"
     })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.patreon,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item patreon"
+      className: "profile-social-item patreon",
+      title: "Patreon"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _patreon.default,
       className: "profile-social-icon icon",
       alt: "Patreon"
+    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.paypal,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item paypal",
+      title: "PayPal"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _paypal.default,
+      className: "profile-social-icon icon",
+      alt: "PayPal"
     })) : null);
   }
 
@@ -35456,218 +35467,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/medium.svg":"assets/icons/medium.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Profile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _config = _interopRequireDefault(require("./config"));
-
-var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
-
-var _Footer = _interopRequireDefault(require("./components/Footer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class Profile extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      currentUser: window.accountId,
-      loading: true,
-      pageBio: new Object(),
-      pageStatus: false
-    };
-    this.signedInFlow = this.signedInFlow.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
-    this.requestSignOut = this.requestSignOut.bind(this);
-    this.signedOutFlow = this.signedOutFlow.bind(this);
-  }
-
-  async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn();
-    let pageOwner = this.props.match.params.owner;
-    const pageBio = await this.getBio(pageOwner);
-
-    if (!!pageBio) {
-      document.title = `${pageBio.name} - Web3.bio`;
-      this.setState({
-        pageBio: pageBio,
-        pageStatus: true
-      });
-    }
-
-    if (loggedIn) {
-      this.signedInFlow();
-    } else {
-      this.signedOutFlow();
-    }
-  }
-
-  async signedInFlow() {
-    this.setState({
-      login: true,
-      currentUser: window.accountId
-    });
-    const accountId = await this.props.wallet.getAccountId();
-
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-  }
-
-  async requestSignIn() {
-    const appTitle = 'Web3.bio';
-    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  async getBio(pageOwner) {
-    try {
-      // make an update call to the smart contract
-      return await window.contract.getRecordByOwner({
-        owner: pageOwner
-      });
-    } catch (e) {
-      console.log('Something went wrong! ');
-      throw e;
-    } finally {
-      this.setState({
-        loading: false
-      });
-    }
-  }
-
-  requestSignOut() {
-    this.props.wallet.signOut();
-    setTimeout(this.signedOutFlow, 500);
-    console.log("after sign out", this.props.wallet.isSignedIn());
-  }
-
-  signedOutFlow() {
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-
-    this.setState({
-      login: false,
-      currentUser: null
-    });
-  }
-
-  render() {
-    const {
-      login,
-      currentUser,
-      loading,
-      pageBio,
-      pageStatus
-    } = this.state;
-    let social = new Object(pageBio.records);
-    let crypto = new Object(pageBio.crypto);
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-header"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/",
-      className: "web3bio-logo",
-      title: "Web3.bio"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), pageBio.owner == currentUser ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-account"
-    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      className: "btn mr-1",
-      to: "/dashboard"
-    }, "Manage"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn",
-      onClick: this.requestSignOut
-    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn",
-      onClick: this.requestSignIn
-    }, "Login with NEAR")) : null)))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.theme}`
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile text-center"
-    }, !!pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
-      src: pageBio.avatar,
-      className: "profile-avatar avatar avatar-xl"
-    }) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null), /*#__PURE__*/_react.default.createElement("h2", {
-      className: "profile-name"
-    }, pageBio.name), /*#__PURE__*/_react.default.createElement("h3", {
-      className: "profile-description"
-    }, pageBio.description), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
-      social: social
-    })))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h1"
-    }, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero-input input-group"
-    }, /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-group-input input-lg text-left",
-      value: `web3.bio/${currentUser}`,
-      readOnly: true
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/dashboard",
-      className: "btn btn-lg input-group-btn"
-    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero-input input-group c-hand",
-      onClick: this.requestSignIn
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg text-left"
-    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", {
-      className: "text-gray"
-    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn btn-lg input-group-btn"
-    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h6 mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "loading loading-lg"
-    })))), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
-  }
-
-}
-
-var _default = Profile;
-exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/Footer":"components/Footer.js"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/medium.svg":"assets/icons/medium.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
 var define;
 /*!
  * clipboard.js v2.0.8
@@ -36954,9 +36754,469 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_react_dom__;
 /******/ });
 });
 
-},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"assets/icons/copy.svg":[function(require,module,exports) {
+},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/react-middle-ellipsis/dist/index.min.js":[function(require,module,exports) {
+var define;
+!function (e, t) {
+  "object" == typeof exports && "object" == typeof module ? module.exports = t(require("react")) : "function" == typeof define && define.amd ? define(["React"], t) : "object" == typeof exports ? exports["react-middle-ellipsis"] = t(require("react")) : e["react-middle-ellipsis"] = t(e.React);
+}(this, function (e) {
+  return (() => {
+    "use strict";
+
+    var t = {
+      798: t => {
+        t.exports = e;
+      }
+    },
+        r = {};
+
+    function o(e) {
+      var n = r[e];
+      if (void 0 !== n) return n.exports;
+      var i = r[e] = {
+        exports: {}
+      };
+      return t[e](i, i.exports, o), i.exports;
+    }
+
+    o.n = e => {
+      var t = e && e.__esModule ? () => e.default : () => e;
+      return o.d(t, {
+        a: t
+      }), t;
+    }, o.d = (e, t) => {
+      for (var r in t) o.o(t, r) && !o.o(e, r) && Object.defineProperty(e, r, {
+        enumerable: !0,
+        get: t[r]
+      });
+    }, o.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t), o.r = e => {
+      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
+        value: "Module"
+      }), Object.defineProperty(e, "__esModule", {
+        value: !0
+      });
+    };
+    var n = {};
+    return (() => {
+      o.r(n), o.d(n, {
+        default: () => l
+      });
+      var e = o(798),
+          t = o.n(e);
+
+      function r(e, t) {
+        var r = Object.keys(e);
+
+        if (Object.getOwnPropertySymbols) {
+          var o = Object.getOwnPropertySymbols(e);
+          t && (o = o.filter(function (t) {
+            return Object.getOwnPropertyDescriptor(e, t).enumerable;
+          })), r.push.apply(r, o);
+        }
+
+        return r;
+      }
+
+      function i(e) {
+        for (var t = 1; t < arguments.length; t++) {
+          var o = null != arguments[t] ? arguments[t] : {};
+          t % 2 ? r(Object(o), !0).forEach(function (t) {
+            a(e, t, o[t]);
+          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(o)) : r(Object(o)).forEach(function (t) {
+            Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(o, t));
+          });
+        }
+
+        return e;
+      }
+
+      function a(e, t, r) {
+        return t in e ? Object.defineProperty(e, t, {
+          value: r,
+          enumerable: !0,
+          configurable: !0,
+          writable: !0
+        }) : e[t] = r, e;
+      }
+
+      const l = function (r) {
+        var o = function (e) {
+          var t = e.parentNode,
+              r = t.querySelector(".constrainedChild") || e.childNodes[0],
+              o = t.querySelector(".ellipseMe") || t.querySelector(".constrainedEllipse") || r;
+          null !== r && null !== o && (o.hasAttribute("data-original") && (o.textContent = o.getAttribute("data-original")), function (e, t, r) {
+            var o = t.offsetWidth,
+                n = e.offsetWidth,
+                i = r.offsetWidth,
+                a = o > i ? o : i;
+
+            if (a > n) {
+              var l = r.textContent,
+                  c = l.length,
+                  u = (c - (n - (a - i)) / (i / c) + 5) / 2,
+                  f = Math.floor(c / 2 - u),
+                  s = Math.ceil(c / 2 + u);
+              r.setAttribute("data-original", r.textContent), r.textContent = l.substr(0, f) + "..." + l.substr(s);
+            }
+          }(e.offsetWidth > t.offsetWidth ? t : e, r, o));
+        },
+            n = (0, e.useCallback)(function (e) {
+          null !== e && (window.addEventListener("resize", function () {
+            o(e);
+          }), o(e));
+        });
+
+        return t().createElement("div", {
+          ref: n,
+          style: i({
+            wordBreak: "keep-all",
+            overflowWrap: "normal"
+          }, r.width && {
+            width: r.width
+          })
+        }, r.children);
+      };
+    })(), n;
+  })();
+});
+},{"react":"../node_modules/react/index.js"}],"assets/icons/near.svg":[function(require,module,exports) {
+module.exports = "/near.0b44b3ed.svg";
+},{}],"assets/icons/btc.svg":[function(require,module,exports) {
+module.exports = "/btc.e136b254.svg";
+},{}],"assets/icons/eth.svg":[function(require,module,exports) {
+module.exports = "/eth.34e5f7dd.svg";
+},{}],"assets/icons/dot.svg":[function(require,module,exports) {
+module.exports = "/dot.3f8fecc0.svg";
+},{}],"assets/icons/copy.svg":[function(require,module,exports) {
 module.exports = "/copy.5aef999a.svg";
-},{}],"Dashboard.js":[function(require,module,exports) {
+},{}],"components/CryptoWidgets.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
+
+var _reactMiddleEllipsis = _interopRequireDefault(require("react-middle-ellipsis"));
+
+var _near = _interopRequireDefault(require("../assets/icons/near.svg"));
+
+var _btc = _interopRequireDefault(require("../assets/icons/btc.svg"));
+
+var _eth = _interopRequireDefault(require("../assets/icons/eth.svg"));
+
+var _dot = _interopRequireDefault(require("../assets/icons/dot.svg"));
+
+var _copy = _interopRequireDefault(require("../assets/icons/copy.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class CryptoWidgets extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.handleCopy = this.handleCopy.bind(this);
+  }
+
+  handleCopy() {
+    console.log('Copied to clipboard');
+  }
+
+  render() {
+    const {
+      crypto
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto profile-widget"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-widget-header"
+    }, "Crypto"), crypto.near ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      component: "div",
+      className: "profile-crypto-item near",
+      "data-clipboard-text": crypto.near
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _near.default,
+      className: "profile-crypto-icon icon",
+      alt: "NEAR"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content text-ellipsis"
+    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
+      className: "profile-crypto-title ellipseMe"
+    }, crypto.near), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "NEAR")))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      component: "div",
+      className: "profile-crypto-item btc",
+      "data-clipboard-text": crypto.btc
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _btc.default,
+      className: "profile-crypto-icon icon",
+      alt: "BTC"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content text-ellipsis"
+    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
+      className: "profile-crypto-title ellipseMe"
+    }, crypto.btc), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "BTC")))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      component: "div",
+      className: "profile-crypto-item eth",
+      "data-clipboard-text": crypto.eth
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _eth.default,
+      className: "profile-crypto-icon icon",
+      alt: "ETH"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content text-ellipsis"
+    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
+      className: "profile-crypto-title ellipseMe"
+    }, crypto.eth), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "ETH")))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      component: "div",
+      className: "profile-crypto-item dot",
+      "data-clipboard-text": crypto.dot
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _dot.default,
+      className: "profile-crypto-icon icon",
+      alt: "DOT"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content text-ellipsis"
+    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
+      className: "profile-crypto-title ellipseMe"
+    }, crypto.dot), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "DOT")))) : null);
+  }
+
+}
+
+var _default = CryptoWidgets;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-middle-ellipsis":"../node_modules/react-middle-ellipsis/dist/index.min.js","../assets/icons/near.svg":"assets/icons/near.svg","../assets/icons/btc.svg":"assets/icons/btc.svg","../assets/icons/eth.svg":"assets/icons/eth.svg","../assets/icons/dot.svg":"assets/icons/dot.svg","../assets/icons/copy.svg":"assets/icons/copy.svg"}],"Profile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
+
+var _CryptoWidgets = _interopRequireDefault(require("./components/CryptoWidgets"));
+
+var _Footer = _interopRequireDefault(require("./components/Footer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class Profile extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+  }
+
+  async componentDidMount() {
+    let loggedIn = this.props.wallet.isSignedIn();
+    let pageOwner = this.props.match.params.owner;
+    const pageBio = await this.getBio(pageOwner);
+
+    if (!!pageBio) {
+      document.title = `${pageBio.name} - Web3.bio`;
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      });
+    }
+
+    if (loggedIn) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  async getBio(pageOwner) {
+    try {
+      // make an update call to the smart contract
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      });
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  render() {
+    const {
+      login,
+      currentUser,
+      loading,
+      pageBio,
+      pageStatus
+    } = this.state;
+    let social = new Object(pageBio.records);
+    let crypto = new Object(pageBio.crypto);
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-container"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-header"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
+      className: "web3bio-logo",
+      title: "Web3.bio"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), pageBio.owner == currentUser ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-account"
+    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      className: "btn mr-1",
+      to: "/dashboard"
+    }, "Manage"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1",
+      onClick: this.requestSignOut
+    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignIn
+    }, "Login with NEAR")) : null)))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-cover ${pageBio.theme}`
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile text-center"
+    }, !!pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: pageBio.avatar,
+      className: "profile-avatar avatar avatar-xl"
+    }) : null, /*#__PURE__*/_react.default.createElement("h2", {
+      className: "profile-name"
+    }, pageBio.name), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
+      className: "profile-description"
+    }, pageBio.description) : /*#__PURE__*/_react.default.createElement("h3", {
+      className: "profile-description"
+    }, pageBio.owner), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
+      social: social
+    }), /*#__PURE__*/_react.default.createElement(_CryptoWidgets.default, {
+      crypto: crypto
+    })))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h1"
+    }, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group"
+    }, /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-group-input input-lg text-left",
+      value: `web3.bio/${currentUser}`,
+      readOnly: true
+    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/dashboard",
+      className: "btn btn-lg input-group-btn"
+    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group c-hand",
+      onClick: this.requestSignIn
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-left"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "text-gray"
+    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-lg input-group-btn"
+    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mt-2"
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "loading loading-lg"
+    })))), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
+  }
+
+}
+
+var _default = Profile;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/Footer":"components/Footer.js"}],"Dashboard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37288,7 +37548,7 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("ul", {
       className: "tab tab-block"
     }, /*#__PURE__*/_react.default.createElement("li", {
-      className: "tab-item"
+      className: "tab-item active"
     }, /*#__PURE__*/_react.default.createElement("a", {
       href: "#profile"
     }, "Profile")), /*#__PURE__*/_react.default.createElement("li", {
@@ -60803,7 +61063,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60698" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50077" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

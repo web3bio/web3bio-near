@@ -651,6 +651,22 @@ html:lang(ko),
     .btn.btn-primary.loading::after {
       border-bottom-color: #fff;
       border-left-color: #fff; }
+  .btn.btn-link {
+    background: rgba(249, 249, 249, 0.5);
+    border-color: rgba(241, 241, 241, 0.5);
+    box-shadow: 0 0.1rem 0.4rem rgba(70, 32, 225, 0.05);
+    color: #202020; }
+    .btn.btn-link:focus, .btn.btn-link:hover {
+      background: #282828;
+      border-color: #202020;
+      color: #fff; }
+    .btn.btn-link:active, .btn.btn-link.active {
+      background: #3b1ac3;
+      border-color: #3718b6;
+      color: #fff; }
+    .btn.btn-link.loading::after {
+      border-bottom-color: #fff;
+      border-left-color: #fff; }
   .btn.btn-sm {
     font-size: 0.7rem;
     height: 1.4rem;
@@ -1849,8 +1865,7 @@ video.video-responsive {
   border-radius: 0.4rem;
   color: #fff;
   display: block;
-  padding: 0.4rem;
-  width: 100%; }
+  padding: 0.4rem 0.8rem; }
   .toast.toast-primary {
     background: rgba(70, 32, 225, 0.95);
     border-color: #4620E1; }
@@ -1875,7 +1890,7 @@ video.video-responsive {
 
 .tooltip {
   position: relative; }
-  .tooltip::after {
+  .tooltip[data-tooltip]::after {
     background: rgba(32, 32, 32, 0.95);
     border-radius: 0.4rem;
     bottom: 100%;
@@ -2473,6 +2488,7 @@ a.text-error:visited {
 
 /*! Web3bio.css | MIT License */
 body {
+  background: #f9f9f9;
   overflow-x: hidden; }
 
 .web3bio-container {
@@ -2571,14 +2587,15 @@ body {
     font-weight: 900;
     line-height: 2rem; }
   .web3bio-content .profile-copy-icon {
-    height: 1rem;
-    margin-top: .1rem; }
+    height: .9rem;
+    margin-top: .1rem;
+    width: .9rem; }
 
 .web3bio-profile {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 2rem 1rem; }
+  text-align: center; }
   .web3bio-profile .profile-avatar {
     background: #fff;
     border: 0.2rem solid #fff;
@@ -2594,36 +2611,101 @@ body {
     font-size: .8rem;
     font-weight: 500;
     max-width: 600px; }
+  .web3bio-profile .profile-widget .profile-widget-header {
+    color: rgba(14, 6, 47, 0.15);
+    font-size: .7rem;
+    font-weight: 900;
+    margin-bottom: .5rem;
+    text-transform: uppercase; }
   .web3bio-profile .profile-social {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: .5rem auto 1rem auto; }
+    margin: 1rem auto; }
   .web3bio-profile .profile-social-item {
     align-items: center;
     background: #fff;
     border-radius: .6rem;
     box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
     display: flex;
-    height: 3rem;
+    height: 2.8rem;
     justify-content: center;
     margin: .5rem;
     padding: .4rem;
     transition: all .3s ease;
-    width: 3rem; }
+    width: 2.8rem; }
     .web3bio-profile .profile-social-item:focus, .web3bio-profile .profile-social-item:hover {
       box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
       transform: translateY(-0.1rem); }
-      .web3bio-profile .profile-social-item:focus .profile-social-icon, .web3bio-profile .profile-social-item:hover .profile-social-icon {
-        transform: scale(1.05); }
     .web3bio-profile .profile-social-item:active .profile-social-icon {
       transform: scale(0.95); }
     .web3bio-profile .profile-social-item .profile-social-icon {
       color: #4620E1;
       display: block;
-      height: 1.4rem;
+      height: 1.2rem;
       transition: all .3s ease;
-      width: 1.4rem; }
+      width: 1.2rem; }
+  .web3bio-profile .profile-crypto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 480px;
+    padding: 1rem 0;
+    width: 100%; }
+  .web3bio-profile .profile-crypto-item {
+    align-items: center;
+    background: #fff;
+    border-radius: .6rem;
+    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    display: flex;
+    margin: .5rem;
+    padding: .8rem 1rem;
+    transition: all .3s ease; }
+    .web3bio-profile .profile-crypto-item:focus, .web3bio-profile .profile-crypto-item:hover {
+      box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+      opacity: 1;
+      transform: translateY(-0.1rem); }
+    .web3bio-profile .profile-crypto-item .profile-crypto-icon {
+      color: #4620E1;
+      display: block;
+      flex: 0 0 1.2rem;
+      height: 1.2rem;
+      transition: all .3s ease;
+      width: 1.2rem; }
+    .web3bio-profile .profile-crypto-item .profile-crypto-content {
+      flex: 1 1 0;
+      padding: 0 0 0 1rem;
+      text-align: left;
+      width: 100%; }
+    .web3bio-profile .profile-crypto-item .profile-crypto-title {
+      font-size: .8rem;
+      line-height: 1.2rem; }
+    .web3bio-profile .profile-crypto-item .profile-crypto-subtitle {
+      color: #b9b9b9;
+      font-size: .5rem;
+      line-height: .6rem;
+      user-select: none; }
+    .web3bio-profile .profile-crypto-item .profile-crypto-action {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      padding: 0 0 0 1rem; }
+      .web3bio-profile .profile-crypto-item .profile-crypto-action .profile-copy-icon {
+        height: .8rem;
+        margin-top: .15rem;
+        width: .8rem; }
+    @media screen and (max-width: 600px) {
+      .web3bio-profile .profile-crypto-item {
+        align-items: flex-start;
+        flex-direction: column;
+        height: auto;
+        padding: 1rem; }
+        .web3bio-profile .profile-crypto-item .profile-crypto-content {
+          flex: 1 1 100%;
+          padding: .5rem 0 0 0; }
+        .web3bio-profile .profile-crypto-item .profile-crypto-action {
+          padding: .5rem 0 0 0; } }
 
 .web3bio-hero {
   padding: 3rem 0;
@@ -2639,15 +2721,17 @@ body {
     @media screen and (max-width: 840px) {
       .web3bio-hero .h1,
       .web3bio-hero h1 {
-        font-size: 2.4rem;
+        font-size: 2.6rem;
         line-height: 2.8rem; } }
   .web3bio-hero h1 strong {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-image: linear-gradient(233deg, #3718b5 0, #DB35A6 100%);
     font-weight: 900; }
+  .web3bio-hero .h2,
   .web3bio-hero h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
     margin: 1rem 0 2rem 0; }
   .web3bio-hero .emoji {
     font-size: 3.2rem; }
@@ -2701,14 +2785,24 @@ body {
         animation: slide-up .15s ease 1;
         box-shadow: 0 0.2rem 2rem #fff; }
 
+.web3bio-toast {
+  bottom: 1rem;
+  left: 50%;
+  max-width: 480px;
+  position: fixed;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 999; }
+
 .web3bio-placeholder {
   background: rgba(28, 12, 92, 0.1);
   box-shadow: inset 0 0 4rem rgba(32, 32, 32, 0.2);
   backdrop-filter: blur(2rem) saturate(120%) brightness(100%); }
 
 .web3bio-footer {
-  top: 100vh;
-  position: sticky; }
+  padding-top: 2rem;
+  position: sticky;
+  top: 100vh; }
 
 
 /*# sourceMappingURL=/src.e31bb0bc.css.map */

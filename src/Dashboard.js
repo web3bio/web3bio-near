@@ -280,7 +280,7 @@ class Dashboard extends Component {
                   
                   <div className="web3bio-settings">
                     <ul className="tab tab-block">
-                      <li className="tab-item">
+                      <li className="tab-item active">
                         <a href="#profile">Profile</a>
                       </li>
                       <li className="tab-item">

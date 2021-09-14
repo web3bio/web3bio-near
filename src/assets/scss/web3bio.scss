@@ -38,6 +38,7 @@
 
 /*! Web3bio.css | MIT License */
 body {
+  background: $bg-color;
   overflow-x: hidden;
 }
 
@@ -175,8 +176,9 @@ body {
   }
 
   .profile-copy-icon {
-    height: 1rem;
+    height: .9rem;
     margin-top: .1rem;
+    width: .9rem;
   }
 }
 
@@ -184,7 +186,7 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
-  padding: 0 1rem 2rem 1rem;
+  text-align: center;
 
   .profile-avatar {
     background: $light-color;
@@ -207,11 +209,22 @@ body {
     max-width: $size-sm;
   }
 
+  .profile-widget {
+    .profile-widget-header {
+      color: rgba(darken($primary-color, 40%), .15);
+      font-size: .7rem;
+      font-weight: 900;
+      margin-bottom: .5rem;
+      text-transform: uppercase;
+    }
+  }
+
+  // Social Widget
   .profile-social {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    margin: .5rem auto 1rem auto;
+    margin: 1rem auto;
   }
 
   .profile-social-item {
@@ -220,21 +233,17 @@ body {
     border-radius: .6rem;
     box-shadow: 0 .2rem .4rem rgba(0, 0, 0, .05);
     display: flex;
-    height: 3rem;
+    height: 2.8rem;
     justify-content: center;
     margin: .5rem;
     padding: .4rem;
     transition: all .3s ease;
-    width: 3rem;
+    width: 2.8rem;
 
     &:focus,
     &:hover {
       box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
       transform: translateY(-.1rem);
-
-      .profile-social-icon {
-        transform: scale(1.05);
-      }
     }
 
     &:active {
@@ -246,9 +255,95 @@ body {
     .profile-social-icon {
       color: $primary-color;
       display: block;
-      height: 1.4rem;
+      height: 1.2rem;
       transition: all .3s ease;
-      width: 1.4rem;
+      width: 1.2rem;
+    }
+  }
+
+  // Crypto Widget
+  .profile-crypto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: $size-xs;
+    padding: 1rem 0;
+    width: 100%;
+  }
+
+  .profile-crypto-item {
+    align-items: center;
+    background: $light-color;
+    border-radius: .6rem;
+    box-shadow: 0 .2rem .4rem rgba(0, 0, 0, .05);
+    cursor: pointer;
+    display: flex;
+    margin: .5rem;
+    padding: .8rem 1rem;
+    transition: all .3s ease;
+
+    &:focus,
+    &:hover {
+      box-shadow: 0 .3rem .6rem rgba(0, 0, 0, .1);
+      opacity: 1;
+      transform: translateY(-.1rem);
+    }
+
+    .profile-crypto-icon {
+      color: $primary-color;
+      display: block;
+      flex: 0 0 1.2rem;
+      height: 1.2rem;
+      transition: all .3s ease;
+      width: 1.2rem;
+    }
+
+    .profile-crypto-content {
+      flex: 1 1 0;
+      padding: 0 0 0 1rem;
+      text-align: left;
+      width: 100%;
+    }
+
+    .profile-crypto-title {
+      font-size: .8rem;
+      line-height: 1.2rem;
+    }
+
+    .profile-crypto-subtitle {
+      color: $gray-color;
+      font-size: .5rem;
+      line-height: .6rem;
+      user-select: none;
+    }
+
+    .profile-crypto-action {
+      align-items: center;
+      display: flex;
+      flex: 0 0 auto;
+      padding: 0 0 0 1rem;
+
+      .profile-copy-icon {
+        height: .8rem;
+        margin-top: .15rem;
+        width: .8rem;
+      }
+    }
+
+    @media screen and (max-width: $size-sm) {
+      align-items: flex-start;
+      flex-direction: column;
+      height: auto;
+      padding: 1rem;
+
+      .profile-crypto-content {
+        flex: 1 1 100%;
+        padding: .5rem 0 0 0;
+      }
+
+      .profile-crypto-action {
+        padding: .5rem 0 0 0;
+      }
     }
   }
 }
@@ -267,7 +362,7 @@ body {
     margin: 1rem 0;
 
     @media screen and (max-width: $size-md) {
-      font-size: 2.4rem;
+      font-size: 2.6rem;
       line-height: 2.8rem;
     }
   }
@@ -281,8 +376,10 @@ body {
     }
   }
 
+  .h2,
   h2 {
-    font-size: 1.2rem;
+    font-size: 1rem;
+    font-weight: 700;
     margin: 1rem 0 2rem 0;
   }
 
@@ -377,6 +474,16 @@ body {
   }
 }
 
+.web3bio-toast {
+  bottom: 1rem;
+  left: 50%;
+  max-width: $size-xs;
+  position: fixed;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 999;
+}
+
 .web3bio-placeholder {
   background: rgba(darken($primary-color, 30%), .1);
   box-shadow: inset 0 0 4rem rgba($dark-color, .2);
@@ -384,6 +491,7 @@ body {
 }
 
 .web3bio-footer {
-  top: 100vh;
+  padding-top: 2rem;
   position: sticky;
+  top: 100vh;
 }

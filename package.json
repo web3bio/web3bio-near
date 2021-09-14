@@ -11,7 +11,6 @@
     "deploy:contract": "near deploy",
     "deploy:pages": "gh-pages -d dist/",
     "deploy": "npm run build && npm run deploy:contract && npm run deploy:pages",
-    "prestart": "npm run build:contract:debug && npm run dev:deploy:contract",
     "start": "echo The app is starting! It will automatically open in your browser when ready && env-cmd -f ./neardev/dev-account.env parcel src/index.html --open",
     "dev": "nodemon --watch contract -e ts --exec \"npm run start\"",
     "test": "npm run build:contract:debug && cd contract && npm run test && cd .. && jest test --runInBand"
@@ -39,7 +38,8 @@
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-clipboard.js": "^2.0.16",
-    "react-dom": "~17.0.1",
+    "react-dom": "^17.0.2",
+    "react-middle-ellipsis": "^1.2.1",
     "react-router-dom": "^5.3.0",
     "regenerator-runtime": "~0.13.5"
   },
