@@ -35113,9 +35113,9 @@ class App extends _react.Component {
       className: "h5 text-bold mt-4"
     }, "Trusted by"), /*#__PURE__*/_react.default.createElement("div", {
       className: "emoji"
-    }, "\uD83D\uDC69\u200D\uD83C\uDF93 \uD83D\uDC69\u200D\uD83D\uDD27 \uD83D\uDC69\u200D\uD83C\uDFA8 \uD83D\uDC69\u200D\uD83C\uDFED \uD83D\uDC33 \uD83D\uDC68\u200D\uD83D\uDCBB \uD83D\uDC69\u200D\uD83C\uDFEB \uD83D\uDC68\u200D\uD83C\uDFA4 \uD83D\uDC6E\u200D\u2642\uFE0F \uD83D\uDC69\u200D\uD83D\uDCBC \uD83E\uDDD1\u200D\uD83D\uDD2C \uD83E\uDDD1\u200D\uD83D\uDE80 \uD83E\uDDB8\u200D\u2642\uFE0F \uD83E\uDD8D \uD83D\uDD75\uFE0F\u200D\u2642\uFE0F \uD83D\uDC68\u200D\uD83C\uDF73 \uD83D\uDC68\u200D\uD83C\uDF3E \uD83E\uDD84 \uD83E\uDDDD\u200D\u2642\uFE0F \uD83E\uDDB9\u200D\u2640\uFE0F \uD83E\uDDD9\u200D\u2642\uFE0F \uD83E\uDDDB\uD83C\uDFFC\u200D\u2642\uFE0F \uD83E\uDD77"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "\uD83D\uDC69\u200D\uD83C\uDF93 \uD83D\uDC69\u200D\uD83D\uDD27 \uD83D\uDC69\u200D\uD83C\uDFA8 \uD83D\uDC69\u200D\uD83C\uDFED \uD83D\uDC33 \uD83D\uDC68\u200D\uD83D\uDCBB \uD83D\uDC69\u200D\uD83C\uDFEB \uD83D\uDC6E\u200D\u2642\uFE0F \uD83E\uDDD1\u200D\uD83D\uDD2C \uD83E\uDDD1\u200D\uD83D\uDE80 \uD83E\uDDB8\u200D\u2642\uFE0F \uD83E\uDD8D \uD83D\uDD75\uFE0F\u200D\u2642\uFE0F \uD83D\uDC68\u200D\uD83C\uDF73 \uD83D\uDC68\u200D\uD83C\uDF3E \uD83E\uDD84 \uD83E\uDDDD\u200D\u2642\uFE0F \uD83E\uDDB9\u200D\u2640\uFE0F \uD83E\uDDD9\u200D\u2642\uFE0F \uD83E\uDDDB\uD83C\uDFFC\u200D\u2642\uFE0F \uD83E\uDD77"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 mt-4"
-    }, "\u21AA See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: "/yanzhu.near",
       className: "btn btn-sm btn-primary ml-1 mr-1"
     }, "Yan Zhu"), "is using Web3.bio."))))), /*#__PURE__*/_react.default.createElement("div", {
@@ -37159,7 +37159,10 @@ class Profile extends _react.Component {
     }, !!pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
       src: pageBio.avatar,
       className: "profile-avatar avatar avatar-xl"
-    }) : null, /*#__PURE__*/_react.default.createElement("h2", {
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-xl",
+      "data-initial": pageBio.name.charAt(0)
+    }), /*#__PURE__*/_react.default.createElement("h2", {
       className: "profile-name"
     }, pageBio.name), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
       className: "profile-description"
@@ -61063,7 +61066,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50077" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53607" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

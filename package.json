@@ -1,7 +1,7 @@
 {
   "name": "web3bio",
   "version": "0.2.0",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "build": "npm run build:contract && npm run build:web",
     "build:contract": "node contract/compile.js",
