@@ -189,9 +189,9 @@ body {
   text-align: center;
 
   .profile-avatar {
-    background: $light-color;
+    background: rgba(darken($primary-color, 40%), .15);
     border: .2rem solid $light-color;
-    box-shadow: 0 .3rem 1.2rem rgba(0, 0, 0, .15);
+    box-shadow: 0 .1rem 1rem rgba(0, 0, 0, .1);
   }
 
   .profile-name {
@@ -376,7 +376,6 @@ body {
     }
   }
 
-  .h2,
   h2 {
     font-size: 1rem;
     font-weight: 700;

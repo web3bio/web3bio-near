@@ -141,7 +141,7 @@ class Profile extends Component {
                     { !!pageBio.avatar ? 
                       <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
                       :
-                      null
+                      <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name.charAt(0)}></div>
                     }
                     <h2 className="profile-name">{pageBio.name}</h2>
                     { !!pageBio.description ?

@@ -134,8 +134,8 @@ class App extends Component {
             <div className="columns">
               <div className="column col-12">
                 <div className="h5 text-bold mt-4">Trusted by</div>
-                <div className="emoji">👩‍🎓 👩‍🔧 👩‍🎨 👩‍🏭 🐳 👨‍💻 👩‍🏫 👨‍🎤 👮‍♂️ 👩‍💼 🧑‍🔬 🧑‍🚀 🦸‍♂️ 🦍 🕵️‍♂️ 👨‍🍳 👨‍🌾 🦄 🧝‍♂️ 🦹‍♀️ 🧙‍♂️ 🧛🏼‍♂️ 🥷</div>
-                <div className="h5 mt-4">&#8618; See how the maker
+                <div className="emoji">👩‍🎓 👩‍🔧 👩‍🎨 👩‍🏭 🐳 👨‍💻 👩‍🏫 👮‍♂️ 🧑‍🔬 🧑‍🚀 🦸‍♂️ 🦍 🕵️‍♂️ 👨‍🍳 👨‍🌾 🦄 🧝‍♂️ 🦹‍♀️ 🧙‍♂️ 🧛🏼‍♂️ 🥷</div>
+                <div className="h5 mt-4">&#10132; See how the maker
                   <Link to="/yanzhu.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
                   is using Web3.bio.
                 </div>

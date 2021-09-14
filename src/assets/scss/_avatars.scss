@@ -69,6 +69,7 @@
   &[data-initial]::before {
     color: currentColor;
     content: attr(data-initial);
+    font-weight: 500;
     left: 50%;
     position: absolute;
     top: 50%;

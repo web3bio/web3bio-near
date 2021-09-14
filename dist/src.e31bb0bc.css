@@ -1591,6 +1591,7 @@ video.video-responsive {
   .avatar[data-initial]::before {
     color: currentColor;
     content: attr(data-initial);
+    font-weight: 500;
     left: 50%;
     position: absolute;
     top: 50%;
@@ -2597,9 +2598,9 @@ body {
   flex-direction: column;
   text-align: center; }
   .web3bio-profile .profile-avatar {
-    background: #fff;
+    background: rgba(14, 6, 47, 0.15);
     border: 0.2rem solid #fff;
-    box-shadow: 0 0.3rem 1.2rem rgba(0, 0, 0, 0.15); }
+    box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1); }
   .web3bio-profile .profile-name {
     color: #202020;
     font-size: 1.2rem;
@@ -2728,7 +2729,6 @@ body {
     -webkit-text-fill-color: transparent;
     background-image: linear-gradient(233deg, #3718b5 0, #DB35A6 100%);
     font-weight: 900; }
-  .web3bio-hero .h2,
   .web3bio-hero h2 {
     font-size: 1rem;
     font-weight: 700;
