@@ -1081,7 +1081,7 @@ textarea.form-input, textarea.form-input.input-lg, textarea.form-input.input-sm 
   opacity: .5; }
 
 .form-input[readonly] {
-  background-color: #f9f9f9; }
+  background-color: #e9e9e9; }
   .form-input[readonly]:focus {
     border-color: #202020;
     box-shadow: none; }
@@ -1802,26 +1802,28 @@ video.video-responsive {
 
 .tab {
   align-items: center;
-  border-bottom: 0.1rem solid #ececec;
+  background: #fff;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  margin: 0.2rem 0 0.1rem 0; }
+  margin: 0.2rem 0; }
   .tab .tab-item {
     margin-top: 0; }
     .tab .tab-item a {
-      border-bottom: 0.1rem solid transparent;
+      border-bottom: 0.1rem solid #ececec;
       color: inherit;
       display: block;
+      font-weight: 900;
       margin: 0 0.4rem 0 0;
-      padding: 0.4rem 0.2rem 0.3rem 0.2rem;
+      padding: 0.8rem 0.2rem 0.7rem 0.2rem;
       text-decoration: none; }
       .tab .tab-item a:focus, .tab .tab-item a:hover {
-        color: #4620E1; }
+        border-bottom-color: #202020;
+        color: #202020; }
     .tab .tab-item.active a,
     .tab .tab-item a.active {
-      border-bottom-color: #4620E1;
-      color: #4620E1; }
+      border-bottom-color: #202020;
+      color: #202020; }
     .tab .tab-item.tab-action {
       flex: 1 0 auto;
       text-align: right; }
@@ -1928,6 +1930,14 @@ video.video-responsive {
   0% {
     opacity: 0;
     transform: translateY(-1.6rem); }
+  100% {
+    opacity: 1;
+    transform: translateY(0); } }
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateY(1.6rem); }
   100% {
     opacity: 1;
     transform: translateY(0); } }
@@ -2440,6 +2450,9 @@ a.text-error:visited {
 .text-large {
   font-size: 1.2em; }
 
+.text-underline {
+  text-decoration: underline; }
+
 .text-opacity {
   opacity: .5; }
 
@@ -2471,7 +2484,7 @@ body {
   background: url("/bg-royal.6d0b558c.jpg") no-repeat center top;
   background-size: cover;
   display: block;
-  filter: blur(2.5rem);
+  filter: blur(3rem);
   height: 18rem;
   position: fixed;
   width: 100%;
@@ -2486,6 +2499,14 @@ body {
     background-image: url("/bg-witchhaze.a41bf097.jpg"); }
   .web3bio-cover.flax {
     background-image: url("/bg-flax.39742261.jpg"); }
+  .web3bio-cover.shalimar {
+    background-image: url("/bg-shalimar.c8c9e51c.jpg"); }
+  .web3bio-cover.creamwhisper {
+    background-image: url("/bg-creamwhisper.318f6706.jpg"); }
+  .web3bio-cover.flare {
+    background-image: url("/bg-flare.df7a95cc.jpg"); }
+  .web3bio-cover.snowymint {
+    background-image: url("/bg-snowymint.0cc40fb1.jpg"); }
 
 .web3bio-header .column {
   align-items: center;
@@ -2623,7 +2644,7 @@ body {
   .web3bio-hero h1 strong {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(233deg, #3718b5, #DB35A6);
+    background-image: linear-gradient(233deg, #3718b5 0, #DB35A6 100%);
     font-weight: 900; }
   .web3bio-hero h2 {
     font-size: 1.2rem;
@@ -2642,7 +2663,7 @@ body {
       flex: 1 1 auto;
       user-select: all; }
     .web3bio-hero .web3bio-hero-input .btn-lg:focus, .web3bio-hero .web3bio-hero-input .btn-lg:hover {
-      background-image: linear-gradient(233deg, #3718b5, #DB35A6);
+      background-image: linear-gradient(233deg, #3718b5 0, #DB35A6 100%);
       border-color: #202020; }
   .web3bio-hero .card {
     margin-bottom: 2rem;
@@ -2654,10 +2675,7 @@ body {
     .web3bio-hero.web3bio-data .text-title {
       color: #202020; }
     .web3bio-hero.web3bio-data .text-subtitle {
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(to left, rgba(28, 12, 92, 0.5) 0, rgba(32, 32, 32, 0.5) 100%);
-      color: rgba(28, 12, 92, 0.75); }
+      color: rgba(14, 6, 47, 0.35); }
   .web3bio-hero .web3bio-actionbar {
     margin-bottom: 1rem;
     margin-top: 2rem; }
@@ -2665,24 +2683,28 @@ body {
 .web3bio-settings {
   background: #fff;
   border-radius: 0.4rem;
-  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.05);
   margin: 2rem 0;
   padding: 1rem 2rem; }
   @media screen and (max-width: 840px) {
     .web3bio-settings {
       padding: 1rem;
-      margin: 2rem -1rem; } }
+      margin: 2rem 0; } }
   .web3bio-settings form fieldset {
-    margin: 2rem 0 0 0; }
-    .web3bio-settings form fieldset:first-child {
-      margin-top: 1rem; }
+    padding: 1rem 0 0 0; }
   .web3bio-settings .web3bio-settings-footer {
     padding: 1rem 0; }
     .web3bio-settings .web3bio-settings-footer.active {
       bottom: 0;
       position: sticky; }
       .web3bio-settings .web3bio-settings-footer.active .btn {
+        animation: slide-up .15s ease 1;
         box-shadow: 0 0.2rem 2rem #fff; }
+
+.web3bio-placeholder {
+  background: rgba(28, 12, 92, 0.1);
+  box-shadow: inset 0 0 4rem rgba(32, 32, 32, 0.2);
+  backdrop-filter: blur(2rem) saturate(120%) brightness(100%); }
 
 .web3bio-footer {
   top: 100vh;

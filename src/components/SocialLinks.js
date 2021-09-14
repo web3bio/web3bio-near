@@ -5,6 +5,7 @@ import IconTwitter from '../assets/icons/twitter.svg'
 import IconFacebook from '../assets/icons/facebook.svg'
 import IconLinkedin from '../assets/icons/linkedin.svg'
 import IconGithub from '../assets/icons/github.svg'
+import IconMeidum from '../assets/icons/medium.svg'
 import IconTelegram from '../assets/icons/telegram.svg'
 import IconInstagram from '../assets/icons/instagram.svg'
 import IconYoutube from '../assets/icons/youtube.svg'
@@ -50,6 +51,11 @@ class SocialLinks extends Component {
         {social.github? 
           <a href={social.github} target="_blank" rel="noopener noreferrer" className="profile-social-item github">
             <img src={IconGithub} className="profile-social-icon icon" alt="GitHub" />
+          </a> : null
+        }
+        {social.medium? 
+          <a href={social.medium} target="_blank" rel="noopener noreferrer" className="profile-social-item medium">
+            <img src={IconMeidum} className="profile-social-icon icon" alt="Medium" />
           </a> : null
         }
         {social.telegram? 

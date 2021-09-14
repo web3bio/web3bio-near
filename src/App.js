@@ -135,7 +135,7 @@ class App extends Component {
               <div className="column col-12">
                 <div className="h5 text-bold mt-4">Trusted by</div>
                 <div className="emoji">👩‍🎓 👩‍🔧 👩‍🎨 👩‍🏭 🐳 👨‍💻 👩‍🏫 👨‍🎤 👮‍♂️ 👩‍💼 🧑‍🔬 🧑‍🚀 🦸‍♂️ 🦍 🕵️‍♂️ 👨‍🍳 👨‍🌾 🦄 🧝‍♂️ 🦹‍♀️ 🧙‍♂️ 🧛🏼‍♂️ 🥷</div>
-                <div className="h5 mt-4">↪ See how the maker
+                <div className="h5 mt-4">&#8618; See how the maker
                   <Link to="/yanzhu.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
                   is using Web3.bio.
                 </div>
@@ -179,7 +179,7 @@ class App extends Component {
                     <div className="web3bio-action mx-auto text-bold">2</div>
                   </div>
                   <div className="h5 text-bold mt-2">Customize your profile</div>
-                  <div className="h6 mt-2">Complete your profile with your social links, crypto addresses, and others.</div>
+                  <div className="h6 mt-2">Complete your profile with your basic info, social links, crypto addresses, and others.</div>
                 </div>
               </div>
               <div className="column col-4 col-md-12">
@@ -195,7 +195,7 @@ class App extends Component {
             <div className="columns">
               <div className="column col-12">
                 { login ? 
-                  <Link className="btn btn-primary btn-lg" to="/dashboard">Claim your <strong>Web3.bio</strong> page</Link>
+                  <Link className="btn btn-primary btn-lg" to="/dashboard">Claim your <strong className="ml-1 mr-1">Web3.bio</strong> page</Link>
                   :
                   <button className="btn btn-primary btn-lg" onClick={this.requestSignIn}>Login and claim <strong>Web3.bio</strong> page</button>
                 }

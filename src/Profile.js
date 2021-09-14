@@ -141,8 +141,7 @@ class Profile extends Component {
                   <div className="container grid-sm">
                     <div className="columns">
                       <div className="column col-12">
-                        <h1>The page you’re looking for doesn’t exist.</h1>
-                        <div className="mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+                        <div className="h1">The page you’re looking for doesn’t exist.</div>
                         { login ? 
                           <div className="web3bio-hero-input input-group">
                             <input className="form-input input-group-input input-lg text-left" value={`web3.bio/${currentUser}`} readOnly />
@@ -156,6 +155,7 @@ class Profile extends Component {
                             <button className="btn btn-lg input-group-btn">Login and Claim</button>
                           </div>
                         }
+                        <div className="h6 mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
                       </div>
                     </div>
                   </div>

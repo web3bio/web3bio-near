@@ -163,6 +163,7 @@ class Dashboard extends Component {
       facebook: event.target.facebook.value,
       linkedin: event.target.linkedin.value,
       github: event.target.github.value,
+      medium: event.target.medium.value,
       telegram: event.target.telegram.value,
       instagram: event.target.instagram.value,
       youtube: event.target.youtube.value,
@@ -245,20 +246,50 @@ class Dashboard extends Component {
             <div className="web3bio-content container grid-sm">
               <div className="columns">
                 <div className="column col-12">
-                  <div className="web3bio-content-title text-center mb-4">Manage your profile</div>
-                  <div className="text-center">
-                    <div className="btn-group">
-                        <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
-                        <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
-                          <img src={IconCopy} className="profile-copy-icon icon" />
-                        </Clipboard>
+                  { !pageStatus ? 
+                    <>
+                      <div className="web3bio-content-title text-center mb-4">Welcome, <strong>{currentUser}</strong>.</div>
+                      <div className="web3bio-settings web3bio-placeholder">
+                        <div className="h5 text-bold mb-4">Claim your page</div>
+                        <div className="h6 mb-4">Complete your profile with your <a href="#profile" className="text-dark text-underline">basic info</a>, <a href="#social" className="text-dark text-underline">social links</a>, and <a href="#crypto" className="text-dark text-underline">crypto addresses</a> below.</div>
+                        <div className="h6 mb-4">Your profile page will be available at:</div>
+                        <div className="btn-group mb-2">
+                          <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
+                          <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
+                            <img src={IconCopy} className="profile-copy-icon icon" />
+                          </Clipboard>
+                        </div>
                       </div>
-                  </div>
+                    </>
+                    :
+                    <>
+                      <div className="web3bio-content-title text-center mb-4">Manage your profile</div>
+                      <div className="web3bio-content-action text-center">
+                        <div className="btn-group">
+                          <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
+                          <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
+                            <img src={IconCopy} className="profile-copy-icon icon" />
+                          </Clipboard>
+                        </div>
+                      </div>
+                    </>
+                  }
                   
                   <div className="web3bio-settings">
+                    <ul className="tab tab-block">
+                      <li className="tab-item">
+                        <a href="#profile">Profile</a>
+                      </li>
+                      <li className="tab-item">
+                        <a href="#social">Social</a>
+                      </li>
+                      <li className="tab-item">
+                        <a href="#crypto">Crypto</a>
+                      </li>
+                    </ul>
                     <form onSubmit={this.handleSubmit} autoComplete="off">
                       <fieldset id="profile">
-                        <legend className="h5 text-bold">Profile</legend>
+                        <div className="h5 text-bold">Profile</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="displayname">Name</label>
                           <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} autoComplete="off" />
@@ -276,19 +307,19 @@ class Dashboard extends Component {
                           }
                           <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onChange={this.handleChange} />
                           <div className="form-input-hint">You may use free photo hostings like <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-dark">IMGBB</a> for avatars.</div>
-                          
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="email">Email <small className="label">PUBLIC</small></label>
-                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onChange={this.handleChange} autoComplete="off" />
+                          <div className="form-input-hint">Leave it blank if you don't want to make your Email address public.</div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="website">Website</label>
-                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={social.website} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={social.website} onChange={this.handleChange} autoComplete="off" />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="location">Location</label>
-                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxLength="30" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxLength="30" onChange={this.handleChange} autoComplete="off" />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="theme">Theme</label>
@@ -299,12 +330,15 @@ class Dashboard extends Component {
                             <option value="salmon">Salmon</option>
                             <option value="mauve">Mauve</option>
                             <option value="shalimar">Shalimar</option>
+                            <option value="creamwhisper">Cream Whisper</option>
+                            <option value="flare">Flare</option>
+                            <option value="snowymint">Snowy Mint</option>
                           </select>
                         </div>
                       </fieldset>
 
                       <fieldset id="social">
-                        <legend className="h5 text-bold">Social</legend>
+                        <div className="h5 text-bold">Social</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="twitter">Twitter</label>
                           <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxLength="120" onChange={this.handleChange} />
@@ -320,6 +354,10 @@ class Dashboard extends Component {
                         <div className="form-group">
                           <label className="form-label" htmlFor="github">GitHub</label>
                           <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxLength="120" onChange={this.handleChange} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" htmlFor="medium">Medium</label>
+                          <input className="form-input input-lg" type="text" id="medium" placeholder="https://medium.com/" defaultValue={social.medium} maxLength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="telegram">Telegram</label>
@@ -353,7 +391,7 @@ class Dashboard extends Component {
                       </fieldset>
 
                       <fieldset id="crypto">
-                        <legend className="h5 text-bold">Crypto addresses</legend>
+                        <div className="h5 text-bold">Crypto addresses</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="near">NEAR</label>
                           <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} readOnly />
@@ -384,7 +422,7 @@ class Dashboard extends Component {
                     </form>
                   </div>
 
-                  <div className="web3bio-settings">
+                  <div className="web3bio-settings" id="dangerzone">
                     <div className="h5 text-bold">Danger Zone</div>
                     <div className="form-group">
                       <label className="form-label mb-2">Permanently delete your page and profile data from <strong className="text-error">{currentUser}</strong>. This of course is not reversable.</label>

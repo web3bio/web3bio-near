@@ -33,6 +33,7 @@ export class Records {
     public facebook: string = '',
     public linkedin: string = '',
     public github: string = '',
+    public medium: string = '',
     public telegram: string = '',
     public instagram: string = '',
     public youtube: string = '',

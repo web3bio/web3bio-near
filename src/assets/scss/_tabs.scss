@@ -1,31 +1,34 @@
 // Tabs
 .tab {
   align-items: center;
-  border-bottom: $border-width solid $border-color;
+  background: $light-color;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  margin: $unit-1 0 ($unit-1 - $border-width) 0;
+  margin: $unit-1 0;
 
   .tab-item {
     margin-top: 0;
 
     a {
-      border-bottom: $border-width-lg solid transparent;
+      border-bottom: $border-width-lg solid $border-color;
       color: inherit;
       display: block;
+      font-weight: 900;
       margin: 0 $unit-2 0 0;
-      padding: $unit-2 $unit-1 $unit-2 - $border-width-lg $unit-1;
+      padding: $unit-4 $unit-1 $unit-4 - $border-width-lg $unit-1;
       text-decoration: none;
+
       &:focus,
       &:hover {
-        color: $link-color;
+        border-bottom-color: $dark-color;
+        color: $dark-color;
       }
     }
     &.active a,
     a.active {
-      border-bottom-color: $primary-color;
-      color: $link-color;
+      border-bottom-color: $dark-color;
+      color: $dark-color;
     }
 
     &.tab-action {

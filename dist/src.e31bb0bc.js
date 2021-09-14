@@ -34921,7 +34921,9 @@ class Footer extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       className: "btn btn-primary",
       to: "/"
-    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "ml-1 mr-1"
+    }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-4 mb-2"
     }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://web3.bio",
@@ -35167,7 +35169,7 @@ class App extends _react.Component {
       className: "h5 text-bold mt-2"
     }, "Customize your profile"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-2"
-    }, "Complete your profile with your social links, crypto addresses, and others."))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Complete your profile with your basic info, social links, crypto addresses, and others."))), /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-4 col-md-12"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "card"
@@ -35186,7 +35188,9 @@ class App extends _react.Component {
     }, login ? /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       className: "btn btn-primary btn-lg",
       to: "/dashboard"
-    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page") : /*#__PURE__*/_react.default.createElement("button", {
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "ml-1 mr-1"
+    }, "Web3.bio"), " page") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn btn-primary btn-lg",
       onClick: this.requestSignIn
     }, "Login and claim ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
@@ -35257,6 +35261,8 @@ module.exports = "/facebook.b48d22fd.svg";
 module.exports = "/linkedin.15978cba.svg";
 },{}],"assets/icons/github.svg":[function(require,module,exports) {
 module.exports = "/github.373d19b5.svg";
+},{}],"assets/icons/medium.svg":[function(require,module,exports) {
+module.exports = "/medium.edb97904.svg";
 },{}],"assets/icons/telegram.svg":[function(require,module,exports) {
 module.exports = "/telegram.d5997881.svg";
 },{}],"assets/icons/instagram.svg":[function(require,module,exports) {
@@ -35290,6 +35296,8 @@ var _facebook = _interopRequireDefault(require("../assets/icons/facebook.svg"));
 var _linkedin = _interopRequireDefault(require("../assets/icons/linkedin.svg"));
 
 var _github = _interopRequireDefault(require("../assets/icons/github.svg"));
+
+var _medium = _interopRequireDefault(require("../assets/icons/medium.svg"));
 
 var _telegram = _interopRequireDefault(require("../assets/icons/telegram.svg"));
 
@@ -35374,6 +35382,15 @@ class SocialLinks extends _react.Component {
       src: _github.default,
       className: "profile-social-icon icon",
       alt: "GitHub"
+    })) : null, social.medium ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.medium,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item medium"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _medium.default,
+      className: "profile-social-icon icon",
+      alt: "Medium"
     })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.telegram,
       target: "_blank",
@@ -35435,7 +35452,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/medium.svg":"assets/icons/medium.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg"}],"Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35598,9 +35615,9 @@ class Profile extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "The page you\u2019re looking for doesn\u2019t exist."), /*#__PURE__*/_react.default.createElement("div", {
-      className: "mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."), login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h1"
+    }, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-group-input input-lg text-left",
@@ -35618,7 +35635,9 @@ class Profile extends _react.Component {
       className: "text-gray"
     }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn btn-lg input-group-btn"
-    }, "Login and Claim")))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mt-2"
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
@@ -37103,6 +37122,7 @@ class Dashboard extends _react.Component {
       facebook: event.target.facebook.value,
       linkedin: event.target.linkedin.value,
       github: event.target.github.value,
+      medium: event.target.medium.value,
       telegram: event.target.telegram.value,
       instagram: event.target.instagram.value,
       youtube: event.target.youtube.value,
@@ -37194,10 +37214,43 @@ class Dashboard extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
+    }, !pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content-title text-center mb-4"
+    }, "Welcome, ", /*#__PURE__*/_react.default.createElement("strong", null, currentUser), "."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings web3bio-placeholder"
     }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-4"
+    }, "Claim your page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mb-4"
+    }, "Complete your profile with your ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "#profile",
+      className: "text-dark text-underline"
+    }, "basic info"), ", ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "#social",
+      className: "text-dark text-underline"
+    }, "social links"), ", and ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "#crypto",
+      className: "text-dark text-underline"
+    }, "crypto addresses"), " below."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mb-4"
+    }, "Your profile page will be available at:"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "btn-group mb-2"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "btn",
+      target: "_blank"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-opacity"
+    }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn",
+      "data-clipboard-text": `https://web3.bio/${currentUser}`
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _copy.default,
+      className: "profile-copy-icon icon"
+    }))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content-title text-center mb-4"
     }, "Manage your profile"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "text-center"
+      className: "web3bio-content-action text-center"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "btn-group"
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
@@ -37212,14 +37265,28 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _copy.default,
       className: "profile-copy-icon icon"
-    })))), /*#__PURE__*/_react.default.createElement("div", {
+    }))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
-    }, /*#__PURE__*/_react.default.createElement("form", {
+    }, /*#__PURE__*/_react.default.createElement("ul", {
+      className: "tab tab-block"
+    }, /*#__PURE__*/_react.default.createElement("li", {
+      className: "tab-item"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#profile"
+    }, "Profile")), /*#__PURE__*/_react.default.createElement("li", {
+      className: "tab-item"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#social"
+    }, "Social")), /*#__PURE__*/_react.default.createElement("li", {
+      className: "tab-item"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#crypto"
+    }, "Crypto"))), /*#__PURE__*/_react.default.createElement("form", {
       onSubmit: this.handleSubmit,
       autoComplete: "off"
     }, /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "profile"
-    }, /*#__PURE__*/_react.default.createElement("legend", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold"
     }, "Profile"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -37286,8 +37353,11 @@ class Dashboard extends _react.Component {
       placeholder: "Email",
       pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,14}$",
       defaultValue: social.email,
-      onChange: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+      onChange: this.handleChange,
+      autoComplete: "off"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-input-hint"
+    }, "Leave it blank if you don't want to make your Email address public.")), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
@@ -37298,7 +37368,8 @@ class Dashboard extends _react.Component {
       id: "website",
       placeholder: "https://",
       defaultValue: social.website,
-      onChange: this.handleChange
+      onChange: this.handleChange,
+      autoComplete: "off"
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -37311,7 +37382,8 @@ class Dashboard extends _react.Component {
       placeholder: "The Moon",
       defaultValue: pageBio.location,
       maxLength: "30",
-      onChange: this.handleChange
+      onChange: this.handleChange,
+      autoComplete: "off"
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -37334,9 +37406,15 @@ class Dashboard extends _react.Component {
       value: "mauve"
     }, "Mauve"), /*#__PURE__*/_react.default.createElement("option", {
       value: "shalimar"
-    }, "Shalimar")))), /*#__PURE__*/_react.default.createElement("fieldset", {
+    }, "Shalimar"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "creamwhisper"
+    }, "Cream Whisper"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "flare"
+    }, "Flare"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "snowymint"
+    }, "Snowy Mint")))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "social"
-    }, /*#__PURE__*/_react.default.createElement("legend", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold"
     }, "Social"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -37388,6 +37466,19 @@ class Dashboard extends _react.Component {
       id: "github",
       placeholder: "https://github.com/",
       defaultValue: social.github,
+      maxLength: "120",
+      onChange: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "medium"
+    }, "Medium"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "medium",
+      placeholder: "https://medium.com/",
+      defaultValue: social.medium,
       maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -37478,7 +37569,7 @@ class Dashboard extends _react.Component {
       rel: "noopener noreferrer"
     }, "@picturepan2"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "crypto"
-    }, /*#__PURE__*/_react.default.createElement("legend", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold"
     }, "Crypto addresses"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -37539,7 +37630,8 @@ class Dashboard extends _react.Component {
       disabled: !formChanged,
       type: "submit"
     }, "Update")))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings"
+      className: "web3bio-settings",
+      id: "dangerzone"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold"
     }, "Danger Zone"), /*#__PURE__*/_react.default.createElement("div", {
@@ -37638,7 +37730,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
+},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"./../img/bg-creamwhisper.jpg":[["bg-creamwhisper.318f6706.jpg","assets/img/bg-creamwhisper.jpg"],"assets/img/bg-creamwhisper.jpg"],"./../img/bg-flare.jpg":[["bg-flare.df7a95cc.jpg","assets/img/bg-flare.jpg"],"assets/img/bg-flare.jpg"],"./../img/bg-snowymint.jpg":[["bg-snowymint.0cc40fb1.jpg","assets/img/bg-snowymint.jpg"],"assets/img/bg-snowymint.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyStore = void 0;
@@ -60693,7 +60785,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49603" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60698" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
