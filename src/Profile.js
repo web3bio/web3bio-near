@@ -111,6 +111,20 @@ class Profile extends Component {
                 <Link to="/" className="web3bio-logo" title="Web3.bio">
                   <h1>WEB3<br/>BIO</h1>
                 </Link>
+                { pageBio.owner == currentUser ? 
+                  <div className="web3bio-account">
+                    { login ? 
+                      <>
+                        <Link className="btn mr-1" to="/dashboard">Manage</Link>
+                        <button className="btn" onClick={this.requestSignOut}>Logout</button>
+                      </>
+                      :
+                      <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
+                    }
+                  </div>
+                  :
+                  null
+                }
               </div>
             </div>
           </div>

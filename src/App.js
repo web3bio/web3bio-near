@@ -126,7 +126,7 @@ class App extends Component {
           <div className="container grid-sm">
             <div className="columns">
               <div className="column col-12">
-                <h1>Your Profile<br/>Decentralized<br/>On NEAR</h1>
+                <div className="h1">Your Profile<br/>Decentralized<br/>On NEAR</div>
               </div>
             </div>
           </div>
@@ -197,7 +197,7 @@ class App extends Component {
                 { login ? 
                   <Link className="btn btn-primary btn-lg" to="/dashboard">Claim your <strong className="ml-1 mr-1">Web3.bio</strong> page</Link>
                   :
-                  <button className="btn btn-primary btn-lg" onClick={this.requestSignIn}>Login and claim <strong>Web3.bio</strong> page</button>
+                  <button className="btn btn-primary btn-lg" onClick={this.requestSignIn}>Login and claim <strong className="ml-1 mr-1">Web3.bio</strong> page</button>
                 }
                 <div className="h6 mt-4">New to NEAR Protocol? <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark"><u>Learn more at NEAR.org</u></a></div>
               </div>

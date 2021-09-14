@@ -35103,7 +35103,9 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "Your Profile", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized", /*#__PURE__*/_react.default.createElement("br", null), "On NEAR")))), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h1"
+    }, "Your Profile", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized", /*#__PURE__*/_react.default.createElement("br", null), "On NEAR")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
@@ -35193,7 +35195,9 @@ class App extends _react.Component {
     }, "Web3.bio"), " page") : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn btn-primary btn-lg",
       onClick: this.requestSignIn
-    }, "Login and claim ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Login and claim ", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "ml-1 mr-1"
+    }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-4"
     }, "New to NEAR Protocol? ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://near.org",
@@ -35590,7 +35594,18 @@ class Profile extends _react.Component {
       to: "/",
       className: "web3bio-logo",
       title: "Web3.bio"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), pageBio.owner == currentUser ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-account"
+    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      className: "btn mr-1",
+      to: "/dashboard"
+    }, "Manage"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignOut
+    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignIn
+    }, "Login with NEAR")) : null)))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: `web3bio-cover ${pageBio.theme}`
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-lg"
@@ -37071,6 +37086,9 @@ class Dashboard extends _react.Component {
     } catch (e) {
       console.log('Something went wrong! ');
       throw e;
+    } finally {
+      // Go to home page
+      window.location.replace(window.location.origin);
     }
   }
 

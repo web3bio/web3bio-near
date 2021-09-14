@@ -114,6 +114,9 @@ class Dashboard extends Component {
         'Something went wrong! '
       )
       throw e
+    } finally {
+      // Go to home page
+      window.location.replace(window.location.origin)
     }
   }
 
