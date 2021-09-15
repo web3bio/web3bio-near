@@ -35066,7 +35066,7 @@ class App extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your Web 3 profile, social accounts, crypto addresses and NFT collections on one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: `/${currentUser}`,
@@ -35102,7 +35102,14 @@ class App extends _react.Component {
       className: "column col-12"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h1"
-    }, "Your Profile", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized", /*#__PURE__*/_react.default.createElement("br", null), "On NEAR")))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Your Profile", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized", /*#__PURE__*/_react.default.createElement("br", null), "On NEAR"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 mt-4 mb-4"
+    }, "Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 mt-4 mb-4"
+    }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yanzhu.near",
+      className: "btn btn-sm btn-primary ml-1 mr-1"
+    }, "Yan Zhu"), "is using Web3.bio.")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
@@ -35112,12 +35119,7 @@ class App extends _react.Component {
       className: "h5 text-bold mt-4"
     }, "Trusted by"), /*#__PURE__*/_react.default.createElement("div", {
       className: "emoji"
-    }, "\uD83D\uDC69\u200D\uD83C\uDF93 \uD83D\uDC69\u200D\uD83D\uDD27 \uD83D\uDC69\u200D\uD83C\uDFA8 \uD83D\uDC69\u200D\uD83C\uDFED \uD83D\uDC33 \uD83D\uDC68\u200D\uD83D\uDCBB \uD83D\uDC69\u200D\uD83C\uDFEB \uD83D\uDC6E\u200D\u2642\uFE0F \uD83E\uDDD1\u200D\uD83D\uDD2C \uD83E\uDDD1\u200D\uD83D\uDE80 \uD83E\uDDB8\u200D\u2642\uFE0F \uD83E\uDD8D \uD83D\uDD75\uFE0F\u200D\u2642\uFE0F \uD83D\uDC68\u200D\uD83C\uDF73 \uD83D\uDC68\u200D\uD83C\uDF3E \uD83E\uDD84 \uD83E\uDDDD\u200D\u2642\uFE0F \uD83E\uDDB9\u200D\u2640\uFE0F \uD83E\uDDD9\u200D\u2642\uFE0F \uD83E\uDDDB\uD83C\uDFFC\u200D\u2642\uFE0F \uD83E\uDD77"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 mt-4"
-    }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/yanzhu.near",
-      className: "btn btn-sm btn-primary ml-1 mr-1"
-    }, "Yan Zhu"), "is using Web3.bio."))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "\uD83D\uDC69\u200D\uD83C\uDF93 \uD83D\uDC69\u200D\uD83D\uDD27 \uD83D\uDC69\u200D\uD83C\uDFA8 \uD83D\uDC69\u200D\uD83C\uDFED \uD83D\uDC33 \uD83D\uDC68\u200D\uD83D\uDCBB \uD83D\uDC69\u200D\uD83C\uDFEB \uD83D\uDC6E\u200D\u2642\uFE0F \uD83E\uDDD1\u200D\uD83D\uDD2C \uD83E\uDDD1\u200D\uD83D\uDE80 \uD83E\uDDB8\u200D\u2642\uFE0F \uD83E\uDD8D \uD83D\uDD75\uFE0F\u200D\u2642\uFE0F \uD83D\uDC68\u200D\uD83C\uDF73 \uD83D\uDC68\u200D\uD83C\uDF3E \uD83E\uDD84 \uD83E\uDDDD\u200D\u2642\uFE0F \uD83E\uDDB9\u200D\u2640\uFE0F \uD83E\uDDD9\u200D\u2642\uFE0F \uD83E\uDDDB\uD83C\uDFFC\u200D\u2642\uFE0F \uD83E\uDD77"))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero web3bio-data"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-md"
@@ -35180,7 +35182,7 @@ class App extends _react.Component {
       className: "h5 text-bold mt-2"
     }, "Spread the link"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-2"
-    }, "Use your Web3.bio link on the Twitter bio, emails, and groups, or even business cards.")))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Share your Web3.bio link on the Twitter bio, emails, and groups, or even business cards.")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
@@ -36723,7 +36725,7 @@ class SocialLinks extends _react.Component {
       href: social.website,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item website",
+      className: "profile-social-item tooltip website",
       title: "Website"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialWebsite.default,
@@ -36733,7 +36735,7 @@ class SocialLinks extends _react.Component {
       href: `mailto:${social.email}`,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item email",
+      className: "profile-social-item tooltip email",
       title: "Email"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialEmail.default,
@@ -36743,7 +36745,7 @@ class SocialLinks extends _react.Component {
       href: social.twitter,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item twitter",
+      className: "profile-social-item tooltip twitter",
       title: "Twitter"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialTwitter.default,
@@ -36753,7 +36755,7 @@ class SocialLinks extends _react.Component {
       href: social.facebook,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item facebook",
+      className: "profile-social-item tooltip facebook",
       title: "Facebook"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialFacebook.default,
@@ -36763,7 +36765,7 @@ class SocialLinks extends _react.Component {
       href: social.linkedin,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item linkedin",
+      className: "profile-social-item tooltip linkedin",
       title: "LinkedIn"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialLinkedin.default,
@@ -36773,7 +36775,7 @@ class SocialLinks extends _react.Component {
       href: social.github,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item github",
+      className: "profile-social-item tooltip github",
       title: "GitHub"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialGithub.default,
@@ -36783,7 +36785,7 @@ class SocialLinks extends _react.Component {
       href: social.medium,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item medium",
+      className: "profile-social-item tooltip medium",
       title: "Medium"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialMedium.default,
@@ -36793,7 +36795,7 @@ class SocialLinks extends _react.Component {
       href: social.telegram,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item telegram",
+      className: "profile-social-item tooltip telegram",
       title: "Telegram"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialTelegram.default,
@@ -36803,7 +36805,7 @@ class SocialLinks extends _react.Component {
       href: social.instagram,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item instagram",
+      className: "profile-social-item tooltip instagram",
       title: "Instagram"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialInstagram.default,
@@ -36813,7 +36815,7 @@ class SocialLinks extends _react.Component {
       href: social.youtube,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item youtube",
+      className: "profile-social-item tooltip youtube",
       title: "YouTube"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialYoutube.default,
@@ -36823,7 +36825,7 @@ class SocialLinks extends _react.Component {
       href: social.discord,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item discord",
+      className: "profile-social-item tooltip discord",
       title: "Discord"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialDiscord.default,
@@ -36833,7 +36835,7 @@ class SocialLinks extends _react.Component {
       href: social.patreon,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item patreon",
+      className: "profile-social-item tooltip patreon",
       title: "Patreon"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialPatreon.default,
@@ -36843,7 +36845,7 @@ class SocialLinks extends _react.Component {
       href: social.paypal,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "profile-social-item paypal",
+      className: "profile-social-item tooltip paypal",
       title: "PayPal"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialPaypal.default,
@@ -38233,12 +38235,14 @@ class CryptoWidgets extends _react.Component {
       href: `https://explorer.near.org/accounts/${crypto.near}`,
       target: "_blank",
       rel: "noopener noreferrer",
-      className: "btn btn-sm btn-link tooltip ml-1",
+      className: "btn btn-sm btn-link tooltip ml-1 mr-1",
       title: "Open in Explorer"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionExplore.default,
       className: "icon"
-    })))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
+    })), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1"
+    }, "Donate"))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item btc"
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",

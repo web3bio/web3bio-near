@@ -36,9 +36,10 @@ class CryptoWidgets extends Component {
               <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.near} onSuccess={this.handleCopy} title="Copy to clipboard">
                 <SVG src={IconCopy} className="icon" />
               </Clipboard>
-              <a href={`https://explorer.near.org/accounts/${crypto.near}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
+              <a href={`https://explorer.near.org/accounts/${crypto.near}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1 mr-1" title="Open in Explorer">
                 <SVG src={IconExplore} className="icon" />
               </a>
+              <button className="btn ml-1">Donate</button>
             </div>
           </div> : null
         }

@@ -98,7 +98,7 @@ class App extends Component {
             <div className="columns">
               <div className="column col-12">
                 <h1>One Link For Your <strong>Web3</strong> Profile</h1>
-                <h2>All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
+                <h2>All your Web 3 profile, social accounts, crypto addresses and NFT collections on one page.</h2>
                 { login ? 
                   <div className="web3bio-hero-input input-group">
                     <Link to={`/${currentUser}`} className="input-group-addon addon-lg text-left text-dark">web3.bio/
@@ -129,6 +129,11 @@ class App extends Component {
             <div className="columns">
               <div className="column col-12">
                 <div className="h1">Your Profile<br/>Decentralized<br/>On NEAR</div>
+                <div className="h5 mt-4 mb-4">Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action.</div>
+                <div className="h5 mt-4 mb-4">&#10132; See how the maker
+                  <Link to="/yanzhu.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
+                  is using Web3.bio.
+                </div>
               </div>
             </div>
           </div>
@@ -137,10 +142,6 @@ class App extends Component {
               <div className="column col-12">
                 <div className="h5 text-bold mt-4">Trusted by</div>
                 <div className="emoji">👩‍🎓 👩‍🔧 👩‍🎨 👩‍🏭 🐳 👨‍💻 👩‍🏫 👮‍♂️ 🧑‍🔬 🧑‍🚀 🦸‍♂️ 🦍 🕵️‍♂️ 👨‍🍳 👨‍🌾 🦄 🧝‍♂️ 🦹‍♀️ 🧙‍♂️ 🧛🏼‍♂️ 🥷</div>
-                <div className="h5 mt-4">&#10132; See how the maker
-                  <Link to="/yanzhu.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
-                  is using Web3.bio.
-                </div>
               </div>
             </div>
           </div>
@@ -190,7 +191,7 @@ class App extends Component {
                     <div className="web3bio-action mx-auto text-bold">3</div>
                     </div>
                   <div className="h5 text-bold mt-2">Spread the link</div>
-                  <div className="h6 mt-2">Use your Web3.bio link on the Twitter bio, emails, and groups, or even business cards.</div>
+                  <div className="h6 mt-2">Share your Web3.bio link on the Twitter bio, emails, and groups, or even business cards.</div>
                 </div>
               </div>
             </div>

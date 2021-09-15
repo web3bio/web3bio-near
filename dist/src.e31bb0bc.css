@@ -653,7 +653,7 @@ html:lang(ko),
       border-left-color: #fff; }
   .btn.btn-link {
     background: #f1f1f1;
-    border-color: #ececec;
+    border-color: #efefef;
     box-shadow: 0 0.1rem 0.4rem rgba(32, 32, 32, 0.05);
     color: #202020; }
     .btn.btn-link:focus, .btn.btn-link:hover {
@@ -2686,7 +2686,6 @@ body {
       display: block;
       flex: 0 0 1.4rem;
       height: 1.4rem;
-      transition: all .3s ease;
       width: 1.4rem; }
     .web3bio-profile .profile-crypto-item .profile-crypto-main {
       flex: 1 1 auto;
@@ -2699,7 +2698,7 @@ body {
       color: #b9b9b9;
       font-size: .5rem;
       font-weight: 500;
-      line-height: .6rem;
+      line-height: .7rem;
       user-select: none; }
     .web3bio-profile .profile-crypto-item .profile-crypto-action {
       align-items: center;
