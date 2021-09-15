@@ -15,7 +15,7 @@ export function getRecordByOwner(owner: string): Profile | null  {
 
 // setRecordByOwner for owner
 export function setRecordByOwner(
-  name: string,
+  displayname: string,
   avatar: string,
   description: string,
   location: string,
@@ -26,7 +26,7 @@ export function setRecordByOwner(
   const owner = Context.sender;
 
   const newRecordList = new Profile(
-    name,
+    displayname,
     avatar,
     description,
     location,

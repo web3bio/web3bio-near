@@ -167,11 +167,13 @@ class Dashboard extends Component {
       facebook: event.target.facebook.value,
       linkedin: event.target.linkedin.value,
       github: event.target.github.value,
+      gitcoin: event.target.gitcoin.value,
       medium: event.target.medium.value,
       telegram: event.target.telegram.value,
       instagram: event.target.instagram.value,
       youtube: event.target.youtube.value,
       discord: event.target.discord.value,
+      reddit: event.target.reddit.value,
       patreon: event.target.patreon.value,
       paypal: event.target.paypal.value
     })
@@ -290,7 +292,7 @@ class Dashboard extends Component {
                         <div className="h5 text-bold">Profile</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="displayname">Name</label>
-                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.name} required onChange={this.handleChange} autoComplete="off" />
+                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.displayname} required onChange={this.handleChange} autoComplete="off" />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="description">Bio</label>
@@ -303,7 +305,7 @@ class Dashboard extends Component {
                           :
                             <div className="profile-avatar avatar avatar-lg mb-4 mt-2" data-initial=""></div>
                           }
-                          <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onChange={this.handleChange} autoComplete="off" />
                           <div className="form-input-hint">You may use free photo hostings like <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-dark">IMGBB</a> for avatars.</div>
                         </div>
                         <div className="form-group">
@@ -354,6 +356,10 @@ class Dashboard extends Component {
                           <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxLength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
+                          <label className="form-label" htmlFor="gitcoin">Gitcoin</label>
+                          <input className="form-input input-lg" type="text" id="gitcoin" placeholder="https://gitcoin.co/" defaultValue={social.gitcoin} maxLength="120" onChange={this.handleChange} />
+                        </div>
+                        <div className="form-group">
                           <label className="form-label" htmlFor="medium">Medium</label>
                           <input className="form-input input-lg" type="text" id="medium" placeholder="https://medium.com/" defaultValue={social.medium} maxLength="120" onChange={this.handleChange} />
                         </div>
@@ -372,6 +378,10 @@ class Dashboard extends Component {
                         <div className="form-group">
                           <label className="form-label" htmlFor="discord">Discord</label>
                           <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxLength="120" onChange={this.handleChange} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" htmlFor="reddit">Reddit</label>
+                          <input className="form-input input-lg" type="text" id="reddit" placeholder="https://reddit.com/" defaultValue={social.reddit} maxLength="120" onChange={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="patreon">Patreon</label>

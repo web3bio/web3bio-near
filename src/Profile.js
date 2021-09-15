@@ -29,7 +29,7 @@ class Profile extends Component {
 
     const pageBio = await this.getBio(pageOwner)
     if (!!pageBio) {
-      document.title = `${pageBio.name} - Web3.bio`
+      document.title = `${pageBio.displayname} - Web3.bio`
       
       this.setState({
         pageBio: pageBio,
@@ -141,9 +141,9 @@ class Profile extends Component {
                     { !!pageBio.avatar ? 
                       <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
                       :
-                      <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.name.charAt(0)}></div>
+                      <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.displayname.charAt(0)}></div>
                     }
-                    <h2 className="profile-name">{pageBio.name}</h2>
+                    <h2 className="profile-name">{pageBio.displayname}</h2>
                     { !!pageBio.description ?
                       <h3 className="profile-description">{pageBio.description}</h3>
                       :

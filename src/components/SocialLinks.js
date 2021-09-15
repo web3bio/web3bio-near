@@ -6,11 +6,13 @@ import IconTwitter from '../assets/icons/social-twitter.svg'
 import IconFacebook from '../assets/icons/social-facebook.svg'
 import IconLinkedin from '../assets/icons/social-linkedin.svg'
 import IconGithub from '../assets/icons/social-github.svg'
+import IconGitcoin from '../assets/icons/social-gitcoin.svg'
 import IconMeidum from '../assets/icons/social-medium.svg'
 import IconTelegram from '../assets/icons/social-telegram.svg'
 import IconInstagram from '../assets/icons/social-instagram.svg'
 import IconYoutube from '../assets/icons/social-youtube.svg'
 import IconDiscord from '../assets/icons/social-discord.svg'
+import IconReddit from '../assets/icons/social-reddit.svg'
 import IconPatreon from '../assets/icons/social-patreon.svg'
 import IconPaypal from '../assets/icons/social-paypal.svg'
 
@@ -54,6 +56,11 @@ class SocialLinks extends Component {
             <SVG src={IconGithub} className="profile-social-icon icon" alt="GitHub" />
           </a> : null
         }
+        {social.gitcoin? 
+          <a href={social.gitcoin} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip gitcoin" title="Gitcoin">
+            <SVG src={IconGitcoin} className="profile-social-icon icon" alt="Gitcoin" />
+          </a> : null
+        }
         {social.medium? 
           <a href={social.medium} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip medium" title="Medium">
             <SVG src={IconMeidum} className="profile-social-icon icon" alt="Medium" />
@@ -77,6 +84,11 @@ class SocialLinks extends Component {
         {social.discord? 
           <a href={social.discord} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip discord" title="Discord">
             <SVG src={IconDiscord} className="profile-social-icon icon" alt="Discord" />
+          </a> : null
+        }
+        {social.reddit? 
+          <a href={social.reddit} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip reddit" title="Reddit">
+            <SVG src={IconReddit} className="profile-social-icon icon" alt="Reddit" />
           </a> : null
         }
         {social.patreon? 

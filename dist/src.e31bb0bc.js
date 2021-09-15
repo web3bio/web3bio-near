@@ -36662,6 +36662,8 @@ module.exports = "/social-instagram.591d736b.svg";
 module.exports = "/social-youtube.47047c5e.svg";
 },{}],"assets/icons/social-discord.svg":[function(require,module,exports) {
 module.exports = "/social-discord.cb5487c3.svg";
+},{}],"assets/icons/social-reddit.svg":[function(require,module,exports) {
+module.exports = "/social-reddit.1496fbc4.svg";
 },{}],"assets/icons/social-patreon.svg":[function(require,module,exports) {
 module.exports = "/social-patreon.3c9234ca.svg";
 },{}],"assets/icons/social-paypal.svg":[function(require,module,exports) {
@@ -36699,6 +36701,8 @@ var _socialInstagram = _interopRequireDefault(require("../assets/icons/social-in
 var _socialYoutube = _interopRequireDefault(require("../assets/icons/social-youtube.svg"));
 
 var _socialDiscord = _interopRequireDefault(require("../assets/icons/social-discord.svg"));
+
+var _socialReddit = _interopRequireDefault(require("../assets/icons/social-reddit.svg"));
 
 var _socialPatreon = _interopRequireDefault(require("../assets/icons/social-patreon.svg"));
 
@@ -36831,6 +36835,16 @@ class SocialLinks extends _react.Component {
       src: _socialDiscord.default,
       className: "profile-social-icon icon",
       alt: "Discord"
+    })) : null, social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.reddit,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip reddit",
+      title: "Reddit"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialReddit.default,
+      className: "profile-social-icon icon",
+      alt: "Reddit"
     })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.patreon,
       target: "_blank",
@@ -36858,7 +36872,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
 var define;
 /*!
  * clipboard.js v2.0.8
@@ -38407,7 +38421,7 @@ class Profile extends _react.Component {
     const pageBio = await this.getBio(pageOwner);
 
     if (!!pageBio) {
-      document.title = `${pageBio.name} - Web3.bio`;
+      document.title = `${pageBio.displayname} - Web3.bio`;
       this.setState({
         pageBio: pageBio,
         pageStatus: true
@@ -38517,10 +38531,10 @@ class Profile extends _react.Component {
       className: "profile-avatar avatar avatar-xl"
     }) : /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-avatar avatar avatar-xl",
-      "data-initial": pageBio.name.charAt(0)
+      "data-initial": pageBio.displayname.charAt(0)
     }), /*#__PURE__*/_react.default.createElement("h2", {
       className: "profile-name"
-    }, pageBio.name), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
+    }, pageBio.displayname), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
       className: "profile-description"
     }, pageBio.description) : /*#__PURE__*/_react.default.createElement("h3", {
       className: "profile-description"
@@ -38765,6 +38779,7 @@ class Dashboard extends _react.Component {
       instagram: event.target.instagram.value,
       youtube: event.target.youtube.value,
       discord: event.target.discord.value,
+      reddit: event.target.reddit.value,
       patreon: event.target.patreon.value,
       paypal: event.target.paypal.value
     });
@@ -38931,7 +38946,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "displayname",
       placeholder: "Name",
-      defaultValue: pageBio.name,
+      defaultValue: pageBio.displayname,
       required: true,
       onChange: this.handleChange,
       autoComplete: "off"
@@ -38964,7 +38979,8 @@ class Dashboard extends _react.Component {
       id: "avatar",
       placeholder: "https://",
       defaultValue: pageBio.avatar,
-      onChange: this.handleChange
+      onChange: this.handleChange,
+      autoComplete: "off"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
     }, "You may use free photo hostings like ", /*#__PURE__*/_react.default.createElement("a", {
@@ -39164,6 +39180,19 @@ class Dashboard extends _react.Component {
       id: "discord",
       placeholder: "https://discord.com/",
       defaultValue: social.discord,
+      maxLength: "120",
+      onChange: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "reddit"
+    }, "Reddit"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "reddit",
+      placeholder: "https://reddit.com/",
+      defaultValue: social.reddit,
       maxLength: "120",
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62422,7 +62451,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61300" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56480" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

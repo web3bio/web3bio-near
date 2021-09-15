@@ -1,6 +1,6 @@
 import { context, PersistentMap } from "near-sdk-as";
 
-const PROTOCOL_VERSION = "5";
+const PROTOCOL_VERSION = "6";
 
 @nearBindgen
 export class Profile {
@@ -9,7 +9,7 @@ export class Profile {
   premium: boolean
   
   constructor(
-    public name: string,
+    public displayname: string,
     public avatar: string,
     public description: string,
     public location: string,
@@ -33,11 +33,13 @@ export class Records {
     public facebook: string = '',
     public linkedin: string = '',
     public github: string = '',
+    public gitcoin: string = '',
     public medium: string = '',
     public telegram: string = '',
     public instagram: string = '',
     public youtube: string = '',
     public discord: string = '',
+    public reddit: string = '',
     public patreon: string = '',
     public paypal: string = ''
   ) {}
