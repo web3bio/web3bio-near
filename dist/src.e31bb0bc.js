@@ -35034,7 +35034,7 @@ class App extends _react.Component {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
+      className: "web3bio-cover royal"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35068,11 +35068,10 @@ class App extends _react.Component {
       className: "column col-12"
     }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your profile, social accounts, crypto addresses and NFT collections in one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
-    }, /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-group-input input-lg text-left",
-      value: `web3.bio/${currentUser}`,
-      readOnly: true
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "input-group-addon addon-lg text-left text-dark"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", null, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: "/dashboard",
       className: "btn btn-lg input-group-btn"
     }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
@@ -38225,6 +38224,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       className: "btn btn-sm btn-link tooltip mr-1",
       "data-clipboard-text": crypto.near,
+      onSuccess: this.handleCopy,
       title: "Copy to clipboard"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionCopy.default,
@@ -38243,7 +38243,8 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
       className: "profile-crypto-content",
-      "data-clipboard-text": crypto.btc
+      "data-clipboard-text": crypto.btc,
+      onSuccess: this.handleCopy
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoBtc.default,
       className: "profile-crypto-icon icon",
@@ -38259,6 +38260,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       className: "btn btn-sm btn-link tooltip mr-1",
       "data-clipboard-text": crypto.btc,
+      onSuccess: this.handleCopy,
       title: "Copy to clipboard"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionCopy.default,
@@ -38293,6 +38295,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       className: "btn btn-sm btn-link tooltip mr-1",
       "data-clipboard-text": crypto.eth,
+      onSuccess: this.handleCopy,
       title: "Copy to clipboard"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionCopy.default,
@@ -38327,6 +38330,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       className: "btn btn-sm btn-link tooltip mr-1",
       "data-clipboard-text": crypto.dot,
+      onSuccess: this.handleCopy,
       title: "Copy to clipboard"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionCopy.default,
@@ -38521,7 +38525,7 @@ class Profile extends _react.Component {
     }), /*#__PURE__*/_react.default.createElement(_CryptoWidgets.default, {
       crypto: crypto
     })))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
+      className: "web3bio-cover royal"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -38534,11 +38538,10 @@ class Profile extends _react.Component {
       className: "h1"
     }, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
-    }, /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-group-input input-lg text-left",
-      value: `web3.bio/${currentUser}`,
-      readOnly: true
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "input-group-addon addon-lg text-left text-dark"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", null, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: "/dashboard",
       className: "btn btn-lg input-group-btn"
     }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
@@ -38611,7 +38614,7 @@ class Dashboard extends _react.Component {
       formChanged: false,
       formLoading: false,
       formAvatar: '',
-      formTheme: ''
+      formTheme: 'royal'
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -38831,8 +38834,18 @@ class Dashboard extends _react.Component {
       title: "Web3.bio"
     }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-account"
-    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn",
+    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "btn mr-1",
+      target: "_blank"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "hide-lg"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-opacity"
+    }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement("span", {
+      className: "show-lg"
+    }, "Preview")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1",
       onClick: this.requestSignOut
     }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
       className: "btn",
@@ -38880,25 +38893,8 @@ class Dashboard extends _react.Component {
       src: _actionCopy.default,
       className: "profile-copy-icon icon"
     }))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content-title text-center mb-4"
-    }, "Manage your profile"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content-action text-center"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "btn-group"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: `/${currentUser}`,
-      className: "btn",
-      target: "_blank"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-opacity"
-    }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn tooltip",
-      "data-clipboard-text": `https://web3.bio/${currentUser}`,
-      title: "Copy to clipboard"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionCopy.default,
-      className: "profile-copy-icon icon"
-    }))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content-title text-center mt-4 mb-4"
+    }, "Manage your profile")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
     }, /*#__PURE__*/_react.default.createElement("ul", {
       className: "tab tab-block"
@@ -62422,7 +62418,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57156" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61300" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

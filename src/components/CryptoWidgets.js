@@ -33,7 +33,7 @@ class CryptoWidgets extends Component {
               </div>
             </Clipboard>
             <div className="profile-crypto-action">
-              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.near} title="Copy to clipboard">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.near} onSuccess={this.handleCopy} title="Copy to clipboard">
                 <SVG src={IconCopy} className="icon" />
               </Clipboard>
               <a href={`https://explorer.near.org/accounts/${crypto.near}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
@@ -44,7 +44,7 @@ class CryptoWidgets extends Component {
         }
         { crypto.btc? 
           <div className="profile-crypto-item btc">
-            <Clipboard component="div" className="profile-crypto-content" data-clipboard-text={crypto.btc}>
+            <Clipboard component="div" className="profile-crypto-content" data-clipboard-text={crypto.btc} onSuccess={this.handleCopy}>
               <SVG src={IconBtc} className="profile-crypto-icon icon" alt="BTC" />
               <div className="profile-crypto-main">
                 <div className="profile-crypto-subtitle">BTC</div>
@@ -52,7 +52,7 @@ class CryptoWidgets extends Component {
               </div>
             </Clipboard>
             <div className="profile-crypto-action">
-              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.btc} title="Copy to clipboard">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.btc} onSuccess={this.handleCopy} title="Copy to clipboard">
                 <SVG src={IconCopy} className="icon" />
               </Clipboard>
               <a href={`https://btc.com/btc/address/${crypto.btc}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
@@ -71,7 +71,7 @@ class CryptoWidgets extends Component {
               </div>
             </Clipboard>
             <div className="profile-crypto-action">
-              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.eth} title="Copy to clipboard">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.eth} onSuccess={this.handleCopy} title="Copy to clipboard">
                 <SVG src={IconCopy} className="icon" />
               </Clipboard>
               <a href={`https://etherscan.io/address/${crypto.eth}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
@@ -90,7 +90,7 @@ class CryptoWidgets extends Component {
               </div>
             </Clipboard>
             <div className="profile-crypto-action">
-              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.dot} title="Copy to clipboard">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.dot} onSuccess={this.handleCopy} title="Copy to clipboard">
                 <SVG src={IconCopy} className="icon" />
               </Clipboard>
               <a href={`https://polkadot.subscan.io/account/${crypto.dot}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">

@@ -49,15 +49,19 @@ body {
 }
 
 .web3bio-cover {
-  background: url('../img/bg-royal.jpg') no-repeat center top;
+  background: no-repeat center top;
   background-size: cover;
   display: block;
   filter: blur(3rem);
-  height: 18rem;
+  height: 24rem;
   left: 0;
   position: fixed;
   width: 100%;
   z-index: -1;
+
+  &.royal {
+    background-image: url('../img/bg-royal.jpg');
+  }
 
   &.shalimar {
     background-image: url('../img/bg-shalimar.jpg');
@@ -271,6 +275,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 2rem;
     max-width: $size-xs;
     padding: 1rem 0;
     width: 100%;
@@ -405,7 +410,8 @@ body {
 
   h2 {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
+    line-height: 1.5;
     margin: 1rem 0 2rem 0;
   }
 
@@ -421,6 +427,7 @@ body {
     .input-group-addon {
       border-color: $dark-color;
       flex: 1 1 auto;
+      text-decoration: none;
     }
     
     .input-group-input {

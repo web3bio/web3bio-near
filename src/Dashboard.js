@@ -20,7 +20,7 @@ class Dashboard extends Component {
       formChanged: false,
       formLoading: false,
       formAvatar: '',
-      formTheme: ''
+      formTheme: 'royal'
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -233,7 +233,8 @@ class Dashboard extends Component {
                 <div className="web3bio-account">
                   { login ? 
                     <>
-                      <button className="btn" onClick={this.requestSignOut}>Logout</button>
+                      <Link to={`/${currentUser}`} className="btn mr-1" target="_blank"><span className="hide-lg"><span className="text-opacity">web3.bio/</span>{currentUser}</span><span className="show-lg">Preview</span></Link>
+                      <button className="btn ml-1" onClick={this.requestSignOut}>Logout</button>
                     </>
                     :
                     <button className="btn" onClick={this.requestSignIn}>Login with NEAR</button>
@@ -267,15 +268,8 @@ class Dashboard extends Component {
                     </>
                     :
                     <>
-                      <div className="web3bio-content-title text-center mb-4">Manage your profile</div>
-                      <div className="web3bio-content-action text-center">
-                        <div className="btn-group">
-                          <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
-                          <Clipboard className="btn tooltip" data-clipboard-text={`https://web3.bio/${currentUser}`} title="Copy to clipboard">
-                            <SVG src={IconCopy} className="profile-copy-icon icon" />
-                          </Clipboard>
-                        </div>
-                      </div>
+                      <div className="web3bio-content-title text-center mt-4 mb-4">Manage your profile</div>
+                      
                     </>
                   }
                   

@@ -158,7 +158,7 @@ class Profile extends Component {
               </>
               :
               <>
-                <div className="web3bio-cover"></div>
+                <div className="web3bio-cover royal"></div>
                 <div className="web3bio-hero container grid-sm">
                   <div className="container grid-sm">
                     <div className="columns">
@@ -166,7 +166,9 @@ class Profile extends Component {
                         <div className="h1">The page you’re looking for doesn’t exist.</div>
                         { login ? 
                           <div className="web3bio-hero-input input-group">
-                            <input className="form-input input-group-input input-lg text-left" value={`web3.bio/${currentUser}`} readOnly />
+                            <Link to={`/${currentUser}`} className="input-group-addon addon-lg text-left text-dark">web3.bio/
+                              <strong>{currentUser}</strong>
+                            </Link>
                             <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                           </div>
                           :

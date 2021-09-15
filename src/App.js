@@ -69,7 +69,7 @@ class App extends Component {
 
     return (
       <div className="web3bio-container">
-        <div className="web3bio-cover"></div>
+        <div className="web3bio-cover royal"></div>
 
         <div className="web3bio-header">
           <div className="container grid-lg">
@@ -101,7 +101,9 @@ class App extends Component {
                 <h2>All your profile, social accounts, crypto addresses and NFT collections in one page.</h2>
                 { login ? 
                   <div className="web3bio-hero-input input-group">
-                    <input className="form-input input-group-input input-lg text-left" value={`web3.bio/${currentUser}`} readOnly />
+                    <Link to={`/${currentUser}`} className="input-group-addon addon-lg text-left text-dark">web3.bio/
+                      <strong>{currentUser}</strong>
+                    </Link>
                     <Link to="/dashboard" className="btn btn-lg input-group-btn">Claim your page</Link>
                   </div>
                   :

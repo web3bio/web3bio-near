@@ -653,7 +653,7 @@ html:lang(ko),
       border-left-color: #fff; }
   .btn.btn-link {
     background: #f1f1f1;
-    border-color: #efefef;
+    border-color: #ececec;
     box-shadow: 0 0.1rem 0.4rem rgba(32, 32, 32, 0.05);
     color: #202020; }
     .btn.btn-link:focus, .btn.btn-link:hover {
@@ -2498,15 +2498,17 @@ body {
   width: 100vw; }
 
 .web3bio-cover {
-  background: url("/bg-royal.6d0b558c.jpg") no-repeat center top;
+  background: no-repeat center top;
   background-size: cover;
   display: block;
   filter: blur(3rem);
-  height: 18rem;
+  height: 24rem;
   left: 0;
   position: fixed;
   width: 100%;
   z-index: -1; }
+  .web3bio-cover.royal {
+    background-image: url("/bg-royal.6d0b558c.jpg"); }
   .web3bio-cover.shalimar {
     background-image: url("/bg-shalimar.c8c9e51c.jpg"); }
   .web3bio-cover.mauve {
@@ -2654,6 +2656,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-top: 2rem;
     max-width: 480px;
     padding: 1rem 0;
     width: 100%; }
@@ -2752,7 +2755,8 @@ body {
     font-weight: 900; }
   .web3bio-hero h2 {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 500;
+    line-height: 1.5;
     margin: 1rem 0 2rem 0; }
   .web3bio-hero .emoji {
     font-size: 3.2rem; }
@@ -2762,7 +2766,8 @@ body {
     max-width: 24rem; }
     .web3bio-hero .web3bio-hero-input .input-group-addon {
       border-color: #202020;
-      flex: 1 1 auto; }
+      flex: 1 1 auto;
+      text-decoration: none; }
     .web3bio-hero .web3bio-hero-input .input-group-input {
       border-color: #202020;
       flex: 1 1 auto;
