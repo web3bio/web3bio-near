@@ -2603,10 +2603,14 @@ body {
     box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1); }
   .web3bio-profile .profile-name {
     color: #202020;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     margin-top: 1rem;
     max-width: 600px; }
+    @media screen and (max-width: 840px) {
+      .web3bio-profile .profile-name {
+        font-size: 2.6rem;
+        line-height: 2.8rem; } }
   .web3bio-profile .profile-description {
     color: #202020;
     font-size: .8rem;
@@ -2641,7 +2645,7 @@ body {
     .web3bio-profile .profile-social-item:active .profile-social-icon {
       transform: scale(0.95); }
     .web3bio-profile .profile-social-item .profile-social-icon {
-      color: #4620E1;
+      color: #202020;
       display: block;
       height: 1.2rem;
       transition: all .3s ease;

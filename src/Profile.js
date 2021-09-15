@@ -105,7 +105,7 @@ class Profile extends Component {
     return (
       <div className="web3bio-container">
 
-        <div className="web3bio-header">
+        <div className="web3bio-header hide-md">
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">

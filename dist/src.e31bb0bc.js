@@ -35251,7 +35251,1395 @@ class App extends _react.Component {
 
 var _default = App;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"assets/icons/website.svg":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"../node_modules/react-from-dom/esm/helpers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.randomString = randomString;
+exports.possibleStandardNames = exports.noTextChildNodes = exports.styleToObject = void 0;
+
+var __read = void 0 && (void 0).__read || function (o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+};
+
+var styleToObject = function (input) {
+  var attributes = input.split(/ ?; ?/);
+  return attributes.reduce(function (acc, d) {
+    var _a = __read(d.split(/ ?: ?/), 2),
+        key = _a[0],
+        value = _a[1];
+
+    if (key && value) {
+      acc[key.replace(/-(\w)/g, function (_$0, $1) {
+        return $1.toUpperCase();
+      })] = Number.isNaN(Number(value)) ? value : Number(value);
+    }
+
+    return acc;
+  }, {});
+};
+/* istanbul ignore next */
+
+
+exports.styleToObject = styleToObject;
+
+function randomString(length) {
+  if (length === void 0) {
+    length = 6;
+  }
+
+  var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var result = '';
+
+  for (var i = length; i > 0; --i) {
+    result += characters[Math.round(Math.random() * (characters.length - 1))];
+  }
+
+  return result;
+}
+
+var noTextChildNodes = ['br', 'col', 'colgroup', 'dl', 'hr', 'iframe', 'img', 'input', 'link', 'menuitem', 'meta', 'ol', 'param', 'select', 'table', 'tbody', 'tfoot', 'thead', 'tr', 'ul', 'wbr'];
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+// Taken from https://raw.githubusercontent.com/facebook/react/baff5cc2f69d30589a5dc65b089e47765437294b/packages/react-dom/src/shared/possibleStandardNames.js
+// tslint:disable:object-literal-sort-keys
+
+exports.noTextChildNodes = noTextChildNodes;
+var possibleStandardNames = {
+  // HTML
+  'accept-charset': 'acceptCharset',
+  acceptcharset: 'acceptCharset',
+  accesskey: 'accessKey',
+  allowfullscreen: 'allowFullScreen',
+  autocapitalize: 'autoCapitalize',
+  autocomplete: 'autoComplete',
+  autocorrect: 'autoCorrect',
+  autofocus: 'autoFocus',
+  autoplay: 'autoPlay',
+  autosave: 'autoSave',
+  cellpadding: 'cellPadding',
+  cellspacing: 'cellSpacing',
+  charset: 'charSet',
+  class: 'className',
+  classid: 'classID',
+  classname: 'className',
+  colspan: 'colSpan',
+  contenteditable: 'contentEditable',
+  contextmenu: 'contextMenu',
+  controlslist: 'controlsList',
+  crossorigin: 'crossOrigin',
+  dangerouslysetinnerhtml: 'dangerouslySetInnerHTML',
+  datetime: 'dateTime',
+  defaultchecked: 'defaultChecked',
+  defaultvalue: 'defaultValue',
+  enctype: 'encType',
+  for: 'htmlFor',
+  formmethod: 'formMethod',
+  formaction: 'formAction',
+  formenctype: 'formEncType',
+  formnovalidate: 'formNoValidate',
+  formtarget: 'formTarget',
+  frameborder: 'frameBorder',
+  hreflang: 'hrefLang',
+  htmlfor: 'htmlFor',
+  httpequiv: 'httpEquiv',
+  'http-equiv': 'httpEquiv',
+  icon: 'icon',
+  innerhtml: 'innerHTML',
+  inputmode: 'inputMode',
+  itemid: 'itemID',
+  itemprop: 'itemProp',
+  itemref: 'itemRef',
+  itemscope: 'itemScope',
+  itemtype: 'itemType',
+  keyparams: 'keyParams',
+  keytype: 'keyType',
+  marginwidth: 'marginWidth',
+  marginheight: 'marginHeight',
+  maxlength: 'maxLength',
+  mediagroup: 'mediaGroup',
+  minlength: 'minLength',
+  nomodule: 'noModule',
+  novalidate: 'noValidate',
+  playsinline: 'playsInline',
+  radiogroup: 'radioGroup',
+  readonly: 'readOnly',
+  referrerpolicy: 'referrerPolicy',
+  rowspan: 'rowSpan',
+  spellcheck: 'spellCheck',
+  srcdoc: 'srcDoc',
+  srclang: 'srcLang',
+  srcset: 'srcSet',
+  tabindex: 'tabIndex',
+  typemustmatch: 'typeMustMatch',
+  usemap: 'useMap',
+  // SVG
+  accentheight: 'accentHeight',
+  'accent-height': 'accentHeight',
+  alignmentbaseline: 'alignmentBaseline',
+  'alignment-baseline': 'alignmentBaseline',
+  allowreorder: 'allowReorder',
+  arabicform: 'arabicForm',
+  'arabic-form': 'arabicForm',
+  attributename: 'attributeName',
+  attributetype: 'attributeType',
+  autoreverse: 'autoReverse',
+  basefrequency: 'baseFrequency',
+  baselineshift: 'baselineShift',
+  'baseline-shift': 'baselineShift',
+  baseprofile: 'baseProfile',
+  calcmode: 'calcMode',
+  capheight: 'capHeight',
+  'cap-height': 'capHeight',
+  clippath: 'clipPath',
+  'clip-path': 'clipPath',
+  clippathunits: 'clipPathUnits',
+  cliprule: 'clipRule',
+  'clip-rule': 'clipRule',
+  colorinterpolation: 'colorInterpolation',
+  'color-interpolation': 'colorInterpolation',
+  colorinterpolationfilters: 'colorInterpolationFilters',
+  'color-interpolation-filters': 'colorInterpolationFilters',
+  colorprofile: 'colorProfile',
+  'color-profile': 'colorProfile',
+  colorrendering: 'colorRendering',
+  'color-rendering': 'colorRendering',
+  contentscripttype: 'contentScriptType',
+  contentstyletype: 'contentStyleType',
+  diffuseconstant: 'diffuseConstant',
+  dominantbaseline: 'dominantBaseline',
+  'dominant-baseline': 'dominantBaseline',
+  edgemode: 'edgeMode',
+  enablebackground: 'enableBackground',
+  'enable-background': 'enableBackground',
+  externalresourcesrequired: 'externalResourcesRequired',
+  fillopacity: 'fillOpacity',
+  'fill-opacity': 'fillOpacity',
+  fillrule: 'fillRule',
+  'fill-rule': 'fillRule',
+  filterres: 'filterRes',
+  filterunits: 'filterUnits',
+  floodopacity: 'floodOpacity',
+  'flood-opacity': 'floodOpacity',
+  floodcolor: 'floodColor',
+  'flood-color': 'floodColor',
+  fontfamily: 'fontFamily',
+  'font-family': 'fontFamily',
+  fontsize: 'fontSize',
+  'font-size': 'fontSize',
+  fontsizeadjust: 'fontSizeAdjust',
+  'font-size-adjust': 'fontSizeAdjust',
+  fontstretch: 'fontStretch',
+  'font-stretch': 'fontStretch',
+  fontstyle: 'fontStyle',
+  'font-style': 'fontStyle',
+  fontvariant: 'fontVariant',
+  'font-variant': 'fontVariant',
+  fontweight: 'fontWeight',
+  'font-weight': 'fontWeight',
+  glyphname: 'glyphName',
+  'glyph-name': 'glyphName',
+  glyphorientationhorizontal: 'glyphOrientationHorizontal',
+  'glyph-orientation-horizontal': 'glyphOrientationHorizontal',
+  glyphorientationvertical: 'glyphOrientationVertical',
+  'glyph-orientation-vertical': 'glyphOrientationVertical',
+  glyphref: 'glyphRef',
+  gradienttransform: 'gradientTransform',
+  gradientunits: 'gradientUnits',
+  horizadvx: 'horizAdvX',
+  'horiz-adv-x': 'horizAdvX',
+  horizoriginx: 'horizOriginX',
+  'horiz-origin-x': 'horizOriginX',
+  imagerendering: 'imageRendering',
+  'image-rendering': 'imageRendering',
+  kernelmatrix: 'kernelMatrix',
+  kernelunitlength: 'kernelUnitLength',
+  keypoints: 'keyPoints',
+  keysplines: 'keySplines',
+  keytimes: 'keyTimes',
+  lengthadjust: 'lengthAdjust',
+  letterspacing: 'letterSpacing',
+  'letter-spacing': 'letterSpacing',
+  lightingcolor: 'lightingColor',
+  'lighting-color': 'lightingColor',
+  limitingconeangle: 'limitingConeAngle',
+  markerend: 'markerEnd',
+  'marker-end': 'markerEnd',
+  markerheight: 'markerHeight',
+  markermid: 'markerMid',
+  'marker-mid': 'markerMid',
+  markerstart: 'markerStart',
+  'marker-start': 'markerStart',
+  markerunits: 'markerUnits',
+  markerwidth: 'markerWidth',
+  maskcontentunits: 'maskContentUnits',
+  maskunits: 'maskUnits',
+  numoctaves: 'numOctaves',
+  overlineposition: 'overlinePosition',
+  'overline-position': 'overlinePosition',
+  overlinethickness: 'overlineThickness',
+  'overline-thickness': 'overlineThickness',
+  paintorder: 'paintOrder',
+  'paint-order': 'paintOrder',
+  'panose-1': 'panose1',
+  pathlength: 'pathLength',
+  patterncontentunits: 'patternContentUnits',
+  patterntransform: 'patternTransform',
+  patternunits: 'patternUnits',
+  pointerevents: 'pointerEvents',
+  'pointer-events': 'pointerEvents',
+  pointsatx: 'pointsAtX',
+  pointsaty: 'pointsAtY',
+  pointsatz: 'pointsAtZ',
+  preservealpha: 'preserveAlpha',
+  preserveaspectratio: 'preserveAspectRatio',
+  primitiveunits: 'primitiveUnits',
+  refx: 'refX',
+  refy: 'refY',
+  renderingintent: 'renderingIntent',
+  'rendering-intent': 'renderingIntent',
+  repeatcount: 'repeatCount',
+  repeatdur: 'repeatDur',
+  requiredextensions: 'requiredExtensions',
+  requiredfeatures: 'requiredFeatures',
+  shaperendering: 'shapeRendering',
+  'shape-rendering': 'shapeRendering',
+  specularconstant: 'specularConstant',
+  specularexponent: 'specularExponent',
+  spreadmethod: 'spreadMethod',
+  startoffset: 'startOffset',
+  stddeviation: 'stdDeviation',
+  stitchtiles: 'stitchTiles',
+  stopcolor: 'stopColor',
+  'stop-color': 'stopColor',
+  stopopacity: 'stopOpacity',
+  'stop-opacity': 'stopOpacity',
+  strikethroughposition: 'strikethroughPosition',
+  'strikethrough-position': 'strikethroughPosition',
+  strikethroughthickness: 'strikethroughThickness',
+  'strikethrough-thickness': 'strikethroughThickness',
+  strokedasharray: 'strokeDasharray',
+  'stroke-dasharray': 'strokeDasharray',
+  strokedashoffset: 'strokeDashoffset',
+  'stroke-dashoffset': 'strokeDashoffset',
+  strokelinecap: 'strokeLinecap',
+  'stroke-linecap': 'strokeLinecap',
+  strokelinejoin: 'strokeLinejoin',
+  'stroke-linejoin': 'strokeLinejoin',
+  strokemiterlimit: 'strokeMiterlimit',
+  'stroke-miterlimit': 'strokeMiterlimit',
+  strokewidth: 'strokeWidth',
+  'stroke-width': 'strokeWidth',
+  strokeopacity: 'strokeOpacity',
+  'stroke-opacity': 'strokeOpacity',
+  suppresscontenteditablewarning: 'suppressContentEditableWarning',
+  suppresshydrationwarning: 'suppressHydrationWarning',
+  surfacescale: 'surfaceScale',
+  systemlanguage: 'systemLanguage',
+  tablevalues: 'tableValues',
+  targetx: 'targetX',
+  targety: 'targetY',
+  textanchor: 'textAnchor',
+  'text-anchor': 'textAnchor',
+  textdecoration: 'textDecoration',
+  'text-decoration': 'textDecoration',
+  textlength: 'textLength',
+  textrendering: 'textRendering',
+  'text-rendering': 'textRendering',
+  underlineposition: 'underlinePosition',
+  'underline-position': 'underlinePosition',
+  underlinethickness: 'underlineThickness',
+  'underline-thickness': 'underlineThickness',
+  unicodebidi: 'unicodeBidi',
+  'unicode-bidi': 'unicodeBidi',
+  unicoderange: 'unicodeRange',
+  'unicode-range': 'unicodeRange',
+  unitsperem: 'unitsPerEm',
+  'units-per-em': 'unitsPerEm',
+  unselectable: 'unselectable',
+  valphabetic: 'vAlphabetic',
+  'v-alphabetic': 'vAlphabetic',
+  vectoreffect: 'vectorEffect',
+  'vector-effect': 'vectorEffect',
+  vertadvy: 'vertAdvY',
+  'vert-adv-y': 'vertAdvY',
+  vertoriginx: 'vertOriginX',
+  'vert-origin-x': 'vertOriginX',
+  vertoriginy: 'vertOriginY',
+  'vert-origin-y': 'vertOriginY',
+  vhanging: 'vHanging',
+  'v-hanging': 'vHanging',
+  videographic: 'vIdeographic',
+  'v-ideographic': 'vIdeographic',
+  viewbox: 'viewBox',
+  viewtarget: 'viewTarget',
+  vmathematical: 'vMathematical',
+  'v-mathematical': 'vMathematical',
+  wordspacing: 'wordSpacing',
+  'word-spacing': 'wordSpacing',
+  writingmode: 'writingMode',
+  'writing-mode': 'writingMode',
+  xchannelselector: 'xChannelSelector',
+  xheight: 'xHeight',
+  'x-height': 'xHeight',
+  xlinkactuate: 'xlinkActuate',
+  'xlink:actuate': 'xlinkActuate',
+  xlinkarcrole: 'xlinkArcrole',
+  'xlink:arcrole': 'xlinkArcrole',
+  xlinkhref: 'xlinkHref',
+  'xlink:href': 'xlinkHref',
+  xlinkrole: 'xlinkRole',
+  'xlink:role': 'xlinkRole',
+  xlinkshow: 'xlinkShow',
+  'xlink:show': 'xlinkShow',
+  xlinktitle: 'xlinkTitle',
+  'xlink:title': 'xlinkTitle',
+  xlinktype: 'xlinkType',
+  'xlink:type': 'xlinkType',
+  xmlbase: 'xmlBase',
+  'xml:base': 'xmlBase',
+  xmllang: 'xmlLang',
+  'xml:lang': 'xmlLang',
+  'xml:space': 'xmlSpace',
+  xmlnsxlink: 'xmlnsXlink',
+  'xmlns:xlink': 'xmlnsXlink',
+  xmlspace: 'xmlSpace',
+  ychannelselector: 'yChannelSelector',
+  zoomandpan: 'zoomAndPan',
+  // event handlers
+  onblur: 'onBlur',
+  onchange: 'onChange',
+  onclick: 'onClick',
+  oncontextmenu: 'onContextMenu',
+  ondoubleclick: 'onDoubleClick',
+  ondrag: 'onDrag',
+  ondragend: 'onDragEnd',
+  ondragenter: 'onDragEnter',
+  ondragexit: 'onDragExit',
+  ondragleave: 'onDragLeave',
+  ondragover: 'onDragOver',
+  ondragstart: 'onDragStart',
+  ondrop: 'onDrop',
+  onerror: 'onError',
+  onfocus: 'onFocus',
+  oninput: 'onInput',
+  oninvalid: 'onInvalid',
+  onkeydown: 'onKeyDown',
+  onkeypress: 'onKeyPress',
+  onkeyup: 'onKeyUp',
+  onload: 'onLoad',
+  onmousedown: 'onMouseDown',
+  onmouseenter: 'onMouseEnter',
+  onmouseleave: 'onMouseLeave',
+  onmousemove: 'onMouseMove',
+  onmouseout: 'onMouseOut',
+  onmouseover: 'onMouseOver',
+  onmouseup: 'onMouseUp',
+  onscroll: 'onScroll',
+  onsubmit: 'onSubmit',
+  ontouchcancel: 'onTouchCancel',
+  ontouchend: 'onTouchEnd',
+  ontouchmove: 'onTouchMove',
+  ontouchstart: 'onTouchStart',
+  onwheel: 'onWheel'
+};
+exports.possibleStandardNames = possibleStandardNames;
+},{}],"../node_modules/react-from-dom/esm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.convertFromNode = convertFromNode;
+exports.convertFromString = convertFromString;
+exports.default = convert;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _helpers = require("./helpers");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __read = void 0 && (void 0).__read || function (o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+};
+
+var __spreadArray = void 0 && (void 0).__spreadArray || function (to, from) {
+  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) to[j] = from[i];
+
+  return to;
+};
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
+
+function parseAttributes(node, reactKey) {
+  var attributes = {
+    key: reactKey
+  };
+  /* istanbul ignore else */
+
+  if (node instanceof Element) {
+    var nodeClassNames = node.getAttribute('class');
+
+    if (nodeClassNames) {
+      attributes.className = nodeClassNames;
+    }
+
+    __spreadArray([], __read(node.attributes)).forEach(function (d) {
+      switch (d.name) {
+        // this is manually handled above, so break;
+        case 'class':
+          break;
+
+        case 'style':
+          attributes[d.name] = (0, _helpers.styleToObject)(d.value);
+          break;
+
+        case 'allowfullscreen':
+        case 'allowpaymentrequest':
+        case 'async':
+        case 'autofocus':
+        case 'autoplay':
+        case 'checked':
+        case 'controls':
+        case 'default':
+        case 'defer':
+        case 'disabled':
+        case 'formnovalidate':
+        case 'hidden':
+        case 'ismap':
+        case 'itemscope':
+        case 'loop':
+        case 'multiple':
+        case 'muted':
+        case 'nomodule':
+        case 'novalidate':
+        case 'open':
+        case 'readonly':
+        case 'required':
+        case 'reversed':
+        case 'selected':
+        case 'typemustmatch':
+          attributes[_helpers.possibleStandardNames[d.name] || d.name] = true;
+          break;
+
+        default:
+          attributes[_helpers.possibleStandardNames[d.name] || d.name] = d.value;
+      }
+    });
+  }
+
+  return attributes;
+}
+
+function parseChildren(childNodeList, level, options) {
+  var children = __spreadArray([], __read(childNodeList)).map(function (node, index) {
+    return convertFromNode(node, __assign(__assign({}, options), {
+      index: index,
+      level: level + 1
+    }));
+  }).filter(Boolean);
+
+  if (!children.length) {
+    return null;
+  }
+
+  return children;
+}
+
+function parseName(nodeName) {
+  if (/[a-z]+[A-Z]+[a-z]+/.test(nodeName)) {
+    return nodeName;
+  }
+
+  return nodeName.toLowerCase();
+}
+
+function convertFromNode(input, options) {
+  var _a;
+
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (!input || !(input instanceof Node)) {
+    return null;
+  }
+
+  var _b = options.actions,
+      actions = _b === void 0 ? [] : _b,
+      _c = options.index,
+      index = _c === void 0 ? 0 : _c,
+      _d = options.level,
+      level = _d === void 0 ? 0 : _d,
+      randomKey = options.randomKey;
+  var node = input;
+  var key = level + "-" + index;
+  var result = [];
+
+  if (randomKey && level === 0) {
+    key = (0, _helpers.randomString)() + "-" + key;
+  }
+  /* istanbul ignore else */
+
+
+  if (Array.isArray(actions)) {
+    actions.forEach(function (action) {
+      if (action.condition(node, key, level)) {
+        if (typeof action.pre === 'function') {
+          node = action.pre(node, key, level);
+
+          if (!(node instanceof Node)) {
+            node = input;
+            /* istanbul ignore else */
+
+            if ("development" !== 'production') {
+              // eslint-disable-next-line no-console
+              console.warn('The `pre` method always must return a valid DomNode (instanceof Node) - your modification will be ignored (Hint: if you want to render a React-component, use the `post` method instead)');
+            }
+          }
+        }
+
+        if (typeof action.post === 'function') {
+          result.push(action.post(node, key, level));
+        }
+      }
+    });
+  }
+
+  if (result.length) {
+    return result;
+  }
+
+  switch (node.nodeType) {
+    case 1:
+      {
+        // regular dom-node
+        return React.createElement(parseName(node.nodeName), parseAttributes(node, key), parseChildren(node.childNodes, level, options));
+      }
+
+    case 3:
+      {
+        // textnode
+        var nodeText = ((_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.toString()) || '';
+        /* istanbul ignore else */
+
+        if (/^\s+$/.test(nodeText) && !/[\u202F\u00A0]/.test(nodeText)) {
+          return null;
+        }
+        /* istanbul ignore next */
+
+
+        if (!node.parentNode) {
+          return nodeText;
+        }
+
+        var parentNodeName = node.parentNode.nodeName.toLowerCase();
+
+        if (_helpers.noTextChildNodes.indexOf(parentNodeName) !== -1) {
+          /* istanbul ignore else */
+          if (/\S/.test(nodeText)) {
+            // eslint-disable-next-line no-console
+            console.warn("A textNode is not allowed inside '" + parentNodeName + "'. Your text \"" + nodeText + "\" will be ignored");
+          }
+
+          return null;
+        }
+
+        return nodeText;
+      }
+
+    case 8:
+      {
+        // html-comment
+        return null;
+      }
+
+    /* istanbul ignore next */
+
+    default:
+      {
+        return null;
+      }
+  }
+}
+
+function convertFromString(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (!input || typeof input !== 'string') {
+    return null;
+  }
+
+  var _a = options.nodeOnly,
+      nodeOnly = _a === void 0 ? false : _a,
+      _b = options.selector,
+      selector = _b === void 0 ? 'body > *' : _b,
+      _c = options.type,
+      type = _c === void 0 ? 'text/html' : _c;
+
+  try {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(input, type);
+    var node = doc.querySelector(selector);
+
+    if (!(node instanceof Node)) {
+      throw new Error('Error parsing input');
+    }
+
+    if (nodeOnly) {
+      return node;
+    }
+
+    return convertFromNode(node, options);
+  } catch (error) {
+    /* istanbul ignore else */
+    if ("development" !== 'production') {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
+
+  return null;
+}
+
+function convert(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (typeof input === 'string') {
+    return convertFromString(input, options);
+  }
+
+  if (input instanceof Node) {
+    return convertFromNode(input, options);
+  }
+
+  return null;
+}
+},{"react":"../node_modules/react/index.js","./helpers":"../node_modules/react-from-dom/esm/helpers.js"}],"../node_modules/exenv/index.js":[function(require,module,exports) {
+var define;
+/*!
+  Copyright (c) 2015 Jed Watson.
+  Based on code that is Copyright 2013-2015, Facebook, Inc.
+  All rights reserved.
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var canUseDOM = !!(
+		typeof window !== 'undefined' &&
+		window.document &&
+		window.document.createElement
+	);
+
+	var ExecutionEnvironment = {
+
+		canUseDOM: canUseDOM,
+
+		canUseWorkers: typeof Worker !== 'undefined',
+
+		canUseEventListeners:
+			canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+		canUseViewport: canUseDOM && !!window.screen
+
+	};
+
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		define(function () {
+			return ExecutionEnvironment;
+		});
+	} else if (typeof module !== 'undefined' && module.exports) {
+		module.exports = ExecutionEnvironment;
+	} else {
+		window.ExecutionEnvironment = ExecutionEnvironment;
+	}
+
+}());
+
+},{}],"../node_modules/react-inlinesvg/esm/helpers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.canUseDOM = canUseDOM;
+exports.isSupportedEnvironment = isSupportedEnvironment;
+exports.supportsInlineSVG = supportsInlineSVG;
+exports.randomString = randomString;
+exports.removeProperties = removeProperties;
+exports.STATUS = void 0;
+
+var _exenv = require("exenv");
+
+var STATUS = {
+  FAILED: 'failed',
+  LOADED: 'loaded',
+  LOADING: 'loading',
+  PENDING: 'pending',
+  READY: 'ready',
+  UNSUPPORTED: 'unsupported'
+};
+exports.STATUS = STATUS;
+
+function canUseDOM() {
+  return _exenv.canUseDOM;
+}
+
+function isSupportedEnvironment() {
+  return supportsInlineSVG() && typeof window !== 'undefined' && window !== null;
+}
+
+function supportsInlineSVG() {
+  /* istanbul ignore next */
+  if (!document) {
+    return false;
+  }
+
+  var div = document.createElement('div');
+  div.innerHTML = '<svg />';
+  return !!div.firstChild && div.firstChild.namespaceURI === 'http://www.w3.org/2000/svg';
+}
+
+function randomString(length) {
+  var letters = 'abcdefghijklmnopqrstuvwxyz';
+  var numbers = '1234567890';
+  var charset = "" + letters + letters.toUpperCase() + numbers;
+
+  var randomCharacter = function (character) {
+    return character[Math.floor(Math.random() * character.length)];
+  };
+
+  var R = '';
+
+  for (var i = 0; i < length; i++) {
+    R += randomCharacter(charset);
+  }
+
+  return R;
+}
+/**
+ *  Remove properties from an object
+ */
+
+
+function removeProperties(input) {
+  var filter = [];
+
+  for (var _i = 1; _i < arguments.length; _i++) {
+    filter[_i - 1] = arguments[_i];
+  }
+
+  var output = {};
+
+  for (var key in input) {
+    /* istanbul ignore else */
+    if ({}.hasOwnProperty.call(input, key)) {
+      if (!filter.includes(key)) {
+        output[key] = input[key];
+      }
+    }
+  }
+
+  return output;
+}
+},{"exenv":"../node_modules/exenv/index.js"}],"../node_modules/react-inlinesvg/esm/types.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+},{}],"../node_modules/react-inlinesvg/esm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _exportNames = {
+  cacheStore: true
+};
+exports.default = exports.cacheStore = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _reactFromDom = _interopRequireDefault(require("react-from-dom"));
+
+var _helpers = require("./helpers");
+
+var _types = require("./types");
+
+Object.keys(_types).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  if (key in exports && exports[key] === _types[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _types[key];
+    }
+  });
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var __extends = void 0 && (void 0).__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __read = void 0 && (void 0).__read || function (o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+};
+
+var __spreadArray = void 0 && (void 0).__spreadArray || function (to, from) {
+  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) to[j] = from[i];
+
+  return to;
+};
+
+var cacheStore = Object.create(null);
+exports.cacheStore = cacheStore;
+
+var InlineSVG = function (_super) {
+  __extends(InlineSVG, _super);
+
+  function InlineSVG(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.isActive = false;
+
+    _this.handleCacheQueue = function (content) {
+      /* istanbul ignore else */
+      if (typeof content === 'string') {
+        _this.handleLoad(content);
+
+        return;
+      }
+
+      _this.handleError(content);
+    };
+
+    _this.handleLoad = function (content) {
+      /* istanbul ignore else */
+      if (_this.isActive) {
+        _this.setState({
+          content: content,
+          status: _helpers.STATUS.LOADED
+        }, _this.getElement);
+      }
+    };
+
+    _this.handleError = function (error) {
+      var onError = _this.props.onError;
+      var status = error.message === 'Browser does not support SVG' ? _helpers.STATUS.UNSUPPORTED : _helpers.STATUS.FAILED;
+      /* istanbul ignore else */
+
+      if (_this.isActive) {
+        _this.setState({
+          status: status
+        }, function () {
+          /* istanbul ignore else */
+          if (typeof onError === 'function') {
+            onError(error);
+          }
+        });
+      }
+    };
+
+    _this.request = function () {
+      var _a = _this.props,
+          cacheRequests = _a.cacheRequests,
+          fetchOptions = _a.fetchOptions,
+          src = _a.src;
+
+      try {
+        if (cacheRequests) {
+          cacheStore[src] = {
+            content: '',
+            status: _helpers.STATUS.LOADING,
+            queue: []
+          };
+        }
+
+        return fetch(src, fetchOptions).then(function (response) {
+          var contentType = response.headers.get('content-type');
+
+          var _a = __read((contentType || '').split(/ ?; ?/), 1),
+              fileType = _a[0];
+
+          if (response.status > 299) {
+            throw new Error('Not found');
+          }
+
+          if (!['image/svg+xml', 'text/plain'].some(function (d) {
+            return fileType.indexOf(d) >= 0;
+          })) {
+            throw new Error("Content type isn't valid: " + fileType);
+          }
+
+          return response.text();
+        }).then(function (content) {
+          var currentSrc = _this.props.src; // the current src don't match the previous one, skipping...
+
+          if (src !== currentSrc) {
+            return;
+          }
+
+          _this.handleLoad(content);
+          /* istanbul ignore else */
+
+
+          if (cacheRequests) {
+            var cache = cacheStore[src];
+            /* istanbul ignore else */
+
+            if (cache) {
+              cache.content = content;
+              cache.status = _helpers.STATUS.LOADED;
+              cache.queue = cache.queue.filter(function (cb) {
+                cb(content);
+                return false;
+              });
+            }
+          }
+        }).catch(function (error) {
+          _this.handleError(error);
+          /* istanbul ignore else */
+
+
+          if (cacheRequests) {
+            var cache = cacheStore[src];
+            /* istanbul ignore else */
+
+            if (cache) {
+              cache.queue.forEach(function (cb) {
+                cb(error);
+              });
+              delete cacheStore[src];
+            }
+          }
+        });
+      } catch (error) {
+        return _this.handleError(new Error(error.message));
+      }
+    };
+
+    _this.state = {
+      content: '',
+      element: null,
+      hasCache: !!props.cacheRequests && !!cacheStore[props.src],
+      status: _helpers.STATUS.PENDING
+    };
+    _this.hash = props.uniqueHash || (0, _helpers.randomString)(8);
+    return _this;
+  }
+
+  InlineSVG.prototype.componentDidMount = function () {
+    this.isActive = true;
+
+    if (!(0, _helpers.canUseDOM)()) {
+      return;
+    }
+
+    var status = this.state.status;
+    var src = this.props.src;
+
+    try {
+      /* istanbul ignore else */
+      if (status === _helpers.STATUS.PENDING) {
+        /* istanbul ignore else */
+        if (!(0, _helpers.isSupportedEnvironment)()) {
+          throw new Error('Browser does not support SVG');
+        }
+        /* istanbul ignore else */
+
+
+        if (!src) {
+          throw new Error('Missing src');
+        }
+
+        this.load();
+      }
+    } catch (error) {
+      this.handleError(error);
+    }
+  };
+
+  InlineSVG.prototype.componentDidUpdate = function (prevProps, prevState) {
+    if (!(0, _helpers.canUseDOM)()) {
+      return;
+    }
+
+    var _a = this.state,
+        hasCache = _a.hasCache,
+        status = _a.status;
+    var _b = this.props,
+        onLoad = _b.onLoad,
+        src = _b.src;
+
+    if (prevState.status !== _helpers.STATUS.READY && status === _helpers.STATUS.READY) {
+      /* istanbul ignore else */
+      if (onLoad) {
+        onLoad(src, hasCache);
+      }
+    }
+
+    if (prevProps.src !== src) {
+      if (!src) {
+        this.handleError(new Error('Missing src'));
+        return;
+      }
+
+      this.load();
+    }
+  };
+
+  InlineSVG.prototype.componentWillUnmount = function () {
+    this.isActive = false;
+  };
+
+  InlineSVG.prototype.processSVG = function () {
+    var content = this.state.content;
+    var preProcessor = this.props.preProcessor;
+
+    if (preProcessor) {
+      return preProcessor(content);
+    }
+
+    return content;
+  };
+
+  InlineSVG.prototype.updateSVGAttributes = function (node) {
+    var _this = this;
+
+    var _a = this.props,
+        _b = _a.baseURL,
+        baseURL = _b === void 0 ? '' : _b,
+        uniquifyIDs = _a.uniquifyIDs;
+    var replaceableAttributes = ['id', 'href', 'xlink:href', 'xlink:role', 'xlink:arcrole'];
+    var linkAttributes = ['href', 'xlink:href'];
+
+    var isDataValue = function (name, value) {
+      return linkAttributes.indexOf(name) >= 0 && (value ? value.indexOf('#') < 0 : false);
+    };
+
+    if (!uniquifyIDs) {
+      return node;
+    }
+
+    __spreadArray([], __read(node.children)).map(function (d) {
+      if (d.attributes && d.attributes.length) {
+        var attributes_1 = Object.values(d.attributes).map(function (a) {
+          var attr = a;
+          var match = a.value.match(/url\((.*?)\)/);
+
+          if (match && match[1]) {
+            attr.value = a.value.replace(match[0], "url(" + baseURL + match[1] + "__" + _this.hash + ")");
+          }
+
+          return attr;
+        });
+        replaceableAttributes.forEach(function (r) {
+          var attribute = attributes_1.find(function (a) {
+            return a.name === r;
+          });
+
+          if (attribute && !isDataValue(r, attribute.value)) {
+            attribute.value = attribute.value + "__" + _this.hash;
+          }
+        });
+      }
+
+      if (d.children.length) {
+        return _this.updateSVGAttributes(d);
+      }
+
+      return d;
+    });
+
+    return node;
+  };
+
+  InlineSVG.prototype.getNode = function () {
+    var _a = this.props,
+        description = _a.description,
+        title = _a.title;
+
+    try {
+      var svgText = this.processSVG();
+      var node = (0, _reactFromDom.default)(svgText, {
+        nodeOnly: true
+      });
+
+      if (!node || !(node instanceof SVGSVGElement)) {
+        throw new Error('Could not convert the src to a DOM Node');
+      }
+
+      var svg = this.updateSVGAttributes(node);
+
+      if (description) {
+        var originalDesc = svg.querySelector('desc');
+
+        if (originalDesc && originalDesc.parentNode) {
+          originalDesc.parentNode.removeChild(originalDesc);
+        }
+
+        var descElement = document.createElement('desc');
+        descElement.innerHTML = description;
+        svg.prepend(descElement);
+      }
+
+      if (title) {
+        var originalTitle = svg.querySelector('title');
+
+        if (originalTitle && originalTitle.parentNode) {
+          originalTitle.parentNode.removeChild(originalTitle);
+        }
+
+        var titleElement = document.createElement('title');
+        titleElement.innerHTML = title;
+        svg.prepend(titleElement);
+      }
+
+      return svg;
+    } catch (error) {
+      return this.handleError(error);
+    }
+  };
+
+  InlineSVG.prototype.getElement = function () {
+    try {
+      var node = this.getNode();
+      var element = (0, _reactFromDom.default)(node);
+
+      if (!element || !React.isValidElement(element)) {
+        throw new Error('Could not convert the src to a React element');
+      }
+
+      this.setState({
+        element: element,
+        status: _helpers.STATUS.READY
+      });
+    } catch (error) {
+      this.handleError(new Error(error.message));
+    }
+  };
+
+  InlineSVG.prototype.load = function () {
+    var _this = this;
+    /* istanbul ignore else */
+
+
+    if (this.isActive) {
+      this.setState({
+        content: '',
+        element: null,
+        status: _helpers.STATUS.LOADING
+      }, function () {
+        var _a = _this.props,
+            cacheRequests = _a.cacheRequests,
+            src = _a.src;
+        var cache = cacheRequests && cacheStore[src];
+
+        if (cache) {
+          /* istanbul ignore else */
+          if (cache.status === _helpers.STATUS.LOADING) {
+            cache.queue.push(_this.handleCacheQueue);
+          } else if (cache.status === _helpers.STATUS.LOADED) {
+            _this.handleLoad(cache.content);
+          }
+
+          return;
+        }
+
+        var dataURI = src.match(/data:image\/svg[^,]*?(;base64)?,(.*)/);
+        var inlineSrc;
+
+        if (dataURI) {
+          inlineSrc = dataURI[1] ? atob(dataURI[2]) : decodeURIComponent(dataURI[2]);
+        } else if (src.indexOf('<svg') >= 0) {
+          inlineSrc = src;
+        }
+
+        if (inlineSrc) {
+          _this.handleLoad(inlineSrc);
+
+          return;
+        }
+
+        _this.request();
+      });
+    }
+  };
+
+  InlineSVG.prototype.render = function () {
+    var _a = this.state,
+        element = _a.element,
+        status = _a.status;
+    var _b = this.props,
+        _c = _b.children,
+        children = _c === void 0 ? null : _c,
+        innerRef = _b.innerRef,
+        _d = _b.loader,
+        loader = _d === void 0 ? null : _d;
+    var elementProps = (0, _helpers.removeProperties)(this.props, 'baseURL', 'cacheRequests', 'children', 'description', 'fetchOptions', 'innerRef', 'loader', 'onError', 'onLoad', 'preProcessor', 'src', 'title', 'uniqueHash', 'uniquifyIDs');
+
+    if (!(0, _helpers.canUseDOM)()) {
+      return loader;
+    }
+
+    if (element) {
+      return React.cloneElement(element, __assign({
+        ref: innerRef
+      }, elementProps));
+    }
+
+    if ([_helpers.STATUS.UNSUPPORTED, _helpers.STATUS.FAILED].indexOf(status) > -1) {
+      return children;
+    }
+
+    return loader;
+  };
+
+  InlineSVG.defaultProps = {
+    cacheRequests: true,
+    uniquifyIDs: false
+  };
+  return InlineSVG;
+}(React.PureComponent);
+
+var _default = InlineSVG;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-from-dom":"../node_modules/react-from-dom/esm/index.js","./helpers":"../node_modules/react-inlinesvg/esm/helpers.js","./types":"../node_modules/react-inlinesvg/esm/types.js"}],"assets/icons/website.svg":[function(require,module,exports) {
 module.exports = "/website.2914ab5e.svg";
 },{}],"assets/icons/email.svg":[function(require,module,exports) {
 module.exports = "/email.b0f0adbd.svg";
@@ -35286,6 +36674,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
 
 var _website = _interopRequireDefault(require("../assets/icons/website.svg"));
 
@@ -35336,7 +36726,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item website",
       title: "Website"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _website.default,
       className: "profile-social-icon icon",
       alt: "Website"
@@ -35346,7 +36736,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item email",
       title: "Email"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _email.default,
       className: "profile-social-icon icon",
       alt: "Email"
@@ -35356,7 +36746,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item twitter",
       title: "Twitter"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _twitter.default,
       className: "profile-social-icon icon",
       alt: "Twitter"
@@ -35366,7 +36756,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item facebook",
       title: "Facebook"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _facebook.default,
       className: "profile-social-icon icon",
       alt: "Facebook"
@@ -35376,7 +36766,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item linkedin",
       title: "LinkedIn"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _linkedin.default,
       className: "profile-social-icon icon",
       alt: "LinkedIn"
@@ -35386,7 +36776,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item github",
       title: "GitHub"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _github.default,
       className: "profile-social-icon icon",
       alt: "GitHub"
@@ -35396,7 +36786,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item medium",
       title: "Medium"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _medium.default,
       className: "profile-social-icon icon",
       alt: "Medium"
@@ -35406,7 +36796,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item telegram",
       title: "Telegram"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _telegram.default,
       className: "profile-social-icon icon",
       alt: "Telegram"
@@ -35416,7 +36806,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item instagram",
       title: "Instagram"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _instagram.default,
       className: "profile-social-icon icon",
       alt: "Instagram"
@@ -35426,7 +36816,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item youtube",
       title: "YouTube"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _youtube.default,
       className: "profile-social-icon icon",
       alt: "YouTube"
@@ -35436,7 +36826,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item discord",
       title: "Discord"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _discord.default,
       className: "profile-social-icon icon",
       alt: "Discord"
@@ -35446,7 +36836,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item patreon",
       title: "Patreon"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _patreon.default,
       className: "profile-social-icon icon",
       alt: "Patreon"
@@ -35456,7 +36846,7 @@ class SocialLinks extends _react.Component {
       rel: "noopener noreferrer",
       className: "profile-social-item paypal",
       title: "PayPal"
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _paypal.default,
       className: "profile-social-icon icon",
       alt: "PayPal"
@@ -35467,7 +36857,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/medium.svg":"assets/icons/medium.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/medium.svg":"assets/icons/medium.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
 var define;
 /*!
  * clipboard.js v2.0.8
@@ -36776,6 +38166,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
 
+var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
+
 var _cryptoNear = _interopRequireDefault(require("../assets/icons/crypto-near.svg"));
 
 var _cryptoBtc = _interopRequireDefault(require("../assets/icons/crypto-btc.svg"));
@@ -36814,7 +38206,7 @@ class CryptoWidgets extends _react.Component {
       component: "div",
       className: "profile-crypto-content",
       "data-clipboard-text": crypto.near
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoNear.default,
       className: "profile-crypto-icon icon",
       alt: "NEAR"
@@ -36830,7 +38222,7 @@ class CryptoWidgets extends _react.Component {
       component: "div",
       className: "profile-crypto-content",
       "data-clipboard-text": crypto.btc
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoBtc.default,
       className: "profile-crypto-icon icon",
       alt: "BTC"
@@ -36846,7 +38238,7 @@ class CryptoWidgets extends _react.Component {
       component: "div",
       className: "profile-crypto-content",
       "data-clipboard-text": crypto.eth
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoEth.default,
       className: "profile-crypto-icon icon",
       alt: "ETH"
@@ -36862,7 +38254,7 @@ class CryptoWidgets extends _react.Component {
       component: "div",
       className: "profile-crypto-content",
       "data-clipboard-text": crypto.dot
-    }, /*#__PURE__*/_react.default.createElement("img", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoDot.default,
       className: "profile-crypto-icon icon",
       alt: "DOT"
@@ -36879,7 +38271,7 @@ class CryptoWidgets extends _react.Component {
 
 var _default = CryptoWidgets;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/copy.svg":"assets/icons/copy.svg"}],"Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/copy.svg":"assets/icons/copy.svg"}],"Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -37008,7 +38400,7 @@ class Profile extends _react.Component {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-header"
+      className: "web3bio-header hide-md"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -60946,7 +62338,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59638" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54297" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

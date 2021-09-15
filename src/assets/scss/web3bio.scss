@@ -196,10 +196,15 @@ body {
 
   .profile-name {
     color: $dark-color;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: 800;
     margin-top: 1rem;
     max-width: $size-sm;
+
+    @media screen and (max-width: $size-md) {
+      font-size: 2.6rem;
+      line-height: 2.8rem;
+    }
   }
 
   .profile-description {
@@ -253,7 +258,7 @@ body {
     }
 
     .profile-social-icon {
-      color: $primary-color;
+      color: $dark-color;
       display: block;
       height: 1.2rem;
       transition: all .3s ease;
