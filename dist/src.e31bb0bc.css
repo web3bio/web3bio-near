@@ -2494,7 +2494,7 @@ body {
 
 .web3bio-container {
   min-height: 100vh;
-  padding: 1rem;
+  padding: 1rem .5rem;
   width: 100vw; }
 
 .web3bio-cover {
@@ -2503,6 +2503,7 @@ body {
   display: block;
   filter: blur(3rem);
   height: 18rem;
+  left: 0;
   position: fixed;
   width: 100%;
   z-index: -1; }
@@ -2609,8 +2610,7 @@ body {
     max-width: 600px; }
     @media screen and (max-width: 840px) {
       .web3bio-profile .profile-name {
-        font-size: 2.6rem;
-        line-height: 2.8rem; } }
+        font-size: 1.2rem; } }
   .web3bio-profile .profile-description {
     color: #202020;
     font-size: .8rem;
@@ -2647,9 +2647,9 @@ body {
     .web3bio-profile .profile-social-item .profile-social-icon {
       color: #202020;
       display: block;
-      height: 1.2rem;
+      height: 1.4rem;
       transition: all .3s ease;
-      width: 1.2rem; }
+      width: 1.4rem; }
   .web3bio-profile .profile-crypto {
     display: flex;
     flex-direction: column;
@@ -2661,10 +2661,10 @@ body {
     align-items: center;
     background: #fff;
     border-radius: .6rem;
-    box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.1rem 0.2rem rgba(0, 0, 0, 0.05);
     cursor: pointer;
     display: flex;
-    margin: .5rem;
+    margin: .5rem 0;
     padding: .8rem 1rem;
     transition: all .3s ease; }
     .web3bio-profile .profile-crypto-item:focus, .web3bio-profile .profile-crypto-item:hover {
@@ -2680,10 +2680,10 @@ body {
     .web3bio-profile .profile-crypto-item .profile-crypto-icon {
       color: #4620E1;
       display: block;
-      flex: 0 0 1.2rem;
-      height: 1.6rem;
+      flex: 0 0 1.8rem;
+      height: 1.4rem;
       transition: all .3s ease;
-      width: 1.6rem; }
+      width: 1.4rem; }
     .web3bio-profile .profile-crypto-item .profile-crypto-main {
       padding-left: .5rem; }
     .web3bio-profile .profile-crypto-item .profile-crypto-title {
@@ -2707,6 +2707,20 @@ body {
         height: auto; }
         .web3bio-profile .profile-crypto-item .profile-crypto-action {
           padding: .5rem 0 0 0; } }
+  .web3bio-profile .profile-nft {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 480px;
+    padding: .5rem 0;
+    width: 100%; }
+    .web3bio-profile .profile-nft .profile-nft-item {
+      background: rgba(255, 255, 255, 0.15);
+      border: 0.1rem dashed rgba(32, 32, 32, 0.15);
+      border-radius: .6rem;
+      box-shadow: none;
+      color: rgba(32, 32, 32, 0.15);
+      padding: 1rem; }
 
 .web3bio-hero {
   padding: 3rem 0;

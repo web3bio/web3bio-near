@@ -44,7 +44,7 @@ body {
 
 .web3bio-container {
   min-height: 100vh;
-  padding: 1rem;
+  padding: 1rem .5rem;
   width: 100vw;
 }
 
@@ -54,6 +54,7 @@ body {
   display: block;
   filter: blur(3rem);
   height: 18rem;
+  left: 0;
   position: fixed;
   width: 100%;
   z-index: -1;
@@ -202,8 +203,7 @@ body {
     max-width: $size-sm;
 
     @media screen and (max-width: $size-md) {
-      font-size: 2.6rem;
-      line-height: 2.8rem;
+      font-size: 1.2rem;
     }
   }
 
@@ -260,9 +260,9 @@ body {
     .profile-social-icon {
       color: $dark-color;
       display: block;
-      height: 1.2rem;
+      height: 1.4rem;
       transition: all .3s ease;
-      width: 1.2rem;
+      width: 1.4rem;
     }
   }
 
@@ -280,10 +280,10 @@ body {
     align-items: center;
     background: $light-color;
     border-radius: .6rem;
-    box-shadow: 0 .2rem .4rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .1rem .2rem rgba(0, 0, 0, .05);
     cursor: pointer;
     display: flex;
-    margin: .5rem;
+    margin: .5rem 0;
     padding: .8rem 1rem;
     transition: all .3s ease;
 
@@ -305,10 +305,10 @@ body {
     .profile-crypto-icon {
       color: $primary-color;
       display: block;
-      flex: 0 0 1.2rem;
-      height: 1.6rem;
+      flex: 0 0 1.8rem;
+      height: 1.4rem;
       transition: all .3s ease;
-      width: 1.6rem;
+      width: 1.4rem;
     }
 
     .profile-crypto-main {
@@ -343,6 +343,25 @@ body {
       .profile-crypto-action {
         padding: .5rem 0 0 0;
       }
+    }
+  }
+
+  // NFT Widget
+  .profile-nft {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: $size-xs;
+    padding: .5rem 0;
+    width: 100%;
+
+    .profile-nft-item {
+      background: rgba($light-color, .15);
+      border: .1rem dashed rgba($dark-color, .15);
+      border-radius: .6rem;
+      box-shadow: none;
+      color: rgba($dark-color, .15);
+      padding: 1rem;
     }
   }
 }

@@ -36639,32 +36639,32 @@ var InlineSVG = function (_super) {
 
 var _default = InlineSVG;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-from-dom":"../node_modules/react-from-dom/esm/index.js","./helpers":"../node_modules/react-inlinesvg/esm/helpers.js","./types":"../node_modules/react-inlinesvg/esm/types.js"}],"assets/icons/website.svg":[function(require,module,exports) {
-module.exports = "/website.2914ab5e.svg";
-},{}],"assets/icons/email.svg":[function(require,module,exports) {
-module.exports = "/email.b0f0adbd.svg";
-},{}],"assets/icons/twitter.svg":[function(require,module,exports) {
-module.exports = "/twitter.f2da1eec.svg";
-},{}],"assets/icons/facebook.svg":[function(require,module,exports) {
-module.exports = "/facebook.b48d22fd.svg";
-},{}],"assets/icons/linkedin.svg":[function(require,module,exports) {
-module.exports = "/linkedin.15978cba.svg";
-},{}],"assets/icons/github.svg":[function(require,module,exports) {
-module.exports = "/github.373d19b5.svg";
-},{}],"assets/icons/medium.svg":[function(require,module,exports) {
-module.exports = "/medium.edb97904.svg";
-},{}],"assets/icons/telegram.svg":[function(require,module,exports) {
-module.exports = "/telegram.d5997881.svg";
-},{}],"assets/icons/instagram.svg":[function(require,module,exports) {
-module.exports = "/instagram.79162530.svg";
-},{}],"assets/icons/youtube.svg":[function(require,module,exports) {
-module.exports = "/youtube.af9355a8.svg";
-},{}],"assets/icons/discord.svg":[function(require,module,exports) {
-module.exports = "/discord.31d09d1b.svg";
-},{}],"assets/icons/patreon.svg":[function(require,module,exports) {
-module.exports = "/patreon.663071f8.svg";
-},{}],"assets/icons/paypal.svg":[function(require,module,exports) {
-module.exports = "/paypal.c4a1ad78.svg";
+},{"react":"../node_modules/react/index.js","react-from-dom":"../node_modules/react-from-dom/esm/index.js","./helpers":"../node_modules/react-inlinesvg/esm/helpers.js","./types":"../node_modules/react-inlinesvg/esm/types.js"}],"assets/icons/social-website.svg":[function(require,module,exports) {
+module.exports = "/social-website.51357ff0.svg";
+},{}],"assets/icons/social-email.svg":[function(require,module,exports) {
+module.exports = "/social-email.eec20a87.svg";
+},{}],"assets/icons/social-twitter.svg":[function(require,module,exports) {
+module.exports = "/social-twitter.1f8f210b.svg";
+},{}],"assets/icons/social-facebook.svg":[function(require,module,exports) {
+module.exports = "/social-facebook.06671e21.svg";
+},{}],"assets/icons/social-linkedin.svg":[function(require,module,exports) {
+module.exports = "/social-linkedin.67c3316e.svg";
+},{}],"assets/icons/social-github.svg":[function(require,module,exports) {
+module.exports = "/social-github.ba89de4e.svg";
+},{}],"assets/icons/social-medium.svg":[function(require,module,exports) {
+module.exports = "/social-medium.01883098.svg";
+},{}],"assets/icons/social-telegram.svg":[function(require,module,exports) {
+module.exports = "/social-telegram.cd3061a8.svg";
+},{}],"assets/icons/social-instagram.svg":[function(require,module,exports) {
+module.exports = "/social-instagram.591d736b.svg";
+},{}],"assets/icons/social-youtube.svg":[function(require,module,exports) {
+module.exports = "/social-youtube.47047c5e.svg";
+},{}],"assets/icons/social-discord.svg":[function(require,module,exports) {
+module.exports = "/social-discord.cb5487c3.svg";
+},{}],"assets/icons/social-patreon.svg":[function(require,module,exports) {
+module.exports = "/social-patreon.3c9234ca.svg";
+},{}],"assets/icons/social-paypal.svg":[function(require,module,exports) {
+module.exports = "/social-paypal.9e577d49.svg";
 },{}],"components/SocialLinks.js":[function(require,module,exports) {
 "use strict";
 
@@ -36677,31 +36677,31 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
 
-var _website = _interopRequireDefault(require("../assets/icons/website.svg"));
+var _socialWebsite = _interopRequireDefault(require("../assets/icons/social-website.svg"));
 
-var _email = _interopRequireDefault(require("../assets/icons/email.svg"));
+var _socialEmail = _interopRequireDefault(require("../assets/icons/social-email.svg"));
 
-var _twitter = _interopRequireDefault(require("../assets/icons/twitter.svg"));
+var _socialTwitter = _interopRequireDefault(require("../assets/icons/social-twitter.svg"));
 
-var _facebook = _interopRequireDefault(require("../assets/icons/facebook.svg"));
+var _socialFacebook = _interopRequireDefault(require("../assets/icons/social-facebook.svg"));
 
-var _linkedin = _interopRequireDefault(require("../assets/icons/linkedin.svg"));
+var _socialLinkedin = _interopRequireDefault(require("../assets/icons/social-linkedin.svg"));
 
-var _github = _interopRequireDefault(require("../assets/icons/github.svg"));
+var _socialGithub = _interopRequireDefault(require("../assets/icons/social-github.svg"));
 
-var _medium = _interopRequireDefault(require("../assets/icons/medium.svg"));
+var _socialMedium = _interopRequireDefault(require("../assets/icons/social-medium.svg"));
 
-var _telegram = _interopRequireDefault(require("../assets/icons/telegram.svg"));
+var _socialTelegram = _interopRequireDefault(require("../assets/icons/social-telegram.svg"));
 
-var _instagram = _interopRequireDefault(require("../assets/icons/instagram.svg"));
+var _socialInstagram = _interopRequireDefault(require("../assets/icons/social-instagram.svg"));
 
-var _youtube = _interopRequireDefault(require("../assets/icons/youtube.svg"));
+var _socialYoutube = _interopRequireDefault(require("../assets/icons/social-youtube.svg"));
 
-var _discord = _interopRequireDefault(require("../assets/icons/discord.svg"));
+var _socialDiscord = _interopRequireDefault(require("../assets/icons/social-discord.svg"));
 
-var _patreon = _interopRequireDefault(require("../assets/icons/patreon.svg"));
+var _socialPatreon = _interopRequireDefault(require("../assets/icons/social-patreon.svg"));
 
-var _paypal = _interopRequireDefault(require("../assets/icons/paypal.svg"));
+var _socialPaypal = _interopRequireDefault(require("../assets/icons/social-paypal.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36727,7 +36727,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item website",
       title: "Website"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _website.default,
+      src: _socialWebsite.default,
       className: "profile-social-icon icon",
       alt: "Website"
     })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36737,7 +36737,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item email",
       title: "Email"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _email.default,
+      src: _socialEmail.default,
       className: "profile-social-icon icon",
       alt: "Email"
     })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36747,7 +36747,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item twitter",
       title: "Twitter"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _twitter.default,
+      src: _socialTwitter.default,
       className: "profile-social-icon icon",
       alt: "Twitter"
     })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36757,7 +36757,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item facebook",
       title: "Facebook"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _facebook.default,
+      src: _socialFacebook.default,
       className: "profile-social-icon icon",
       alt: "Facebook"
     })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36767,7 +36767,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item linkedin",
       title: "LinkedIn"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _linkedin.default,
+      src: _socialLinkedin.default,
       className: "profile-social-icon icon",
       alt: "LinkedIn"
     })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36777,7 +36777,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item github",
       title: "GitHub"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _github.default,
+      src: _socialGithub.default,
       className: "profile-social-icon icon",
       alt: "GitHub"
     })) : null, social.medium ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36787,7 +36787,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item medium",
       title: "Medium"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _medium.default,
+      src: _socialMedium.default,
       className: "profile-social-icon icon",
       alt: "Medium"
     })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36797,7 +36797,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item telegram",
       title: "Telegram"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _telegram.default,
+      src: _socialTelegram.default,
       className: "profile-social-icon icon",
       alt: "Telegram"
     })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36807,7 +36807,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item instagram",
       title: "Instagram"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _instagram.default,
+      src: _socialInstagram.default,
       className: "profile-social-icon icon",
       alt: "Instagram"
     })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36817,7 +36817,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item youtube",
       title: "YouTube"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _youtube.default,
+      src: _socialYoutube.default,
       className: "profile-social-icon icon",
       alt: "YouTube"
     })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36827,7 +36827,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item discord",
       title: "Discord"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _discord.default,
+      src: _socialDiscord.default,
       className: "profile-social-icon icon",
       alt: "Discord"
     })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36837,7 +36837,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item patreon",
       title: "Patreon"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _patreon.default,
+      src: _socialPatreon.default,
       className: "profile-social-icon icon",
       alt: "Patreon"
     })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
@@ -36847,7 +36847,7 @@ class SocialLinks extends _react.Component {
       className: "profile-social-item paypal",
       title: "PayPal"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _paypal.default,
+      src: _socialPaypal.default,
       className: "profile-social-icon icon",
       alt: "PayPal"
     })) : null);
@@ -36857,7 +36857,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/website.svg":"assets/icons/website.svg","../assets/icons/email.svg":"assets/icons/email.svg","../assets/icons/twitter.svg":"assets/icons/twitter.svg","../assets/icons/facebook.svg":"assets/icons/facebook.svg","../assets/icons/linkedin.svg":"assets/icons/linkedin.svg","../assets/icons/github.svg":"assets/icons/github.svg","../assets/icons/medium.svg":"assets/icons/medium.svg","../assets/icons/telegram.svg":"assets/icons/telegram.svg","../assets/icons/instagram.svg":"assets/icons/instagram.svg","../assets/icons/youtube.svg":"assets/icons/youtube.svg","../assets/icons/discord.svg":"assets/icons/discord.svg","../assets/icons/patreon.svg":"assets/icons/patreon.svg","../assets/icons/paypal.svg":"assets/icons/paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
 var define;
 /*!
  * clipboard.js v2.0.8
@@ -38200,7 +38200,9 @@ class CryptoWidgets extends _react.Component {
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto profile-widget"
-    }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-widget-header"
+    }, "Crypto"), crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item near"
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
@@ -38400,7 +38402,7 @@ class Profile extends _react.Component {
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-header hide-md"
+      className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {

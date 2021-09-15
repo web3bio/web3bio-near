@@ -22,6 +22,7 @@ class CryptoWidgets extends Component {
 
     return (
       <div className="profile-crypto profile-widget">
+        <div className="profile-widget-header">Crypto</div>
         { crypto.near? 
           <div className="profile-crypto-item near">
             <Clipboard component="div" className="profile-crypto-content" data-clipboard-text={crypto.near}>
@@ -66,6 +67,12 @@ class CryptoWidgets extends Component {
             </Clipboard>
           </div> : null
         }
+
+        {/* <div className="profile-nft">
+          <div className="profile-nft-item">
+            <span className="text-bold">NFT - COMING SOON</span>
+          </div>
+        </div> */}
       </div>
     )
   }
