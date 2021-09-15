@@ -38152,8 +38152,10 @@ module.exports = "/crypto-btc.207fc2b4.svg";
 module.exports = "/crypto-eth.3c16830b.svg";
 },{}],"assets/icons/crypto-dot.svg":[function(require,module,exports) {
 module.exports = "/crypto-dot.29ef90cb.svg";
-},{}],"assets/icons/copy.svg":[function(require,module,exports) {
-module.exports = "/copy.5aef999a.svg";
+},{}],"assets/icons/action-copy.svg":[function(require,module,exports) {
+module.exports = "/action-copy.cc7a0533.svg";
+},{}],"assets/icons/action-explore.svg":[function(require,module,exports) {
+module.exports = "/action-explore.67503071.svg";
 },{}],"components/CryptoWidgets.js":[function(require,module,exports) {
 "use strict";
 
@@ -38176,7 +38178,9 @@ var _cryptoEth = _interopRequireDefault(require("../assets/icons/crypto-eth.svg"
 
 var _cryptoDot = _interopRequireDefault(require("../assets/icons/crypto-dot.svg"));
 
-var _copy = _interopRequireDefault(require("../assets/icons/copy.svg"));
+var _actionCopy = _interopRequireDefault(require("../assets/icons/action-copy.svg"));
+
+var _actionExplore = _interopRequireDefault(require("../assets/icons/action-explore.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38200,9 +38204,7 @@ class CryptoWidgets extends _react.Component {
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto profile-widget"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-widget-header"
-    }, "Crypto"), crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
+    }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item near"
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
@@ -38218,7 +38220,25 @@ class CryptoWidgets extends _react.Component {
       className: "profile-crypto-subtitle"
     }, "NEAR"), /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-title"
-    }, crypto.near)))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
+    }, crypto.near))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.near,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://explorer.near.org/accounts/${crypto.near}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item btc"
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
@@ -38234,7 +38254,25 @@ class CryptoWidgets extends _react.Component {
       className: "profile-crypto-subtitle"
     }, "BTC"), /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-title"
-    }, crypto.btc)))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
+    }, crypto.btc))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.btc,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://btc.com/btc/address/${crypto.btc}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item eth"
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
@@ -38250,13 +38288,31 @@ class CryptoWidgets extends _react.Component {
       className: "profile-crypto-subtitle"
     }, "ETH"), /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-title"
-    }, crypto.eth)))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
+    }, crypto.eth))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.eth,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://etherscan.io/address/${crypto.eth}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item dot"
     }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
       className: "profile-crypto-content",
       "data-clipboard-text": crypto.dot
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+    }, /*#__PURE__*/_react.default.createElement("img", {
       src: _cryptoDot.default,
       className: "profile-crypto-icon icon",
       alt: "DOT"
@@ -38266,14 +38322,32 @@ class CryptoWidgets extends _react.Component {
       className: "profile-crypto-subtitle"
     }, "DOT"), /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-title"
-    }, crypto.dot)))) : null);
+    }, crypto.dot))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.dot,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://polkadot.subscan.io/account/${crypto.dot}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null);
   }
 
 }
 
 var _default = CryptoWidgets;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/copy.svg":"assets/icons/copy.svg"}],"Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg"}],"Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38513,7 +38587,9 @@ var _Footer = _interopRequireDefault(require("./components/Footer"));
 
 var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
 
-var _copy = _interopRequireDefault(require("./assets/icons/copy.svg"));
+var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
+
+var _actionCopy = _interopRequireDefault(require("./assets/icons/action-copy.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38797,10 +38873,11 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "text-opacity"
     }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn",
-      "data-clipboard-text": `https://web3.bio/${currentUser}`
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _copy.default,
+      className: "btn tooltip",
+      "data-clipboard-text": `https://web3.bio/${currentUser}`,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
       className: "profile-copy-icon icon"
     }))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content-title text-center mb-4"
@@ -38815,10 +38892,11 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "text-opacity"
     }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn",
-      "data-clipboard-text": `https://web3.bio/${currentUser}`
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _copy.default,
+      className: "btn tooltip",
+      "data-clipboard-text": `https://web3.bio/${currentUser}`,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
       className: "profile-copy-icon icon"
     }))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
@@ -38971,7 +39049,7 @@ class Dashboard extends _react.Component {
       id: "social"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold"
-    }, "Social"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Social links"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
@@ -39171,6 +39249,10 @@ class Dashboard extends _react.Component {
       defaultValue: crypto.dot,
       onChange: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-placeholder"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-bold"
+    }, "NFT Collection Widget - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
@@ -39178,7 +39260,7 @@ class Dashboard extends _react.Component {
       href: "https://twitter.com/picturepan2",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, "@picturepan2"), ".", /*#__PURE__*/_react.default.createElement("br", null), "NFT collection widget is coming soon."))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "@picturepan2"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), /*#__PURE__*/_react.default.createElement("div", {
       className: `web3bio-settings-footer ${formChanged ? "active" : ""}`
     }, /*#__PURE__*/_react.default.createElement("button", {
       className: `btn btn-lg btn-block ${formLoading ? "loading" : ""}`,
@@ -39213,7 +39295,7 @@ class Dashboard extends _react.Component {
 
 var _default = Dashboard;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","./assets/icons/copy.svg":"assets/icons/copy.svg"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","./assets/icons/action-copy.svg":"assets/icons/action-copy.svg"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -62340,7 +62422,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54297" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57156" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

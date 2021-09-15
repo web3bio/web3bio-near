@@ -177,9 +177,9 @@ body {
   }
 
   .profile-copy-icon {
-    height: .9rem;
+    height: 1rem;
     margin-top: .1rem;
-    width: .9rem;
+    width: 1rem;
   }
 }
 
@@ -300,23 +300,26 @@ body {
       flex: 1 1 auto;
       text-align: left;
       word-break: break-all;
+      width: 100%;
     }
 
     .profile-crypto-icon {
       color: $primary-color;
       display: block;
-      flex: 0 0 1.8rem;
+      flex: 0 0 1.4rem;
       height: 1.4rem;
       transition: all .3s ease;
       width: 1.4rem;
     }
 
     .profile-crypto-main {
-      padding-left: .5rem;
+      flex: 1 1 auto;
+      padding-left: 1rem;
     }
 
     .profile-crypto-title {
       font-size: .7rem;
+      font-weight: 500;
       line-height: .9rem;
     }
 
@@ -333,6 +336,12 @@ body {
       display: flex;
       flex: 0 0 auto;
       padding: 0 0 0 1rem;
+
+      .icon {
+        height: 1rem;
+        margin-top: .1rem;
+        width: 1rem;
+      }
     }
 
     @media screen and (max-width: $size-sm) {
@@ -488,6 +497,16 @@ body {
         box-shadow: 0 .2rem 2rem $light-color;
       }
     }
+  }
+
+  .web3bio-settings-placeholder {
+    background: rgba($light-color, .15);
+    border: .1rem dashed rgba($dark-color, .25);
+    border-radius: .6rem;
+    box-shadow: none;
+    color: rgba($dark-color, .25);
+    margin: 1rem 0;
+    padding: 1rem;
   }
 }
 

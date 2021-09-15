@@ -4,7 +4,8 @@ import { Link, Redirect } from 'react-router-dom'
 import getConfig from './config'
 import Footer from './components/Footer'
 import Clipboard from 'react-clipboard.js'
-import IconCopy from './assets/icons/copy.svg'
+import SVG from 'react-inlinesvg'
+import IconCopy from './assets/icons/action-copy.svg'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Dashboard extends Component {
@@ -258,8 +259,8 @@ class Dashboard extends Component {
                         <div className="h6 mb-4">Your profile page will be available at:</div>
                         <div className="btn-group mb-2">
                           <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
-                          <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
-                            <img src={IconCopy} className="profile-copy-icon icon" />
+                          <Clipboard className="btn tooltip" data-clipboard-text={`https://web3.bio/${currentUser}`} title="Copy to clipboard">
+                            <SVG src={IconCopy} className="profile-copy-icon icon" />
                           </Clipboard>
                         </div>
                       </div>
@@ -270,8 +271,8 @@ class Dashboard extends Component {
                       <div className="web3bio-content-action text-center">
                         <div className="btn-group">
                           <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
-                          <Clipboard className="btn" data-clipboard-text={`https://web3.bio/${currentUser}`}>
-                            <img src={IconCopy} className="profile-copy-icon icon" />
+                          <Clipboard className="btn tooltip" data-clipboard-text={`https://web3.bio/${currentUser}`} title="Copy to clipboard">
+                            <SVG src={IconCopy} className="profile-copy-icon icon" />
                           </Clipboard>
                         </div>
                       </div>
@@ -341,7 +342,7 @@ class Dashboard extends Component {
                       </fieldset>
 
                       <fieldset id="social">
-                        <div className="h5 text-bold">Social</div>
+                        <div className="h5 text-bold">Social links</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="twitter">Twitter</label>
                           <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxLength="120" onChange={this.handleChange} />
@@ -411,10 +412,12 @@ class Dashboard extends Component {
                           <label className="form-label" htmlFor="dot">Polkadot</label>
                           <input className="form-input input-lg" type="text" id="dot" defaultValue={crypto.dot} onChange={this.handleChange} />
                         </div>
+                        <div className="web3bio-settings-placeholder">
+                          <span className="text-bold">NFT Collection Widget - COMING SOON</span>
+                        </div>
                         <div className="form-group">
                           <div className="form-input-hint">
                             Request more crypto support? Please contact <a href="https://twitter.com/picturepan2" target="_blank" rel="noopener noreferrer">@picturepan2</a>.<br/>
-                            NFT collection widget is coming soon.
                           </div>
                         </div>
                       </fieldset>

@@ -5,7 +5,8 @@ import IconNear from '../assets/icons/crypto-near.svg'
 import IconBtc from '../assets/icons/crypto-btc.svg'
 import IconEth from '../assets/icons/crypto-eth.svg'
 import IconDot from '../assets/icons/crypto-dot.svg'
-import IconCopy from '../assets/icons/copy.svg'
+import IconCopy from '../assets/icons/action-copy.svg'
+import IconExplore from '../assets/icons/action-explore.svg'
 
 class CryptoWidgets extends Component {
   constructor(props) {
@@ -22,7 +23,6 @@ class CryptoWidgets extends Component {
 
     return (
       <div className="profile-crypto profile-widget">
-        <div className="profile-widget-header">Crypto</div>
         { crypto.near? 
           <div className="profile-crypto-item near">
             <Clipboard component="div" className="profile-crypto-content" data-clipboard-text={crypto.near}>
@@ -32,6 +32,14 @@ class CryptoWidgets extends Component {
                 <div className="profile-crypto-title">{crypto.near}</div>
               </div>
             </Clipboard>
+            <div className="profile-crypto-action">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.near} title="Copy to clipboard">
+                <SVG src={IconCopy} className="icon" />
+              </Clipboard>
+              <a href={`https://explorer.near.org/accounts/${crypto.near}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
+                <SVG src={IconExplore} className="icon" />
+              </a>
+            </div>
           </div> : null
         }
         { crypto.btc? 
@@ -43,6 +51,14 @@ class CryptoWidgets extends Component {
                 <div className="profile-crypto-title">{crypto.btc}</div>
               </div>
             </Clipboard>
+            <div className="profile-crypto-action">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.btc} title="Copy to clipboard">
+                <SVG src={IconCopy} className="icon" />
+              </Clipboard>
+              <a href={`https://btc.com/btc/address/${crypto.btc}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
+                <SVG src={IconExplore} className="icon" />
+              </a>
+            </div>
           </div> : null
         }
         { crypto.eth? 
@@ -54,25 +70,35 @@ class CryptoWidgets extends Component {
                 <div className="profile-crypto-title">{crypto.eth}</div>
               </div>
             </Clipboard>
+            <div className="profile-crypto-action">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.eth} title="Copy to clipboard">
+                <SVG src={IconCopy} className="icon" />
+              </Clipboard>
+              <a href={`https://etherscan.io/address/${crypto.eth}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
+                <SVG src={IconExplore} className="icon" />
+              </a>
+            </div>
           </div> : null
         }
         { crypto.dot? 
           <div className="profile-crypto-item dot">
             <Clipboard component="div" className="profile-crypto-content" data-clipboard-text={crypto.dot}>
-              <SVG src={IconDot} className="profile-crypto-icon icon" alt="DOT" />
+              <img src={IconDot} className="profile-crypto-icon icon" alt="DOT" />
               <div className="profile-crypto-main">
                 <div className="profile-crypto-subtitle">DOT</div>
                 <div className="profile-crypto-title">{crypto.dot}</div>
               </div>
             </Clipboard>
+            <div className="profile-crypto-action">
+              <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.dot} title="Copy to clipboard">
+                <SVG src={IconCopy} className="icon" />
+              </Clipboard>
+              <a href={`https://polkadot.subscan.io/account/${crypto.dot}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1" title="Open in Explorer">
+                <SVG src={IconExplore} className="icon" />
+              </a>
+            </div>
           </div> : null
         }
-
-        {/* <div className="profile-nft">
-          <div className="profile-nft-item">
-            <span className="text-bold">NFT - COMING SOON</span>
-          </div>
-        </div> */}
       </div>
     )
   }
