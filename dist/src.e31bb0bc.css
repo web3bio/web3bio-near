@@ -2667,24 +2667,28 @@ body {
       box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.1);
       opacity: 1;
       transform: translateY(-0.1rem); }
+    .web3bio-profile .profile-crypto-item .profile-crypto-content {
+      align-items: center;
+      display: flex;
+      flex: 1 1 auto;
+      text-align: left;
+      word-break: break-all; }
     .web3bio-profile .profile-crypto-item .profile-crypto-icon {
       color: #4620E1;
       display: block;
       flex: 0 0 1.2rem;
-      height: 1.2rem;
+      height: 1.6rem;
       transition: all .3s ease;
-      width: 1.2rem; }
-    .web3bio-profile .profile-crypto-item .profile-crypto-content {
-      flex: 1 1 0;
-      padding: 0 0 0 1rem;
-      text-align: left;
-      width: 100%; }
+      width: 1.6rem; }
+    .web3bio-profile .profile-crypto-item .profile-crypto-main {
+      padding-left: .5rem; }
     .web3bio-profile .profile-crypto-item .profile-crypto-title {
-      font-size: .8rem;
-      line-height: 1.2rem; }
+      font-size: .7rem;
+      line-height: .9rem; }
     .web3bio-profile .profile-crypto-item .profile-crypto-subtitle {
       color: #b9b9b9;
       font-size: .5rem;
+      font-weight: 500;
       line-height: .6rem;
       user-select: none; }
     .web3bio-profile .profile-crypto-item .profile-crypto-action {
@@ -2692,19 +2696,11 @@ body {
       display: flex;
       flex: 0 0 auto;
       padding: 0 0 0 1rem; }
-      .web3bio-profile .profile-crypto-item .profile-crypto-action .profile-copy-icon {
-        height: .8rem;
-        margin-top: .15rem;
-        width: .8rem; }
     @media screen and (max-width: 600px) {
       .web3bio-profile .profile-crypto-item {
         align-items: flex-start;
         flex-direction: column;
-        height: auto;
-        padding: 1rem; }
-        .web3bio-profile .profile-crypto-item .profile-crypto-content {
-          flex: 1 1 100%;
-          padding: .5rem 0 0 0; }
+        height: auto; }
         .web3bio-profile .profile-crypto-item .profile-crypto-action {
           padding: .5rem 0 0 0; } }
 

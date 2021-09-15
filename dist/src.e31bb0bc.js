@@ -36754,138 +36754,14 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_react_dom__;
 /******/ });
 });
 
-},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/react-middle-ellipsis/dist/index.min.js":[function(require,module,exports) {
-var define;
-!function (e, t) {
-  "object" == typeof exports && "object" == typeof module ? module.exports = t(require("react")) : "function" == typeof define && define.amd ? define(["React"], t) : "object" == typeof exports ? exports["react-middle-ellipsis"] = t(require("react")) : e["react-middle-ellipsis"] = t(e.React);
-}(this, function (e) {
-  return (() => {
-    "use strict";
-
-    var t = {
-      798: t => {
-        t.exports = e;
-      }
-    },
-        r = {};
-
-    function o(e) {
-      var n = r[e];
-      if (void 0 !== n) return n.exports;
-      var i = r[e] = {
-        exports: {}
-      };
-      return t[e](i, i.exports, o), i.exports;
-    }
-
-    o.n = e => {
-      var t = e && e.__esModule ? () => e.default : () => e;
-      return o.d(t, {
-        a: t
-      }), t;
-    }, o.d = (e, t) => {
-      for (var r in t) o.o(t, r) && !o.o(e, r) && Object.defineProperty(e, r, {
-        enumerable: !0,
-        get: t[r]
-      });
-    }, o.o = (e, t) => Object.prototype.hasOwnProperty.call(e, t), o.r = e => {
-      "undefined" != typeof Symbol && Symbol.toStringTag && Object.defineProperty(e, Symbol.toStringTag, {
-        value: "Module"
-      }), Object.defineProperty(e, "__esModule", {
-        value: !0
-      });
-    };
-    var n = {};
-    return (() => {
-      o.r(n), o.d(n, {
-        default: () => l
-      });
-      var e = o(798),
-          t = o.n(e);
-
-      function r(e, t) {
-        var r = Object.keys(e);
-
-        if (Object.getOwnPropertySymbols) {
-          var o = Object.getOwnPropertySymbols(e);
-          t && (o = o.filter(function (t) {
-            return Object.getOwnPropertyDescriptor(e, t).enumerable;
-          })), r.push.apply(r, o);
-        }
-
-        return r;
-      }
-
-      function i(e) {
-        for (var t = 1; t < arguments.length; t++) {
-          var o = null != arguments[t] ? arguments[t] : {};
-          t % 2 ? r(Object(o), !0).forEach(function (t) {
-            a(e, t, o[t]);
-          }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(o)) : r(Object(o)).forEach(function (t) {
-            Object.defineProperty(e, t, Object.getOwnPropertyDescriptor(o, t));
-          });
-        }
-
-        return e;
-      }
-
-      function a(e, t, r) {
-        return t in e ? Object.defineProperty(e, t, {
-          value: r,
-          enumerable: !0,
-          configurable: !0,
-          writable: !0
-        }) : e[t] = r, e;
-      }
-
-      const l = function (r) {
-        var o = function (e) {
-          var t = e.parentNode,
-              r = t.querySelector(".constrainedChild") || e.childNodes[0],
-              o = t.querySelector(".ellipseMe") || t.querySelector(".constrainedEllipse") || r;
-          null !== r && null !== o && (o.hasAttribute("data-original") && (o.textContent = o.getAttribute("data-original")), function (e, t, r) {
-            var o = t.offsetWidth,
-                n = e.offsetWidth,
-                i = r.offsetWidth,
-                a = o > i ? o : i;
-
-            if (a > n) {
-              var l = r.textContent,
-                  c = l.length,
-                  u = (c - (n - (a - i)) / (i / c) + 5) / 2,
-                  f = Math.floor(c / 2 - u),
-                  s = Math.ceil(c / 2 + u);
-              r.setAttribute("data-original", r.textContent), r.textContent = l.substr(0, f) + "..." + l.substr(s);
-            }
-          }(e.offsetWidth > t.offsetWidth ? t : e, r, o));
-        },
-            n = (0, e.useCallback)(function (e) {
-          null !== e && (window.addEventListener("resize", function () {
-            o(e);
-          }), o(e));
-        });
-
-        return t().createElement("div", {
-          ref: n,
-          style: i({
-            wordBreak: "keep-all",
-            overflowWrap: "normal"
-          }, r.width && {
-            width: r.width
-          })
-        }, r.children);
-      };
-    })(), n;
-  })();
-});
-},{"react":"../node_modules/react/index.js"}],"assets/icons/near.svg":[function(require,module,exports) {
-module.exports = "/near.0b44b3ed.svg";
-},{}],"assets/icons/btc.svg":[function(require,module,exports) {
-module.exports = "/btc.e136b254.svg";
-},{}],"assets/icons/eth.svg":[function(require,module,exports) {
-module.exports = "/eth.34e5f7dd.svg";
-},{}],"assets/icons/dot.svg":[function(require,module,exports) {
-module.exports = "/dot.3f8fecc0.svg";
+},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"assets/icons/crypto-near.svg":[function(require,module,exports) {
+module.exports = "/crypto-near.6af70c73.svg";
+},{}],"assets/icons/crypto-btc.svg":[function(require,module,exports) {
+module.exports = "/crypto-btc.207fc2b4.svg";
+},{}],"assets/icons/crypto-eth.svg":[function(require,module,exports) {
+module.exports = "/crypto-eth.3c16830b.svg";
+},{}],"assets/icons/crypto-dot.svg":[function(require,module,exports) {
+module.exports = "/crypto-dot.29ef90cb.svg";
 },{}],"assets/icons/copy.svg":[function(require,module,exports) {
 module.exports = "/copy.5aef999a.svg";
 },{}],"components/CryptoWidgets.js":[function(require,module,exports) {
@@ -36900,15 +36776,13 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
 
-var _reactMiddleEllipsis = _interopRequireDefault(require("react-middle-ellipsis"));
+var _cryptoNear = _interopRequireDefault(require("../assets/icons/crypto-near.svg"));
 
-var _near = _interopRequireDefault(require("../assets/icons/near.svg"));
+var _cryptoBtc = _interopRequireDefault(require("../assets/icons/crypto-btc.svg"));
 
-var _btc = _interopRequireDefault(require("../assets/icons/btc.svg"));
+var _cryptoEth = _interopRequireDefault(require("../assets/icons/crypto-eth.svg"));
 
-var _eth = _interopRequireDefault(require("../assets/icons/eth.svg"));
-
-var _dot = _interopRequireDefault(require("../assets/icons/dot.svg"));
+var _cryptoDot = _interopRequireDefault(require("../assets/icons/crypto-dot.svg"));
 
 var _copy = _interopRequireDefault(require("../assets/icons/copy.svg"));
 
@@ -36934,72 +36808,78 @@ class CryptoWidgets extends _react.Component {
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto profile-widget"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-widget-header"
-    }, "Crypto"), crypto.near ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+    }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item near"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
-      className: "profile-crypto-item near",
+      className: "profile-crypto-content",
       "data-clipboard-text": crypto.near
     }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _near.default,
+      src: _cryptoNear.default,
       className: "profile-crypto-icon icon",
       alt: "NEAR"
     }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content text-ellipsis"
-    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
-      className: "profile-crypto-title ellipseMe"
-    }, crypto.near), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-subtitle"
-    }, "NEAR")))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+    }, "NEAR"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.near)))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item btc"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
-      className: "profile-crypto-item btc",
+      className: "profile-crypto-content",
       "data-clipboard-text": crypto.btc
     }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _btc.default,
+      src: _cryptoBtc.default,
       className: "profile-crypto-icon icon",
       alt: "BTC"
     }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content text-ellipsis"
-    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
-      className: "profile-crypto-title ellipseMe"
-    }, crypto.btc), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-subtitle"
-    }, "BTC")))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+    }, "BTC"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.btc)))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item eth"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
-      className: "profile-crypto-item eth",
+      className: "profile-crypto-content",
       "data-clipboard-text": crypto.eth
     }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _eth.default,
+      src: _cryptoEth.default,
       className: "profile-crypto-icon icon",
       alt: "ETH"
     }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content text-ellipsis"
-    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
-      className: "profile-crypto-title ellipseMe"
-    }, crypto.eth), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-subtitle"
-    }, "ETH")))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+    }, "ETH"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.eth)))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item dot"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
-      className: "profile-crypto-item dot",
+      className: "profile-crypto-content",
       "data-clipboard-text": crypto.dot
     }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _dot.default,
+      src: _cryptoDot.default,
       className: "profile-crypto-icon icon",
       alt: "DOT"
     }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content text-ellipsis"
-    }, /*#__PURE__*/_react.default.createElement(_reactMiddleEllipsis.default, null, /*#__PURE__*/_react.default.createElement("span", {
-      className: "profile-crypto-title ellipseMe"
-    }, crypto.dot), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-subtitle"
-    }, "DOT")))) : null);
+    }, "DOT"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.dot)))) : null);
   }
 
 }
 
 var _default = CryptoWidgets;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-middle-ellipsis":"../node_modules/react-middle-ellipsis/dist/index.min.js","../assets/icons/near.svg":"assets/icons/near.svg","../assets/icons/btc.svg":"assets/icons/btc.svg","../assets/icons/eth.svg":"assets/icons/eth.svg","../assets/icons/dot.svg":"assets/icons/dot.svg","../assets/icons/copy.svg":"assets/icons/copy.svg"}],"Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/copy.svg":"assets/icons/copy.svg"}],"Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61066,7 +60946,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53607" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59638" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

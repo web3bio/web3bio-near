@@ -289,30 +289,36 @@ body {
       transform: translateY(-.1rem);
     }
 
+    .profile-crypto-content {
+      align-items: center;
+      display: flex;
+      flex: 1 1 auto;
+      text-align: left;
+      word-break: break-all;
+    }
+
     .profile-crypto-icon {
       color: $primary-color;
       display: block;
       flex: 0 0 1.2rem;
-      height: 1.2rem;
+      height: 1.6rem;
       transition: all .3s ease;
-      width: 1.2rem;
+      width: 1.6rem;
     }
 
-    .profile-crypto-content {
-      flex: 1 1 0;
-      padding: 0 0 0 1rem;
-      text-align: left;
-      width: 100%;
+    .profile-crypto-main {
+      padding-left: .5rem;
     }
 
     .profile-crypto-title {
-      font-size: .8rem;
-      line-height: 1.2rem;
+      font-size: .7rem;
+      line-height: .9rem;
     }
 
     .profile-crypto-subtitle {
       color: $gray-color;
       font-size: .5rem;
+      font-weight: 500;
       line-height: .6rem;
       user-select: none;
     }
@@ -322,24 +328,12 @@ body {
       display: flex;
       flex: 0 0 auto;
       padding: 0 0 0 1rem;
-
-      .profile-copy-icon {
-        height: .8rem;
-        margin-top: .15rem;
-        width: .8rem;
-      }
     }
 
     @media screen and (max-width: $size-sm) {
       align-items: flex-start;
       flex-direction: column;
       height: auto;
-      padding: 1rem;
-
-      .profile-crypto-content {
-        flex: 1 1 100%;
-        padding: .5rem 0 0 0;
-      }
 
       .profile-crypto-action {
         padding: .5rem 0 0 0;
