@@ -91,6 +91,10 @@ body {
     background-image: url('../img/bg-creamwhisper.jpg');
   }
 
+  &.eggsour {
+    background-image: url('../img/bg-eggsour.jpg');
+  }
+
   &.flare {
     background-image: url('../img/bg-flare.jpg');
   }
@@ -178,12 +182,6 @@ body {
     font-size: 1.6rem;
     font-weight: 900;
     line-height: 2rem;
-  }
-
-  .profile-copy-icon {
-    height: 1rem;
-    margin-top: .1rem;
-    width: 1rem;
   }
 }
 
@@ -499,7 +497,7 @@ body {
       position: sticky;
 
       .btn {
-        animation: slide-up .15s ease 1;
+        animation: slide-up .25s ease 1;
         box-shadow: 0 .2rem 2rem $light-color;
       }
     }
@@ -517,13 +515,20 @@ body {
 }
 
 .web3bio-toast {
-  bottom: 1rem;
+  display: flex;
+  justify-content: center;
   left: 50%;
-  max-width: $size-xs;
   position: fixed;
   transform: translateX(-50%);
   text-align: center;
-  z-index: 999;
+  top: 1rem;
+  width: $size-xs;
+  z-index: 9999;
+
+  .toast {
+    animation: slide-down .25s ease 1;
+    max-width: $size-xs;
+  }
 }
 
 .web3bio-placeholder {

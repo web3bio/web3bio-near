@@ -1,27 +1,14 @@
 // Toasts
 .toast {
-  @include toast-variant($dark-color);
-  border: $border-width solid $dark-color;
-  border-radius: $border-radius;
+  backdrop-filter: blur(2rem) saturate(120%) brightness(100%);
+  background: rgba($dark-color, .8);
+  border: .1rem solid rgba($dark-color, .1);
+  border-radius: $border-radius-lg;
+  box-shadow: 0 .2rem 2rem rgba($dark-color, .75);
   color: $light-color;
   display: block;
-  padding: $layout-spacing $layout-spacing-lg;
-
-  &.toast-primary {
-    @include toast-variant($primary-color);
-  }
-
-  &.toast-success {
-    @include toast-variant($success-color);
-  }
-
-  &.toast-warning {
-    @include toast-variant($warning-color);
-  }
-
-  &.toast-error {
-    @include toast-variant($error-color);
-  }
+  font-size: .8rem;
+  padding: .8rem;
 
   a {
     color: $light-color;

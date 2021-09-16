@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import getConfig from './config'
 import Footer from './components/Footer'
+import Toast from './components/Toast'
 import Clipboard from 'react-clipboard.js'
 import SVG from 'react-inlinesvg'
 import IconCopy from './assets/icons/action-copy.svg'
@@ -20,7 +21,8 @@ class Dashboard extends Component {
       formChanged: false,
       formLoading: false,
       formAvatar: '',
-      formTheme: 'royal'
+      formTheme: 'royal',
+      pageToast: ''
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -28,7 +30,7 @@ class Dashboard extends Component {
     this.signedOutFlow = this.signedOutFlow.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.delBio = this.delBio.bind(this);
+    this.delProfile = this.delProfile.bind(this);
   }
 
   async componentDidMount() {
@@ -37,7 +39,7 @@ class Dashboard extends Component {
     let loggedIn = this.props.wallet.isSignedIn()
     let pageOwner = window.accountId
 
-    let pageBio = await this.getBio(pageOwner)
+    let pageBio = await this.getProfile(pageOwner)
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
@@ -74,15 +76,16 @@ class Dashboard extends Component {
     )
   }
 
-  async getBio(pageOwner) {
+  async getProfile(pageOwner) {
     try {
       return await window.contract.getRecordByOwner({
         owner: pageOwner
       })
     } catch (e) {
-      console.log(
-        'Something went wrong! '
-      )
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      })
       throw e
     } finally {
       this.setState({
@@ -91,18 +94,19 @@ class Dashboard extends Component {
     }
   }
 
-  async setBio(newRecords) {
+  async setProfile(newRecords) {
     try {
       await window.contract.setRecordByOwner(newRecords)
     } catch (e) {
-      console.log(
-        'Something went wrong! '
-      )
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      })
       throw e
     }
   }
 
-  async delBio() {
+  async delProfile() {
     if (!window.confirm(`Permanently delete your page and profile data for ${this.state.currentUser}?`)) {
       return
     }
@@ -111,9 +115,10 @@ class Dashboard extends Component {
         owner: this.state.currentUser
       })
     } catch (e) {
-      console.log(
-        'Something went wrong! '
-      )
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      })
       throw e
     } finally {
       // Go to home page
@@ -187,7 +192,7 @@ class Dashboard extends Component {
     newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
     
     let newRecords = new Object({
-      name: event.target.displayname.value,
+      displayname: event.target.displayname.value,
       avatar: event.target.avatar.value,
       description: event.target.description.value,
       location: event.target.location.value,
@@ -197,10 +202,10 @@ class Dashboard extends Component {
     })
     console.log(newRecords)
 
-    await this.setBio(newRecords)
+    await this.setProfile(newRecords)
 
     let pageOwner = this.state.currentUser
-    let pageBio = await this.getBio(pageOwner)
+    let pageBio = await this.getProfile(pageOwner)
     if (!!pageBio) {
       this.setState({
         pageBio: pageBio,
@@ -208,13 +213,24 @@ class Dashboard extends Component {
         formChanged: false,
         formLoading: false,
         formAvatar: pageBio.avatar,
-        formTheme: pageBio.theme
+        formTheme: pageBio.theme,
+        pageToast: 'Updated.'
       })
     }
   }
 
   render() {
-    const { login, currentUser, loading, pageBio, pageStatus, formChanged, formLoading, formAvatar, formTheme } = this.state
+    const { 
+      login,
+      currentUser,
+      loading,
+      pageBio,
+      pageStatus,
+      formChanged,
+      formLoading,
+      formAvatar,
+      formTheme,
+      pageToast } = this.state
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
 
@@ -224,7 +240,7 @@ class Dashboard extends Component {
 
     return (
       <div className="web3bio-container">
-
+        <Toast />
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
@@ -255,30 +271,27 @@ class Dashboard extends Component {
                 <div className="column col-12">
                   { !pageStatus ? 
                     <>
-                      <div className="web3bio-content-title text-center mb-4">Welcome, <strong>{currentUser}</strong>.</div>
+                      <div className="web3bio-content-title text-center mb-4">Hello, <strong>{currentUser}</strong>.</div>
                       <div className="web3bio-settings web3bio-placeholder">
-                        <div className="h5 text-bold mb-4">Claim your page</div>
-                        <div className="h6 mb-4">Complete your profile with your <a href="#profile" className="text-dark text-underline">basic info</a>, <a href="#social" className="text-dark text-underline">social links</a>, and <a href="#crypto" className="text-dark text-underline">crypto addresses</a> below.</div>
-                        <div className="h6 mb-4">Your profile page will be available at:</div>
-                        <div className="btn-group mb-2">
-                          <Link to={`/${currentUser}`} className="btn" target="_blank"><span className="text-opacity">web3.bio/</span>{currentUser}</Link>
-                          <Clipboard className="btn tooltip" data-clipboard-text={`https://web3.bio/${currentUser}`} title="Copy to clipboard">
-                            <SVG src={IconCopy} className="profile-copy-icon icon" />
-                          </Clipboard>
+                        <div className="h5 text-bold mb-2">Claim your page</div>
+                        <div className="h6 mb-2">
+                          Complete your <a href="#profile" className="btn btn-sm ml-1 mr-1">basic info</a>, <a href="#social" className="btn btn-sm ml-1 mr-1">social links</a>, or <a href="#crypto" className="btn btn-sm ml-1 mr-1">crypto addresses</a> below to claim your page.
+                        </div>
+                        <div className="h6 mb-4">
+                          Your page will be available at: <a href={`https://web3.bio/${currentUser}`} className="text-dark text-underline ml-1" target="_blank">web3.bio/{currentUser}</a>.
                         </div>
                       </div>
                     </>
                     :
                     <>
                       <div className="web3bio-content-title text-center mt-4 mb-4">Manage your profile</div>
-                      
                     </>
                   }
                   
                   <div className="web3bio-settings">
                     <ul className="tab tab-block">
-                      <li className="tab-item active">
-                        <a href="#profile">Profile</a>
+                      <li className="tab-item">
+                        <a href="#profile">Basic</a>
                       </li>
                       <li className="tab-item">
                         <a href="#social">Social</a>
@@ -289,14 +302,14 @@ class Dashboard extends Component {
                     </ul>
                     <form onSubmit={this.handleSubmit} autoComplete="off">
                       <fieldset id="profile">
-                        <div className="h5 text-bold">Profile</div>
+                        <div className="h5 text-bold mb-2">Basic</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="displayname">Name</label>
-                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.displayname} required onChange={this.handleChange} autoComplete="off" />
+                          <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.displayname} required onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="description">Bio</label>
-                          <textarea className="form-input input-lg" id="description" placeholder="Description" defaultValue={pageBio.description} maxLength="160" onChange={this.handleChange} />
+                          <textarea className="form-input input-lg" id="description" placeholder="Description" defaultValue={pageBio.description} maxLength="160" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="avatar">Avatar</label>
@@ -305,25 +318,25 @@ class Dashboard extends Component {
                           :
                             <div className="profile-avatar avatar avatar-lg mb-4 mt-2" data-initial=""></div>
                           }
-                          <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onChange={this.handleChange} autoComplete="off" />
+                          <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onInput={this.handleChange} />
                           <div className="form-input-hint">You may use free photo hostings like <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-dark">IMGBB</a> for avatars.</div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="email">Email <small className="label">PUBLIC</small></label>
-                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onChange={this.handleChange} autoComplete="off" />
+                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onInput={this.handleChange} />
                           <div className="form-input-hint">Leave it blank if you don't want to make your Email address public.</div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="website">Website</label>
-                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={social.website} onChange={this.handleChange} autoComplete="off" />
+                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={social.website} onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="location">Location</label>
-                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxLength="30" onChange={this.handleChange} autoComplete="off" />
+                          <input className="form-input input-lg" type="text" id="location" placeholder="The Moon" defaultValue={pageBio.location} maxLength="30" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="theme">Theme</label>
-                          <select className="form-select select-lg" id="theme" value={formTheme} onChange={this.handleChange}>
+                          <select className="form-select select-lg" id="theme" value={formTheme} onInput={this.handleChange}>
                             <option value="royal">Royal</option>
                             <option value="flax">Flax</option>
                             <option value="witchhaze">Witch Haze</option>
@@ -331,6 +344,7 @@ class Dashboard extends Component {
                             <option value="mauve">Mauve</option>
                             <option value="shalimar">Shalimar</option>
                             <option value="creamwhisper">Cream Whisper</option>
+                            <option value="eggsour">Egg Sour</option>
                             <option value="flare">Flare</option>
                             <option value="snowymint">Snowy Mint</option>
                           </select>
@@ -338,58 +352,58 @@ class Dashboard extends Component {
                       </fieldset>
 
                       <fieldset id="social">
-                        <div className="h5 text-bold">Social links</div>
+                        <div className="h5 text-bold mb-2">Social links</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="twitter">Twitter</label>
-                          <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="facebook">Facebook</label>
-                          <input className="form-input input-lg" type="text" id="facebook" placeholder="https://facebook.com/" defaultValue={social.facebook} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="facebook" placeholder="https://facebook.com/" defaultValue={social.facebook} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="linkedin">LinkedIn</label>
-                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linkedin} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linkedin} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="github">GitHub</label>
-                          <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="gitcoin">Gitcoin</label>
-                          <input className="form-input input-lg" type="text" id="gitcoin" placeholder="https://gitcoin.co/" defaultValue={social.gitcoin} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="gitcoin" placeholder="https://gitcoin.co/" defaultValue={social.gitcoin} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="medium">Medium</label>
-                          <input className="form-input input-lg" type="text" id="medium" placeholder="https://medium.com/" defaultValue={social.medium} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="medium" placeholder="https://medium.com/" defaultValue={social.medium} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="telegram">Telegram</label>
-                          <input className="form-input input-lg" type="text" id="telegram" placeholder="https://t.me/" defaultValue={social.telegram} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="telegram" placeholder="https://t.me/" defaultValue={social.telegram} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="instagram">Instagram</label>
-                          <input className="form-input input-lg" type="text" id="instagram" placeholder="https://instagram.com/" defaultValue={social.instagram} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="instagram" placeholder="https://instagram.com/" defaultValue={social.instagram} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="youtube">YouTube</label>
-                          <input className="form-input input-lg" type="text" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="discord">Discord</label>
-                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="reddit">Reddit</label>
-                          <input className="form-input input-lg" type="text" id="reddit" placeholder="https://reddit.com/" defaultValue={social.reddit} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="reddit" placeholder="https://reddit.com/" defaultValue={social.reddit} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="patreon">Patreon</label>
-                          <input className="form-input input-lg" type="text" id="patreon" placeholder="https://patreon.com/" defaultValue={social.patreon} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="patreon" placeholder="https://patreon.com/" defaultValue={social.patreon} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="paypal">PayPal</label>
-                          <input className="form-input input-lg" type="text" id="paypal" placeholder="https://paypal.me/" defaultValue={social.paypal} maxLength="120" onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="paypal" placeholder="https://paypal.me/" defaultValue={social.paypal} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <div className="form-input-hint">
@@ -399,22 +413,22 @@ class Dashboard extends Component {
                       </fieldset>
 
                       <fieldset id="crypto">
-                        <div className="h5 text-bold">Crypto addresses</div>
+                        <div className="h5 text-bold mb-2">Crypto addresses</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="near">NEAR</label>
                           <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} readOnly />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="btc">Bitcoin</label>
-                          <input className="form-input input-lg" type="text" id="btc" defaultValue={crypto.btc} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="btc" defaultValue={crypto.btc} onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="eth">Ethereum</label>
-                          <input className="form-input input-lg" type="text" id="eth" defaultValue={crypto.eth} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="eth" defaultValue={crypto.eth} onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="dot">Polkadot</label>
-                          <input className="form-input input-lg" type="text" id="dot" defaultValue={crypto.dot} onChange={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="dot" defaultValue={crypto.dot} onInput={this.handleChange} />
                         </div>
                         <div className="web3bio-settings-placeholder">
                           <span className="text-bold">NFT Collection Widget - COMING SOON</span>
@@ -436,12 +450,15 @@ class Dashboard extends Component {
                     <div className="h5 text-bold">Danger Zone</div>
                     <div className="form-group">
                       <label className="form-label mb-2">Permanently delete your page and profile data from <strong className="text-error">{currentUser}</strong>. This of course is not reversable.</label>
-                      <button className="btn mb-2" onClick={this.delBio}>Delete data</button>
+                      <button className="btn mb-2" onClick={this.delProfile}>Delete data</button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            
+            { !!pageToast ? <Toast content={pageToast} />:null }
+            
           </>
           :
           <>

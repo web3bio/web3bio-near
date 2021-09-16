@@ -1,7 +1,7 @@
 // Forms
 .form-group {
   &:not(:last-child) {
-    margin-bottom: $layout-spacing;
+    margin-bottom: $layout-spacing-lg;
   }
 }
 

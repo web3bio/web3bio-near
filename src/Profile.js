@@ -27,7 +27,7 @@ class Profile extends Component {
     let loggedIn = this.props.wallet.isSignedIn()
     let pageOwner = this.props.match.params.owner
 
-    const pageBio = await this.getBio(pageOwner)
+    const pageBio = await this.getProfile(pageOwner)
     if (!!pageBio) {
       document.title = `${pageBio.displayname} - Web3.bio`
       
@@ -63,7 +63,7 @@ class Profile extends Component {
     )
   }
 
-  async getBio(pageOwner) {
+  async getProfile(pageOwner) {
     try {
       // make an update call to the smart contract
       return await window.contract.getRecordByOwner({

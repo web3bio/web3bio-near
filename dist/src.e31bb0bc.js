@@ -36652,6 +36652,8 @@ module.exports = "/social-facebook.06671e21.svg";
 module.exports = "/social-linkedin.67c3316e.svg";
 },{}],"assets/icons/social-github.svg":[function(require,module,exports) {
 module.exports = "/social-github.ba89de4e.svg";
+},{}],"assets/icons/social-gitcoin.svg":[function(require,module,exports) {
+module.exports = "/social-gitcoin.f79ef815.svg";
 },{}],"assets/icons/social-medium.svg":[function(require,module,exports) {
 module.exports = "/social-medium.01883098.svg";
 },{}],"assets/icons/social-telegram.svg":[function(require,module,exports) {
@@ -36691,6 +36693,8 @@ var _socialFacebook = _interopRequireDefault(require("../assets/icons/social-fac
 var _socialLinkedin = _interopRequireDefault(require("../assets/icons/social-linkedin.svg"));
 
 var _socialGithub = _interopRequireDefault(require("../assets/icons/social-github.svg"));
+
+var _socialGitcoin = _interopRequireDefault(require("../assets/icons/social-gitcoin.svg"));
 
 var _socialMedium = _interopRequireDefault(require("../assets/icons/social-medium.svg"));
 
@@ -36733,8 +36737,7 @@ class SocialLinks extends _react.Component {
       title: "Website"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialWebsite.default,
-      className: "profile-social-icon icon",
-      alt: "Website"
+      className: "profile-social-icon icon"
     })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
       href: `mailto:${social.email}`,
       target: "_blank",
@@ -36743,8 +36746,7 @@ class SocialLinks extends _react.Component {
       title: "Email"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialEmail.default,
-      className: "profile-social-icon icon",
-      alt: "Email"
+      className: "profile-social-icon icon"
     })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.twitter,
       target: "_blank",
@@ -36753,8 +36755,7 @@ class SocialLinks extends _react.Component {
       title: "Twitter"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialTwitter.default,
-      className: "profile-social-icon icon",
-      alt: "Twitter"
+      className: "profile-social-icon icon"
     })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.facebook,
       target: "_blank",
@@ -36763,8 +36764,7 @@ class SocialLinks extends _react.Component {
       title: "Facebook"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialFacebook.default,
-      className: "profile-social-icon icon",
-      alt: "Facebook"
+      className: "profile-social-icon icon"
     })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.linkedin,
       target: "_blank",
@@ -36773,8 +36773,7 @@ class SocialLinks extends _react.Component {
       title: "LinkedIn"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialLinkedin.default,
-      className: "profile-social-icon icon",
-      alt: "LinkedIn"
+      className: "profile-social-icon icon"
     })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.github,
       target: "_blank",
@@ -36783,8 +36782,16 @@ class SocialLinks extends _react.Component {
       title: "GitHub"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialGithub.default,
-      className: "profile-social-icon icon",
-      alt: "GitHub"
+      className: "profile-social-icon icon"
+    })) : null, social.gitcoin ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.gitcoin,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip gitcoin",
+      title: "Gitcoin"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialGitcoin.default,
+      className: "profile-social-icon icon"
     })) : null, social.medium ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.medium,
       target: "_blank",
@@ -36793,8 +36800,7 @@ class SocialLinks extends _react.Component {
       title: "Medium"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialMedium.default,
-      className: "profile-social-icon icon",
-      alt: "Medium"
+      className: "profile-social-icon icon"
     })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.telegram,
       target: "_blank",
@@ -36803,8 +36809,7 @@ class SocialLinks extends _react.Component {
       title: "Telegram"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialTelegram.default,
-      className: "profile-social-icon icon",
-      alt: "Telegram"
+      className: "profile-social-icon icon"
     })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.instagram,
       target: "_blank",
@@ -36813,8 +36818,7 @@ class SocialLinks extends _react.Component {
       title: "Instagram"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialInstagram.default,
-      className: "profile-social-icon icon",
-      alt: "Instagram"
+      className: "profile-social-icon icon"
     })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.youtube,
       target: "_blank",
@@ -36823,8 +36827,7 @@ class SocialLinks extends _react.Component {
       title: "YouTube"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialYoutube.default,
-      className: "profile-social-icon icon",
-      alt: "YouTube"
+      className: "profile-social-icon icon"
     })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.discord,
       target: "_blank",
@@ -36833,8 +36836,7 @@ class SocialLinks extends _react.Component {
       title: "Discord"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialDiscord.default,
-      className: "profile-social-icon icon",
-      alt: "Discord"
+      className: "profile-social-icon icon"
     })) : null, social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.reddit,
       target: "_blank",
@@ -36843,8 +36845,7 @@ class SocialLinks extends _react.Component {
       title: "Reddit"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialReddit.default,
-      className: "profile-social-icon icon",
-      alt: "Reddit"
+      className: "profile-social-icon icon"
     })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.patreon,
       target: "_blank",
@@ -36853,8 +36854,7 @@ class SocialLinks extends _react.Component {
       title: "Patreon"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialPatreon.default,
-      className: "profile-social-icon icon",
-      alt: "Patreon"
+      className: "profile-social-icon icon"
     })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.paypal,
       target: "_blank",
@@ -36863,8 +36863,7 @@ class SocialLinks extends _react.Component {
       title: "PayPal"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialPaypal.default,
-      className: "profile-social-icon icon",
-      alt: "PayPal"
+      className: "profile-social-icon icon"
     })) : null);
   }
 
@@ -36872,7 +36871,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-gitcoin.svg":"assets/icons/social-gitcoin.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
 var define;
 /*!
  * clipboard.js v2.0.8
@@ -38418,7 +38417,7 @@ class Profile extends _react.Component {
   async componentDidMount() {
     let loggedIn = this.props.wallet.isSignedIn();
     let pageOwner = this.props.match.params.owner;
-    const pageBio = await this.getBio(pageOwner);
+    const pageBio = await this.getProfile(pageOwner);
 
     if (!!pageBio) {
       document.title = `${pageBio.displayname} - Web3.bio`;
@@ -38452,7 +38451,7 @@ class Profile extends _react.Component {
     await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
   }
 
-  async getBio(pageOwner) {
+  async getProfile(pageOwner) {
     try {
       // make an update call to the smart contract
       return await window.contract.getRecordByOwner({
@@ -38588,7 +38587,61 @@ class Profile extends _react.Component {
 
 var _default = Profile;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/Footer":"components/Footer.js"}],"Dashboard.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/Footer":"components/Footer.js"}],"components/Toast.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class Toast extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      toastState: true
+    };
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => this.tick(), 4000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  tick() {
+    this.setState({
+      toastState: false
+    });
+  }
+
+  render() {
+    const {
+      toastState
+    } = this.state;
+    const {
+      content
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, toastState && !!content ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-toast"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "toast"
+    }, content)) : null);
+  }
+
+}
+
+var _default = Toast;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"Dashboard.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38605,6 +38658,8 @@ var _reactRouterDom = require("react-router-dom");
 var _config = _interopRequireDefault(require("./config"));
 
 var _Footer = _interopRequireDefault(require("./components/Footer"));
+
+var _Toast = _interopRequireDefault(require("./components/Toast"));
 
 var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
 
@@ -38632,7 +38687,8 @@ class Dashboard extends _react.Component {
       formChanged: false,
       formLoading: false,
       formAvatar: '',
-      formTheme: 'royal'
+      formTheme: 'royal',
+      pageToast: ''
     };
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
@@ -38640,14 +38696,14 @@ class Dashboard extends _react.Component {
     this.signedOutFlow = this.signedOutFlow.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.delBio = this.delBio.bind(this);
+    this.delProfile = this.delProfile.bind(this);
   }
 
   async componentDidMount() {
     document.title = "Manage your profile - Web3.bio";
     let loggedIn = this.props.wallet.isSignedIn();
     let pageOwner = window.accountId;
-    let pageBio = await this.getBio(pageOwner);
+    let pageBio = await this.getProfile(pageOwner);
 
     if (!!pageBio) {
       this.setState({
@@ -38684,13 +38740,16 @@ class Dashboard extends _react.Component {
     await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
   }
 
-  async getBio(pageOwner) {
+  async getProfile(pageOwner) {
     try {
       return await window.contract.getRecordByOwner({
         owner: pageOwner
       });
     } catch (e) {
-      console.log('Something went wrong! ');
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      });
       throw e;
     } finally {
       this.setState({
@@ -38699,16 +38758,19 @@ class Dashboard extends _react.Component {
     }
   }
 
-  async setBio(newRecords) {
+  async setProfile(newRecords) {
     try {
       await window.contract.setRecordByOwner(newRecords);
     } catch (e) {
-      console.log('Something went wrong! ');
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      });
       throw e;
     }
   }
 
-  async delBio() {
+  async delProfile() {
     if (!window.confirm(`Permanently delete your page and profile data for ${this.state.currentUser}?`)) {
       return;
     }
@@ -38718,7 +38780,10 @@ class Dashboard extends _react.Component {
         owner: this.state.currentUser
       });
     } catch (e) {
-      console.log('Something went wrong! ');
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      });
       throw e;
     } finally {
       // Go to home page
@@ -38774,6 +38839,7 @@ class Dashboard extends _react.Component {
       facebook: event.target.facebook.value,
       linkedin: event.target.linkedin.value,
       github: event.target.github.value,
+      gitcoin: event.target.gitcoin.value,
       medium: event.target.medium.value,
       telegram: event.target.telegram.value,
       instagram: event.target.instagram.value,
@@ -38791,7 +38857,7 @@ class Dashboard extends _react.Component {
     });
     newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
     let newRecords = new Object({
-      name: event.target.displayname.value,
+      displayname: event.target.displayname.value,
       avatar: event.target.avatar.value,
       description: event.target.description.value,
       location: event.target.location.value,
@@ -38800,9 +38866,9 @@ class Dashboard extends _react.Component {
       crypto: newCrypto
     });
     console.log(newRecords);
-    await this.setBio(newRecords);
+    await this.setProfile(newRecords);
     let pageOwner = this.state.currentUser;
-    let pageBio = await this.getBio(pageOwner);
+    let pageBio = await this.getProfile(pageOwner);
 
     if (!!pageBio) {
       this.setState({
@@ -38811,7 +38877,8 @@ class Dashboard extends _react.Component {
         formChanged: false,
         formLoading: false,
         formAvatar: pageBio.avatar,
-        formTheme: pageBio.theme
+        formTheme: pageBio.theme,
+        pageToast: 'Updated.'
       });
     }
   }
@@ -38826,7 +38893,8 @@ class Dashboard extends _react.Component {
       formChanged,
       formLoading,
       formAvatar,
-      formTheme
+      formTheme,
+      pageToast
     } = this.state;
     let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
@@ -38839,7 +38907,7 @@ class Dashboard extends _react.Component {
 
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement(_Toast.default, null), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -38879,49 +38947,38 @@ class Dashboard extends _react.Component {
       className: "column col-12"
     }, !pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content-title text-center mb-4"
-    }, "Welcome, ", /*#__PURE__*/_react.default.createElement("strong", null, currentUser), "."), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Hello, ", /*#__PURE__*/_react.default.createElement("strong", null, currentUser), "."), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings web3bio-placeholder"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold mb-4"
+      className: "h5 text-bold mb-2"
     }, "Claim your page"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h6 mb-4"
-    }, "Complete your profile with your ", /*#__PURE__*/_react.default.createElement("a", {
+      className: "h6 mb-2"
+    }, "Complete your ", /*#__PURE__*/_react.default.createElement("a", {
       href: "#profile",
-      className: "text-dark text-underline"
+      className: "btn btn-sm ml-1 mr-1"
     }, "basic info"), ", ", /*#__PURE__*/_react.default.createElement("a", {
       href: "#social",
-      className: "text-dark text-underline"
-    }, "social links"), ", and ", /*#__PURE__*/_react.default.createElement("a", {
+      className: "btn btn-sm ml-1 mr-1"
+    }, "social links"), ", or ", /*#__PURE__*/_react.default.createElement("a", {
       href: "#crypto",
-      className: "text-dark text-underline"
-    }, "crypto addresses"), " below."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "btn btn-sm ml-1 mr-1"
+    }, "crypto addresses"), " below to claim your page."), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mb-4"
-    }, "Your profile page will be available at:"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "btn-group mb-2"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: `/${currentUser}`,
-      className: "btn",
+    }, "Your page will be available at: ", /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://web3.bio/${currentUser}`,
+      className: "text-dark text-underline ml-1",
       target: "_blank"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-opacity"
-    }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn tooltip",
-      "data-clipboard-text": `https://web3.bio/${currentUser}`,
-      title: "Copy to clipboard"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionCopy.default,
-      className: "profile-copy-icon icon"
-    }))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+    }, "web3.bio/", currentUser), "."))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content-title text-center mt-4 mb-4"
     }, "Manage your profile")), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings"
     }, /*#__PURE__*/_react.default.createElement("ul", {
       className: "tab tab-block"
     }, /*#__PURE__*/_react.default.createElement("li", {
-      className: "tab-item active"
+      className: "tab-item"
     }, /*#__PURE__*/_react.default.createElement("a", {
       href: "#profile"
-    }, "Profile")), /*#__PURE__*/_react.default.createElement("li", {
+    }, "Basic")), /*#__PURE__*/_react.default.createElement("li", {
       className: "tab-item"
     }, /*#__PURE__*/_react.default.createElement("a", {
       href: "#social"
@@ -38935,8 +38992,8 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold"
-    }, "Profile"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-2"
+    }, "Basic"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
@@ -38948,8 +39005,7 @@ class Dashboard extends _react.Component {
       placeholder: "Name",
       defaultValue: pageBio.displayname,
       required: true,
-      onChange: this.handleChange,
-      autoComplete: "off"
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -38961,7 +39017,7 @@ class Dashboard extends _react.Component {
       placeholder: "Description",
       defaultValue: pageBio.description,
       maxLength: "160",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -38979,8 +39035,7 @@ class Dashboard extends _react.Component {
       id: "avatar",
       placeholder: "https://",
       defaultValue: pageBio.avatar,
-      onChange: this.handleChange,
-      autoComplete: "off"
+      onInput: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
     }, "You may use free photo hostings like ", /*#__PURE__*/_react.default.createElement("a", {
@@ -39002,8 +39057,7 @@ class Dashboard extends _react.Component {
       placeholder: "Email",
       pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,14}$",
       defaultValue: social.email,
-      onChange: this.handleChange,
-      autoComplete: "off"
+      onInput: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
     }, "Leave it blank if you don't want to make your Email address public.")), /*#__PURE__*/_react.default.createElement("div", {
@@ -39017,8 +39071,7 @@ class Dashboard extends _react.Component {
       id: "website",
       placeholder: "https://",
       defaultValue: social.website,
-      onChange: this.handleChange,
-      autoComplete: "off"
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39031,8 +39084,7 @@ class Dashboard extends _react.Component {
       placeholder: "The Moon",
       defaultValue: pageBio.location,
       maxLength: "30",
-      onChange: this.handleChange,
-      autoComplete: "off"
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39042,7 +39094,7 @@ class Dashboard extends _react.Component {
       className: "form-select select-lg",
       id: "theme",
       value: formTheme,
-      onChange: this.handleChange
+      onInput: this.handleChange
     }, /*#__PURE__*/_react.default.createElement("option", {
       value: "royal"
     }, "Royal"), /*#__PURE__*/_react.default.createElement("option", {
@@ -39058,13 +39110,15 @@ class Dashboard extends _react.Component {
     }, "Shalimar"), /*#__PURE__*/_react.default.createElement("option", {
       value: "creamwhisper"
     }, "Cream Whisper"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "eggsour"
+    }, "Egg Sour"), /*#__PURE__*/_react.default.createElement("option", {
       value: "flare"
     }, "Flare"), /*#__PURE__*/_react.default.createElement("option", {
       value: "snowymint"
     }, "Snowy Mint")))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "social"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold"
+      className: "h5 text-bold mb-2"
     }, "Social links"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39077,7 +39131,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://twitter.com/",
       defaultValue: social.twitter,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39090,7 +39144,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://facebook.com/",
       defaultValue: social.facebook,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39103,7 +39157,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://linkedin.com/",
       defaultValue: social.linkedin,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39116,7 +39170,20 @@ class Dashboard extends _react.Component {
       placeholder: "https://github.com/",
       defaultValue: social.github,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "gitcoin"
+    }, "Gitcoin"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "gitcoin",
+      placeholder: "https://gitcoin.co/",
+      defaultValue: social.gitcoin,
+      maxLength: "120",
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39129,7 +39196,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://medium.com/",
       defaultValue: social.medium,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39142,7 +39209,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://t.me/",
       defaultValue: social.telegram,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39155,7 +39222,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://instagram.com/",
       defaultValue: social.instagram,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39168,7 +39235,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://youtube.com/",
       defaultValue: social.youtube,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39181,7 +39248,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://discord.com/",
       defaultValue: social.discord,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39194,7 +39261,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://reddit.com/",
       defaultValue: social.reddit,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39207,7 +39274,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://patreon.com/",
       defaultValue: social.patreon,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39220,7 +39287,7 @@ class Dashboard extends _react.Component {
       placeholder: "https://paypal.me/",
       defaultValue: social.paypal,
       maxLength: "120",
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -39232,7 +39299,7 @@ class Dashboard extends _react.Component {
     }, "@picturepan2"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "crypto"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold"
+      className: "h5 text-bold mb-2"
     }, "Crypto addresses"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39254,7 +39321,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "btc",
       defaultValue: crypto.btc,
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39265,7 +39332,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "eth",
       defaultValue: crypto.eth,
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
@@ -39276,7 +39343,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "dot",
       defaultValue: crypto.dot,
-      onChange: this.handleChange
+      onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings-placeholder"
     }, /*#__PURE__*/_react.default.createElement("span", {
@@ -39308,8 +39375,10 @@ class Dashboard extends _react.Component {
       className: "text-error"
     }, currentUser), ". This of course is not reversable."), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn mb-2",
-      onClick: this.delBio
-    }, "Delete data"))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      onClick: this.delProfile
+    }, "Delete data")))))), !!pageToast ? /*#__PURE__*/_react.default.createElement(_Toast.default, {
+      content: pageToast
+    }) : null) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
@@ -39324,7 +39393,7 @@ class Dashboard extends _react.Component {
 
 var _default = Dashboard;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","./assets/icons/action-copy.svg":"assets/icons/action-copy.svg"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","./components/Toast":"components/Toast.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","./assets/icons/action-copy.svg":"assets/icons/action-copy.svg"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -39396,7 +39465,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"./../img/bg-creamwhisper.jpg":[["bg-creamwhisper.318f6706.jpg","assets/img/bg-creamwhisper.jpg"],"assets/img/bg-creamwhisper.jpg"],"./../img/bg-flare.jpg":[["bg-flare.df7a95cc.jpg","assets/img/bg-flare.jpg"],"assets/img/bg-flare.jpg"],"./../img/bg-snowymint.jpg":[["bg-snowymint.0cc40fb1.jpg","assets/img/bg-snowymint.jpg"],"assets/img/bg-snowymint.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
+},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"./../img/bg-creamwhisper.jpg":[["bg-creamwhisper.318f6706.jpg","assets/img/bg-creamwhisper.jpg"],"assets/img/bg-creamwhisper.jpg"],"./../img/bg-eggsour.jpg":[["bg-eggsour.a0316a65.jpg","assets/img/bg-eggsour.jpg"],"assets/img/bg-eggsour.jpg"],"./../img/bg-flare.jpg":[["bg-flare.df7a95cc.jpg","assets/img/bg-flare.jpg"],"assets/img/bg-flare.jpg"],"./../img/bg-snowymint.jpg":[["bg-snowymint.0cc40fb1.jpg","assets/img/bg-snowymint.jpg"],"assets/img/bg-snowymint.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyStore = void 0;
@@ -62451,7 +62520,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56480" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61348" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

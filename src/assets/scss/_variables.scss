@@ -2,7 +2,7 @@
 $primary-color: #4620E1 !default;
 $primary-color-dark: darken($primary-color, 3%) !default;
 $primary-color-light: lighten($primary-color, 3%) !default;
-$secondary-color: #EEEEF4 !default;
+$secondary-color: lighten($primary-color, 40%) !default;
 $secondary-color-dark: darken($secondary-color, 3%) !default;
 $secondary-color-light: lighten($secondary-color, 3%) !default;
 
@@ -74,6 +74,7 @@ $layout-spacing: $unit-2 !default;
 $layout-spacing-sm: $unit-1 !default;
 $layout-spacing-lg: $unit-4 !default;
 $border-radius: .4rem !default;
+$border-radius-lg: .6rem !default;
 $border-width: $unit-h !default;
 $border-width-lg: $unit-h !default;
 $control-size: $unit-9 !default;
