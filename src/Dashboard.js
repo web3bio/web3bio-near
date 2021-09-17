@@ -2,7 +2,6 @@ import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import getConfig from './config'
-import Footer from './components/Footer'
 import Toast from './components/Toast'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
@@ -246,7 +245,7 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="web3bio-container">
+      <>
         <Toast />
         <div className="web3bio-header">
           <div className="container grid-lg">
@@ -514,9 +513,7 @@ class Dashboard extends Component {
             </div>
           </>
         }
-        
-        <Footer />
-      </div>
+      </>
     )
   }
 

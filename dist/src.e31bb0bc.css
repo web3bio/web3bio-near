@@ -1903,7 +1903,7 @@ video.video-responsive {
     transition: opacity .2s, transform .2s;
     white-space: pre;
     z-index: 300; }
-  .tooltip:focus::after, .tooltip:hover::after {
+  .tooltip:hover::after {
     opacity: 1;
     transform: translate(-50%, -0.2rem); }
   .tooltip[disabled], .tooltip.disabled {
@@ -1912,20 +1912,20 @@ video.video-responsive {
     bottom: 50%;
     left: 100%;
     transform: translate(-0.2rem, 50%); }
-  .tooltip.tooltip-right:focus::after, .tooltip.tooltip-right:hover::after {
+  .tooltip.tooltip-right:hover::after {
     transform: translate(0.2rem, 50%); }
   .tooltip.tooltip-bottom::after {
     bottom: auto;
     top: 100%;
     transform: translate(-50%, -0.4rem); }
-  .tooltip.tooltip-bottom:focus::after, .tooltip.tooltip-bottom:hover::after {
+  .tooltip.tooltip-bottom:hover::after {
     transform: translate(-50%, 0.2rem); }
   .tooltip.tooltip-left::after {
     bottom: 50%;
     left: auto;
     right: 100%;
     transform: translate(0.4rem, 50%); }
-  .tooltip.tooltip-left:focus::after, .tooltip.tooltip-left:hover::after {
+  .tooltip.tooltip-left:hover::after {
     transform: translate(-0.2rem, 50%); }
 
 @keyframes loading {
@@ -2685,7 +2685,8 @@ body {
     .web3bio-profile .profile-crypto-item .profile-crypto-title {
       font-size: .7rem;
       font-weight: 500;
-      line-height: .9rem; }
+      line-height: .9rem;
+      user-select: all; }
     .web3bio-profile .profile-crypto-item .profile-crypto-subtitle {
       color: #b9b9b9;
       font-size: .5rem;

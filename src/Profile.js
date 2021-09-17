@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 import CryptoWidgets from './components/CryptoWidgets'
-import Footer from './components/Footer'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Profile extends Component {
@@ -104,8 +103,7 @@ class Profile extends Component {
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase()
 
     return (
-      <div className="web3bio-container">
-
+      <>
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
@@ -198,9 +196,7 @@ class Profile extends Component {
             </div>
           </>
         }
-        
-        <Footer />
-      </div>
+      </>
     )
   }
 

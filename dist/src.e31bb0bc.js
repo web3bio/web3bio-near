@@ -34892,57 +34892,7 @@ function getConfig(env) {
 }
 
 module.exports = getConfig;
-},{}],"components/Footer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-class Footer extends _react.Component {
-  render() {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-footer text-center"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      className: "btn",
-      to: "/"
-    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
-      className: "ml-1 mr-1"
-    }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "mt-4 mb-2"
-    }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://web3.bio",
-      className: "text-dark"
-    }, "Web3.bio"), " \xB7 Proudly Built with ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://near.org",
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "text-dark"
-    }, "NEAR"), " ", /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-primary"
-    }, "\u2665")))))));
-  }
-
-}
-
-var _default = Footer;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"App.js":[function(require,module,exports) {
+},{}],"Home.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -34958,8 +34908,6 @@ var _reactRouterDom = require("react-router-dom");
 
 var _config = _interopRequireDefault(require("./config"));
 
-var _Footer = _interopRequireDefault(require("./components/Footer"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -34968,7 +34916,7 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 
 const nearConfig = (0, _config.default)("development" || 'development');
 
-class App extends _react.Component {
+class Home extends _react.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -35031,9 +34979,7 @@ class App extends _react.Component {
       currentUser
     } = this.state;
     console.log();
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover royal"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
@@ -35245,14 +35191,14 @@ class App extends _react.Component {
     }, "We\u2019d love to know what you think. Please reach out to ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: "/yanzhu.near",
       className: "btn btn-sm ml-1 mr-1"
-    }, "Yan Zhu"), "."))))), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
+    }, "Yan Zhu"), "."))))));
   }
 
 }
 
-var _default = App;
+var _default = Home;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
 var define;
 /*!
  * clipboard.js v2.0.8
@@ -38184,6 +38130,8 @@ module.exports = "/crypto-dot.29ef90cb.svg";
 module.exports = "/action-copy.cc7a0533.svg";
 },{}],"assets/icons/action-explore.svg":[function(require,module,exports) {
 module.exports = "/action-explore.67503071.svg";
+},{}],"assets/icons/action-donate.svg":[function(require,module,exports) {
+module.exports = "/action-donate.81d02392.svg";
 },{}],"components/CryptoWidgets.js":[function(require,module,exports) {
 "use strict";
 
@@ -38193,6 +38141,8 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
 
 var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
 
@@ -38209,6 +38159,8 @@ var _cryptoDot = _interopRequireDefault(require("../assets/icons/crypto-dot.svg"
 var _actionCopy = _interopRequireDefault(require("../assets/icons/action-copy.svg"));
 
 var _actionExplore = _interopRequireDefault(require("../assets/icons/action-explore.svg"));
+
+var _actionDonate = _interopRequireDefault(require("../assets/icons/action-donate.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38234,10 +38186,8 @@ class CryptoWidgets extends _react.Component {
       className: "profile-crypto profile-widget"
     }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item near"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      component: "div",
-      className: "profile-crypto-content",
-      "data-clipboard-text": crypto.near
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoNear.default,
       className: "profile-crypto-icon icon",
@@ -38267,15 +38217,16 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionExplore.default,
       className: "icon"
-    })), /*#__PURE__*/_react.default.createElement("button", {
+    })), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
       className: "btn ml-1"
-    }, "Donate"))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionDonate.default,
+      className: "icon mr-2"
+    }), " Donate"))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item btc"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      component: "div",
-      className: "profile-crypto-content",
-      "data-clipboard-text": crypto.btc,
-      onSuccess: this.handleCopy
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoBtc.default,
       className: "profile-crypto-icon icon",
@@ -38307,10 +38258,8 @@ class CryptoWidgets extends _react.Component {
       className: "icon"
     })))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item eth"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      component: "div",
-      className: "profile-crypto-content",
-      "data-clipboard-text": crypto.eth
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _cryptoEth.default,
       className: "profile-crypto-icon icon",
@@ -38342,10 +38291,9 @@ class CryptoWidgets extends _react.Component {
       className: "icon"
     })))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item dot"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+    }, /*#__PURE__*/_react.default.createElement("div", {
       component: "div",
-      className: "profile-crypto-content",
-      "data-clipboard-text": crypto.dot
+      className: "profile-crypto-content"
     }, /*#__PURE__*/_react.default.createElement("img", {
       src: _cryptoDot.default,
       className: "profile-crypto-icon icon",
@@ -38382,7 +38330,7 @@ class CryptoWidgets extends _react.Component {
 
 var _default = CryptoWidgets;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg"}],"Profile.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg","../assets/icons/action-donate.svg":"assets/icons/action-donate.svg"}],"Profile.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38401,8 +38349,6 @@ var _config = _interopRequireDefault(require("./config"));
 var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
 
 var _CryptoWidgets = _interopRequireDefault(require("./components/CryptoWidgets"));
-
-var _Footer = _interopRequireDefault(require("./components/Footer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38509,9 +38455,7 @@ class Profile extends _react.Component {
     let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -38595,14 +38539,14 @@ class Profile extends _react.Component {
       className: "web3bio-profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "loading loading-lg"
-    })))), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
+    })))));
   }
 
 }
 
 var _default = Profile;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/Footer":"components/Footer.js"}],"components/Toast.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js"}],"components/Toast.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38671,8 +38615,6 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactRouterDom = require("react-router-dom");
 
 var _config = _interopRequireDefault(require("./config"));
-
-var _Footer = _interopRequireDefault(require("./components/Footer"));
 
 var _Toast = _interopRequireDefault(require("./components/Toast"));
 
@@ -38924,9 +38866,7 @@ class Dashboard extends _react.Component {
       });
     }
 
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement(_Toast.default, null), /*#__PURE__*/_react.default.createElement("div", {
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Toast.default, null), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -39482,14 +39422,187 @@ class Dashboard extends _react.Component {
       className: "web3bio-profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "loading loading-lg"
-    })))), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
+    })))));
   }
 
 }
 
 var _default = Dashboard;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","./components/Toast":"components/Toast.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Toast":"components/Toast.js"}],"components/Footer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class Footer extends _react.Component {
+  render() {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-footer text-center"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      className: "btn",
+      to: "/"
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "ml-1 mr-1"
+    }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-4 mb-2"
+    }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://web3.bio",
+      className: "text-dark"
+    }, "Web3.bio"), " \xB7 Proudly Built with ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://near.org",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "NEAR"), " ", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-primary"
+    }, "\u2665")))))));
+  }
+
+}
+
+var _default = Footer;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"App.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _Home = _interopRequireDefault(require("./Home"));
+
+var _Profile = _interopRequireDefault(require("./Profile"));
+
+var _Dashboard = _interopRequireDefault(require("./Dashboard"));
+
+var _Footer = _interopRequireDefault(require("./components/Footer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class App extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+  }
+
+  async componentDidMount() {
+    let loggedIn = this.props.wallet.isSignedIn();
+
+    if (loggedIn) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  render() {
+    const {
+      login,
+      currentUser
+    } = this.state;
+    console.log();
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-container"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      path: "/",
+      exact: true,
+      render: props => /*#__PURE__*/_react.default.createElement(_Home.default, _extends({}, props, {
+        wallet: window.walletConnection
+      }))
+    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      path: "/dashboard",
+      exact: true,
+      render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
+        wallet: window.walletConnection
+      }))
+    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      path: "/:owner",
+      render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
+        wallet: window.walletConnection
+      }))
+    })), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
+  }
+
+}
+
+var _default = App;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -62550,6 +62663,8 @@ var _history = require("history");
 
 var _App = _interopRequireDefault(require("./App"));
 
+var _Home = _interopRequireDefault(require("./Home"));
+
 var _Profile = _interopRequireDefault(require("./Profile"));
 
 var _Dashboard = _interopRequireDefault(require("./Dashboard"));
@@ -62560,35 +62675,15 @@ var _utils = require("./util/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
 const history = (0, _history.createBrowserHistory)();
 window.nearInitPromise = (0, _utils.initContract)().then(() => {
   _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_reactRouterDom.Router, {
     history: history
-  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-    path: "/",
-    exact: true,
-    render: props => /*#__PURE__*/_react.default.createElement(_App.default, _extends({}, props, {
-      wallet: window.walletConnection,
-      contract: window.contract
-    }))
-  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-    path: "/dashboard",
-    exact: true,
-    render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
-      wallet: window.walletConnection,
-      contract: window.contract
-    }))
-  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-    path: "/:owner",
-    render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
-      wallet: window.walletConnection,
-      contract: window.contract
-    }))
-  }))), document.querySelector('#root'));
+  }, /*#__PURE__*/_react.default.createElement(_App.default, {
+    wallet: window.walletConnection
+  })), document.querySelector('#root'));
 }).catch(console.error);
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
