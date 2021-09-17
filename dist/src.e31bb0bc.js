@@ -35252,7 +35252,1294 @@ class App extends _react.Component {
 
 var _default = App;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"../node_modules/react-from-dom/esm/helpers.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+var define;
+/*!
+ * clipboard.js v2.0.8
+ * https://clipboardjs.com/
+ *
+ * Licensed MIT © Zeno Rocha
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["ClipboardJS"] = factory();
+	else
+		root["ClipboardJS"] = factory();
+})(this, function() {
+return /******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 134:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": function() { return /* binding */ clipboard; }
+});
+
+// EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
+var tiny_emitter = __webpack_require__(279);
+var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
+// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
+var listen = __webpack_require__(370);
+var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
+// EXTERNAL MODULE: ./node_modules/select/src/select.js
+var src_select = __webpack_require__(817);
+var select_default = /*#__PURE__*/__webpack_require__.n(src_select);
+;// CONCATENATED MODULE: ./src/clipboard-action.js
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+/**
+ * Inner class which performs selection from either `text` or `target`
+ * properties and then executes copy or cut operations.
+ */
+
+var ClipboardAction = /*#__PURE__*/function () {
+  /**
+   * @param {Object} options
+   */
+  function ClipboardAction(options) {
+    _classCallCheck(this, ClipboardAction);
+
+    this.resolveOptions(options);
+    this.initSelection();
+  }
+  /**
+   * Defines base properties passed from constructor.
+   * @param {Object} options
+   */
+
+
+  _createClass(ClipboardAction, [{
+    key: "resolveOptions",
+    value: function resolveOptions() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      this.action = options.action;
+      this.container = options.container;
+      this.emitter = options.emitter;
+      this.target = options.target;
+      this.text = options.text;
+      this.trigger = options.trigger;
+      this.selectedText = '';
+    }
+    /**
+     * Decides which selection strategy is going to be applied based
+     * on the existence of `text` and `target` properties.
+     */
+
+  }, {
+    key: "initSelection",
+    value: function initSelection() {
+      if (this.text) {
+        this.selectFake();
+      } else if (this.target) {
+        this.selectTarget();
+      }
+    }
+    /**
+     * Creates a fake textarea element, sets its value from `text` property,
+     */
+
+  }, {
+    key: "createFakeElement",
+    value: function createFakeElement() {
+      var isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+      this.fakeElem = document.createElement('textarea'); // Prevent zooming on iOS
+
+      this.fakeElem.style.fontSize = '12pt'; // Reset box model
+
+      this.fakeElem.style.border = '0';
+      this.fakeElem.style.padding = '0';
+      this.fakeElem.style.margin = '0'; // Move element out of screen horizontally
+
+      this.fakeElem.style.position = 'absolute';
+      this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px'; // Move element to the same position vertically
+
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      this.fakeElem.style.top = "".concat(yPosition, "px");
+      this.fakeElem.setAttribute('readonly', '');
+      this.fakeElem.value = this.text;
+      return this.fakeElem;
+    }
+    /**
+     * Get's the value of fakeElem,
+     * and makes a selection on it.
+     */
+
+  }, {
+    key: "selectFake",
+    value: function selectFake() {
+      var _this = this;
+
+      var fakeElem = this.createFakeElement();
+
+      this.fakeHandlerCallback = function () {
+        return _this.removeFake();
+      };
+
+      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+      this.container.appendChild(fakeElem);
+      this.selectedText = select_default()(fakeElem);
+      this.copyText();
+      this.removeFake();
+    }
+    /**
+     * Only removes the fake element after another click event, that way
+     * a user can hit `Ctrl+C` to copy because selection still exists.
+     */
+
+  }, {
+    key: "removeFake",
+    value: function removeFake() {
+      if (this.fakeHandler) {
+        this.container.removeEventListener('click', this.fakeHandlerCallback);
+        this.fakeHandler = null;
+        this.fakeHandlerCallback = null;
+      }
+
+      if (this.fakeElem) {
+        this.container.removeChild(this.fakeElem);
+        this.fakeElem = null;
+      }
+    }
+    /**
+     * Selects the content from element passed on `target` property.
+     */
+
+  }, {
+    key: "selectTarget",
+    value: function selectTarget() {
+      this.selectedText = select_default()(this.target);
+      this.copyText();
+    }
+    /**
+     * Executes the copy operation based on the current selection.
+     */
+
+  }, {
+    key: "copyText",
+    value: function copyText() {
+      var succeeded;
+
+      try {
+        succeeded = document.execCommand(this.action);
+      } catch (err) {
+        succeeded = false;
+      }
+
+      this.handleResult(succeeded);
+    }
+    /**
+     * Fires an event based on the copy operation result.
+     * @param {Boolean} succeeded
+     */
+
+  }, {
+    key: "handleResult",
+    value: function handleResult(succeeded) {
+      this.emitter.emit(succeeded ? 'success' : 'error', {
+        action: this.action,
+        text: this.selectedText,
+        trigger: this.trigger,
+        clearSelection: this.clearSelection.bind(this)
+      });
+    }
+    /**
+     * Moves focus away from `target` and back to the trigger, removes current selection.
+     */
+
+  }, {
+    key: "clearSelection",
+    value: function clearSelection() {
+      if (this.trigger) {
+        this.trigger.focus();
+      }
+
+      document.activeElement.blur();
+      window.getSelection().removeAllRanges();
+    }
+    /**
+     * Sets the `action` to be performed which can be either 'copy' or 'cut'.
+     * @param {String} action
+     */
+
+  }, {
+    key: "destroy",
+
+    /**
+     * Destroy lifecycle.
+     */
+    value: function destroy() {
+      this.removeFake();
+    }
+  }, {
+    key: "action",
+    set: function set() {
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'copy';
+      this._action = action;
+
+      if (this._action !== 'copy' && this._action !== 'cut') {
+        throw new Error('Invalid "action" value, use either "copy" or "cut"');
+      }
+    }
+    /**
+     * Gets the `action` property.
+     * @return {String}
+     */
+    ,
+    get: function get() {
+      return this._action;
+    }
+    /**
+     * Sets the `target` property using an element
+     * that will be have its content copied.
+     * @param {Element} target
+     */
+
+  }, {
+    key: "target",
+    set: function set(target) {
+      if (target !== undefined) {
+        if (target && _typeof(target) === 'object' && target.nodeType === 1) {
+          if (this.action === 'copy' && target.hasAttribute('disabled')) {
+            throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
+          }
+
+          if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
+            throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
+          }
+
+          this._target = target;
+        } else {
+          throw new Error('Invalid "target" value, use a valid Element');
+        }
+      }
+    }
+    /**
+     * Gets the `target` property.
+     * @return {String|HTMLElement}
+     */
+    ,
+    get: function get() {
+      return this._target;
+    }
+  }]);
+
+  return ClipboardAction;
+}();
+
+/* harmony default export */ var clipboard_action = (ClipboardAction);
+;// CONCATENATED MODULE: ./src/clipboard.js
+function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
+
+function clipboard_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function clipboard_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function clipboard_createClass(Constructor, protoProps, staticProps) { if (protoProps) clipboard_defineProperties(Constructor.prototype, protoProps); if (staticProps) clipboard_defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (clipboard_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+/**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+
+function getAttributeValue(suffix, element) {
+  var attribute = "data-clipboard-".concat(suffix);
+
+  if (!element.hasAttribute(attribute)) {
+    return;
+  }
+
+  return element.getAttribute(attribute);
+}
+/**
+ * Base class which takes one or more elements, adds event listeners to them,
+ * and instantiates a new `ClipboardAction` on each click.
+ */
+
+
+var Clipboard = /*#__PURE__*/function (_Emitter) {
+  _inherits(Clipboard, _Emitter);
+
+  var _super = _createSuper(Clipboard);
+
+  /**
+   * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
+   * @param {Object} options
+   */
+  function Clipboard(trigger, options) {
+    var _this;
+
+    clipboard_classCallCheck(this, Clipboard);
+
+    _this = _super.call(this);
+
+    _this.resolveOptions(options);
+
+    _this.listenClick(trigger);
+
+    return _this;
+  }
+  /**
+   * Defines if attributes would be resolved using internal setter functions
+   * or custom functions that were passed in the constructor.
+   * @param {Object} options
+   */
+
+
+  clipboard_createClass(Clipboard, [{
+    key: "resolveOptions",
+    value: function resolveOptions() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
+      this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
+      this.text = typeof options.text === 'function' ? options.text : this.defaultText;
+      this.container = clipboard_typeof(options.container) === 'object' ? options.container : document.body;
+    }
+    /**
+     * Adds a click event listener to the passed trigger.
+     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
+     */
+
+  }, {
+    key: "listenClick",
+    value: function listenClick(trigger) {
+      var _this2 = this;
+
+      this.listener = listen_default()(trigger, 'click', function (e) {
+        return _this2.onClick(e);
+      });
+    }
+    /**
+     * Defines a new `ClipboardAction` on each click event.
+     * @param {Event} e
+     */
+
+  }, {
+    key: "onClick",
+    value: function onClick(e) {
+      var trigger = e.delegateTarget || e.currentTarget;
+
+      if (this.clipboardAction) {
+        this.clipboardAction = null;
+      }
+
+      this.clipboardAction = new clipboard_action({
+        action: this.action(trigger),
+        target: this.target(trigger),
+        text: this.text(trigger),
+        container: this.container,
+        trigger: trigger,
+        emitter: this
+      });
+    }
+    /**
+     * Default `action` lookup function.
+     * @param {Element} trigger
+     */
+
+  }, {
+    key: "defaultAction",
+    value: function defaultAction(trigger) {
+      return getAttributeValue('action', trigger);
+    }
+    /**
+     * Default `target` lookup function.
+     * @param {Element} trigger
+     */
+
+  }, {
+    key: "defaultTarget",
+    value: function defaultTarget(trigger) {
+      var selector = getAttributeValue('target', trigger);
+
+      if (selector) {
+        return document.querySelector(selector);
+      }
+    }
+    /**
+     * Returns the support of the given action, or all actions if no action is
+     * given.
+     * @param {String} [action]
+     */
+
+  }, {
+    key: "defaultText",
+
+    /**
+     * Default `text` lookup function.
+     * @param {Element} trigger
+     */
+    value: function defaultText(trigger) {
+      return getAttributeValue('text', trigger);
+    }
+    /**
+     * Destroy lifecycle.
+     */
+
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.listener.destroy();
+
+      if (this.clipboardAction) {
+        this.clipboardAction.destroy();
+        this.clipboardAction = null;
+      }
+    }
+  }], [{
+    key: "isSupported",
+    value: function isSupported() {
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
+      var actions = typeof action === 'string' ? [action] : action;
+      var support = !!document.queryCommandSupported;
+      actions.forEach(function (action) {
+        support = support && !!document.queryCommandSupported(action);
+      });
+      return support;
+    }
+  }]);
+
+  return Clipboard;
+}((tiny_emitter_default()));
+
+/* harmony default export */ var clipboard = (Clipboard);
+
+/***/ }),
+
+/***/ 828:
+/***/ (function(module) {
+
+var DOCUMENT_NODE_TYPE = 9;
+
+/**
+ * A polyfill for Element.matches()
+ */
+if (typeof Element !== 'undefined' && !Element.prototype.matches) {
+    var proto = Element.prototype;
+
+    proto.matches = proto.matchesSelector ||
+                    proto.mozMatchesSelector ||
+                    proto.msMatchesSelector ||
+                    proto.oMatchesSelector ||
+                    proto.webkitMatchesSelector;
+}
+
+/**
+ * Finds the closest parent that matches a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @return {Function}
+ */
+function closest (element, selector) {
+    while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
+        if (typeof element.matches === 'function' &&
+            element.matches(selector)) {
+          return element;
+        }
+        element = element.parentNode;
+    }
+}
+
+module.exports = closest;
+
+
+/***/ }),
+
+/***/ 438:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var closest = __webpack_require__(828);
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function _delegate(element, selector, type, callback, useCapture) {
+    var listenerFn = listener.apply(this, arguments);
+
+    element.addEventListener(type, listenerFn, useCapture);
+
+    return {
+        destroy: function() {
+            element.removeEventListener(type, listenerFn, useCapture);
+        }
+    }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
+}
+
+/**
+ * Finds closest match and invokes callback.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Function}
+ */
+function listener(element, selector, type, callback) {
+    return function(e) {
+        e.delegateTarget = closest(e.target, selector);
+
+        if (e.delegateTarget) {
+            callback.call(element, e);
+        }
+    }
+}
+
+module.exports = delegate;
+
+
+/***/ }),
+
+/***/ 879:
+/***/ (function(__unused_webpack_module, exports) {
+
+/**
+ * Check if argument is a HTML element.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.node = function(value) {
+    return value !== undefined
+        && value instanceof HTMLElement
+        && value.nodeType === 1;
+};
+
+/**
+ * Check if argument is a list of HTML elements.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.nodeList = function(value) {
+    var type = Object.prototype.toString.call(value);
+
+    return value !== undefined
+        && (type === '[object NodeList]' || type === '[object HTMLCollection]')
+        && ('length' in value)
+        && (value.length === 0 || exports.node(value[0]));
+};
+
+/**
+ * Check if argument is a string.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.string = function(value) {
+    return typeof value === 'string'
+        || value instanceof String;
+};
+
+/**
+ * Check if argument is a function.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.fn = function(value) {
+    var type = Object.prototype.toString.call(value);
+
+    return type === '[object Function]';
+};
+
+
+/***/ }),
+
+/***/ 370:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var is = __webpack_require__(879);
+var delegate = __webpack_require__(438);
+
+/**
+ * Validates all params and calls the right
+ * listener function based on its target type.
+ *
+ * @param {String|HTMLElement|HTMLCollection|NodeList} target
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listen(target, type, callback) {
+    if (!target && !type && !callback) {
+        throw new Error('Missing required arguments');
+    }
+
+    if (!is.string(type)) {
+        throw new TypeError('Second argument must be a String');
+    }
+
+    if (!is.fn(callback)) {
+        throw new TypeError('Third argument must be a Function');
+    }
+
+    if (is.node(target)) {
+        return listenNode(target, type, callback);
+    }
+    else if (is.nodeList(target)) {
+        return listenNodeList(target, type, callback);
+    }
+    else if (is.string(target)) {
+        return listenSelector(target, type, callback);
+    }
+    else {
+        throw new TypeError('First argument must be a String, HTMLElement, HTMLCollection, or NodeList');
+    }
+}
+
+/**
+ * Adds an event listener to a HTML element
+ * and returns a remove listener function.
+ *
+ * @param {HTMLElement} node
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenNode(node, type, callback) {
+    node.addEventListener(type, callback);
+
+    return {
+        destroy: function() {
+            node.removeEventListener(type, callback);
+        }
+    }
+}
+
+/**
+ * Add an event listener to a list of HTML elements
+ * and returns a remove listener function.
+ *
+ * @param {NodeList|HTMLCollection} nodeList
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenNodeList(nodeList, type, callback) {
+    Array.prototype.forEach.call(nodeList, function(node) {
+        node.addEventListener(type, callback);
+    });
+
+    return {
+        destroy: function() {
+            Array.prototype.forEach.call(nodeList, function(node) {
+                node.removeEventListener(type, callback);
+            });
+        }
+    }
+}
+
+/**
+ * Add an event listener to a selector
+ * and returns a remove listener function.
+ *
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenSelector(selector, type, callback) {
+    return delegate(document.body, selector, type, callback);
+}
+
+module.exports = listen;
+
+
+/***/ }),
+
+/***/ 817:
+/***/ (function(module) {
+
+function select(element) {
+    var selectedText;
+
+    if (element.nodeName === 'SELECT') {
+        element.focus();
+
+        selectedText = element.value;
+    }
+    else if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
+        var isReadOnly = element.hasAttribute('readonly');
+
+        if (!isReadOnly) {
+            element.setAttribute('readonly', '');
+        }
+
+        element.select();
+        element.setSelectionRange(0, element.value.length);
+
+        if (!isReadOnly) {
+            element.removeAttribute('readonly');
+        }
+
+        selectedText = element.value;
+    }
+    else {
+        if (element.hasAttribute('contenteditable')) {
+            element.focus();
+        }
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        selectedText = selection.toString();
+    }
+
+    return selectedText;
+}
+
+module.exports = select;
+
+
+/***/ }),
+
+/***/ 279:
+/***/ (function(module) {
+
+function E () {
+  // Keep this empty so it's easier to inherit from
+  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
+}
+
+E.prototype = {
+  on: function (name, callback, ctx) {
+    var e = this.e || (this.e = {});
+
+    (e[name] || (e[name] = [])).push({
+      fn: callback,
+      ctx: ctx
+    });
+
+    return this;
+  },
+
+  once: function (name, callback, ctx) {
+    var self = this;
+    function listener () {
+      self.off(name, listener);
+      callback.apply(ctx, arguments);
+    };
+
+    listener._ = callback
+    return this.on(name, listener, ctx);
+  },
+
+  emit: function (name) {
+    var data = [].slice.call(arguments, 1);
+    var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
+    var i = 0;
+    var len = evtArr.length;
+
+    for (i; i < len; i++) {
+      evtArr[i].fn.apply(evtArr[i].ctx, data);
+    }
+
+    return this;
+  },
+
+  off: function (name, callback) {
+    var e = this.e || (this.e = {});
+    var evts = e[name];
+    var liveEvents = [];
+
+    if (evts && callback) {
+      for (var i = 0, len = evts.length; i < len; i++) {
+        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
+          liveEvents.push(evts[i]);
+      }
+    }
+
+    // Remove event from queue to prevent memory leak
+    // Suggested by https://github.com/lazd
+    // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
+
+    (liveEvents.length)
+      ? e[name] = liveEvents
+      : delete e[name];
+
+    return this;
+  }
+};
+
+module.exports = E;
+module.exports.TinyEmitter = E;
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+/******/ 	// module exports must be returned from runtime so entry inlining is disabled
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(134);
+/******/ })()
+.default;
+});
+},{}],"../node_modules/react-clipboard.js/dist/react-clipboard.js":[function(require,module,exports) {
+var define;
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
+	else if(typeof define === 'function' && define.amd)
+		define(["clipboard", "prop-types", "react", "react-dom"], factory);
+	else if(typeof exports === 'object')
+		exports["ReactClipboard"] = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
+	else
+		root["ReactClipboard"] = factory(root["ClipboardJS"], root["PropTypes"], root["React"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_clipboard__, __WEBPACK_EXTERNAL_MODULE_prop_types__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./index.js":
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var ClipboardButton =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ClipboardButton, _React$Component);
+
+  function ClipboardButton() {
+    _classCallCheck(this, ClipboardButton);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ClipboardButton).apply(this, arguments));
+  }
+
+  _createClass(ClipboardButton, [{
+    key: "propsWith",
+    value: function propsWith(regexp) {
+      var remove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var object = {};
+      Object.keys(this.props).forEach(function (key) {
+        if (key.search(regexp) !== -1) {
+          var objectKey = remove ? key.replace(regexp, '') : key;
+          object[objectKey] = this.props[key];
+        }
+      }, this);
+      return object;
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.clipboard && this.clipboard.destroy();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // Support old API by trying to assign this.props.options first;
+      var options = this.props.options || this.propsWith(/^option-/, true);
+      var element = react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.findDOMNode(this.element);
+
+      if (!element) {
+        return;
+      }
+
+      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
+
+      this.clipboard = new Clipboard(element, options);
+      var callbacks = this.propsWith(/^on/, true);
+      Object.keys(callbacks).forEach(function (callback) {
+        this.clipboard.on(callback.toLowerCase(), this.props['on' + callback]);
+      }, this);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var attributes = _objectSpread({
+        title: this.props.title || '',
+        type: this.getType(),
+        className: this.props.className || '',
+        style: this.props.style || {},
+        ref: function ref(element) {
+          return _this.element = element;
+        },
+        onClick: this.props.onClick
+      }, this.propsWith(/^data-/), this.propsWith(/^button-/, true));
+
+      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
+
+      if (!this.props.isVisibleWhenUnsupported && !Clipboard.isSupported()) {
+        return null;
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(this.getComponent(), attributes, this.props.children);
+    }
+  }, {
+    key: "getType",
+    value: function getType() {
+      if (this.getComponent() === 'button' || this.getComponent() === 'input') {
+        return this.props.type || 'button';
+      } else {
+        return undefined;
+      }
+    }
+  }, {
+    key: "getComponent",
+    value: function getComponent() {
+      return this.props.component || 'button';
+    }
+  }]);
+
+  return ClipboardButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(ClipboardButton, "propTypes", {
+  options: function options(props, propName, componentName) {
+    var options = props[propName];
+
+    if (options && _typeof(options) !== 'object' || Array.isArray(options)) {
+      return new Error("Invalid props '".concat(propName, "' supplied to '").concat(componentName, "'. ") + "'".concat(propName, "' is not an object."));
+    }
+
+    if (props['option-text'] !== undefined) {
+      var optionText = props['option-text'];
+
+      if (typeof optionText !== 'function') {
+        return new Error("Invalid props 'option-text' supplied to '".concat(componentName, "'. ") + "'option-text' is not a function.");
+      }
+    }
+  },
+  title: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  className: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  style: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
+  component: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any,
+  children: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any
+});
+
+_defineProperty(ClipboardButton, "defaultProps", {
+  isVisibleWhenUnsupported: true,
+  onClick: function onClick() {}
+  /* Returns a object with all props that fulfill a certain naming pattern
+   *
+   * @param {RegExp} regexp - Regular expression representing which pattern
+   *                          you'll be searching for.
+   * @param {Boolean} remove - Determines if the regular expression should be
+   *                           removed when transmitting the key from the props
+   *                           to the new object.
+   *
+   * e.g:
+   *
+   * // Considering:
+   * // this.props = {option-foo: 1, onBar: 2, data-foobar: 3 data-baz: 4};
+   *
+   * // *RegExps not using // so that this comment doesn't break up
+   * this.propsWith(option-*, true); // returns {foo: 1}
+   * this.propsWith(on*, true); // returns {Bar: 2}
+   * this.propsWith(data-*); // returns {data-foobar: 1, data-baz: 4}
+   */
+
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (ClipboardButton);
+
+/***/ }),
+
+/***/ "clipboard":
+/*!********************************************************************************************************!*\
+  !*** external {"root":"ClipboardJS","amd":"clipboard","commonjs":"clipboard","commonjs2":"clipboard"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_clipboard__;
+
+/***/ }),
+
+/***/ "prop-types":
+/*!*********************************************************************************************************!*\
+  !*** external {"root":"PropTypes","amd":"prop-types","commonjs":"prop-types","commonjs2":"prop-types"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_prop_types__;
+
+/***/ }),
+
+/***/ "react":
+/*!**************************************************************************************!*\
+  !*** external {"root":"React","amd":"react","commonjs":"react","commonjs2":"react"} ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_react__;
+
+/***/ }),
+
+/***/ "react-dom":
+/*!*****************************************************************************************************!*\
+  !*** external {"root":"ReactDOM","amd":"react-dom","commonjs":"react-dom","commonjs2":"react-dom"} ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_react_dom__;
+
+/***/ })
+
+/******/ });
+});
+
+},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/react-from-dom/esm/helpers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -36656,6 +37943,8 @@ module.exports = "/social-github.ba89de4e.svg";
 module.exports = "/social-gitcoin.f79ef815.svg";
 },{}],"assets/icons/social-medium.svg":[function(require,module,exports) {
 module.exports = "/social-medium.01883098.svg";
+},{}],"assets/icons/social-wechat.svg":[function(require,module,exports) {
+module.exports = "/social-wechat.01bfbc33.svg";
 },{}],"assets/icons/social-telegram.svg":[function(require,module,exports) {
 module.exports = "/social-telegram.cd3061a8.svg";
 },{}],"assets/icons/social-instagram.svg":[function(require,module,exports) {
@@ -36680,6 +37969,8 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
+var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
+
 var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
 
 var _socialWebsite = _interopRequireDefault(require("../assets/icons/social-website.svg"));
@@ -36697,6 +37988,8 @@ var _socialGithub = _interopRequireDefault(require("../assets/icons/social-githu
 var _socialGitcoin = _interopRequireDefault(require("../assets/icons/social-gitcoin.svg"));
 
 var _socialMedium = _interopRequireDefault(require("../assets/icons/social-medium.svg"));
+
+var _socialWechat = _interopRequireDefault(require("../assets/icons/social-wechat.svg"));
 
 var _socialTelegram = _interopRequireDefault(require("../assets/icons/social-telegram.svg"));
 
@@ -36748,7 +38041,7 @@ class SocialLinks extends _react.Component {
       src: _socialEmail.default,
       className: "profile-social-icon icon"
     })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.twitter,
+      href: `https://twitter.com/${social.twitter}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip twitter",
@@ -36757,7 +38050,7 @@ class SocialLinks extends _react.Component {
       src: _socialTwitter.default,
       className: "profile-social-icon icon"
     })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.facebook,
+      href: `https://facebook.com/${social.facebook}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip facebook",
@@ -36775,7 +38068,7 @@ class SocialLinks extends _react.Component {
       src: _socialLinkedin.default,
       className: "profile-social-icon icon"
     })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.github,
+      href: `https://github.com/${social.github}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip github",
@@ -36784,7 +38077,7 @@ class SocialLinks extends _react.Component {
       src: _socialGithub.default,
       className: "profile-social-icon icon"
     })) : null, social.gitcoin ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.gitcoin,
+      href: `https://gitcoin.com/${social.gitcoin}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip gitcoin",
@@ -36801,8 +38094,16 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialMedium.default,
       className: "profile-social-icon icon"
+    })) : null, social.wechat ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      component: "div",
+      className: "profile-social-item c-hand tooltip medium",
+      "data-clipboard-text": social.wechat,
+      title: "Copy WeChat ID"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialWechat.default,
+      className: "profile-social-icon icon"
     })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.telegram,
+      href: `https://t.me/${social.telegram}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip telegram",
@@ -36811,7 +38112,7 @@ class SocialLinks extends _react.Component {
       src: _socialTelegram.default,
       className: "profile-social-icon icon"
     })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.instagram,
+      href: `https://instagram.com/${social.instagram}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip instagram",
@@ -36847,7 +38148,7 @@ class SocialLinks extends _react.Component {
       src: _socialReddit.default,
       className: "profile-social-icon icon"
     })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.patreon,
+      href: `https://patreon.com/${social.patreon}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip patreon",
@@ -36856,7 +38157,7 @@ class SocialLinks extends _react.Component {
       src: _socialPatreon.default,
       className: "profile-social-icon icon"
     })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.paypal,
+      href: `https://www.paypal.com/paypalme/${social.paypal}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip paypal",
@@ -36871,1294 +38172,7 @@ class SocialLinks extends _react.Component {
 
 var _default = SocialLinks;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-gitcoin.svg":"assets/icons/social-gitcoin.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
-var define;
-/*!
- * clipboard.js v2.0.8
- * https://clipboardjs.com/
- *
- * Licensed MIT © Zeno Rocha
- */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["ClipboardJS"] = factory();
-	else
-		root["ClipboardJS"] = factory();
-})(this, function() {
-return /******/ (function() { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 134:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": function() { return /* binding */ clipboard; }
-});
-
-// EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
-var tiny_emitter = __webpack_require__(279);
-var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
-// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
-var listen = __webpack_require__(370);
-var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
-// EXTERNAL MODULE: ./node_modules/select/src/select.js
-var src_select = __webpack_require__(817);
-var select_default = /*#__PURE__*/__webpack_require__.n(src_select);
-;// CONCATENATED MODULE: ./src/clipboard-action.js
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-/**
- * Inner class which performs selection from either `text` or `target`
- * properties and then executes copy or cut operations.
- */
-
-var ClipboardAction = /*#__PURE__*/function () {
-  /**
-   * @param {Object} options
-   */
-  function ClipboardAction(options) {
-    _classCallCheck(this, ClipboardAction);
-
-    this.resolveOptions(options);
-    this.initSelection();
-  }
-  /**
-   * Defines base properties passed from constructor.
-   * @param {Object} options
-   */
-
-
-  _createClass(ClipboardAction, [{
-    key: "resolveOptions",
-    value: function resolveOptions() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.action = options.action;
-      this.container = options.container;
-      this.emitter = options.emitter;
-      this.target = options.target;
-      this.text = options.text;
-      this.trigger = options.trigger;
-      this.selectedText = '';
-    }
-    /**
-     * Decides which selection strategy is going to be applied based
-     * on the existence of `text` and `target` properties.
-     */
-
-  }, {
-    key: "initSelection",
-    value: function initSelection() {
-      if (this.text) {
-        this.selectFake();
-      } else if (this.target) {
-        this.selectTarget();
-      }
-    }
-    /**
-     * Creates a fake textarea element, sets its value from `text` property,
-     */
-
-  }, {
-    key: "createFakeElement",
-    value: function createFakeElement() {
-      var isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-      this.fakeElem = document.createElement('textarea'); // Prevent zooming on iOS
-
-      this.fakeElem.style.fontSize = '12pt'; // Reset box model
-
-      this.fakeElem.style.border = '0';
-      this.fakeElem.style.padding = '0';
-      this.fakeElem.style.margin = '0'; // Move element out of screen horizontally
-
-      this.fakeElem.style.position = 'absolute';
-      this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px'; // Move element to the same position vertically
-
-      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-      this.fakeElem.style.top = "".concat(yPosition, "px");
-      this.fakeElem.setAttribute('readonly', '');
-      this.fakeElem.value = this.text;
-      return this.fakeElem;
-    }
-    /**
-     * Get's the value of fakeElem,
-     * and makes a selection on it.
-     */
-
-  }, {
-    key: "selectFake",
-    value: function selectFake() {
-      var _this = this;
-
-      var fakeElem = this.createFakeElement();
-
-      this.fakeHandlerCallback = function () {
-        return _this.removeFake();
-      };
-
-      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
-      this.container.appendChild(fakeElem);
-      this.selectedText = select_default()(fakeElem);
-      this.copyText();
-      this.removeFake();
-    }
-    /**
-     * Only removes the fake element after another click event, that way
-     * a user can hit `Ctrl+C` to copy because selection still exists.
-     */
-
-  }, {
-    key: "removeFake",
-    value: function removeFake() {
-      if (this.fakeHandler) {
-        this.container.removeEventListener('click', this.fakeHandlerCallback);
-        this.fakeHandler = null;
-        this.fakeHandlerCallback = null;
-      }
-
-      if (this.fakeElem) {
-        this.container.removeChild(this.fakeElem);
-        this.fakeElem = null;
-      }
-    }
-    /**
-     * Selects the content from element passed on `target` property.
-     */
-
-  }, {
-    key: "selectTarget",
-    value: function selectTarget() {
-      this.selectedText = select_default()(this.target);
-      this.copyText();
-    }
-    /**
-     * Executes the copy operation based on the current selection.
-     */
-
-  }, {
-    key: "copyText",
-    value: function copyText() {
-      var succeeded;
-
-      try {
-        succeeded = document.execCommand(this.action);
-      } catch (err) {
-        succeeded = false;
-      }
-
-      this.handleResult(succeeded);
-    }
-    /**
-     * Fires an event based on the copy operation result.
-     * @param {Boolean} succeeded
-     */
-
-  }, {
-    key: "handleResult",
-    value: function handleResult(succeeded) {
-      this.emitter.emit(succeeded ? 'success' : 'error', {
-        action: this.action,
-        text: this.selectedText,
-        trigger: this.trigger,
-        clearSelection: this.clearSelection.bind(this)
-      });
-    }
-    /**
-     * Moves focus away from `target` and back to the trigger, removes current selection.
-     */
-
-  }, {
-    key: "clearSelection",
-    value: function clearSelection() {
-      if (this.trigger) {
-        this.trigger.focus();
-      }
-
-      document.activeElement.blur();
-      window.getSelection().removeAllRanges();
-    }
-    /**
-     * Sets the `action` to be performed which can be either 'copy' or 'cut'.
-     * @param {String} action
-     */
-
-  }, {
-    key: "destroy",
-
-    /**
-     * Destroy lifecycle.
-     */
-    value: function destroy() {
-      this.removeFake();
-    }
-  }, {
-    key: "action",
-    set: function set() {
-      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'copy';
-      this._action = action;
-
-      if (this._action !== 'copy' && this._action !== 'cut') {
-        throw new Error('Invalid "action" value, use either "copy" or "cut"');
-      }
-    }
-    /**
-     * Gets the `action` property.
-     * @return {String}
-     */
-    ,
-    get: function get() {
-      return this._action;
-    }
-    /**
-     * Sets the `target` property using an element
-     * that will be have its content copied.
-     * @param {Element} target
-     */
-
-  }, {
-    key: "target",
-    set: function set(target) {
-      if (target !== undefined) {
-        if (target && _typeof(target) === 'object' && target.nodeType === 1) {
-          if (this.action === 'copy' && target.hasAttribute('disabled')) {
-            throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
-          }
-
-          if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
-            throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
-          }
-
-          this._target = target;
-        } else {
-          throw new Error('Invalid "target" value, use a valid Element');
-        }
-      }
-    }
-    /**
-     * Gets the `target` property.
-     * @return {String|HTMLElement}
-     */
-    ,
-    get: function get() {
-      return this._target;
-    }
-  }]);
-
-  return ClipboardAction;
-}();
-
-/* harmony default export */ var clipboard_action = (ClipboardAction);
-;// CONCATENATED MODULE: ./src/clipboard.js
-function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
-
-function clipboard_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function clipboard_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function clipboard_createClass(Constructor, protoProps, staticProps) { if (protoProps) clipboard_defineProperties(Constructor.prototype, protoProps); if (staticProps) clipboard_defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (clipboard_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-/**
- * Helper function to retrieve attribute value.
- * @param {String} suffix
- * @param {Element} element
- */
-
-function getAttributeValue(suffix, element) {
-  var attribute = "data-clipboard-".concat(suffix);
-
-  if (!element.hasAttribute(attribute)) {
-    return;
-  }
-
-  return element.getAttribute(attribute);
-}
-/**
- * Base class which takes one or more elements, adds event listeners to them,
- * and instantiates a new `ClipboardAction` on each click.
- */
-
-
-var Clipboard = /*#__PURE__*/function (_Emitter) {
-  _inherits(Clipboard, _Emitter);
-
-  var _super = _createSuper(Clipboard);
-
-  /**
-   * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
-   * @param {Object} options
-   */
-  function Clipboard(trigger, options) {
-    var _this;
-
-    clipboard_classCallCheck(this, Clipboard);
-
-    _this = _super.call(this);
-
-    _this.resolveOptions(options);
-
-    _this.listenClick(trigger);
-
-    return _this;
-  }
-  /**
-   * Defines if attributes would be resolved using internal setter functions
-   * or custom functions that were passed in the constructor.
-   * @param {Object} options
-   */
-
-
-  clipboard_createClass(Clipboard, [{
-    key: "resolveOptions",
-    value: function resolveOptions() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
-      this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
-      this.text = typeof options.text === 'function' ? options.text : this.defaultText;
-      this.container = clipboard_typeof(options.container) === 'object' ? options.container : document.body;
-    }
-    /**
-     * Adds a click event listener to the passed trigger.
-     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
-     */
-
-  }, {
-    key: "listenClick",
-    value: function listenClick(trigger) {
-      var _this2 = this;
-
-      this.listener = listen_default()(trigger, 'click', function (e) {
-        return _this2.onClick(e);
-      });
-    }
-    /**
-     * Defines a new `ClipboardAction` on each click event.
-     * @param {Event} e
-     */
-
-  }, {
-    key: "onClick",
-    value: function onClick(e) {
-      var trigger = e.delegateTarget || e.currentTarget;
-
-      if (this.clipboardAction) {
-        this.clipboardAction = null;
-      }
-
-      this.clipboardAction = new clipboard_action({
-        action: this.action(trigger),
-        target: this.target(trigger),
-        text: this.text(trigger),
-        container: this.container,
-        trigger: trigger,
-        emitter: this
-      });
-    }
-    /**
-     * Default `action` lookup function.
-     * @param {Element} trigger
-     */
-
-  }, {
-    key: "defaultAction",
-    value: function defaultAction(trigger) {
-      return getAttributeValue('action', trigger);
-    }
-    /**
-     * Default `target` lookup function.
-     * @param {Element} trigger
-     */
-
-  }, {
-    key: "defaultTarget",
-    value: function defaultTarget(trigger) {
-      var selector = getAttributeValue('target', trigger);
-
-      if (selector) {
-        return document.querySelector(selector);
-      }
-    }
-    /**
-     * Returns the support of the given action, or all actions if no action is
-     * given.
-     * @param {String} [action]
-     */
-
-  }, {
-    key: "defaultText",
-
-    /**
-     * Default `text` lookup function.
-     * @param {Element} trigger
-     */
-    value: function defaultText(trigger) {
-      return getAttributeValue('text', trigger);
-    }
-    /**
-     * Destroy lifecycle.
-     */
-
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.listener.destroy();
-
-      if (this.clipboardAction) {
-        this.clipboardAction.destroy();
-        this.clipboardAction = null;
-      }
-    }
-  }], [{
-    key: "isSupported",
-    value: function isSupported() {
-      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
-      var actions = typeof action === 'string' ? [action] : action;
-      var support = !!document.queryCommandSupported;
-      actions.forEach(function (action) {
-        support = support && !!document.queryCommandSupported(action);
-      });
-      return support;
-    }
-  }]);
-
-  return Clipboard;
-}((tiny_emitter_default()));
-
-/* harmony default export */ var clipboard = (Clipboard);
-
-/***/ }),
-
-/***/ 828:
-/***/ (function(module) {
-
-var DOCUMENT_NODE_TYPE = 9;
-
-/**
- * A polyfill for Element.matches()
- */
-if (typeof Element !== 'undefined' && !Element.prototype.matches) {
-    var proto = Element.prototype;
-
-    proto.matches = proto.matchesSelector ||
-                    proto.mozMatchesSelector ||
-                    proto.msMatchesSelector ||
-                    proto.oMatchesSelector ||
-                    proto.webkitMatchesSelector;
-}
-
-/**
- * Finds the closest parent that matches a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @return {Function}
- */
-function closest (element, selector) {
-    while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
-        if (typeof element.matches === 'function' &&
-            element.matches(selector)) {
-          return element;
-        }
-        element = element.parentNode;
-    }
-}
-
-module.exports = closest;
-
-
-/***/ }),
-
-/***/ 438:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-var closest = __webpack_require__(828);
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function _delegate(element, selector, type, callback, useCapture) {
-    var listenerFn = listener.apply(this, arguments);
-
-    element.addEventListener(type, listenerFn, useCapture);
-
-    return {
-        destroy: function() {
-            element.removeEventListener(type, listenerFn, useCapture);
-        }
-    }
-}
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element|String|Array} [elements]
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function delegate(elements, selector, type, callback, useCapture) {
-    // Handle the regular Element usage
-    if (typeof elements.addEventListener === 'function') {
-        return _delegate.apply(null, arguments);
-    }
-
-    // Handle Element-less usage, it defaults to global delegation
-    if (typeof type === 'function') {
-        // Use `document` as the first parameter, then apply arguments
-        // This is a short way to .unshift `arguments` without running into deoptimizations
-        return _delegate.bind(null, document).apply(null, arguments);
-    }
-
-    // Handle Selector-based usage
-    if (typeof elements === 'string') {
-        elements = document.querySelectorAll(elements);
-    }
-
-    // Handle Array-like based usage
-    return Array.prototype.map.call(elements, function (element) {
-        return _delegate(element, selector, type, callback, useCapture);
-    });
-}
-
-/**
- * Finds closest match and invokes callback.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @return {Function}
- */
-function listener(element, selector, type, callback) {
-    return function(e) {
-        e.delegateTarget = closest(e.target, selector);
-
-        if (e.delegateTarget) {
-            callback.call(element, e);
-        }
-    }
-}
-
-module.exports = delegate;
-
-
-/***/ }),
-
-/***/ 879:
-/***/ (function(__unused_webpack_module, exports) {
-
-/**
- * Check if argument is a HTML element.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.node = function(value) {
-    return value !== undefined
-        && value instanceof HTMLElement
-        && value.nodeType === 1;
-};
-
-/**
- * Check if argument is a list of HTML elements.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.nodeList = function(value) {
-    var type = Object.prototype.toString.call(value);
-
-    return value !== undefined
-        && (type === '[object NodeList]' || type === '[object HTMLCollection]')
-        && ('length' in value)
-        && (value.length === 0 || exports.node(value[0]));
-};
-
-/**
- * Check if argument is a string.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.string = function(value) {
-    return typeof value === 'string'
-        || value instanceof String;
-};
-
-/**
- * Check if argument is a function.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.fn = function(value) {
-    var type = Object.prototype.toString.call(value);
-
-    return type === '[object Function]';
-};
-
-
-/***/ }),
-
-/***/ 370:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-var is = __webpack_require__(879);
-var delegate = __webpack_require__(438);
-
-/**
- * Validates all params and calls the right
- * listener function based on its target type.
- *
- * @param {String|HTMLElement|HTMLCollection|NodeList} target
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listen(target, type, callback) {
-    if (!target && !type && !callback) {
-        throw new Error('Missing required arguments');
-    }
-
-    if (!is.string(type)) {
-        throw new TypeError('Second argument must be a String');
-    }
-
-    if (!is.fn(callback)) {
-        throw new TypeError('Third argument must be a Function');
-    }
-
-    if (is.node(target)) {
-        return listenNode(target, type, callback);
-    }
-    else if (is.nodeList(target)) {
-        return listenNodeList(target, type, callback);
-    }
-    else if (is.string(target)) {
-        return listenSelector(target, type, callback);
-    }
-    else {
-        throw new TypeError('First argument must be a String, HTMLElement, HTMLCollection, or NodeList');
-    }
-}
-
-/**
- * Adds an event listener to a HTML element
- * and returns a remove listener function.
- *
- * @param {HTMLElement} node
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenNode(node, type, callback) {
-    node.addEventListener(type, callback);
-
-    return {
-        destroy: function() {
-            node.removeEventListener(type, callback);
-        }
-    }
-}
-
-/**
- * Add an event listener to a list of HTML elements
- * and returns a remove listener function.
- *
- * @param {NodeList|HTMLCollection} nodeList
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenNodeList(nodeList, type, callback) {
-    Array.prototype.forEach.call(nodeList, function(node) {
-        node.addEventListener(type, callback);
-    });
-
-    return {
-        destroy: function() {
-            Array.prototype.forEach.call(nodeList, function(node) {
-                node.removeEventListener(type, callback);
-            });
-        }
-    }
-}
-
-/**
- * Add an event listener to a selector
- * and returns a remove listener function.
- *
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenSelector(selector, type, callback) {
-    return delegate(document.body, selector, type, callback);
-}
-
-module.exports = listen;
-
-
-/***/ }),
-
-/***/ 817:
-/***/ (function(module) {
-
-function select(element) {
-    var selectedText;
-
-    if (element.nodeName === 'SELECT') {
-        element.focus();
-
-        selectedText = element.value;
-    }
-    else if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
-        var isReadOnly = element.hasAttribute('readonly');
-
-        if (!isReadOnly) {
-            element.setAttribute('readonly', '');
-        }
-
-        element.select();
-        element.setSelectionRange(0, element.value.length);
-
-        if (!isReadOnly) {
-            element.removeAttribute('readonly');
-        }
-
-        selectedText = element.value;
-    }
-    else {
-        if (element.hasAttribute('contenteditable')) {
-            element.focus();
-        }
-
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.selectNodeContents(element);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        selectedText = selection.toString();
-    }
-
-    return selectedText;
-}
-
-module.exports = select;
-
-
-/***/ }),
-
-/***/ 279:
-/***/ (function(module) {
-
-function E () {
-  // Keep this empty so it's easier to inherit from
-  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
-}
-
-E.prototype = {
-  on: function (name, callback, ctx) {
-    var e = this.e || (this.e = {});
-
-    (e[name] || (e[name] = [])).push({
-      fn: callback,
-      ctx: ctx
-    });
-
-    return this;
-  },
-
-  once: function (name, callback, ctx) {
-    var self = this;
-    function listener () {
-      self.off(name, listener);
-      callback.apply(ctx, arguments);
-    };
-
-    listener._ = callback
-    return this.on(name, listener, ctx);
-  },
-
-  emit: function (name) {
-    var data = [].slice.call(arguments, 1);
-    var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
-    var i = 0;
-    var len = evtArr.length;
-
-    for (i; i < len; i++) {
-      evtArr[i].fn.apply(evtArr[i].ctx, data);
-    }
-
-    return this;
-  },
-
-  off: function (name, callback) {
-    var e = this.e || (this.e = {});
-    var evts = e[name];
-    var liveEvents = [];
-
-    if (evts && callback) {
-      for (var i = 0, len = evts.length; i < len; i++) {
-        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
-          liveEvents.push(evts[i]);
-      }
-    }
-
-    // Remove event from queue to prevent memory leak
-    // Suggested by https://github.com/lazd
-    // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
-
-    (liveEvents.length)
-      ? e[name] = liveEvents
-      : delete e[name];
-
-    return this;
-  }
-};
-
-module.exports = E;
-module.exports.TinyEmitter = E;
-
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(134);
-/******/ })()
-.default;
-});
-},{}],"../node_modules/react-clipboard.js/dist/react-clipboard.js":[function(require,module,exports) {
-var define;
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
-	else if(typeof define === 'function' && define.amd)
-		define(["clipboard", "prop-types", "react", "react-dom"], factory);
-	else if(typeof exports === 'object')
-		exports["ReactClipboard"] = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
-	else
-		root["ReactClipboard"] = factory(root["ClipboardJS"], root["PropTypes"], root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_clipboard__, __WEBPACK_EXTERNAL_MODULE_prop_types__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-var ClipboardButton =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(ClipboardButton, _React$Component);
-
-  function ClipboardButton() {
-    _classCallCheck(this, ClipboardButton);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(ClipboardButton).apply(this, arguments));
-  }
-
-  _createClass(ClipboardButton, [{
-    key: "propsWith",
-    value: function propsWith(regexp) {
-      var remove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var object = {};
-      Object.keys(this.props).forEach(function (key) {
-        if (key.search(regexp) !== -1) {
-          var objectKey = remove ? key.replace(regexp, '') : key;
-          object[objectKey] = this.props[key];
-        }
-      }, this);
-      return object;
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.clipboard && this.clipboard.destroy();
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // Support old API by trying to assign this.props.options first;
-      var options = this.props.options || this.propsWith(/^option-/, true);
-      var element = react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.findDOMNode(this.element);
-
-      if (!element) {
-        return;
-      }
-
-      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
-
-      this.clipboard = new Clipboard(element, options);
-      var callbacks = this.propsWith(/^on/, true);
-      Object.keys(callbacks).forEach(function (callback) {
-        this.clipboard.on(callback.toLowerCase(), this.props['on' + callback]);
-      }, this);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      var attributes = _objectSpread({
-        title: this.props.title || '',
-        type: this.getType(),
-        className: this.props.className || '',
-        style: this.props.style || {},
-        ref: function ref(element) {
-          return _this.element = element;
-        },
-        onClick: this.props.onClick
-      }, this.propsWith(/^data-/), this.propsWith(/^button-/, true));
-
-      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
-
-      if (!this.props.isVisibleWhenUnsupported && !Clipboard.isSupported()) {
-        return null;
-      }
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(this.getComponent(), attributes, this.props.children);
-    }
-  }, {
-    key: "getType",
-    value: function getType() {
-      if (this.getComponent() === 'button' || this.getComponent() === 'input') {
-        return this.props.type || 'button';
-      } else {
-        return undefined;
-      }
-    }
-  }, {
-    key: "getComponent",
-    value: function getComponent() {
-      return this.props.component || 'button';
-    }
-  }]);
-
-  return ClipboardButton;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-_defineProperty(ClipboardButton, "propTypes", {
-  options: function options(props, propName, componentName) {
-    var options = props[propName];
-
-    if (options && _typeof(options) !== 'object' || Array.isArray(options)) {
-      return new Error("Invalid props '".concat(propName, "' supplied to '").concat(componentName, "'. ") + "'".concat(propName, "' is not an object."));
-    }
-
-    if (props['option-text'] !== undefined) {
-      var optionText = props['option-text'];
-
-      if (typeof optionText !== 'function') {
-        return new Error("Invalid props 'option-text' supplied to '".concat(componentName, "'. ") + "'option-text' is not a function.");
-      }
-    }
-  },
-  title: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  className: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  style: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
-  component: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any,
-  children: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any
-});
-
-_defineProperty(ClipboardButton, "defaultProps", {
-  isVisibleWhenUnsupported: true,
-  onClick: function onClick() {}
-  /* Returns a object with all props that fulfill a certain naming pattern
-   *
-   * @param {RegExp} regexp - Regular expression representing which pattern
-   *                          you'll be searching for.
-   * @param {Boolean} remove - Determines if the regular expression should be
-   *                           removed when transmitting the key from the props
-   *                           to the new object.
-   *
-   * e.g:
-   *
-   * // Considering:
-   * // this.props = {option-foo: 1, onBar: 2, data-foobar: 3 data-baz: 4};
-   *
-   * // *RegExps not using // so that this comment doesn't break up
-   * this.propsWith(option-*, true); // returns {foo: 1}
-   * this.propsWith(on*, true); // returns {Bar: 2}
-   * this.propsWith(data-*); // returns {data-foobar: 1, data-baz: 4}
-   */
-
-});
-
-/* harmony default export */ __webpack_exports__["default"] = (ClipboardButton);
-
-/***/ }),
-
-/***/ "clipboard":
-/*!********************************************************************************************************!*\
-  !*** external {"root":"ClipboardJS","amd":"clipboard","commonjs":"clipboard","commonjs2":"clipboard"} ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_clipboard__;
-
-/***/ }),
-
-/***/ "prop-types":
-/*!*********************************************************************************************************!*\
-  !*** external {"root":"PropTypes","amd":"prop-types","commonjs":"prop-types","commonjs2":"prop-types"} ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_prop_types__;
-
-/***/ }),
-
-/***/ "react":
-/*!**************************************************************************************!*\
-  !*** external {"root":"React","amd":"react","commonjs":"react","commonjs2":"react"} ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_react__;
-
-/***/ }),
-
-/***/ "react-dom":
-/*!*****************************************************************************************************!*\
-  !*** external {"root":"ReactDOM","amd":"react-dom","commonjs":"react-dom","commonjs2":"react-dom"} ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_react_dom__;
-
-/***/ })
-
-/******/ });
-});
-
-},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"assets/icons/crypto-near.svg":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-gitcoin.svg":"assets/icons/social-gitcoin.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-wechat.svg":"assets/icons/social-wechat.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"assets/icons/crypto-near.svg":[function(require,module,exports) {
 module.exports = "/crypto-near.6af70c73.svg";
 },{}],"assets/icons/crypto-btc.svg":[function(require,module,exports) {
 module.exports = "/crypto-btc.207fc2b4.svg";
@@ -38494,6 +38508,7 @@ class Profile extends _react.Component {
     } = this.state;
     let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
+    let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-container"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -38530,7 +38545,7 @@ class Profile extends _react.Component {
       className: "profile-avatar avatar avatar-xl"
     }) : /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-avatar avatar avatar-xl",
-      "data-initial": pageBio.displayname.charAt(0)
+      "data-initial": nameInitial
     }), /*#__PURE__*/_react.default.createElement("h2", {
       className: "profile-name"
     }, pageBio.displayname), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
@@ -38660,12 +38675,6 @@ var _config = _interopRequireDefault(require("./config"));
 var _Footer = _interopRequireDefault(require("./components/Footer"));
 
 var _Toast = _interopRequireDefault(require("./components/Toast"));
-
-var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
-
-var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
-
-var _actionCopy = _interopRequireDefault(require("./assets/icons/action-copy.svg"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38812,12 +38821,14 @@ class Dashboard extends _react.Component {
     let formAvatar = this.state.formAvatar;
     let formTheme = this.state.formTheme;
 
-    if (event.target.id == 'avatar') {
-      formAvatar = event.target.value;
-    }
+    switch (event.target.id) {
+      case 'avatar':
+        formAvatar = event.target.value;
+        break;
 
-    if (event.target.id == 'theme') {
-      formTheme = event.target.value;
+      case 'theme':
+        formTheme = event.target.value;
+        break;
     }
 
     this.setState({
@@ -38841,6 +38852,7 @@ class Dashboard extends _react.Component {
       github: event.target.github.value,
       gitcoin: event.target.gitcoin.value,
       medium: event.target.medium.value,
+      wechat: event.target.wechat.value,
       telegram: event.target.telegram.value,
       instagram: event.target.instagram.value,
       youtube: event.target.youtube.value,
@@ -38878,7 +38890,7 @@ class Dashboard extends _react.Component {
         formLoading: false,
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme,
-        pageToast: 'Updated.'
+        pageToast: 'Profile updated.'
       });
     }
   }
@@ -38898,6 +38910,13 @@ class Dashboard extends _react.Component {
     } = this.state;
     let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
+    let nameInitial = '';
+
+    if (pageStatus) {
+      nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
+    } else {
+      nameInitial = String(currentUser).charAt(0).toUpperCase();
+    }
 
     if (!login && !currentUser) {
       return /*#__PURE__*/_react.default.createElement(_reactRouterDom.Redirect, {
@@ -38950,8 +38969,10 @@ class Dashboard extends _react.Component {
     }, "Hello, ", /*#__PURE__*/_react.default.createElement("strong", null, currentUser), "."), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings web3bio-placeholder"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold mb-2"
-    }, "Claim your page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-4"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "mr-2"
+    }, "\uD83C\uDF08"), " Claim your page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mb-2"
     }, "Complete your ", /*#__PURE__*/_react.default.createElement("a", {
       href: "#profile",
@@ -38993,7 +39014,7 @@ class Dashboard extends _react.Component {
       id: "profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold mb-2"
-    }, "Basic"), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Basic info"), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
@@ -39023,15 +39044,13 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "avatar"
-    }, "Avatar"), formAvatar ? /*#__PURE__*/_react.default.createElement("img", {
-      src: formAvatar,
-      className: "profile-avatar avatar avatar-lg mb-4 mt-2"
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-avatar avatar avatar-lg mb-4 mt-2",
-      "data-initial": ""
-    }), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Avatar"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column"
+    }, /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "url",
       id: "avatar",
       placeholder: "https://",
       defaultValue: pageBio.avatar,
@@ -39039,11 +39058,24 @@ class Dashboard extends _react.Component {
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
     }, "You may use free photo hostings like ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://imgur.com/",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "Imgur"), " or ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://imgbb.com/",
       target: "_blank",
       rel: "noopener noreferrer",
       className: "text-dark"
     }, "IMGBB"), " for avatars.")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-auto"
+    }, formAvatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: formAvatar,
+      className: "profile-avatar avatar avatar-lg"
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-lg",
+      "data-initial": nameInitial
+    })))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
@@ -39052,10 +39084,9 @@ class Dashboard extends _react.Component {
       className: "label"
     }, "PUBLIC")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "email",
       id: "email",
       placeholder: "Email",
-      pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,14}$",
       defaultValue: social.email,
       onInput: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
@@ -39067,7 +39098,7 @@ class Dashboard extends _react.Component {
       htmlFor: "website"
     }, "Website"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "url",
       id: "website",
       placeholder: "https://",
       defaultValue: social.website,
@@ -39124,35 +39155,47 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "twitter"
-    }, "Twitter"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Twitter"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "twitter.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "twitter",
-      placeholder: "https://twitter.com/",
+      placeholder: "username",
       defaultValue: social.twitter,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "facebook"
-    }, "Facebook"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Facebook"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "facebook.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "facebook",
-      placeholder: "https://facebook.com/",
+      placeholder: "username",
       defaultValue: social.facebook,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "linkedin"
     }, "LinkedIn"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "url",
       id: "linkedin",
       placeholder: "https://linkedin.com/",
       defaultValue: social.linkedin,
@@ -39163,35 +39206,47 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "github"
-    }, "GitHub"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "GitHub"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "github.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "github",
-      placeholder: "https://github.com/",
+      placeholder: "username",
       defaultValue: social.github,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "gitcoin"
-    }, "Gitcoin"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Gitcoin"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "gitcoin.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "gitcoin",
-      placeholder: "https://gitcoin.co/",
+      placeholder: "username",
       defaultValue: social.gitcoin,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "medium"
     }, "Medium"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "url",
       id: "medium",
       placeholder: "https://medium.com/",
       defaultValue: social.medium,
@@ -39201,36 +39256,61 @@ class Dashboard extends _react.Component {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
-      htmlFor: "telegram"
-    }, "Telegram"), /*#__PURE__*/_react.default.createElement("input", {
+      htmlFor: "wechat"
+    }, "WeChat"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
-      id: "telegram",
-      placeholder: "https://t.me/",
-      defaultValue: social.telegram,
+      id: "wechat",
+      placeholder: "WeChat ID",
+      defaultValue: social.wechat,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
+      htmlFor: "telegram"
+    }, "Telegram"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "t.me", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "telegram",
+      placeholder: "username",
+      defaultValue: social.telegram,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
       htmlFor: "instagram"
-    }, "Instagram"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Instagram"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "instagram.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "instagram",
-      placeholder: "https://instagram.com/",
+      placeholder: "username",
       defaultValue: social.instagram,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "youtube"
     }, "YouTube"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "url",
       id: "youtube",
       placeholder: "https://youtube.com/",
       defaultValue: social.youtube,
@@ -39245,7 +39325,7 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "discord",
-      placeholder: "https://discord.com/",
+      placeholder: "https://discord.com",
       defaultValue: social.discord,
       maxLength: "120",
       onInput: this.handleChange
@@ -39256,7 +39336,7 @@ class Dashboard extends _react.Component {
       htmlFor: "reddit"
     }, "Reddit"), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
-      type: "text",
+      type: "url",
       id: "reddit",
       placeholder: "https://reddit.com/",
       defaultValue: social.reddit,
@@ -39267,36 +39347,48 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "patreon"
-    }, "Patreon"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "Patreon"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "patreon.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "patreon",
-      placeholder: "https://patreon.com/",
+      placeholder: "username",
       defaultValue: social.patreon,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("label", {
       className: "form-label",
       htmlFor: "paypal"
-    }, "PayPal"), /*#__PURE__*/_react.default.createElement("input", {
+    }, "PayPal"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "paypal.me", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
       className: "form-input input-lg",
       type: "text",
       id: "paypal",
-      placeholder: "https://paypal.me/",
+      placeholder: "username",
       defaultValue: social.paypal,
       maxLength: "120",
       onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
+    }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
-    }, "Request more social support? Please contact ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://twitter.com/picturepan2",
+    }, "Request more social support? Please contact ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yanzhu.near",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, "@picturepan2"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
+    }, "@yanzhu.near"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "crypto"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 text-bold mb-2"
@@ -39309,7 +39401,7 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "near",
-      defaultValue: crypto.near,
+      defaultValue: crypto.near ? crypto.near : currentUser,
       readOnly: true
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -39349,14 +39441,18 @@ class Dashboard extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement("span", {
       className: "text-bold"
     }, "NFT Collection Widget - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-placeholder"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-bold"
+    }, "Import ENS or DAS Records - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
-    }, "Request more crypto support? Please contact ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://twitter.com/picturepan2",
+    }, "Request more crypto support? Please contact ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yanzhu.near",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, "@picturepan2"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "@yanzhu.near"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), /*#__PURE__*/_react.default.createElement("div", {
       className: `web3bio-settings-footer ${formChanged ? "active" : ""}`
     }, /*#__PURE__*/_react.default.createElement("button", {
       className: `btn btn-lg btn-block ${formLoading ? "loading" : ""}`,
@@ -39393,7 +39489,7 @@ class Dashboard extends _react.Component {
 
 var _default = Dashboard;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","./components/Toast":"components/Toast.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","./assets/icons/action-copy.svg":"assets/icons/action-copy.svg"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Footer":"components/Footer.js","./components/Toast":"components/Toast.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -62520,7 +62616,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61348" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53260" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

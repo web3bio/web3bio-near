@@ -758,8 +758,8 @@ legend {
   transition: background .2s, border .2s, box-shadow .2s, color .2s;
   width: 100%; }
   .form-input:focus {
-    box-shadow: 0 0 0 0.1rem rgba(70, 32, 225, 0.2);
-    border-color: #4620E1; }
+    box-shadow: 0 0 0 0.1rem rgba(32, 32, 32, 0.2);
+    border-color: #202020; }
   .form-input::placeholder {
     color: #b9b9b9; }
   .form-input.input-sm {
@@ -987,9 +987,11 @@ textarea.form-input, textarea.form-input.input-lg, textarea.form-input.input-sm 
 .input-group {
   display: flex; }
   .input-group .input-group-addon {
-    background: #f9f9f9;
-    border: 0.1rem solid lightgray;
+    background: #fff;
+    border: 0.1rem solid #202020;
+    border-right-color: transparent;
     border-radius: 0.4rem;
+    color: #202020;
     line-height: 1.2rem;
     padding: 0.2rem 0.6rem;
     white-space: nowrap; }
@@ -1533,7 +1535,7 @@ video.video-responsive {
   font-size: 0.8rem;
   height: 1.6rem;
   width: 1.6rem;
-  background: transparent;
+  background: rgba(14, 6, 47, 0.15);
   border-radius: 50%;
   box-shadow: 0 0.3rem 1.2rem rgba(0, 0, 0, 0.15);
   color: rgba(255, 255, 255, 0.85);
@@ -2582,6 +2584,9 @@ body {
     font-size: 1.6rem;
     font-weight: 900;
     line-height: 2rem; }
+    @media screen and (max-width: 840px) {
+      .web3bio-content .web3bio-content-title {
+        font-size: 1.2rem; } }
 
 .web3bio-profile {
   align-items: center;
@@ -2589,7 +2594,6 @@ body {
   flex-direction: column;
   text-align: center; }
   .web3bio-profile .profile-avatar {
-    background: rgba(14, 6, 47, 0.15);
     border: 0.2rem solid #fff;
     box-shadow: 0 0.1rem 1rem rgba(0, 0, 0, 0.1); }
   .web3bio-profile .profile-name {
@@ -2783,12 +2787,19 @@ body {
   box-shadow: 0 0.3rem 0.6rem rgba(0, 0, 0, 0.05);
   margin: 2rem 0;
   padding: 1rem 2rem; }
-  @media screen and (max-width: 840px) {
+  @media screen and (max-width: 600px) {
     .web3bio-settings {
       padding: 1rem;
       margin: 2rem 0; } }
   .web3bio-settings form fieldset {
     padding: 1rem 0 0 0; }
+  .web3bio-settings form .input-group-addon.addon-lg {
+    font-size: .7rem;
+    padding-right: .4rem; }
+    .web3bio-settings form .input-group-addon.addon-lg span {
+      color: #b9b9b9; }
+  .web3bio-settings form .input-group-addon + .form-input {
+    border-left: 0; }
   .web3bio-settings .web3bio-settings-footer {
     padding: 1rem 0; }
     .web3bio-settings .web3bio-settings-footer.active {

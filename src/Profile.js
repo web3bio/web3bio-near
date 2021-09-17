@@ -101,6 +101,7 @@ class Profile extends Component {
     const { login, currentUser, loading, pageBio, pageStatus } = this.state
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
+    let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase()
 
     return (
       <div className="web3bio-container">
@@ -141,7 +142,7 @@ class Profile extends Component {
                     { !!pageBio.avatar ? 
                       <img src={pageBio.avatar} className="profile-avatar avatar avatar-xl" />
                       :
-                      <div className="profile-avatar avatar avatar-xl" data-initial={pageBio.displayname.charAt(0)}></div>
+                      <div className="profile-avatar avatar avatar-xl" data-initial={nameInitial}></div>
                     }
                     <h2 className="profile-name">{pageBio.displayname}</h2>
                     { !!pageBio.description ?

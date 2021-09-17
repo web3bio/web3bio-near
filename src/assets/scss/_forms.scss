@@ -51,8 +51,8 @@ legend {
   transition: background .2s, border .2s, box-shadow .2s, color .2s;
   width: 100%;
   &:focus {
-    @include control-shadow();
-    border-color: $primary-color;
+    @include control-shadow($dark-color);
+    border-color: $dark-color;
   }
   &::placeholder {
     color: $gray-color;
@@ -371,9 +371,11 @@ textarea.form-input {
   display: flex;
 
   .input-group-addon {
-    background: $bg-color;
-    border: $border-width solid $border-color-dark;
+    background: $light-color;
+    border: $border-width solid $dark-color;
+    border-right-color: transparent;
     border-radius: $border-radius;
+    color: $dark-color;
     line-height: $line-height;
     padding: $control-padding-y $control-padding-x;
     white-space: nowrap;

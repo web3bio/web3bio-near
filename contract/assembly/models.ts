@@ -35,6 +35,7 @@ export class Records {
     public github: string = '',
     public gitcoin: string = '',
     public medium: string = '',
+    public wechat: string = '',
     public telegram: string = '',
     public instagram: string = '',
     public youtube: string = '',

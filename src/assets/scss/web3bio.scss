@@ -182,6 +182,10 @@ body {
     font-size: 1.6rem;
     font-weight: 900;
     line-height: 2rem;
+
+    @media screen and (max-width: $size-md) {
+      font-size: 1.2rem;
+    }
   }
 }
 
@@ -192,7 +196,6 @@ body {
   text-align: center;
 
   .profile-avatar {
-    background: rgba(darken($primary-color, 40%), .15);
     border: .2rem solid $light-color;
     box-shadow: 0 .1rem 1rem rgba(0, 0, 0, .1);
   }
@@ -478,7 +481,7 @@ body {
   margin: 2rem 0;
   padding: 1rem 2rem;
   
-  @media screen and (max-width: $size-md) {
+  @media screen and (max-width: $size-sm) {
     padding: 1rem;
     margin: 2rem 0;
   }
@@ -486,6 +489,21 @@ body {
   form {
     fieldset {
       padding: 1rem 0 0 0;
+    }
+
+    .input-group-addon {
+      &.addon-lg {
+        font-size: .7rem;
+        padding-right: .4rem;
+
+        span {
+          color: $gray-color;
+        }
+      }
+
+      & + .form-input {
+        border-left: 0;
+      }
     }
   }
 

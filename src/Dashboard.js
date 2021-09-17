@@ -4,9 +4,6 @@ import { Link, Redirect } from 'react-router-dom'
 import getConfig from './config'
 import Footer from './components/Footer'
 import Toast from './components/Toast'
-import Clipboard from 'react-clipboard.js'
-import SVG from 'react-inlinesvg'
-import IconCopy from './assets/icons/action-copy.svg'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Dashboard extends Component {
@@ -145,11 +142,14 @@ class Dashboard extends Component {
   handleChange(event) {
     let formAvatar = this.state.formAvatar
     let formTheme = this.state.formTheme
-    if (event.target.id == 'avatar') {
-      formAvatar = event.target.value
-    }
-    if (event.target.id == 'theme') {
-      formTheme = event.target.value
+
+    switch (event.target.id) {
+      case 'avatar':
+        formAvatar = event.target.value
+        break;
+      case 'theme':
+        formTheme = event.target.value
+        break
     }
 
     this.setState({
@@ -174,6 +174,7 @@ class Dashboard extends Component {
       github: event.target.github.value,
       gitcoin: event.target.gitcoin.value,
       medium: event.target.medium.value,
+      wechat: event.target.wechat.value,
       telegram: event.target.telegram.value,
       instagram: event.target.instagram.value,
       youtube: event.target.youtube.value,
@@ -214,7 +215,7 @@ class Dashboard extends Component {
         formLoading: false,
         formAvatar: pageBio.avatar,
         formTheme: pageBio.theme,
-        pageToast: 'Updated.'
+        pageToast: 'Profile updated.'
       })
     }
   }
@@ -233,6 +234,12 @@ class Dashboard extends Component {
       pageToast } = this.state
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
+    let nameInitial = ''
+    if (pageStatus) {
+      nameInitial = String(pageBio.displayname).charAt(0).toUpperCase()
+    } else {
+      nameInitial = String(currentUser).charAt(0).toUpperCase()
+    }
 
     if (!login && !currentUser) {
       return <Redirect to="/" />;
@@ -273,7 +280,7 @@ class Dashboard extends Component {
                     <>
                       <div className="web3bio-content-title text-center mb-4">Hello, <strong>{currentUser}</strong>.</div>
                       <div className="web3bio-settings web3bio-placeholder">
-                        <div className="h5 text-bold mb-2">Claim your page</div>
+                        <div className="h5 text-bold mb-4"><span className="mr-2">🌈</span> Claim your page</div>
                         <div className="h6 mb-2">
                           Complete your <a href="#profile" className="btn btn-sm ml-1 mr-1">basic info</a>, <a href="#social" className="btn btn-sm ml-1 mr-1">social links</a>, or <a href="#crypto" className="btn btn-sm ml-1 mr-1">crypto addresses</a> below to claim your page.
                         </div>
@@ -302,7 +309,7 @@ class Dashboard extends Component {
                     </ul>
                     <form onSubmit={this.handleSubmit} autoComplete="off">
                       <fieldset id="profile">
-                        <div className="h5 text-bold mb-2">Basic</div>
+                        <div className="h5 text-bold mb-2">Basic info</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="displayname">Name</label>
                           <input className="form-input input-lg" type="text" id="displayname" placeholder="Name" defaultValue={pageBio.displayname} required onInput={this.handleChange} />
@@ -313,22 +320,28 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="avatar">Avatar</label>
-                          { formAvatar ? 
-                            <img src={formAvatar} className="profile-avatar avatar avatar-lg mb-4 mt-2" />
-                          :
-                            <div className="profile-avatar avatar avatar-lg mb-4 mt-2" data-initial=""></div>
-                          }
-                          <input className="form-input input-lg" type="text" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onInput={this.handleChange} />
-                          <div className="form-input-hint">You may use free photo hostings like <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-dark">IMGBB</a> for avatars.</div>
+                          <div className="columns">
+                            <div className="column">
+                              <input className="form-input input-lg" type="url" id="avatar" placeholder="https://" defaultValue={pageBio.avatar} onInput={this.handleChange} />
+                              <div className="form-input-hint">You may use free photo hostings like <a href="https://imgur.com/" target="_blank" rel="noopener noreferrer" className="text-dark">Imgur</a> or <a href="https://imgbb.com/" target="_blank" rel="noopener noreferrer" className="text-dark">IMGBB</a> for avatars.</div>
+                            </div>
+                            <div className="column col-auto">
+                              { formAvatar ? 
+                                <img src={formAvatar} className="profile-avatar avatar avatar-lg" />
+                              :
+                                <div className="profile-avatar avatar avatar-lg" data-initial={nameInitial}></div>
+                              }
+                            </div>
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="email">Email <small className="label">PUBLIC</small></label>
-                          <input className="form-input input-lg" type="text" id="email" placeholder="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,14}$" defaultValue={social.email} onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="email" id="email" placeholder="Email" defaultValue={social.email} onInput={this.handleChange} />
                           <div className="form-input-hint">Leave it blank if you don't want to make your Email address public.</div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="website">Website</label>
-                          <input className="form-input input-lg" type="text" id="website" placeholder="https://" defaultValue={social.website} onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="url" id="website" placeholder="https://" defaultValue={social.website} onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="location">Location</label>
@@ -355,59 +368,87 @@ class Dashboard extends Component {
                         <div className="h5 text-bold mb-2">Social links</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="twitter">Twitter</label>
-                          <input className="form-input input-lg" type="text" id="twitter" placeholder="https://twitter.com/" defaultValue={social.twitter} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">twitter.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="twitter" placeholder="username" defaultValue={social.twitter} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="facebook">Facebook</label>
-                          <input className="form-input input-lg" type="text" id="facebook" placeholder="https://facebook.com/" defaultValue={social.facebook} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">facebook.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="facebook" placeholder="username" defaultValue={social.facebook} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="linkedin">LinkedIn</label>
-                          <input className="form-input input-lg" type="text" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linkedin} maxLength="120" onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="url" id="linkedin" placeholder="https://linkedin.com/" defaultValue={social.linkedin} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="github">GitHub</label>
-                          <input className="form-input input-lg" type="text" id="github" placeholder="https://github.com/" defaultValue={social.github} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">github.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="github" placeholder="username" defaultValue={social.github} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="gitcoin">Gitcoin</label>
-                          <input className="form-input input-lg" type="text" id="gitcoin" placeholder="https://gitcoin.co/" defaultValue={social.gitcoin} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">gitcoin.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="gitcoin" placeholder="username" defaultValue={social.gitcoin} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="medium">Medium</label>
-                          <input className="form-input input-lg" type="text" id="medium" placeholder="https://medium.com/" defaultValue={social.medium} maxLength="120" onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="url" id="medium" placeholder="https://medium.com/" defaultValue={social.medium} maxLength="120" onInput={this.handleChange} />
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" htmlFor="wechat">WeChat</label>
+                          <input className="form-input input-lg" type="text" id="wechat" placeholder="WeChat ID" defaultValue={social.wechat} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="telegram">Telegram</label>
-                          <input className="form-input input-lg" type="text" id="telegram" placeholder="https://t.me/" defaultValue={social.telegram} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">t.me<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="telegram" placeholder="username" defaultValue={social.telegram} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="instagram">Instagram</label>
-                          <input className="form-input input-lg" type="text" id="instagram" placeholder="https://instagram.com/" defaultValue={social.instagram} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">instagram.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="instagram" placeholder="username" defaultValue={social.instagram} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="youtube">YouTube</label>
-                          <input className="form-input input-lg" type="text" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxLength="120" onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="url" id="youtube" placeholder="https://youtube.com/" defaultValue={social.youtube} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="discord">Discord</label>
-                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com/" defaultValue={social.discord} maxLength="120" onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="text" id="discord" placeholder="https://discord.com" defaultValue={social.discord} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="reddit">Reddit</label>
-                          <input className="form-input input-lg" type="text" id="reddit" placeholder="https://reddit.com/" defaultValue={social.reddit} maxLength="120" onInput={this.handleChange} />
+                          <input className="form-input input-lg" type="url" id="reddit" placeholder="https://reddit.com/" defaultValue={social.reddit} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="patreon">Patreon</label>
-                          <input className="form-input input-lg" type="text" id="patreon" placeholder="https://patreon.com/" defaultValue={social.patreon} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">patreon.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="patreon" placeholder="username" defaultValue={social.patreon} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="paypal">PayPal</label>
-                          <input className="form-input input-lg" type="text" id="paypal" placeholder="https://paypal.me/" defaultValue={social.paypal} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">paypal.me<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="paypal" placeholder="username" defaultValue={social.paypal} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <div className="form-input-hint">
-                            Request more social support? Please contact <a href="https://twitter.com/picturepan2" target="_blank" rel="noopener noreferrer">@picturepan2</a>.
+                            Request more social support? Please contact <Link to="/yanzhu.near" target="_blank" rel="noopener noreferrer">@yanzhu.near</Link>.
                           </div>
                         </div>
                       </fieldset>
@@ -416,7 +457,7 @@ class Dashboard extends Component {
                         <div className="h5 text-bold mb-2">Crypto addresses</div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="near">NEAR</label>
-                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near} readOnly />
+                          <input className="form-input input-lg" type="text" id="near" defaultValue={crypto.near ? crypto.near: currentUser} readOnly />
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="btc">Bitcoin</label>
@@ -433,9 +474,12 @@ class Dashboard extends Component {
                         <div className="web3bio-settings-placeholder">
                           <span className="text-bold">NFT Collection Widget - COMING SOON</span>
                         </div>
+                        <div className="web3bio-settings-placeholder">
+                          <span className="text-bold">Import ENS or DAS Records - COMING SOON</span>
+                        </div>
                         <div className="form-group">
                           <div className="form-input-hint">
-                            Request more crypto support? Please contact <a href="https://twitter.com/picturepan2" target="_blank" rel="noopener noreferrer">@picturepan2</a>.<br/>
+                            Request more crypto support? Please contact <Link to="/yanzhu.near" target="_blank" rel="noopener noreferrer">@yanzhu.near</Link>.<br/>
                           </div>
                         </div>
                       </fieldset>

@@ -1,7 +1,7 @@
 // Avatars
 .avatar {
   @include avatar-base();
-  background: transparent;
+  background: rgba(darken($primary-color, 40%), .15);
   border-radius: 50%;
   box-shadow: 0 .3rem 1.2rem rgba(0, 0, 0, .15);
   color: rgba($light-color, .85);
