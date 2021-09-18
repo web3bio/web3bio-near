@@ -16,11 +16,10 @@ class Modal extends Component {
   }
 
   async componentDidMount() {
-    let currentBalance = await this.props.wallet.account().getAccountBalance().available
+    let accountBalance = await this.props.wallet.account().getAccountBalance()
     this.setState({
-      currentBalance: currentBalance
+      currentBalance: accountBalance.available
     })
-    console.log(this.state.currentBalance)
   }
 
   async handleSubmit(event) {
@@ -49,8 +48,7 @@ class Modal extends Component {
   render() {
     let { currentBalance } = this.state
     let { displayname, handleDonateClose } = this.props
-    let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance)
-        amountInNEAR = Math.floor(amountInNEAR * 10000) / 10000
+    let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance, 4)
 
     return (
       <div className="web3bio-modal">
@@ -67,7 +65,7 @@ class Modal extends Component {
               <div className="form-group">
                 <div className="input-group">
                   <span className="input-group-addon addon-lg">NEAR</span>
-                  <input className="form-input input-lg" type="number" id="amount" placeholder="Donation amount" defaultValue="5" max={amountInNEAR} step="0.01" required />
+                  <input className="form-input input-lg" type="number" id="amount" placeholder="Donation amount" max={amountInNEAR} step="0.01" required />
                 </div>
               </div>
               <div className="form-group">

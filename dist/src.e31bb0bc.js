@@ -61292,11 +61292,10 @@ class Modal extends _react.Component {
   }
 
   async componentDidMount() {
-    let currentBalance = await this.props.wallet.account().getAccountBalance().available;
+    let accountBalance = await this.props.wallet.account().getAccountBalance();
     this.setState({
-      currentBalance: currentBalance
+      currentBalance: accountBalance.available
     });
-    console.log(this.state.currentBalance);
   }
 
   async handleSubmit(event) {
@@ -61329,8 +61328,7 @@ class Modal extends _react.Component {
       displayname,
       handleDonateClose
     } = this.props;
-    let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance);
-    amountInNEAR = Math.floor(amountInNEAR * 10000) / 10000;
+    let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance, 4);
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-modal"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -61366,7 +61364,6 @@ class Modal extends _react.Component {
       type: "number",
       id: "amount",
       placeholder: "Donation amount",
-      defaultValue: "5",
       max: amountInNEAR,
       step: "0.01",
       required: true
@@ -61461,7 +61458,6 @@ class Profile extends _react.Component {
       login: true,
       currentUser: window.accountId
     });
-    const accountId = await this.props.wallet.getAccountId();
 
     if (window.location.search.includes("account_id")) {
       window.location.replace(window.location.origin + window.location.pathname);

@@ -53,7 +53,6 @@ class Profile extends Component {
       login: true,
       currentUser: window.accountId
     })
-    const accountId = await this.props.wallet.getAccountId()
     if (window.location.search.includes("account_id")) {
       window.location.replace(window.location.origin + window.location.pathname)
     }
