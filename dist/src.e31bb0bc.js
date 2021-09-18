@@ -61355,8 +61355,9 @@ class Modal extends _react.Component {
       id: "amount",
       placeholder: "Donation amount",
       defaultValue: "5",
-      required: true,
-      onInput: this.handleChange
+      max: amountInNEAR,
+      step: "0.01",
+      required: true
     }))), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
     }, /*#__PURE__*/_react.default.createElement("button", {
@@ -62855,7 +62856,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53260" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61329" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

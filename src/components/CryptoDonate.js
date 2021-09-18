@@ -58,7 +58,7 @@ class Modal extends Component {
               <div className="form-group">
                 <div className="input-group">
                   <span className="input-group-addon addon-lg">NEAR</span>
-                  <input className="form-input input-lg" type="number" id="amount" placeholder="Donation amount" defaultValue="5" required onInput={this.handleChange} />
+                  <input className="form-input input-lg" type="number" id="amount" placeholder="Donation amount" defaultValue="5" max={amountInNEAR} step="0.01" required />
                 </div>
               </div>
               <div className="form-group">
