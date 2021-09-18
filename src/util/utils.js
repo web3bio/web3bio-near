@@ -15,9 +15,6 @@ export async function initContract() {
   // Getting the Account ID. If still unauthorized, it's just empty string
   window.accountId = window.walletConnection.getAccountId()
 
-  const account = await near.account(window.accountId);
-  window.accountBalance = await account.getAccountBalance();
-
   // Initializing our contract APIs by contract name and configuration
   window.contract = await new Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.

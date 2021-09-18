@@ -35198,3142 +35198,7 @@ class Home extends _react.Component {
 
 var _default = Home;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
-var define;
-/*!
- * clipboard.js v2.0.8
- * https://clipboardjs.com/
- *
- * Licensed MIT © Zeno Rocha
- */
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["ClipboardJS"] = factory();
-	else
-		root["ClipboardJS"] = factory();
-})(this, function() {
-return /******/ (function() { // webpackBootstrap
-/******/ 	var __webpack_modules__ = ({
-
-/***/ 134:
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": function() { return /* binding */ clipboard; }
-});
-
-// EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
-var tiny_emitter = __webpack_require__(279);
-var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
-// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
-var listen = __webpack_require__(370);
-var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
-// EXTERNAL MODULE: ./node_modules/select/src/select.js
-var src_select = __webpack_require__(817);
-var select_default = /*#__PURE__*/__webpack_require__.n(src_select);
-;// CONCATENATED MODULE: ./src/clipboard-action.js
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-
-/**
- * Inner class which performs selection from either `text` or `target`
- * properties and then executes copy or cut operations.
- */
-
-var ClipboardAction = /*#__PURE__*/function () {
-  /**
-   * @param {Object} options
-   */
-  function ClipboardAction(options) {
-    _classCallCheck(this, ClipboardAction);
-
-    this.resolveOptions(options);
-    this.initSelection();
-  }
-  /**
-   * Defines base properties passed from constructor.
-   * @param {Object} options
-   */
-
-
-  _createClass(ClipboardAction, [{
-    key: "resolveOptions",
-    value: function resolveOptions() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.action = options.action;
-      this.container = options.container;
-      this.emitter = options.emitter;
-      this.target = options.target;
-      this.text = options.text;
-      this.trigger = options.trigger;
-      this.selectedText = '';
-    }
-    /**
-     * Decides which selection strategy is going to be applied based
-     * on the existence of `text` and `target` properties.
-     */
-
-  }, {
-    key: "initSelection",
-    value: function initSelection() {
-      if (this.text) {
-        this.selectFake();
-      } else if (this.target) {
-        this.selectTarget();
-      }
-    }
-    /**
-     * Creates a fake textarea element, sets its value from `text` property,
-     */
-
-  }, {
-    key: "createFakeElement",
-    value: function createFakeElement() {
-      var isRTL = document.documentElement.getAttribute('dir') === 'rtl';
-      this.fakeElem = document.createElement('textarea'); // Prevent zooming on iOS
-
-      this.fakeElem.style.fontSize = '12pt'; // Reset box model
-
-      this.fakeElem.style.border = '0';
-      this.fakeElem.style.padding = '0';
-      this.fakeElem.style.margin = '0'; // Move element out of screen horizontally
-
-      this.fakeElem.style.position = 'absolute';
-      this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px'; // Move element to the same position vertically
-
-      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-      this.fakeElem.style.top = "".concat(yPosition, "px");
-      this.fakeElem.setAttribute('readonly', '');
-      this.fakeElem.value = this.text;
-      return this.fakeElem;
-    }
-    /**
-     * Get's the value of fakeElem,
-     * and makes a selection on it.
-     */
-
-  }, {
-    key: "selectFake",
-    value: function selectFake() {
-      var _this = this;
-
-      var fakeElem = this.createFakeElement();
-
-      this.fakeHandlerCallback = function () {
-        return _this.removeFake();
-      };
-
-      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
-      this.container.appendChild(fakeElem);
-      this.selectedText = select_default()(fakeElem);
-      this.copyText();
-      this.removeFake();
-    }
-    /**
-     * Only removes the fake element after another click event, that way
-     * a user can hit `Ctrl+C` to copy because selection still exists.
-     */
-
-  }, {
-    key: "removeFake",
-    value: function removeFake() {
-      if (this.fakeHandler) {
-        this.container.removeEventListener('click', this.fakeHandlerCallback);
-        this.fakeHandler = null;
-        this.fakeHandlerCallback = null;
-      }
-
-      if (this.fakeElem) {
-        this.container.removeChild(this.fakeElem);
-        this.fakeElem = null;
-      }
-    }
-    /**
-     * Selects the content from element passed on `target` property.
-     */
-
-  }, {
-    key: "selectTarget",
-    value: function selectTarget() {
-      this.selectedText = select_default()(this.target);
-      this.copyText();
-    }
-    /**
-     * Executes the copy operation based on the current selection.
-     */
-
-  }, {
-    key: "copyText",
-    value: function copyText() {
-      var succeeded;
-
-      try {
-        succeeded = document.execCommand(this.action);
-      } catch (err) {
-        succeeded = false;
-      }
-
-      this.handleResult(succeeded);
-    }
-    /**
-     * Fires an event based on the copy operation result.
-     * @param {Boolean} succeeded
-     */
-
-  }, {
-    key: "handleResult",
-    value: function handleResult(succeeded) {
-      this.emitter.emit(succeeded ? 'success' : 'error', {
-        action: this.action,
-        text: this.selectedText,
-        trigger: this.trigger,
-        clearSelection: this.clearSelection.bind(this)
-      });
-    }
-    /**
-     * Moves focus away from `target` and back to the trigger, removes current selection.
-     */
-
-  }, {
-    key: "clearSelection",
-    value: function clearSelection() {
-      if (this.trigger) {
-        this.trigger.focus();
-      }
-
-      document.activeElement.blur();
-      window.getSelection().removeAllRanges();
-    }
-    /**
-     * Sets the `action` to be performed which can be either 'copy' or 'cut'.
-     * @param {String} action
-     */
-
-  }, {
-    key: "destroy",
-
-    /**
-     * Destroy lifecycle.
-     */
-    value: function destroy() {
-      this.removeFake();
-    }
-  }, {
-    key: "action",
-    set: function set() {
-      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'copy';
-      this._action = action;
-
-      if (this._action !== 'copy' && this._action !== 'cut') {
-        throw new Error('Invalid "action" value, use either "copy" or "cut"');
-      }
-    }
-    /**
-     * Gets the `action` property.
-     * @return {String}
-     */
-    ,
-    get: function get() {
-      return this._action;
-    }
-    /**
-     * Sets the `target` property using an element
-     * that will be have its content copied.
-     * @param {Element} target
-     */
-
-  }, {
-    key: "target",
-    set: function set(target) {
-      if (target !== undefined) {
-        if (target && _typeof(target) === 'object' && target.nodeType === 1) {
-          if (this.action === 'copy' && target.hasAttribute('disabled')) {
-            throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
-          }
-
-          if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
-            throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
-          }
-
-          this._target = target;
-        } else {
-          throw new Error('Invalid "target" value, use a valid Element');
-        }
-      }
-    }
-    /**
-     * Gets the `target` property.
-     * @return {String|HTMLElement}
-     */
-    ,
-    get: function get() {
-      return this._target;
-    }
-  }]);
-
-  return ClipboardAction;
-}();
-
-/* harmony default export */ var clipboard_action = (ClipboardAction);
-;// CONCATENATED MODULE: ./src/clipboard.js
-function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
-
-function clipboard_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function clipboard_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function clipboard_createClass(Constructor, protoProps, staticProps) { if (protoProps) clipboard_defineProperties(Constructor.prototype, protoProps); if (staticProps) clipboard_defineProperties(Constructor, staticProps); return Constructor; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
-
-function _possibleConstructorReturn(self, call) { if (call && (clipboard_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-
-
-
-/**
- * Helper function to retrieve attribute value.
- * @param {String} suffix
- * @param {Element} element
- */
-
-function getAttributeValue(suffix, element) {
-  var attribute = "data-clipboard-".concat(suffix);
-
-  if (!element.hasAttribute(attribute)) {
-    return;
-  }
-
-  return element.getAttribute(attribute);
-}
-/**
- * Base class which takes one or more elements, adds event listeners to them,
- * and instantiates a new `ClipboardAction` on each click.
- */
-
-
-var Clipboard = /*#__PURE__*/function (_Emitter) {
-  _inherits(Clipboard, _Emitter);
-
-  var _super = _createSuper(Clipboard);
-
-  /**
-   * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
-   * @param {Object} options
-   */
-  function Clipboard(trigger, options) {
-    var _this;
-
-    clipboard_classCallCheck(this, Clipboard);
-
-    _this = _super.call(this);
-
-    _this.resolveOptions(options);
-
-    _this.listenClick(trigger);
-
-    return _this;
-  }
-  /**
-   * Defines if attributes would be resolved using internal setter functions
-   * or custom functions that were passed in the constructor.
-   * @param {Object} options
-   */
-
-
-  clipboard_createClass(Clipboard, [{
-    key: "resolveOptions",
-    value: function resolveOptions() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
-      this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
-      this.text = typeof options.text === 'function' ? options.text : this.defaultText;
-      this.container = clipboard_typeof(options.container) === 'object' ? options.container : document.body;
-    }
-    /**
-     * Adds a click event listener to the passed trigger.
-     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
-     */
-
-  }, {
-    key: "listenClick",
-    value: function listenClick(trigger) {
-      var _this2 = this;
-
-      this.listener = listen_default()(trigger, 'click', function (e) {
-        return _this2.onClick(e);
-      });
-    }
-    /**
-     * Defines a new `ClipboardAction` on each click event.
-     * @param {Event} e
-     */
-
-  }, {
-    key: "onClick",
-    value: function onClick(e) {
-      var trigger = e.delegateTarget || e.currentTarget;
-
-      if (this.clipboardAction) {
-        this.clipboardAction = null;
-      }
-
-      this.clipboardAction = new clipboard_action({
-        action: this.action(trigger),
-        target: this.target(trigger),
-        text: this.text(trigger),
-        container: this.container,
-        trigger: trigger,
-        emitter: this
-      });
-    }
-    /**
-     * Default `action` lookup function.
-     * @param {Element} trigger
-     */
-
-  }, {
-    key: "defaultAction",
-    value: function defaultAction(trigger) {
-      return getAttributeValue('action', trigger);
-    }
-    /**
-     * Default `target` lookup function.
-     * @param {Element} trigger
-     */
-
-  }, {
-    key: "defaultTarget",
-    value: function defaultTarget(trigger) {
-      var selector = getAttributeValue('target', trigger);
-
-      if (selector) {
-        return document.querySelector(selector);
-      }
-    }
-    /**
-     * Returns the support of the given action, or all actions if no action is
-     * given.
-     * @param {String} [action]
-     */
-
-  }, {
-    key: "defaultText",
-
-    /**
-     * Default `text` lookup function.
-     * @param {Element} trigger
-     */
-    value: function defaultText(trigger) {
-      return getAttributeValue('text', trigger);
-    }
-    /**
-     * Destroy lifecycle.
-     */
-
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this.listener.destroy();
-
-      if (this.clipboardAction) {
-        this.clipboardAction.destroy();
-        this.clipboardAction = null;
-      }
-    }
-  }], [{
-    key: "isSupported",
-    value: function isSupported() {
-      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
-      var actions = typeof action === 'string' ? [action] : action;
-      var support = !!document.queryCommandSupported;
-      actions.forEach(function (action) {
-        support = support && !!document.queryCommandSupported(action);
-      });
-      return support;
-    }
-  }]);
-
-  return Clipboard;
-}((tiny_emitter_default()));
-
-/* harmony default export */ var clipboard = (Clipboard);
-
-/***/ }),
-
-/***/ 828:
-/***/ (function(module) {
-
-var DOCUMENT_NODE_TYPE = 9;
-
-/**
- * A polyfill for Element.matches()
- */
-if (typeof Element !== 'undefined' && !Element.prototype.matches) {
-    var proto = Element.prototype;
-
-    proto.matches = proto.matchesSelector ||
-                    proto.mozMatchesSelector ||
-                    proto.msMatchesSelector ||
-                    proto.oMatchesSelector ||
-                    proto.webkitMatchesSelector;
-}
-
-/**
- * Finds the closest parent that matches a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @return {Function}
- */
-function closest (element, selector) {
-    while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
-        if (typeof element.matches === 'function' &&
-            element.matches(selector)) {
-          return element;
-        }
-        element = element.parentNode;
-    }
-}
-
-module.exports = closest;
-
-
-/***/ }),
-
-/***/ 438:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-var closest = __webpack_require__(828);
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function _delegate(element, selector, type, callback, useCapture) {
-    var listenerFn = listener.apply(this, arguments);
-
-    element.addEventListener(type, listenerFn, useCapture);
-
-    return {
-        destroy: function() {
-            element.removeEventListener(type, listenerFn, useCapture);
-        }
-    }
-}
-
-/**
- * Delegates event to a selector.
- *
- * @param {Element|String|Array} [elements]
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @param {Boolean} useCapture
- * @return {Object}
- */
-function delegate(elements, selector, type, callback, useCapture) {
-    // Handle the regular Element usage
-    if (typeof elements.addEventListener === 'function') {
-        return _delegate.apply(null, arguments);
-    }
-
-    // Handle Element-less usage, it defaults to global delegation
-    if (typeof type === 'function') {
-        // Use `document` as the first parameter, then apply arguments
-        // This is a short way to .unshift `arguments` without running into deoptimizations
-        return _delegate.bind(null, document).apply(null, arguments);
-    }
-
-    // Handle Selector-based usage
-    if (typeof elements === 'string') {
-        elements = document.querySelectorAll(elements);
-    }
-
-    // Handle Array-like based usage
-    return Array.prototype.map.call(elements, function (element) {
-        return _delegate(element, selector, type, callback, useCapture);
-    });
-}
-
-/**
- * Finds closest match and invokes callback.
- *
- * @param {Element} element
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @return {Function}
- */
-function listener(element, selector, type, callback) {
-    return function(e) {
-        e.delegateTarget = closest(e.target, selector);
-
-        if (e.delegateTarget) {
-            callback.call(element, e);
-        }
-    }
-}
-
-module.exports = delegate;
-
-
-/***/ }),
-
-/***/ 879:
-/***/ (function(__unused_webpack_module, exports) {
-
-/**
- * Check if argument is a HTML element.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.node = function(value) {
-    return value !== undefined
-        && value instanceof HTMLElement
-        && value.nodeType === 1;
-};
-
-/**
- * Check if argument is a list of HTML elements.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.nodeList = function(value) {
-    var type = Object.prototype.toString.call(value);
-
-    return value !== undefined
-        && (type === '[object NodeList]' || type === '[object HTMLCollection]')
-        && ('length' in value)
-        && (value.length === 0 || exports.node(value[0]));
-};
-
-/**
- * Check if argument is a string.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.string = function(value) {
-    return typeof value === 'string'
-        || value instanceof String;
-};
-
-/**
- * Check if argument is a function.
- *
- * @param {Object} value
- * @return {Boolean}
- */
-exports.fn = function(value) {
-    var type = Object.prototype.toString.call(value);
-
-    return type === '[object Function]';
-};
-
-
-/***/ }),
-
-/***/ 370:
-/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
-
-var is = __webpack_require__(879);
-var delegate = __webpack_require__(438);
-
-/**
- * Validates all params and calls the right
- * listener function based on its target type.
- *
- * @param {String|HTMLElement|HTMLCollection|NodeList} target
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listen(target, type, callback) {
-    if (!target && !type && !callback) {
-        throw new Error('Missing required arguments');
-    }
-
-    if (!is.string(type)) {
-        throw new TypeError('Second argument must be a String');
-    }
-
-    if (!is.fn(callback)) {
-        throw new TypeError('Third argument must be a Function');
-    }
-
-    if (is.node(target)) {
-        return listenNode(target, type, callback);
-    }
-    else if (is.nodeList(target)) {
-        return listenNodeList(target, type, callback);
-    }
-    else if (is.string(target)) {
-        return listenSelector(target, type, callback);
-    }
-    else {
-        throw new TypeError('First argument must be a String, HTMLElement, HTMLCollection, or NodeList');
-    }
-}
-
-/**
- * Adds an event listener to a HTML element
- * and returns a remove listener function.
- *
- * @param {HTMLElement} node
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenNode(node, type, callback) {
-    node.addEventListener(type, callback);
-
-    return {
-        destroy: function() {
-            node.removeEventListener(type, callback);
-        }
-    }
-}
-
-/**
- * Add an event listener to a list of HTML elements
- * and returns a remove listener function.
- *
- * @param {NodeList|HTMLCollection} nodeList
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenNodeList(nodeList, type, callback) {
-    Array.prototype.forEach.call(nodeList, function(node) {
-        node.addEventListener(type, callback);
-    });
-
-    return {
-        destroy: function() {
-            Array.prototype.forEach.call(nodeList, function(node) {
-                node.removeEventListener(type, callback);
-            });
-        }
-    }
-}
-
-/**
- * Add an event listener to a selector
- * and returns a remove listener function.
- *
- * @param {String} selector
- * @param {String} type
- * @param {Function} callback
- * @return {Object}
- */
-function listenSelector(selector, type, callback) {
-    return delegate(document.body, selector, type, callback);
-}
-
-module.exports = listen;
-
-
-/***/ }),
-
-/***/ 817:
-/***/ (function(module) {
-
-function select(element) {
-    var selectedText;
-
-    if (element.nodeName === 'SELECT') {
-        element.focus();
-
-        selectedText = element.value;
-    }
-    else if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
-        var isReadOnly = element.hasAttribute('readonly');
-
-        if (!isReadOnly) {
-            element.setAttribute('readonly', '');
-        }
-
-        element.select();
-        element.setSelectionRange(0, element.value.length);
-
-        if (!isReadOnly) {
-            element.removeAttribute('readonly');
-        }
-
-        selectedText = element.value;
-    }
-    else {
-        if (element.hasAttribute('contenteditable')) {
-            element.focus();
-        }
-
-        var selection = window.getSelection();
-        var range = document.createRange();
-
-        range.selectNodeContents(element);
-        selection.removeAllRanges();
-        selection.addRange(range);
-
-        selectedText = selection.toString();
-    }
-
-    return selectedText;
-}
-
-module.exports = select;
-
-
-/***/ }),
-
-/***/ 279:
-/***/ (function(module) {
-
-function E () {
-  // Keep this empty so it's easier to inherit from
-  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
-}
-
-E.prototype = {
-  on: function (name, callback, ctx) {
-    var e = this.e || (this.e = {});
-
-    (e[name] || (e[name] = [])).push({
-      fn: callback,
-      ctx: ctx
-    });
-
-    return this;
-  },
-
-  once: function (name, callback, ctx) {
-    var self = this;
-    function listener () {
-      self.off(name, listener);
-      callback.apply(ctx, arguments);
-    };
-
-    listener._ = callback
-    return this.on(name, listener, ctx);
-  },
-
-  emit: function (name) {
-    var data = [].slice.call(arguments, 1);
-    var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
-    var i = 0;
-    var len = evtArr.length;
-
-    for (i; i < len; i++) {
-      evtArr[i].fn.apply(evtArr[i].ctx, data);
-    }
-
-    return this;
-  },
-
-  off: function (name, callback) {
-    var e = this.e || (this.e = {});
-    var evts = e[name];
-    var liveEvents = [];
-
-    if (evts && callback) {
-      for (var i = 0, len = evts.length; i < len; i++) {
-        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
-          liveEvents.push(evts[i]);
-      }
-    }
-
-    // Remove event from queue to prevent memory leak
-    // Suggested by https://github.com/lazd
-    // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
-
-    (liveEvents.length)
-      ? e[name] = liveEvents
-      : delete e[name];
-
-    return this;
-  }
-};
-
-module.exports = E;
-module.exports.TinyEmitter = E;
-
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	!function() {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = function(module) {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				function() { return module['default']; } :
-/******/ 				function() { return module; };
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(134);
-/******/ })()
-.default;
-});
-},{}],"../node_modules/react-clipboard.js/dist/react-clipboard.js":[function(require,module,exports) {
-var define;
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
-	else if(typeof define === 'function' && define.amd)
-		define(["clipboard", "prop-types", "react", "react-dom"], factory);
-	else if(typeof exports === 'object')
-		exports["ReactClipboard"] = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
-	else
-		root["ReactClipboard"] = factory(root["ClipboardJS"], root["PropTypes"], root["React"], root["ReactDOM"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_clipboard__, __WEBPACK_EXTERNAL_MODULE_prop_types__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
-/******/ })
-/************************************************************************/
-/******/ ({
-
-/***/ "./index.js":
-/*!******************!*\
-  !*** ./index.js ***!
-  \******************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-var ClipboardButton =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(ClipboardButton, _React$Component);
-
-  function ClipboardButton() {
-    _classCallCheck(this, ClipboardButton);
-
-    return _possibleConstructorReturn(this, _getPrototypeOf(ClipboardButton).apply(this, arguments));
-  }
-
-  _createClass(ClipboardButton, [{
-    key: "propsWith",
-    value: function propsWith(regexp) {
-      var remove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var object = {};
-      Object.keys(this.props).forEach(function (key) {
-        if (key.search(regexp) !== -1) {
-          var objectKey = remove ? key.replace(regexp, '') : key;
-          object[objectKey] = this.props[key];
-        }
-      }, this);
-      return object;
-    }
-  }, {
-    key: "componentWillUnmount",
-    value: function componentWillUnmount() {
-      this.clipboard && this.clipboard.destroy();
-    }
-  }, {
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      // Support old API by trying to assign this.props.options first;
-      var options = this.props.options || this.propsWith(/^option-/, true);
-      var element = react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.findDOMNode(this.element);
-
-      if (!element) {
-        return;
-      }
-
-      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
-
-      this.clipboard = new Clipboard(element, options);
-      var callbacks = this.propsWith(/^on/, true);
-      Object.keys(callbacks).forEach(function (callback) {
-        this.clipboard.on(callback.toLowerCase(), this.props['on' + callback]);
-      }, this);
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this = this;
-
-      var attributes = _objectSpread({
-        title: this.props.title || '',
-        type: this.getType(),
-        className: this.props.className || '',
-        style: this.props.style || {},
-        ref: function ref(element) {
-          return _this.element = element;
-        },
-        onClick: this.props.onClick
-      }, this.propsWith(/^data-/), this.propsWith(/^button-/, true));
-
-      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
-
-      if (!this.props.isVisibleWhenUnsupported && !Clipboard.isSupported()) {
-        return null;
-      }
-
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(this.getComponent(), attributes, this.props.children);
-    }
-  }, {
-    key: "getType",
-    value: function getType() {
-      if (this.getComponent() === 'button' || this.getComponent() === 'input') {
-        return this.props.type || 'button';
-      } else {
-        return undefined;
-      }
-    }
-  }, {
-    key: "getComponent",
-    value: function getComponent() {
-      return this.props.component || 'button';
-    }
-  }]);
-
-  return ClipboardButton;
-}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
-
-_defineProperty(ClipboardButton, "propTypes", {
-  options: function options(props, propName, componentName) {
-    var options = props[propName];
-
-    if (options && _typeof(options) !== 'object' || Array.isArray(options)) {
-      return new Error("Invalid props '".concat(propName, "' supplied to '").concat(componentName, "'. ") + "'".concat(propName, "' is not an object."));
-    }
-
-    if (props['option-text'] !== undefined) {
-      var optionText = props['option-text'];
-
-      if (typeof optionText !== 'function') {
-        return new Error("Invalid props 'option-text' supplied to '".concat(componentName, "'. ") + "'option-text' is not a function.");
-      }
-    }
-  },
-  title: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  className: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
-  style: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
-  component: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any,
-  children: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any
-});
-
-_defineProperty(ClipboardButton, "defaultProps", {
-  isVisibleWhenUnsupported: true,
-  onClick: function onClick() {}
-  /* Returns a object with all props that fulfill a certain naming pattern
-   *
-   * @param {RegExp} regexp - Regular expression representing which pattern
-   *                          you'll be searching for.
-   * @param {Boolean} remove - Determines if the regular expression should be
-   *                           removed when transmitting the key from the props
-   *                           to the new object.
-   *
-   * e.g:
-   *
-   * // Considering:
-   * // this.props = {option-foo: 1, onBar: 2, data-foobar: 3 data-baz: 4};
-   *
-   * // *RegExps not using // so that this comment doesn't break up
-   * this.propsWith(option-*, true); // returns {foo: 1}
-   * this.propsWith(on*, true); // returns {Bar: 2}
-   * this.propsWith(data-*); // returns {data-foobar: 1, data-baz: 4}
-   */
-
-});
-
-/* harmony default export */ __webpack_exports__["default"] = (ClipboardButton);
-
-/***/ }),
-
-/***/ "clipboard":
-/*!********************************************************************************************************!*\
-  !*** external {"root":"ClipboardJS","amd":"clipboard","commonjs":"clipboard","commonjs2":"clipboard"} ***!
-  \********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_clipboard__;
-
-/***/ }),
-
-/***/ "prop-types":
-/*!*********************************************************************************************************!*\
-  !*** external {"root":"PropTypes","amd":"prop-types","commonjs":"prop-types","commonjs2":"prop-types"} ***!
-  \*********************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_prop_types__;
-
-/***/ }),
-
-/***/ "react":
-/*!**************************************************************************************!*\
-  !*** external {"root":"React","amd":"react","commonjs":"react","commonjs2":"react"} ***!
-  \**************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_react__;
-
-/***/ }),
-
-/***/ "react-dom":
-/*!*****************************************************************************************************!*\
-  !*** external {"root":"ReactDOM","amd":"react-dom","commonjs":"react-dom","commonjs2":"react-dom"} ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = __WEBPACK_EXTERNAL_MODULE_react_dom__;
-
-/***/ })
-
-/******/ });
-});
-
-},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/react-from-dom/esm/helpers.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.randomString = randomString;
-exports.possibleStandardNames = exports.noTextChildNodes = exports.styleToObject = void 0;
-
-var __read = void 0 && (void 0).__read || function (o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m) return o;
-  var i = m.call(o),
-      r,
-      ar = [],
-      e;
-
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-  } catch (error) {
-    e = {
-      error: error
-    };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"])) m.call(i);
-    } finally {
-      if (e) throw e.error;
-    }
-  }
-
-  return ar;
-};
-
-var styleToObject = function (input) {
-  var attributes = input.split(/ ?; ?/);
-  return attributes.reduce(function (acc, d) {
-    var _a = __read(d.split(/ ?: ?/), 2),
-        key = _a[0],
-        value = _a[1];
-
-    if (key && value) {
-      acc[key.replace(/-(\w)/g, function (_$0, $1) {
-        return $1.toUpperCase();
-      })] = Number.isNaN(Number(value)) ? value : Number(value);
-    }
-
-    return acc;
-  }, {});
-};
-/* istanbul ignore next */
-
-
-exports.styleToObject = styleToObject;
-
-function randomString(length) {
-  if (length === void 0) {
-    length = 6;
-  }
-
-  var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  var result = '';
-
-  for (var i = length; i > 0; --i) {
-    result += characters[Math.round(Math.random() * (characters.length - 1))];
-  }
-
-  return result;
-}
-
-var noTextChildNodes = ['br', 'col', 'colgroup', 'dl', 'hr', 'iframe', 'img', 'input', 'link', 'menuitem', 'meta', 'ol', 'param', 'select', 'table', 'tbody', 'tfoot', 'thead', 'tr', 'ul', 'wbr'];
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-// Taken from https://raw.githubusercontent.com/facebook/react/baff5cc2f69d30589a5dc65b089e47765437294b/packages/react-dom/src/shared/possibleStandardNames.js
-// tslint:disable:object-literal-sort-keys
-
-exports.noTextChildNodes = noTextChildNodes;
-var possibleStandardNames = {
-  // HTML
-  'accept-charset': 'acceptCharset',
-  acceptcharset: 'acceptCharset',
-  accesskey: 'accessKey',
-  allowfullscreen: 'allowFullScreen',
-  autocapitalize: 'autoCapitalize',
-  autocomplete: 'autoComplete',
-  autocorrect: 'autoCorrect',
-  autofocus: 'autoFocus',
-  autoplay: 'autoPlay',
-  autosave: 'autoSave',
-  cellpadding: 'cellPadding',
-  cellspacing: 'cellSpacing',
-  charset: 'charSet',
-  class: 'className',
-  classid: 'classID',
-  classname: 'className',
-  colspan: 'colSpan',
-  contenteditable: 'contentEditable',
-  contextmenu: 'contextMenu',
-  controlslist: 'controlsList',
-  crossorigin: 'crossOrigin',
-  dangerouslysetinnerhtml: 'dangerouslySetInnerHTML',
-  datetime: 'dateTime',
-  defaultchecked: 'defaultChecked',
-  defaultvalue: 'defaultValue',
-  enctype: 'encType',
-  for: 'htmlFor',
-  formmethod: 'formMethod',
-  formaction: 'formAction',
-  formenctype: 'formEncType',
-  formnovalidate: 'formNoValidate',
-  formtarget: 'formTarget',
-  frameborder: 'frameBorder',
-  hreflang: 'hrefLang',
-  htmlfor: 'htmlFor',
-  httpequiv: 'httpEquiv',
-  'http-equiv': 'httpEquiv',
-  icon: 'icon',
-  innerhtml: 'innerHTML',
-  inputmode: 'inputMode',
-  itemid: 'itemID',
-  itemprop: 'itemProp',
-  itemref: 'itemRef',
-  itemscope: 'itemScope',
-  itemtype: 'itemType',
-  keyparams: 'keyParams',
-  keytype: 'keyType',
-  marginwidth: 'marginWidth',
-  marginheight: 'marginHeight',
-  maxlength: 'maxLength',
-  mediagroup: 'mediaGroup',
-  minlength: 'minLength',
-  nomodule: 'noModule',
-  novalidate: 'noValidate',
-  playsinline: 'playsInline',
-  radiogroup: 'radioGroup',
-  readonly: 'readOnly',
-  referrerpolicy: 'referrerPolicy',
-  rowspan: 'rowSpan',
-  spellcheck: 'spellCheck',
-  srcdoc: 'srcDoc',
-  srclang: 'srcLang',
-  srcset: 'srcSet',
-  tabindex: 'tabIndex',
-  typemustmatch: 'typeMustMatch',
-  usemap: 'useMap',
-  // SVG
-  accentheight: 'accentHeight',
-  'accent-height': 'accentHeight',
-  alignmentbaseline: 'alignmentBaseline',
-  'alignment-baseline': 'alignmentBaseline',
-  allowreorder: 'allowReorder',
-  arabicform: 'arabicForm',
-  'arabic-form': 'arabicForm',
-  attributename: 'attributeName',
-  attributetype: 'attributeType',
-  autoreverse: 'autoReverse',
-  basefrequency: 'baseFrequency',
-  baselineshift: 'baselineShift',
-  'baseline-shift': 'baselineShift',
-  baseprofile: 'baseProfile',
-  calcmode: 'calcMode',
-  capheight: 'capHeight',
-  'cap-height': 'capHeight',
-  clippath: 'clipPath',
-  'clip-path': 'clipPath',
-  clippathunits: 'clipPathUnits',
-  cliprule: 'clipRule',
-  'clip-rule': 'clipRule',
-  colorinterpolation: 'colorInterpolation',
-  'color-interpolation': 'colorInterpolation',
-  colorinterpolationfilters: 'colorInterpolationFilters',
-  'color-interpolation-filters': 'colorInterpolationFilters',
-  colorprofile: 'colorProfile',
-  'color-profile': 'colorProfile',
-  colorrendering: 'colorRendering',
-  'color-rendering': 'colorRendering',
-  contentscripttype: 'contentScriptType',
-  contentstyletype: 'contentStyleType',
-  diffuseconstant: 'diffuseConstant',
-  dominantbaseline: 'dominantBaseline',
-  'dominant-baseline': 'dominantBaseline',
-  edgemode: 'edgeMode',
-  enablebackground: 'enableBackground',
-  'enable-background': 'enableBackground',
-  externalresourcesrequired: 'externalResourcesRequired',
-  fillopacity: 'fillOpacity',
-  'fill-opacity': 'fillOpacity',
-  fillrule: 'fillRule',
-  'fill-rule': 'fillRule',
-  filterres: 'filterRes',
-  filterunits: 'filterUnits',
-  floodopacity: 'floodOpacity',
-  'flood-opacity': 'floodOpacity',
-  floodcolor: 'floodColor',
-  'flood-color': 'floodColor',
-  fontfamily: 'fontFamily',
-  'font-family': 'fontFamily',
-  fontsize: 'fontSize',
-  'font-size': 'fontSize',
-  fontsizeadjust: 'fontSizeAdjust',
-  'font-size-adjust': 'fontSizeAdjust',
-  fontstretch: 'fontStretch',
-  'font-stretch': 'fontStretch',
-  fontstyle: 'fontStyle',
-  'font-style': 'fontStyle',
-  fontvariant: 'fontVariant',
-  'font-variant': 'fontVariant',
-  fontweight: 'fontWeight',
-  'font-weight': 'fontWeight',
-  glyphname: 'glyphName',
-  'glyph-name': 'glyphName',
-  glyphorientationhorizontal: 'glyphOrientationHorizontal',
-  'glyph-orientation-horizontal': 'glyphOrientationHorizontal',
-  glyphorientationvertical: 'glyphOrientationVertical',
-  'glyph-orientation-vertical': 'glyphOrientationVertical',
-  glyphref: 'glyphRef',
-  gradienttransform: 'gradientTransform',
-  gradientunits: 'gradientUnits',
-  horizadvx: 'horizAdvX',
-  'horiz-adv-x': 'horizAdvX',
-  horizoriginx: 'horizOriginX',
-  'horiz-origin-x': 'horizOriginX',
-  imagerendering: 'imageRendering',
-  'image-rendering': 'imageRendering',
-  kernelmatrix: 'kernelMatrix',
-  kernelunitlength: 'kernelUnitLength',
-  keypoints: 'keyPoints',
-  keysplines: 'keySplines',
-  keytimes: 'keyTimes',
-  lengthadjust: 'lengthAdjust',
-  letterspacing: 'letterSpacing',
-  'letter-spacing': 'letterSpacing',
-  lightingcolor: 'lightingColor',
-  'lighting-color': 'lightingColor',
-  limitingconeangle: 'limitingConeAngle',
-  markerend: 'markerEnd',
-  'marker-end': 'markerEnd',
-  markerheight: 'markerHeight',
-  markermid: 'markerMid',
-  'marker-mid': 'markerMid',
-  markerstart: 'markerStart',
-  'marker-start': 'markerStart',
-  markerunits: 'markerUnits',
-  markerwidth: 'markerWidth',
-  maskcontentunits: 'maskContentUnits',
-  maskunits: 'maskUnits',
-  numoctaves: 'numOctaves',
-  overlineposition: 'overlinePosition',
-  'overline-position': 'overlinePosition',
-  overlinethickness: 'overlineThickness',
-  'overline-thickness': 'overlineThickness',
-  paintorder: 'paintOrder',
-  'paint-order': 'paintOrder',
-  'panose-1': 'panose1',
-  pathlength: 'pathLength',
-  patterncontentunits: 'patternContentUnits',
-  patterntransform: 'patternTransform',
-  patternunits: 'patternUnits',
-  pointerevents: 'pointerEvents',
-  'pointer-events': 'pointerEvents',
-  pointsatx: 'pointsAtX',
-  pointsaty: 'pointsAtY',
-  pointsatz: 'pointsAtZ',
-  preservealpha: 'preserveAlpha',
-  preserveaspectratio: 'preserveAspectRatio',
-  primitiveunits: 'primitiveUnits',
-  refx: 'refX',
-  refy: 'refY',
-  renderingintent: 'renderingIntent',
-  'rendering-intent': 'renderingIntent',
-  repeatcount: 'repeatCount',
-  repeatdur: 'repeatDur',
-  requiredextensions: 'requiredExtensions',
-  requiredfeatures: 'requiredFeatures',
-  shaperendering: 'shapeRendering',
-  'shape-rendering': 'shapeRendering',
-  specularconstant: 'specularConstant',
-  specularexponent: 'specularExponent',
-  spreadmethod: 'spreadMethod',
-  startoffset: 'startOffset',
-  stddeviation: 'stdDeviation',
-  stitchtiles: 'stitchTiles',
-  stopcolor: 'stopColor',
-  'stop-color': 'stopColor',
-  stopopacity: 'stopOpacity',
-  'stop-opacity': 'stopOpacity',
-  strikethroughposition: 'strikethroughPosition',
-  'strikethrough-position': 'strikethroughPosition',
-  strikethroughthickness: 'strikethroughThickness',
-  'strikethrough-thickness': 'strikethroughThickness',
-  strokedasharray: 'strokeDasharray',
-  'stroke-dasharray': 'strokeDasharray',
-  strokedashoffset: 'strokeDashoffset',
-  'stroke-dashoffset': 'strokeDashoffset',
-  strokelinecap: 'strokeLinecap',
-  'stroke-linecap': 'strokeLinecap',
-  strokelinejoin: 'strokeLinejoin',
-  'stroke-linejoin': 'strokeLinejoin',
-  strokemiterlimit: 'strokeMiterlimit',
-  'stroke-miterlimit': 'strokeMiterlimit',
-  strokewidth: 'strokeWidth',
-  'stroke-width': 'strokeWidth',
-  strokeopacity: 'strokeOpacity',
-  'stroke-opacity': 'strokeOpacity',
-  suppresscontenteditablewarning: 'suppressContentEditableWarning',
-  suppresshydrationwarning: 'suppressHydrationWarning',
-  surfacescale: 'surfaceScale',
-  systemlanguage: 'systemLanguage',
-  tablevalues: 'tableValues',
-  targetx: 'targetX',
-  targety: 'targetY',
-  textanchor: 'textAnchor',
-  'text-anchor': 'textAnchor',
-  textdecoration: 'textDecoration',
-  'text-decoration': 'textDecoration',
-  textlength: 'textLength',
-  textrendering: 'textRendering',
-  'text-rendering': 'textRendering',
-  underlineposition: 'underlinePosition',
-  'underline-position': 'underlinePosition',
-  underlinethickness: 'underlineThickness',
-  'underline-thickness': 'underlineThickness',
-  unicodebidi: 'unicodeBidi',
-  'unicode-bidi': 'unicodeBidi',
-  unicoderange: 'unicodeRange',
-  'unicode-range': 'unicodeRange',
-  unitsperem: 'unitsPerEm',
-  'units-per-em': 'unitsPerEm',
-  unselectable: 'unselectable',
-  valphabetic: 'vAlphabetic',
-  'v-alphabetic': 'vAlphabetic',
-  vectoreffect: 'vectorEffect',
-  'vector-effect': 'vectorEffect',
-  vertadvy: 'vertAdvY',
-  'vert-adv-y': 'vertAdvY',
-  vertoriginx: 'vertOriginX',
-  'vert-origin-x': 'vertOriginX',
-  vertoriginy: 'vertOriginY',
-  'vert-origin-y': 'vertOriginY',
-  vhanging: 'vHanging',
-  'v-hanging': 'vHanging',
-  videographic: 'vIdeographic',
-  'v-ideographic': 'vIdeographic',
-  viewbox: 'viewBox',
-  viewtarget: 'viewTarget',
-  vmathematical: 'vMathematical',
-  'v-mathematical': 'vMathematical',
-  wordspacing: 'wordSpacing',
-  'word-spacing': 'wordSpacing',
-  writingmode: 'writingMode',
-  'writing-mode': 'writingMode',
-  xchannelselector: 'xChannelSelector',
-  xheight: 'xHeight',
-  'x-height': 'xHeight',
-  xlinkactuate: 'xlinkActuate',
-  'xlink:actuate': 'xlinkActuate',
-  xlinkarcrole: 'xlinkArcrole',
-  'xlink:arcrole': 'xlinkArcrole',
-  xlinkhref: 'xlinkHref',
-  'xlink:href': 'xlinkHref',
-  xlinkrole: 'xlinkRole',
-  'xlink:role': 'xlinkRole',
-  xlinkshow: 'xlinkShow',
-  'xlink:show': 'xlinkShow',
-  xlinktitle: 'xlinkTitle',
-  'xlink:title': 'xlinkTitle',
-  xlinktype: 'xlinkType',
-  'xlink:type': 'xlinkType',
-  xmlbase: 'xmlBase',
-  'xml:base': 'xmlBase',
-  xmllang: 'xmlLang',
-  'xml:lang': 'xmlLang',
-  'xml:space': 'xmlSpace',
-  xmlnsxlink: 'xmlnsXlink',
-  'xmlns:xlink': 'xmlnsXlink',
-  xmlspace: 'xmlSpace',
-  ychannelselector: 'yChannelSelector',
-  zoomandpan: 'zoomAndPan',
-  // event handlers
-  onblur: 'onBlur',
-  onchange: 'onChange',
-  onclick: 'onClick',
-  oncontextmenu: 'onContextMenu',
-  ondoubleclick: 'onDoubleClick',
-  ondrag: 'onDrag',
-  ondragend: 'onDragEnd',
-  ondragenter: 'onDragEnter',
-  ondragexit: 'onDragExit',
-  ondragleave: 'onDragLeave',
-  ondragover: 'onDragOver',
-  ondragstart: 'onDragStart',
-  ondrop: 'onDrop',
-  onerror: 'onError',
-  onfocus: 'onFocus',
-  oninput: 'onInput',
-  oninvalid: 'onInvalid',
-  onkeydown: 'onKeyDown',
-  onkeypress: 'onKeyPress',
-  onkeyup: 'onKeyUp',
-  onload: 'onLoad',
-  onmousedown: 'onMouseDown',
-  onmouseenter: 'onMouseEnter',
-  onmouseleave: 'onMouseLeave',
-  onmousemove: 'onMouseMove',
-  onmouseout: 'onMouseOut',
-  onmouseover: 'onMouseOver',
-  onmouseup: 'onMouseUp',
-  onscroll: 'onScroll',
-  onsubmit: 'onSubmit',
-  ontouchcancel: 'onTouchCancel',
-  ontouchend: 'onTouchEnd',
-  ontouchmove: 'onTouchMove',
-  ontouchstart: 'onTouchStart',
-  onwheel: 'onWheel'
-};
-exports.possibleStandardNames = possibleStandardNames;
-},{}],"../node_modules/react-from-dom/esm/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.convertFromNode = convertFromNode;
-exports.convertFromString = convertFromString;
-exports.default = convert;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _helpers = require("./helpers");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var __assign = void 0 && (void 0).__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
-var __read = void 0 && (void 0).__read || function (o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m) return o;
-  var i = m.call(o),
-      r,
-      ar = [],
-      e;
-
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-  } catch (error) {
-    e = {
-      error: error
-    };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"])) m.call(i);
-    } finally {
-      if (e) throw e.error;
-    }
-  }
-
-  return ar;
-};
-
-var __spreadArray = void 0 && (void 0).__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) to[j] = from[i];
-
-  return to;
-};
-/* eslint-disable @typescript-eslint/no-use-before-define */
-
-
-function parseAttributes(node, reactKey) {
-  var attributes = {
-    key: reactKey
-  };
-  /* istanbul ignore else */
-
-  if (node instanceof Element) {
-    var nodeClassNames = node.getAttribute('class');
-
-    if (nodeClassNames) {
-      attributes.className = nodeClassNames;
-    }
-
-    __spreadArray([], __read(node.attributes)).forEach(function (d) {
-      switch (d.name) {
-        // this is manually handled above, so break;
-        case 'class':
-          break;
-
-        case 'style':
-          attributes[d.name] = (0, _helpers.styleToObject)(d.value);
-          break;
-
-        case 'allowfullscreen':
-        case 'allowpaymentrequest':
-        case 'async':
-        case 'autofocus':
-        case 'autoplay':
-        case 'checked':
-        case 'controls':
-        case 'default':
-        case 'defer':
-        case 'disabled':
-        case 'formnovalidate':
-        case 'hidden':
-        case 'ismap':
-        case 'itemscope':
-        case 'loop':
-        case 'multiple':
-        case 'muted':
-        case 'nomodule':
-        case 'novalidate':
-        case 'open':
-        case 'readonly':
-        case 'required':
-        case 'reversed':
-        case 'selected':
-        case 'typemustmatch':
-          attributes[_helpers.possibleStandardNames[d.name] || d.name] = true;
-          break;
-
-        default:
-          attributes[_helpers.possibleStandardNames[d.name] || d.name] = d.value;
-      }
-    });
-  }
-
-  return attributes;
-}
-
-function parseChildren(childNodeList, level, options) {
-  var children = __spreadArray([], __read(childNodeList)).map(function (node, index) {
-    return convertFromNode(node, __assign(__assign({}, options), {
-      index: index,
-      level: level + 1
-    }));
-  }).filter(Boolean);
-
-  if (!children.length) {
-    return null;
-  }
-
-  return children;
-}
-
-function parseName(nodeName) {
-  if (/[a-z]+[A-Z]+[a-z]+/.test(nodeName)) {
-    return nodeName;
-  }
-
-  return nodeName.toLowerCase();
-}
-
-function convertFromNode(input, options) {
-  var _a;
-
-  if (options === void 0) {
-    options = {};
-  }
-
-  if (!input || !(input instanceof Node)) {
-    return null;
-  }
-
-  var _b = options.actions,
-      actions = _b === void 0 ? [] : _b,
-      _c = options.index,
-      index = _c === void 0 ? 0 : _c,
-      _d = options.level,
-      level = _d === void 0 ? 0 : _d,
-      randomKey = options.randomKey;
-  var node = input;
-  var key = level + "-" + index;
-  var result = [];
-
-  if (randomKey && level === 0) {
-    key = (0, _helpers.randomString)() + "-" + key;
-  }
-  /* istanbul ignore else */
-
-
-  if (Array.isArray(actions)) {
-    actions.forEach(function (action) {
-      if (action.condition(node, key, level)) {
-        if (typeof action.pre === 'function') {
-          node = action.pre(node, key, level);
-
-          if (!(node instanceof Node)) {
-            node = input;
-            /* istanbul ignore else */
-
-            if ("development" !== 'production') {
-              // eslint-disable-next-line no-console
-              console.warn('The `pre` method always must return a valid DomNode (instanceof Node) - your modification will be ignored (Hint: if you want to render a React-component, use the `post` method instead)');
-            }
-          }
-        }
-
-        if (typeof action.post === 'function') {
-          result.push(action.post(node, key, level));
-        }
-      }
-    });
-  }
-
-  if (result.length) {
-    return result;
-  }
-
-  switch (node.nodeType) {
-    case 1:
-      {
-        // regular dom-node
-        return React.createElement(parseName(node.nodeName), parseAttributes(node, key), parseChildren(node.childNodes, level, options));
-      }
-
-    case 3:
-      {
-        // textnode
-        var nodeText = ((_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.toString()) || '';
-        /* istanbul ignore else */
-
-        if (/^\s+$/.test(nodeText) && !/[\u202F\u00A0]/.test(nodeText)) {
-          return null;
-        }
-        /* istanbul ignore next */
-
-
-        if (!node.parentNode) {
-          return nodeText;
-        }
-
-        var parentNodeName = node.parentNode.nodeName.toLowerCase();
-
-        if (_helpers.noTextChildNodes.indexOf(parentNodeName) !== -1) {
-          /* istanbul ignore else */
-          if (/\S/.test(nodeText)) {
-            // eslint-disable-next-line no-console
-            console.warn("A textNode is not allowed inside '" + parentNodeName + "'. Your text \"" + nodeText + "\" will be ignored");
-          }
-
-          return null;
-        }
-
-        return nodeText;
-      }
-
-    case 8:
-      {
-        // html-comment
-        return null;
-      }
-
-    /* istanbul ignore next */
-
-    default:
-      {
-        return null;
-      }
-  }
-}
-
-function convertFromString(input, options) {
-  if (options === void 0) {
-    options = {};
-  }
-
-  if (!input || typeof input !== 'string') {
-    return null;
-  }
-
-  var _a = options.nodeOnly,
-      nodeOnly = _a === void 0 ? false : _a,
-      _b = options.selector,
-      selector = _b === void 0 ? 'body > *' : _b,
-      _c = options.type,
-      type = _c === void 0 ? 'text/html' : _c;
-
-  try {
-    var parser = new DOMParser();
-    var doc = parser.parseFromString(input, type);
-    var node = doc.querySelector(selector);
-
-    if (!(node instanceof Node)) {
-      throw new Error('Error parsing input');
-    }
-
-    if (nodeOnly) {
-      return node;
-    }
-
-    return convertFromNode(node, options);
-  } catch (error) {
-    /* istanbul ignore else */
-    if ("development" !== 'production') {
-      // eslint-disable-next-line no-console
-      console.error(error);
-    }
-  }
-
-  return null;
-}
-
-function convert(input, options) {
-  if (options === void 0) {
-    options = {};
-  }
-
-  if (typeof input === 'string') {
-    return convertFromString(input, options);
-  }
-
-  if (input instanceof Node) {
-    return convertFromNode(input, options);
-  }
-
-  return null;
-}
-},{"react":"../node_modules/react/index.js","./helpers":"../node_modules/react-from-dom/esm/helpers.js"}],"../node_modules/exenv/index.js":[function(require,module,exports) {
-var define;
-/*!
-  Copyright (c) 2015 Jed Watson.
-  Based on code that is Copyright 2013-2015, Facebook, Inc.
-  All rights reserved.
-*/
-/* global define */
-
-(function () {
-	'use strict';
-
-	var canUseDOM = !!(
-		typeof window !== 'undefined' &&
-		window.document &&
-		window.document.createElement
-	);
-
-	var ExecutionEnvironment = {
-
-		canUseDOM: canUseDOM,
-
-		canUseWorkers: typeof Worker !== 'undefined',
-
-		canUseEventListeners:
-			canUseDOM && !!(window.addEventListener || window.attachEvent),
-
-		canUseViewport: canUseDOM && !!window.screen
-
-	};
-
-	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
-		define(function () {
-			return ExecutionEnvironment;
-		});
-	} else if (typeof module !== 'undefined' && module.exports) {
-		module.exports = ExecutionEnvironment;
-	} else {
-		window.ExecutionEnvironment = ExecutionEnvironment;
-	}
-
-}());
-
-},{}],"../node_modules/react-inlinesvg/esm/helpers.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.canUseDOM = canUseDOM;
-exports.isSupportedEnvironment = isSupportedEnvironment;
-exports.supportsInlineSVG = supportsInlineSVG;
-exports.randomString = randomString;
-exports.removeProperties = removeProperties;
-exports.STATUS = void 0;
-
-var _exenv = require("exenv");
-
-var STATUS = {
-  FAILED: 'failed',
-  LOADED: 'loaded',
-  LOADING: 'loading',
-  PENDING: 'pending',
-  READY: 'ready',
-  UNSUPPORTED: 'unsupported'
-};
-exports.STATUS = STATUS;
-
-function canUseDOM() {
-  return _exenv.canUseDOM;
-}
-
-function isSupportedEnvironment() {
-  return supportsInlineSVG() && typeof window !== 'undefined' && window !== null;
-}
-
-function supportsInlineSVG() {
-  /* istanbul ignore next */
-  if (!document) {
-    return false;
-  }
-
-  var div = document.createElement('div');
-  div.innerHTML = '<svg />';
-  return !!div.firstChild && div.firstChild.namespaceURI === 'http://www.w3.org/2000/svg';
-}
-
-function randomString(length) {
-  var letters = 'abcdefghijklmnopqrstuvwxyz';
-  var numbers = '1234567890';
-  var charset = "" + letters + letters.toUpperCase() + numbers;
-
-  var randomCharacter = function (character) {
-    return character[Math.floor(Math.random() * character.length)];
-  };
-
-  var R = '';
-
-  for (var i = 0; i < length; i++) {
-    R += randomCharacter(charset);
-  }
-
-  return R;
-}
-/**
- *  Remove properties from an object
- */
-
-
-function removeProperties(input) {
-  var filter = [];
-
-  for (var _i = 1; _i < arguments.length; _i++) {
-    filter[_i - 1] = arguments[_i];
-  }
-
-  var output = {};
-
-  for (var key in input) {
-    /* istanbul ignore else */
-    if ({}.hasOwnProperty.call(input, key)) {
-      if (!filter.includes(key)) {
-        output[key] = input[key];
-      }
-    }
-  }
-
-  return output;
-}
-},{"exenv":"../node_modules/exenv/index.js"}],"../node_modules/react-inlinesvg/esm/types.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-},{}],"../node_modules/react-inlinesvg/esm/index.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var _exportNames = {
-  cacheStore: true
-};
-exports.default = exports.cacheStore = void 0;
-
-var React = _interopRequireWildcard(require("react"));
-
-var _reactFromDom = _interopRequireDefault(require("react-from-dom"));
-
-var _helpers = require("./helpers");
-
-var _types = require("./types");
-
-Object.keys(_types).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
-  if (key in exports && exports[key] === _types[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function () {
-      return _types[key];
-    }
-  });
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-var __extends = void 0 && (void 0).__extends || function () {
-  var extendStatics = function (d, b) {
-    extendStatics = Object.setPrototypeOf || {
-      __proto__: []
-    } instanceof Array && function (d, b) {
-      d.__proto__ = b;
-    } || function (d, b) {
-      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
-    };
-
-    return extendStatics(d, b);
-  };
-
-  return function (d, b) {
-    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-    extendStatics(d, b);
-
-    function __() {
-      this.constructor = d;
-    }
-
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-  };
-}();
-
-var __assign = void 0 && (void 0).__assign || function () {
-  __assign = Object.assign || function (t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-      s = arguments[i];
-
-      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
-    }
-
-    return t;
-  };
-
-  return __assign.apply(this, arguments);
-};
-
-var __read = void 0 && (void 0).__read || function (o, n) {
-  var m = typeof Symbol === "function" && o[Symbol.iterator];
-  if (!m) return o;
-  var i = m.call(o),
-      r,
-      ar = [],
-      e;
-
-  try {
-    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
-  } catch (error) {
-    e = {
-      error: error
-    };
-  } finally {
-    try {
-      if (r && !r.done && (m = i["return"])) m.call(i);
-    } finally {
-      if (e) throw e.error;
-    }
-  }
-
-  return ar;
-};
-
-var __spreadArray = void 0 && (void 0).__spreadArray || function (to, from) {
-  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) to[j] = from[i];
-
-  return to;
-};
-
-var cacheStore = Object.create(null);
-exports.cacheStore = cacheStore;
-
-var InlineSVG = function (_super) {
-  __extends(InlineSVG, _super);
-
-  function InlineSVG(props) {
-    var _this = _super.call(this, props) || this;
-
-    _this.isActive = false;
-
-    _this.handleCacheQueue = function (content) {
-      /* istanbul ignore else */
-      if (typeof content === 'string') {
-        _this.handleLoad(content);
-
-        return;
-      }
-
-      _this.handleError(content);
-    };
-
-    _this.handleLoad = function (content) {
-      /* istanbul ignore else */
-      if (_this.isActive) {
-        _this.setState({
-          content: content,
-          status: _helpers.STATUS.LOADED
-        }, _this.getElement);
-      }
-    };
-
-    _this.handleError = function (error) {
-      var onError = _this.props.onError;
-      var status = error.message === 'Browser does not support SVG' ? _helpers.STATUS.UNSUPPORTED : _helpers.STATUS.FAILED;
-      /* istanbul ignore else */
-
-      if (_this.isActive) {
-        _this.setState({
-          status: status
-        }, function () {
-          /* istanbul ignore else */
-          if (typeof onError === 'function') {
-            onError(error);
-          }
-        });
-      }
-    };
-
-    _this.request = function () {
-      var _a = _this.props,
-          cacheRequests = _a.cacheRequests,
-          fetchOptions = _a.fetchOptions,
-          src = _a.src;
-
-      try {
-        if (cacheRequests) {
-          cacheStore[src] = {
-            content: '',
-            status: _helpers.STATUS.LOADING,
-            queue: []
-          };
-        }
-
-        return fetch(src, fetchOptions).then(function (response) {
-          var contentType = response.headers.get('content-type');
-
-          var _a = __read((contentType || '').split(/ ?; ?/), 1),
-              fileType = _a[0];
-
-          if (response.status > 299) {
-            throw new Error('Not found');
-          }
-
-          if (!['image/svg+xml', 'text/plain'].some(function (d) {
-            return fileType.indexOf(d) >= 0;
-          })) {
-            throw new Error("Content type isn't valid: " + fileType);
-          }
-
-          return response.text();
-        }).then(function (content) {
-          var currentSrc = _this.props.src; // the current src don't match the previous one, skipping...
-
-          if (src !== currentSrc) {
-            return;
-          }
-
-          _this.handleLoad(content);
-          /* istanbul ignore else */
-
-
-          if (cacheRequests) {
-            var cache = cacheStore[src];
-            /* istanbul ignore else */
-
-            if (cache) {
-              cache.content = content;
-              cache.status = _helpers.STATUS.LOADED;
-              cache.queue = cache.queue.filter(function (cb) {
-                cb(content);
-                return false;
-              });
-            }
-          }
-        }).catch(function (error) {
-          _this.handleError(error);
-          /* istanbul ignore else */
-
-
-          if (cacheRequests) {
-            var cache = cacheStore[src];
-            /* istanbul ignore else */
-
-            if (cache) {
-              cache.queue.forEach(function (cb) {
-                cb(error);
-              });
-              delete cacheStore[src];
-            }
-          }
-        });
-      } catch (error) {
-        return _this.handleError(new Error(error.message));
-      }
-    };
-
-    _this.state = {
-      content: '',
-      element: null,
-      hasCache: !!props.cacheRequests && !!cacheStore[props.src],
-      status: _helpers.STATUS.PENDING
-    };
-    _this.hash = props.uniqueHash || (0, _helpers.randomString)(8);
-    return _this;
-  }
-
-  InlineSVG.prototype.componentDidMount = function () {
-    this.isActive = true;
-
-    if (!(0, _helpers.canUseDOM)()) {
-      return;
-    }
-
-    var status = this.state.status;
-    var src = this.props.src;
-
-    try {
-      /* istanbul ignore else */
-      if (status === _helpers.STATUS.PENDING) {
-        /* istanbul ignore else */
-        if (!(0, _helpers.isSupportedEnvironment)()) {
-          throw new Error('Browser does not support SVG');
-        }
-        /* istanbul ignore else */
-
-
-        if (!src) {
-          throw new Error('Missing src');
-        }
-
-        this.load();
-      }
-    } catch (error) {
-      this.handleError(error);
-    }
-  };
-
-  InlineSVG.prototype.componentDidUpdate = function (prevProps, prevState) {
-    if (!(0, _helpers.canUseDOM)()) {
-      return;
-    }
-
-    var _a = this.state,
-        hasCache = _a.hasCache,
-        status = _a.status;
-    var _b = this.props,
-        onLoad = _b.onLoad,
-        src = _b.src;
-
-    if (prevState.status !== _helpers.STATUS.READY && status === _helpers.STATUS.READY) {
-      /* istanbul ignore else */
-      if (onLoad) {
-        onLoad(src, hasCache);
-      }
-    }
-
-    if (prevProps.src !== src) {
-      if (!src) {
-        this.handleError(new Error('Missing src'));
-        return;
-      }
-
-      this.load();
-    }
-  };
-
-  InlineSVG.prototype.componentWillUnmount = function () {
-    this.isActive = false;
-  };
-
-  InlineSVG.prototype.processSVG = function () {
-    var content = this.state.content;
-    var preProcessor = this.props.preProcessor;
-
-    if (preProcessor) {
-      return preProcessor(content);
-    }
-
-    return content;
-  };
-
-  InlineSVG.prototype.updateSVGAttributes = function (node) {
-    var _this = this;
-
-    var _a = this.props,
-        _b = _a.baseURL,
-        baseURL = _b === void 0 ? '' : _b,
-        uniquifyIDs = _a.uniquifyIDs;
-    var replaceableAttributes = ['id', 'href', 'xlink:href', 'xlink:role', 'xlink:arcrole'];
-    var linkAttributes = ['href', 'xlink:href'];
-
-    var isDataValue = function (name, value) {
-      return linkAttributes.indexOf(name) >= 0 && (value ? value.indexOf('#') < 0 : false);
-    };
-
-    if (!uniquifyIDs) {
-      return node;
-    }
-
-    __spreadArray([], __read(node.children)).map(function (d) {
-      if (d.attributes && d.attributes.length) {
-        var attributes_1 = Object.values(d.attributes).map(function (a) {
-          var attr = a;
-          var match = a.value.match(/url\((.*?)\)/);
-
-          if (match && match[1]) {
-            attr.value = a.value.replace(match[0], "url(" + baseURL + match[1] + "__" + _this.hash + ")");
-          }
-
-          return attr;
-        });
-        replaceableAttributes.forEach(function (r) {
-          var attribute = attributes_1.find(function (a) {
-            return a.name === r;
-          });
-
-          if (attribute && !isDataValue(r, attribute.value)) {
-            attribute.value = attribute.value + "__" + _this.hash;
-          }
-        });
-      }
-
-      if (d.children.length) {
-        return _this.updateSVGAttributes(d);
-      }
-
-      return d;
-    });
-
-    return node;
-  };
-
-  InlineSVG.prototype.getNode = function () {
-    var _a = this.props,
-        description = _a.description,
-        title = _a.title;
-
-    try {
-      var svgText = this.processSVG();
-      var node = (0, _reactFromDom.default)(svgText, {
-        nodeOnly: true
-      });
-
-      if (!node || !(node instanceof SVGSVGElement)) {
-        throw new Error('Could not convert the src to a DOM Node');
-      }
-
-      var svg = this.updateSVGAttributes(node);
-
-      if (description) {
-        var originalDesc = svg.querySelector('desc');
-
-        if (originalDesc && originalDesc.parentNode) {
-          originalDesc.parentNode.removeChild(originalDesc);
-        }
-
-        var descElement = document.createElement('desc');
-        descElement.innerHTML = description;
-        svg.prepend(descElement);
-      }
-
-      if (title) {
-        var originalTitle = svg.querySelector('title');
-
-        if (originalTitle && originalTitle.parentNode) {
-          originalTitle.parentNode.removeChild(originalTitle);
-        }
-
-        var titleElement = document.createElement('title');
-        titleElement.innerHTML = title;
-        svg.prepend(titleElement);
-      }
-
-      return svg;
-    } catch (error) {
-      return this.handleError(error);
-    }
-  };
-
-  InlineSVG.prototype.getElement = function () {
-    try {
-      var node = this.getNode();
-      var element = (0, _reactFromDom.default)(node);
-
-      if (!element || !React.isValidElement(element)) {
-        throw new Error('Could not convert the src to a React element');
-      }
-
-      this.setState({
-        element: element,
-        status: _helpers.STATUS.READY
-      });
-    } catch (error) {
-      this.handleError(new Error(error.message));
-    }
-  };
-
-  InlineSVG.prototype.load = function () {
-    var _this = this;
-    /* istanbul ignore else */
-
-
-    if (this.isActive) {
-      this.setState({
-        content: '',
-        element: null,
-        status: _helpers.STATUS.LOADING
-      }, function () {
-        var _a = _this.props,
-            cacheRequests = _a.cacheRequests,
-            src = _a.src;
-        var cache = cacheRequests && cacheStore[src];
-
-        if (cache) {
-          /* istanbul ignore else */
-          if (cache.status === _helpers.STATUS.LOADING) {
-            cache.queue.push(_this.handleCacheQueue);
-          } else if (cache.status === _helpers.STATUS.LOADED) {
-            _this.handleLoad(cache.content);
-          }
-
-          return;
-        }
-
-        var dataURI = src.match(/data:image\/svg[^,]*?(;base64)?,(.*)/);
-        var inlineSrc;
-
-        if (dataURI) {
-          inlineSrc = dataURI[1] ? atob(dataURI[2]) : decodeURIComponent(dataURI[2]);
-        } else if (src.indexOf('<svg') >= 0) {
-          inlineSrc = src;
-        }
-
-        if (inlineSrc) {
-          _this.handleLoad(inlineSrc);
-
-          return;
-        }
-
-        _this.request();
-      });
-    }
-  };
-
-  InlineSVG.prototype.render = function () {
-    var _a = this.state,
-        element = _a.element,
-        status = _a.status;
-    var _b = this.props,
-        _c = _b.children,
-        children = _c === void 0 ? null : _c,
-        innerRef = _b.innerRef,
-        _d = _b.loader,
-        loader = _d === void 0 ? null : _d;
-    var elementProps = (0, _helpers.removeProperties)(this.props, 'baseURL', 'cacheRequests', 'children', 'description', 'fetchOptions', 'innerRef', 'loader', 'onError', 'onLoad', 'preProcessor', 'src', 'title', 'uniqueHash', 'uniquifyIDs');
-
-    if (!(0, _helpers.canUseDOM)()) {
-      return loader;
-    }
-
-    if (element) {
-      return React.cloneElement(element, __assign({
-        ref: innerRef
-      }, elementProps));
-    }
-
-    if ([_helpers.STATUS.UNSUPPORTED, _helpers.STATUS.FAILED].indexOf(status) > -1) {
-      return children;
-    }
-
-    return loader;
-  };
-
-  InlineSVG.defaultProps = {
-    cacheRequests: true,
-    uniquifyIDs: false
-  };
-  return InlineSVG;
-}(React.PureComponent);
-
-var _default = InlineSVG;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-from-dom":"../node_modules/react-from-dom/esm/index.js","./helpers":"../node_modules/react-inlinesvg/esm/helpers.js","./types":"../node_modules/react-inlinesvg/esm/types.js"}],"assets/icons/social-website.svg":[function(require,module,exports) {
-module.exports = "/social-website.51357ff0.svg";
-},{}],"assets/icons/social-email.svg":[function(require,module,exports) {
-module.exports = "/social-email.eec20a87.svg";
-},{}],"assets/icons/social-twitter.svg":[function(require,module,exports) {
-module.exports = "/social-twitter.1f8f210b.svg";
-},{}],"assets/icons/social-facebook.svg":[function(require,module,exports) {
-module.exports = "/social-facebook.06671e21.svg";
-},{}],"assets/icons/social-linkedin.svg":[function(require,module,exports) {
-module.exports = "/social-linkedin.67c3316e.svg";
-},{}],"assets/icons/social-github.svg":[function(require,module,exports) {
-module.exports = "/social-github.ba89de4e.svg";
-},{}],"assets/icons/social-gitcoin.svg":[function(require,module,exports) {
-module.exports = "/social-gitcoin.f79ef815.svg";
-},{}],"assets/icons/social-medium.svg":[function(require,module,exports) {
-module.exports = "/social-medium.01883098.svg";
-},{}],"assets/icons/social-wechat.svg":[function(require,module,exports) {
-module.exports = "/social-wechat.01bfbc33.svg";
-},{}],"assets/icons/social-telegram.svg":[function(require,module,exports) {
-module.exports = "/social-telegram.cd3061a8.svg";
-},{}],"assets/icons/social-instagram.svg":[function(require,module,exports) {
-module.exports = "/social-instagram.591d736b.svg";
-},{}],"assets/icons/social-youtube.svg":[function(require,module,exports) {
-module.exports = "/social-youtube.47047c5e.svg";
-},{}],"assets/icons/social-discord.svg":[function(require,module,exports) {
-module.exports = "/social-discord.cb5487c3.svg";
-},{}],"assets/icons/social-reddit.svg":[function(require,module,exports) {
-module.exports = "/social-reddit.1496fbc4.svg";
-},{}],"assets/icons/social-patreon.svg":[function(require,module,exports) {
-module.exports = "/social-patreon.3c9234ca.svg";
-},{}],"assets/icons/social-paypal.svg":[function(require,module,exports) {
-module.exports = "/social-paypal.9e577d49.svg";
-},{}],"components/SocialLinks.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
-
-var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
-
-var _socialWebsite = _interopRequireDefault(require("../assets/icons/social-website.svg"));
-
-var _socialEmail = _interopRequireDefault(require("../assets/icons/social-email.svg"));
-
-var _socialTwitter = _interopRequireDefault(require("../assets/icons/social-twitter.svg"));
-
-var _socialFacebook = _interopRequireDefault(require("../assets/icons/social-facebook.svg"));
-
-var _socialLinkedin = _interopRequireDefault(require("../assets/icons/social-linkedin.svg"));
-
-var _socialGithub = _interopRequireDefault(require("../assets/icons/social-github.svg"));
-
-var _socialGitcoin = _interopRequireDefault(require("../assets/icons/social-gitcoin.svg"));
-
-var _socialMedium = _interopRequireDefault(require("../assets/icons/social-medium.svg"));
-
-var _socialWechat = _interopRequireDefault(require("../assets/icons/social-wechat.svg"));
-
-var _socialTelegram = _interopRequireDefault(require("../assets/icons/social-telegram.svg"));
-
-var _socialInstagram = _interopRequireDefault(require("../assets/icons/social-instagram.svg"));
-
-var _socialYoutube = _interopRequireDefault(require("../assets/icons/social-youtube.svg"));
-
-var _socialDiscord = _interopRequireDefault(require("../assets/icons/social-discord.svg"));
-
-var _socialReddit = _interopRequireDefault(require("../assets/icons/social-reddit.svg"));
-
-var _socialPatreon = _interopRequireDefault(require("../assets/icons/social-patreon.svg"));
-
-var _socialPaypal = _interopRequireDefault(require("../assets/icons/social-paypal.svg"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-class SocialLinks extends _react.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    const {
-      social
-    } = this.props;
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-social profile-widget"
-    }, social.website ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.website,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip website",
-      title: "Website"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialWebsite.default,
-      className: "profile-social-icon icon"
-    })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `mailto:${social.email}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip email",
-      title: "Email"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialEmail.default,
-      className: "profile-social-icon icon"
-    })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://twitter.com/${social.twitter}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip twitter",
-      title: "Twitter"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialTwitter.default,
-      className: "profile-social-icon icon"
-    })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://facebook.com/${social.facebook}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip facebook",
-      title: "Facebook"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialFacebook.default,
-      className: "profile-social-icon icon"
-    })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.linkedin,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip linkedin",
-      title: "LinkedIn"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialLinkedin.default,
-      className: "profile-social-icon icon"
-    })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://github.com/${social.github}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip github",
-      title: "GitHub"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialGithub.default,
-      className: "profile-social-icon icon"
-    })) : null, social.gitcoin ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://gitcoin.com/${social.gitcoin}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip gitcoin",
-      title: "Gitcoin"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialGitcoin.default,
-      className: "profile-social-icon icon"
-    })) : null, social.medium ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.medium,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip medium",
-      title: "Medium"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialMedium.default,
-      className: "profile-social-icon icon"
-    })) : null, social.wechat ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      component: "div",
-      className: "profile-social-item c-hand tooltip medium",
-      "data-clipboard-text": social.wechat,
-      title: "Copy WeChat ID"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialWechat.default,
-      className: "profile-social-icon icon"
-    })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://t.me/${social.telegram}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip telegram",
-      title: "Telegram"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialTelegram.default,
-      className: "profile-social-icon icon"
-    })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://instagram.com/${social.instagram}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip instagram",
-      title: "Instagram"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialInstagram.default,
-      className: "profile-social-icon icon"
-    })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.youtube,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip youtube",
-      title: "YouTube"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialYoutube.default,
-      className: "profile-social-icon icon"
-    })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.discord,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip discord",
-      title: "Discord"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialDiscord.default,
-      className: "profile-social-icon icon"
-    })) : null, social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.reddit,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip reddit",
-      title: "Reddit"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialReddit.default,
-      className: "profile-social-icon icon"
-    })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://patreon.com/${social.patreon}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip patreon",
-      title: "Patreon"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialPatreon.default,
-      className: "profile-social-icon icon"
-    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://www.paypal.com/paypalme/${social.paypal}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "profile-social-item tooltip paypal",
-      title: "PayPal"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _socialPaypal.default,
-      className: "profile-social-icon icon"
-    })) : null);
-  }
-
-}
-
-var _default = SocialLinks;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-gitcoin.svg":"assets/icons/social-gitcoin.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-wechat.svg":"assets/icons/social-wechat.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"assets/icons/crypto-near.svg":[function(require,module,exports) {
-module.exports = "/crypto-near.6af70c73.svg";
-},{}],"assets/icons/crypto-btc.svg":[function(require,module,exports) {
-module.exports = "/crypto-btc.207fc2b4.svg";
-},{}],"assets/icons/crypto-eth.svg":[function(require,module,exports) {
-module.exports = "/crypto-eth.3c16830b.svg";
-},{}],"assets/icons/crypto-dot.svg":[function(require,module,exports) {
-module.exports = "/crypto-dot.29ef90cb.svg";
-},{}],"assets/icons/action-copy.svg":[function(require,module,exports) {
-module.exports = "/action-copy.cc7a0533.svg";
-},{}],"assets/icons/action-explore.svg":[function(require,module,exports) {
-module.exports = "/action-explore.67503071.svg";
-},{}],"assets/icons/action-donate.svg":[function(require,module,exports) {
-module.exports = "/action-donate.81d02392.svg";
-},{}],"components/CryptoWidgets.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
-
-var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
-
-var _cryptoNear = _interopRequireDefault(require("../assets/icons/crypto-near.svg"));
-
-var _cryptoBtc = _interopRequireDefault(require("../assets/icons/crypto-btc.svg"));
-
-var _cryptoEth = _interopRequireDefault(require("../assets/icons/crypto-eth.svg"));
-
-var _cryptoDot = _interopRequireDefault(require("../assets/icons/crypto-dot.svg"));
-
-var _actionCopy = _interopRequireDefault(require("../assets/icons/action-copy.svg"));
-
-var _actionExplore = _interopRequireDefault(require("../assets/icons/action-explore.svg"));
-
-var _actionDonate = _interopRequireDefault(require("../assets/icons/action-donate.svg"));
-
-var _config = _interopRequireDefault(require("../config"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class CryptoWidgets extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.handleCopy = this.handleCopy.bind(this);
-  }
-
-  handleCopy() {
-    console.log('Copied to clipboard');
-  }
-
-  render() {
-    const {
-      crypto,
-      handleDonateOpen
-    } = this.props;
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto profile-widget"
-    }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-item near"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _cryptoNear.default,
-      className: "profile-crypto-icon icon",
-      alt: "NEAR"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-main"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-subtitle"
-    }, "NEAR"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-title"
-    }, crypto.near))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-action"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn btn-sm btn-link tooltip mr-1",
-      "data-clipboard-text": crypto.near,
-      onSuccess: this.handleCopy,
-      title: "Copy to clipboard"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionCopy.default,
-      className: "icon"
-    })), /*#__PURE__*/_react.default.createElement("a", {
-      href: `${nearConfig.explorerUrl}/accounts/${crypto.near}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "btn btn-sm btn-link tooltip ml-1 mr-1",
-      title: "Open in Explorer"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionExplore.default,
-      className: "icon"
-    })), /*#__PURE__*/_react.default.createElement("button", {
-      onClick: handleDonateOpen,
-      className: "btn ml-1"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionDonate.default,
-      className: "icon mr-2"
-    }), " Donate"))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-item btc"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _cryptoBtc.default,
-      className: "profile-crypto-icon icon",
-      alt: "BTC"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-main"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-subtitle"
-    }, "BTC"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-title"
-    }, crypto.btc))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-action"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn btn-sm btn-link tooltip mr-1",
-      "data-clipboard-text": crypto.btc,
-      onSuccess: this.handleCopy,
-      title: "Copy to clipboard"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionCopy.default,
-      className: "icon"
-    })), /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://btc.com/btc/address/${crypto.btc}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "btn btn-sm btn-link tooltip ml-1",
-      title: "Open in Explorer"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionExplore.default,
-      className: "icon"
-    })))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-item eth"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-content"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _cryptoEth.default,
-      className: "profile-crypto-icon icon",
-      alt: "ETH"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-main"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-subtitle"
-    }, "ETH"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-title"
-    }, crypto.eth))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-action"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn btn-sm btn-link tooltip mr-1",
-      "data-clipboard-text": crypto.eth,
-      onSuccess: this.handleCopy,
-      title: "Copy to clipboard"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionCopy.default,
-      className: "icon"
-    })), /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://etherscan.io/address/${crypto.eth}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "btn btn-sm btn-link tooltip ml-1",
-      title: "Open in Explorer"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionExplore.default,
-      className: "icon"
-    })))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-item dot"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      component: "div",
-      className: "profile-crypto-content"
-    }, /*#__PURE__*/_react.default.createElement("img", {
-      src: _cryptoDot.default,
-      className: "profile-crypto-icon icon",
-      alt: "DOT"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-main"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-subtitle"
-    }, "DOT"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-title"
-    }, crypto.dot))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-crypto-action"
-    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
-      className: "btn btn-sm btn-link tooltip mr-1",
-      "data-clipboard-text": crypto.dot,
-      onSuccess: this.handleCopy,
-      title: "Copy to clipboard"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionCopy.default,
-      className: "icon"
-    })), /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://polkadot.subscan.io/account/${crypto.dot}`,
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "btn btn-sm btn-link tooltip ml-1",
-      title: "Open in Explorer"
-    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
-      src: _actionExplore.default,
-      className: "icon"
-    })))) : null);
-  }
-
-}
-
-var _default = CryptoWidgets;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg","../assets/icons/action-donate.svg":"assets/icons/action-donate.svg","../config":"config.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyStore = void 0;
@@ -61256,7 +58121,3142 @@ exports.keyStores = __importStar(require("./key_stores/browser-index"));
 __exportStar(require("./common-index"), exports);
 require("error-polyfill");
 
-},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js","error-polyfill":"../node_modules/error-polyfill/index.js"}],"components/CryptoDonate.js":[function(require,module,exports) {
+},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js","error-polyfill":"../node_modules/error-polyfill/index.js"}],"../node_modules/clipboard/dist/clipboard.js":[function(require,module,exports) {
+var define;
+/*!
+ * clipboard.js v2.0.8
+ * https://clipboardjs.com/
+ *
+ * Licensed MIT © Zeno Rocha
+ */
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["ClipboardJS"] = factory();
+	else
+		root["ClipboardJS"] = factory();
+})(this, function() {
+return /******/ (function() { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 134:
+/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "default": function() { return /* binding */ clipboard; }
+});
+
+// EXTERNAL MODULE: ./node_modules/tiny-emitter/index.js
+var tiny_emitter = __webpack_require__(279);
+var tiny_emitter_default = /*#__PURE__*/__webpack_require__.n(tiny_emitter);
+// EXTERNAL MODULE: ./node_modules/good-listener/src/listen.js
+var listen = __webpack_require__(370);
+var listen_default = /*#__PURE__*/__webpack_require__.n(listen);
+// EXTERNAL MODULE: ./node_modules/select/src/select.js
+var src_select = __webpack_require__(817);
+var select_default = /*#__PURE__*/__webpack_require__.n(src_select);
+;// CONCATENATED MODULE: ./src/clipboard-action.js
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+/**
+ * Inner class which performs selection from either `text` or `target`
+ * properties and then executes copy or cut operations.
+ */
+
+var ClipboardAction = /*#__PURE__*/function () {
+  /**
+   * @param {Object} options
+   */
+  function ClipboardAction(options) {
+    _classCallCheck(this, ClipboardAction);
+
+    this.resolveOptions(options);
+    this.initSelection();
+  }
+  /**
+   * Defines base properties passed from constructor.
+   * @param {Object} options
+   */
+
+
+  _createClass(ClipboardAction, [{
+    key: "resolveOptions",
+    value: function resolveOptions() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      this.action = options.action;
+      this.container = options.container;
+      this.emitter = options.emitter;
+      this.target = options.target;
+      this.text = options.text;
+      this.trigger = options.trigger;
+      this.selectedText = '';
+    }
+    /**
+     * Decides which selection strategy is going to be applied based
+     * on the existence of `text` and `target` properties.
+     */
+
+  }, {
+    key: "initSelection",
+    value: function initSelection() {
+      if (this.text) {
+        this.selectFake();
+      } else if (this.target) {
+        this.selectTarget();
+      }
+    }
+    /**
+     * Creates a fake textarea element, sets its value from `text` property,
+     */
+
+  }, {
+    key: "createFakeElement",
+    value: function createFakeElement() {
+      var isRTL = document.documentElement.getAttribute('dir') === 'rtl';
+      this.fakeElem = document.createElement('textarea'); // Prevent zooming on iOS
+
+      this.fakeElem.style.fontSize = '12pt'; // Reset box model
+
+      this.fakeElem.style.border = '0';
+      this.fakeElem.style.padding = '0';
+      this.fakeElem.style.margin = '0'; // Move element out of screen horizontally
+
+      this.fakeElem.style.position = 'absolute';
+      this.fakeElem.style[isRTL ? 'right' : 'left'] = '-9999px'; // Move element to the same position vertically
+
+      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+      this.fakeElem.style.top = "".concat(yPosition, "px");
+      this.fakeElem.setAttribute('readonly', '');
+      this.fakeElem.value = this.text;
+      return this.fakeElem;
+    }
+    /**
+     * Get's the value of fakeElem,
+     * and makes a selection on it.
+     */
+
+  }, {
+    key: "selectFake",
+    value: function selectFake() {
+      var _this = this;
+
+      var fakeElem = this.createFakeElement();
+
+      this.fakeHandlerCallback = function () {
+        return _this.removeFake();
+      };
+
+      this.fakeHandler = this.container.addEventListener('click', this.fakeHandlerCallback) || true;
+      this.container.appendChild(fakeElem);
+      this.selectedText = select_default()(fakeElem);
+      this.copyText();
+      this.removeFake();
+    }
+    /**
+     * Only removes the fake element after another click event, that way
+     * a user can hit `Ctrl+C` to copy because selection still exists.
+     */
+
+  }, {
+    key: "removeFake",
+    value: function removeFake() {
+      if (this.fakeHandler) {
+        this.container.removeEventListener('click', this.fakeHandlerCallback);
+        this.fakeHandler = null;
+        this.fakeHandlerCallback = null;
+      }
+
+      if (this.fakeElem) {
+        this.container.removeChild(this.fakeElem);
+        this.fakeElem = null;
+      }
+    }
+    /**
+     * Selects the content from element passed on `target` property.
+     */
+
+  }, {
+    key: "selectTarget",
+    value: function selectTarget() {
+      this.selectedText = select_default()(this.target);
+      this.copyText();
+    }
+    /**
+     * Executes the copy operation based on the current selection.
+     */
+
+  }, {
+    key: "copyText",
+    value: function copyText() {
+      var succeeded;
+
+      try {
+        succeeded = document.execCommand(this.action);
+      } catch (err) {
+        succeeded = false;
+      }
+
+      this.handleResult(succeeded);
+    }
+    /**
+     * Fires an event based on the copy operation result.
+     * @param {Boolean} succeeded
+     */
+
+  }, {
+    key: "handleResult",
+    value: function handleResult(succeeded) {
+      this.emitter.emit(succeeded ? 'success' : 'error', {
+        action: this.action,
+        text: this.selectedText,
+        trigger: this.trigger,
+        clearSelection: this.clearSelection.bind(this)
+      });
+    }
+    /**
+     * Moves focus away from `target` and back to the trigger, removes current selection.
+     */
+
+  }, {
+    key: "clearSelection",
+    value: function clearSelection() {
+      if (this.trigger) {
+        this.trigger.focus();
+      }
+
+      document.activeElement.blur();
+      window.getSelection().removeAllRanges();
+    }
+    /**
+     * Sets the `action` to be performed which can be either 'copy' or 'cut'.
+     * @param {String} action
+     */
+
+  }, {
+    key: "destroy",
+
+    /**
+     * Destroy lifecycle.
+     */
+    value: function destroy() {
+      this.removeFake();
+    }
+  }, {
+    key: "action",
+    set: function set() {
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'copy';
+      this._action = action;
+
+      if (this._action !== 'copy' && this._action !== 'cut') {
+        throw new Error('Invalid "action" value, use either "copy" or "cut"');
+      }
+    }
+    /**
+     * Gets the `action` property.
+     * @return {String}
+     */
+    ,
+    get: function get() {
+      return this._action;
+    }
+    /**
+     * Sets the `target` property using an element
+     * that will be have its content copied.
+     * @param {Element} target
+     */
+
+  }, {
+    key: "target",
+    set: function set(target) {
+      if (target !== undefined) {
+        if (target && _typeof(target) === 'object' && target.nodeType === 1) {
+          if (this.action === 'copy' && target.hasAttribute('disabled')) {
+            throw new Error('Invalid "target" attribute. Please use "readonly" instead of "disabled" attribute');
+          }
+
+          if (this.action === 'cut' && (target.hasAttribute('readonly') || target.hasAttribute('disabled'))) {
+            throw new Error('Invalid "target" attribute. You can\'t cut text from elements with "readonly" or "disabled" attributes');
+          }
+
+          this._target = target;
+        } else {
+          throw new Error('Invalid "target" value, use a valid Element');
+        }
+      }
+    }
+    /**
+     * Gets the `target` property.
+     * @return {String|HTMLElement}
+     */
+    ,
+    get: function get() {
+      return this._target;
+    }
+  }]);
+
+  return ClipboardAction;
+}();
+
+/* harmony default export */ var clipboard_action = (ClipboardAction);
+;// CONCATENATED MODULE: ./src/clipboard.js
+function clipboard_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { clipboard_typeof = function _typeof(obj) { return typeof obj; }; } else { clipboard_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return clipboard_typeof(obj); }
+
+function clipboard_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function clipboard_defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function clipboard_createClass(Constructor, protoProps, staticProps) { if (protoProps) clipboard_defineProperties(Constructor.prototype, protoProps); if (staticProps) clipboard_defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (clipboard_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Date.prototype.toString.call(Reflect.construct(Date, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+/**
+ * Helper function to retrieve attribute value.
+ * @param {String} suffix
+ * @param {Element} element
+ */
+
+function getAttributeValue(suffix, element) {
+  var attribute = "data-clipboard-".concat(suffix);
+
+  if (!element.hasAttribute(attribute)) {
+    return;
+  }
+
+  return element.getAttribute(attribute);
+}
+/**
+ * Base class which takes one or more elements, adds event listeners to them,
+ * and instantiates a new `ClipboardAction` on each click.
+ */
+
+
+var Clipboard = /*#__PURE__*/function (_Emitter) {
+  _inherits(Clipboard, _Emitter);
+
+  var _super = _createSuper(Clipboard);
+
+  /**
+   * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
+   * @param {Object} options
+   */
+  function Clipboard(trigger, options) {
+    var _this;
+
+    clipboard_classCallCheck(this, Clipboard);
+
+    _this = _super.call(this);
+
+    _this.resolveOptions(options);
+
+    _this.listenClick(trigger);
+
+    return _this;
+  }
+  /**
+   * Defines if attributes would be resolved using internal setter functions
+   * or custom functions that were passed in the constructor.
+   * @param {Object} options
+   */
+
+
+  clipboard_createClass(Clipboard, [{
+    key: "resolveOptions",
+    value: function resolveOptions() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      this.action = typeof options.action === 'function' ? options.action : this.defaultAction;
+      this.target = typeof options.target === 'function' ? options.target : this.defaultTarget;
+      this.text = typeof options.text === 'function' ? options.text : this.defaultText;
+      this.container = clipboard_typeof(options.container) === 'object' ? options.container : document.body;
+    }
+    /**
+     * Adds a click event listener to the passed trigger.
+     * @param {String|HTMLElement|HTMLCollection|NodeList} trigger
+     */
+
+  }, {
+    key: "listenClick",
+    value: function listenClick(trigger) {
+      var _this2 = this;
+
+      this.listener = listen_default()(trigger, 'click', function (e) {
+        return _this2.onClick(e);
+      });
+    }
+    /**
+     * Defines a new `ClipboardAction` on each click event.
+     * @param {Event} e
+     */
+
+  }, {
+    key: "onClick",
+    value: function onClick(e) {
+      var trigger = e.delegateTarget || e.currentTarget;
+
+      if (this.clipboardAction) {
+        this.clipboardAction = null;
+      }
+
+      this.clipboardAction = new clipboard_action({
+        action: this.action(trigger),
+        target: this.target(trigger),
+        text: this.text(trigger),
+        container: this.container,
+        trigger: trigger,
+        emitter: this
+      });
+    }
+    /**
+     * Default `action` lookup function.
+     * @param {Element} trigger
+     */
+
+  }, {
+    key: "defaultAction",
+    value: function defaultAction(trigger) {
+      return getAttributeValue('action', trigger);
+    }
+    /**
+     * Default `target` lookup function.
+     * @param {Element} trigger
+     */
+
+  }, {
+    key: "defaultTarget",
+    value: function defaultTarget(trigger) {
+      var selector = getAttributeValue('target', trigger);
+
+      if (selector) {
+        return document.querySelector(selector);
+      }
+    }
+    /**
+     * Returns the support of the given action, or all actions if no action is
+     * given.
+     * @param {String} [action]
+     */
+
+  }, {
+    key: "defaultText",
+
+    /**
+     * Default `text` lookup function.
+     * @param {Element} trigger
+     */
+    value: function defaultText(trigger) {
+      return getAttributeValue('text', trigger);
+    }
+    /**
+     * Destroy lifecycle.
+     */
+
+  }, {
+    key: "destroy",
+    value: function destroy() {
+      this.listener.destroy();
+
+      if (this.clipboardAction) {
+        this.clipboardAction.destroy();
+        this.clipboardAction = null;
+      }
+    }
+  }], [{
+    key: "isSupported",
+    value: function isSupported() {
+      var action = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : ['copy', 'cut'];
+      var actions = typeof action === 'string' ? [action] : action;
+      var support = !!document.queryCommandSupported;
+      actions.forEach(function (action) {
+        support = support && !!document.queryCommandSupported(action);
+      });
+      return support;
+    }
+  }]);
+
+  return Clipboard;
+}((tiny_emitter_default()));
+
+/* harmony default export */ var clipboard = (Clipboard);
+
+/***/ }),
+
+/***/ 828:
+/***/ (function(module) {
+
+var DOCUMENT_NODE_TYPE = 9;
+
+/**
+ * A polyfill for Element.matches()
+ */
+if (typeof Element !== 'undefined' && !Element.prototype.matches) {
+    var proto = Element.prototype;
+
+    proto.matches = proto.matchesSelector ||
+                    proto.mozMatchesSelector ||
+                    proto.msMatchesSelector ||
+                    proto.oMatchesSelector ||
+                    proto.webkitMatchesSelector;
+}
+
+/**
+ * Finds the closest parent that matches a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @return {Function}
+ */
+function closest (element, selector) {
+    while (element && element.nodeType !== DOCUMENT_NODE_TYPE) {
+        if (typeof element.matches === 'function' &&
+            element.matches(selector)) {
+          return element;
+        }
+        element = element.parentNode;
+    }
+}
+
+module.exports = closest;
+
+
+/***/ }),
+
+/***/ 438:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var closest = __webpack_require__(828);
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function _delegate(element, selector, type, callback, useCapture) {
+    var listenerFn = listener.apply(this, arguments);
+
+    element.addEventListener(type, listenerFn, useCapture);
+
+    return {
+        destroy: function() {
+            element.removeEventListener(type, listenerFn, useCapture);
+        }
+    }
+}
+
+/**
+ * Delegates event to a selector.
+ *
+ * @param {Element|String|Array} [elements]
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @param {Boolean} useCapture
+ * @return {Object}
+ */
+function delegate(elements, selector, type, callback, useCapture) {
+    // Handle the regular Element usage
+    if (typeof elements.addEventListener === 'function') {
+        return _delegate.apply(null, arguments);
+    }
+
+    // Handle Element-less usage, it defaults to global delegation
+    if (typeof type === 'function') {
+        // Use `document` as the first parameter, then apply arguments
+        // This is a short way to .unshift `arguments` without running into deoptimizations
+        return _delegate.bind(null, document).apply(null, arguments);
+    }
+
+    // Handle Selector-based usage
+    if (typeof elements === 'string') {
+        elements = document.querySelectorAll(elements);
+    }
+
+    // Handle Array-like based usage
+    return Array.prototype.map.call(elements, function (element) {
+        return _delegate(element, selector, type, callback, useCapture);
+    });
+}
+
+/**
+ * Finds closest match and invokes callback.
+ *
+ * @param {Element} element
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Function}
+ */
+function listener(element, selector, type, callback) {
+    return function(e) {
+        e.delegateTarget = closest(e.target, selector);
+
+        if (e.delegateTarget) {
+            callback.call(element, e);
+        }
+    }
+}
+
+module.exports = delegate;
+
+
+/***/ }),
+
+/***/ 879:
+/***/ (function(__unused_webpack_module, exports) {
+
+/**
+ * Check if argument is a HTML element.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.node = function(value) {
+    return value !== undefined
+        && value instanceof HTMLElement
+        && value.nodeType === 1;
+};
+
+/**
+ * Check if argument is a list of HTML elements.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.nodeList = function(value) {
+    var type = Object.prototype.toString.call(value);
+
+    return value !== undefined
+        && (type === '[object NodeList]' || type === '[object HTMLCollection]')
+        && ('length' in value)
+        && (value.length === 0 || exports.node(value[0]));
+};
+
+/**
+ * Check if argument is a string.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.string = function(value) {
+    return typeof value === 'string'
+        || value instanceof String;
+};
+
+/**
+ * Check if argument is a function.
+ *
+ * @param {Object} value
+ * @return {Boolean}
+ */
+exports.fn = function(value) {
+    var type = Object.prototype.toString.call(value);
+
+    return type === '[object Function]';
+};
+
+
+/***/ }),
+
+/***/ 370:
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+var is = __webpack_require__(879);
+var delegate = __webpack_require__(438);
+
+/**
+ * Validates all params and calls the right
+ * listener function based on its target type.
+ *
+ * @param {String|HTMLElement|HTMLCollection|NodeList} target
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listen(target, type, callback) {
+    if (!target && !type && !callback) {
+        throw new Error('Missing required arguments');
+    }
+
+    if (!is.string(type)) {
+        throw new TypeError('Second argument must be a String');
+    }
+
+    if (!is.fn(callback)) {
+        throw new TypeError('Third argument must be a Function');
+    }
+
+    if (is.node(target)) {
+        return listenNode(target, type, callback);
+    }
+    else if (is.nodeList(target)) {
+        return listenNodeList(target, type, callback);
+    }
+    else if (is.string(target)) {
+        return listenSelector(target, type, callback);
+    }
+    else {
+        throw new TypeError('First argument must be a String, HTMLElement, HTMLCollection, or NodeList');
+    }
+}
+
+/**
+ * Adds an event listener to a HTML element
+ * and returns a remove listener function.
+ *
+ * @param {HTMLElement} node
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenNode(node, type, callback) {
+    node.addEventListener(type, callback);
+
+    return {
+        destroy: function() {
+            node.removeEventListener(type, callback);
+        }
+    }
+}
+
+/**
+ * Add an event listener to a list of HTML elements
+ * and returns a remove listener function.
+ *
+ * @param {NodeList|HTMLCollection} nodeList
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenNodeList(nodeList, type, callback) {
+    Array.prototype.forEach.call(nodeList, function(node) {
+        node.addEventListener(type, callback);
+    });
+
+    return {
+        destroy: function() {
+            Array.prototype.forEach.call(nodeList, function(node) {
+                node.removeEventListener(type, callback);
+            });
+        }
+    }
+}
+
+/**
+ * Add an event listener to a selector
+ * and returns a remove listener function.
+ *
+ * @param {String} selector
+ * @param {String} type
+ * @param {Function} callback
+ * @return {Object}
+ */
+function listenSelector(selector, type, callback) {
+    return delegate(document.body, selector, type, callback);
+}
+
+module.exports = listen;
+
+
+/***/ }),
+
+/***/ 817:
+/***/ (function(module) {
+
+function select(element) {
+    var selectedText;
+
+    if (element.nodeName === 'SELECT') {
+        element.focus();
+
+        selectedText = element.value;
+    }
+    else if (element.nodeName === 'INPUT' || element.nodeName === 'TEXTAREA') {
+        var isReadOnly = element.hasAttribute('readonly');
+
+        if (!isReadOnly) {
+            element.setAttribute('readonly', '');
+        }
+
+        element.select();
+        element.setSelectionRange(0, element.value.length);
+
+        if (!isReadOnly) {
+            element.removeAttribute('readonly');
+        }
+
+        selectedText = element.value;
+    }
+    else {
+        if (element.hasAttribute('contenteditable')) {
+            element.focus();
+        }
+
+        var selection = window.getSelection();
+        var range = document.createRange();
+
+        range.selectNodeContents(element);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        selectedText = selection.toString();
+    }
+
+    return selectedText;
+}
+
+module.exports = select;
+
+
+/***/ }),
+
+/***/ 279:
+/***/ (function(module) {
+
+function E () {
+  // Keep this empty so it's easier to inherit from
+  // (via https://github.com/lipsmack from https://github.com/scottcorgan/tiny-emitter/issues/3)
+}
+
+E.prototype = {
+  on: function (name, callback, ctx) {
+    var e = this.e || (this.e = {});
+
+    (e[name] || (e[name] = [])).push({
+      fn: callback,
+      ctx: ctx
+    });
+
+    return this;
+  },
+
+  once: function (name, callback, ctx) {
+    var self = this;
+    function listener () {
+      self.off(name, listener);
+      callback.apply(ctx, arguments);
+    };
+
+    listener._ = callback
+    return this.on(name, listener, ctx);
+  },
+
+  emit: function (name) {
+    var data = [].slice.call(arguments, 1);
+    var evtArr = ((this.e || (this.e = {}))[name] || []).slice();
+    var i = 0;
+    var len = evtArr.length;
+
+    for (i; i < len; i++) {
+      evtArr[i].fn.apply(evtArr[i].ctx, data);
+    }
+
+    return this;
+  },
+
+  off: function (name, callback) {
+    var e = this.e || (this.e = {});
+    var evts = e[name];
+    var liveEvents = [];
+
+    if (evts && callback) {
+      for (var i = 0, len = evts.length; i < len; i++) {
+        if (evts[i].fn !== callback && evts[i].fn._ !== callback)
+          liveEvents.push(evts[i]);
+      }
+    }
+
+    // Remove event from queue to prevent memory leak
+    // Suggested by https://github.com/lazd
+    // Ref: https://github.com/scottcorgan/tiny-emitter/commit/c6ebfaa9bc973b33d110a84a307742b7cf94c953#commitcomment-5024910
+
+    (liveEvents.length)
+      ? e[name] = liveEvents
+      : delete e[name];
+
+    return this;
+  }
+};
+
+module.exports = E;
+module.exports.TinyEmitter = E;
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	!function() {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = function(module) {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				function() { return module['default']; } :
+/******/ 				function() { return module; };
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	!function() {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = function(exports, definition) {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	}();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	!function() {
+/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
+/******/ 	}();
+/******/ 	
+/************************************************************************/
+/******/ 	// module exports must be returned from runtime so entry inlining is disabled
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(134);
+/******/ })()
+.default;
+});
+},{}],"../node_modules/react-clipboard.js/dist/react-clipboard.js":[function(require,module,exports) {
+var define;
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
+	else if(typeof define === 'function' && define.amd)
+		define(["clipboard", "prop-types", "react", "react-dom"], factory);
+	else if(typeof exports === 'object')
+		exports["ReactClipboard"] = factory(require("clipboard"), require("prop-types"), require("react"), require("react-dom"));
+	else
+		root["ReactClipboard"] = factory(root["ClipboardJS"], root["PropTypes"], root["React"], root["ReactDOM"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_clipboard__, __WEBPACK_EXTERNAL_MODULE_prop_types__, __WEBPACK_EXTERNAL_MODULE_react__, __WEBPACK_EXTERNAL_MODULE_react_dom__) {
+return /******/ (function(modules) { // webpackBootstrap
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
+/******/
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
+/******/
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
+/******/
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/
+/******/
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./index.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./index.js":
+/*!******************!*\
+  !*** ./index.js ***!
+  \******************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "react-dom");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! prop-types */ "prop-types");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
+
+var ClipboardButton =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ClipboardButton, _React$Component);
+
+  function ClipboardButton() {
+    _classCallCheck(this, ClipboardButton);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(ClipboardButton).apply(this, arguments));
+  }
+
+  _createClass(ClipboardButton, [{
+    key: "propsWith",
+    value: function propsWith(regexp) {
+      var remove = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var object = {};
+      Object.keys(this.props).forEach(function (key) {
+        if (key.search(regexp) !== -1) {
+          var objectKey = remove ? key.replace(regexp, '') : key;
+          object[objectKey] = this.props[key];
+        }
+      }, this);
+      return object;
+    }
+  }, {
+    key: "componentWillUnmount",
+    value: function componentWillUnmount() {
+      this.clipboard && this.clipboard.destroy();
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      // Support old API by trying to assign this.props.options first;
+      var options = this.props.options || this.propsWith(/^option-/, true);
+      var element = react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.findDOMNode(this.element);
+
+      if (!element) {
+        return;
+      }
+
+      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
+
+      this.clipboard = new Clipboard(element, options);
+      var callbacks = this.propsWith(/^on/, true);
+      Object.keys(callbacks).forEach(function (callback) {
+        this.clipboard.on(callback.toLowerCase(), this.props['on' + callback]);
+      }, this);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this = this;
+
+      var attributes = _objectSpread({
+        title: this.props.title || '',
+        type: this.getType(),
+        className: this.props.className || '',
+        style: this.props.style || {},
+        ref: function ref(element) {
+          return _this.element = element;
+        },
+        onClick: this.props.onClick
+      }, this.propsWith(/^data-/), this.propsWith(/^button-/, true));
+
+      var Clipboard = __webpack_require__(/*! clipboard */ "clipboard");
+
+      if (!this.props.isVisibleWhenUnsupported && !Clipboard.isSupported()) {
+        return null;
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(this.getComponent(), attributes, this.props.children);
+    }
+  }, {
+    key: "getType",
+    value: function getType() {
+      if (this.getComponent() === 'button' || this.getComponent() === 'input') {
+        return this.props.type || 'button';
+      } else {
+        return undefined;
+      }
+    }
+  }, {
+    key: "getComponent",
+    value: function getComponent() {
+      return this.props.component || 'button';
+    }
+  }]);
+
+  return ClipboardButton;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+_defineProperty(ClipboardButton, "propTypes", {
+  options: function options(props, propName, componentName) {
+    var options = props[propName];
+
+    if (options && _typeof(options) !== 'object' || Array.isArray(options)) {
+      return new Error("Invalid props '".concat(propName, "' supplied to '").concat(componentName, "'. ") + "'".concat(propName, "' is not an object."));
+    }
+
+    if (props['option-text'] !== undefined) {
+      var optionText = props['option-text'];
+
+      if (typeof optionText !== 'function') {
+        return new Error("Invalid props 'option-text' supplied to '".concat(componentName, "'. ") + "'option-text' is not a function.");
+      }
+    }
+  },
+  title: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  type: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  className: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.string,
+  style: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.object,
+  component: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any,
+  children: prop_types__WEBPACK_IMPORTED_MODULE_2___default.a.any
+});
+
+_defineProperty(ClipboardButton, "defaultProps", {
+  isVisibleWhenUnsupported: true,
+  onClick: function onClick() {}
+  /* Returns a object with all props that fulfill a certain naming pattern
+   *
+   * @param {RegExp} regexp - Regular expression representing which pattern
+   *                          you'll be searching for.
+   * @param {Boolean} remove - Determines if the regular expression should be
+   *                           removed when transmitting the key from the props
+   *                           to the new object.
+   *
+   * e.g:
+   *
+   * // Considering:
+   * // this.props = {option-foo: 1, onBar: 2, data-foobar: 3 data-baz: 4};
+   *
+   * // *RegExps not using // so that this comment doesn't break up
+   * this.propsWith(option-*, true); // returns {foo: 1}
+   * this.propsWith(on*, true); // returns {Bar: 2}
+   * this.propsWith(data-*); // returns {data-foobar: 1, data-baz: 4}
+   */
+
+});
+
+/* harmony default export */ __webpack_exports__["default"] = (ClipboardButton);
+
+/***/ }),
+
+/***/ "clipboard":
+/*!********************************************************************************************************!*\
+  !*** external {"root":"ClipboardJS","amd":"clipboard","commonjs":"clipboard","commonjs2":"clipboard"} ***!
+  \********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_clipboard__;
+
+/***/ }),
+
+/***/ "prop-types":
+/*!*********************************************************************************************************!*\
+  !*** external {"root":"PropTypes","amd":"prop-types","commonjs":"prop-types","commonjs2":"prop-types"} ***!
+  \*********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_prop_types__;
+
+/***/ }),
+
+/***/ "react":
+/*!**************************************************************************************!*\
+  !*** external {"root":"React","amd":"react","commonjs":"react","commonjs2":"react"} ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_react__;
+
+/***/ }),
+
+/***/ "react-dom":
+/*!*****************************************************************************************************!*\
+  !*** external {"root":"ReactDOM","amd":"react-dom","commonjs":"react-dom","commonjs2":"react-dom"} ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = __WEBPACK_EXTERNAL_MODULE_react_dom__;
+
+/***/ })
+
+/******/ });
+});
+
+},{"clipboard":"../node_modules/clipboard/dist/clipboard.js","prop-types":"../node_modules/prop-types/index.js","react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js"}],"../node_modules/react-from-dom/esm/helpers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.randomString = randomString;
+exports.possibleStandardNames = exports.noTextChildNodes = exports.styleToObject = void 0;
+
+var __read = void 0 && (void 0).__read || function (o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+};
+
+var styleToObject = function (input) {
+  var attributes = input.split(/ ?; ?/);
+  return attributes.reduce(function (acc, d) {
+    var _a = __read(d.split(/ ?: ?/), 2),
+        key = _a[0],
+        value = _a[1];
+
+    if (key && value) {
+      acc[key.replace(/-(\w)/g, function (_$0, $1) {
+        return $1.toUpperCase();
+      })] = Number.isNaN(Number(value)) ? value : Number(value);
+    }
+
+    return acc;
+  }, {});
+};
+/* istanbul ignore next */
+
+
+exports.styleToObject = styleToObject;
+
+function randomString(length) {
+  if (length === void 0) {
+    length = 6;
+  }
+
+  var characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  var result = '';
+
+  for (var i = length; i > 0; --i) {
+    result += characters[Math.round(Math.random() * (characters.length - 1))];
+  }
+
+  return result;
+}
+
+var noTextChildNodes = ['br', 'col', 'colgroup', 'dl', 'hr', 'iframe', 'img', 'input', 'link', 'menuitem', 'meta', 'ol', 'param', 'select', 'table', 'tbody', 'tfoot', 'thead', 'tr', 'ul', 'wbr'];
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+// Taken from https://raw.githubusercontent.com/facebook/react/baff5cc2f69d30589a5dc65b089e47765437294b/packages/react-dom/src/shared/possibleStandardNames.js
+// tslint:disable:object-literal-sort-keys
+
+exports.noTextChildNodes = noTextChildNodes;
+var possibleStandardNames = {
+  // HTML
+  'accept-charset': 'acceptCharset',
+  acceptcharset: 'acceptCharset',
+  accesskey: 'accessKey',
+  allowfullscreen: 'allowFullScreen',
+  autocapitalize: 'autoCapitalize',
+  autocomplete: 'autoComplete',
+  autocorrect: 'autoCorrect',
+  autofocus: 'autoFocus',
+  autoplay: 'autoPlay',
+  autosave: 'autoSave',
+  cellpadding: 'cellPadding',
+  cellspacing: 'cellSpacing',
+  charset: 'charSet',
+  class: 'className',
+  classid: 'classID',
+  classname: 'className',
+  colspan: 'colSpan',
+  contenteditable: 'contentEditable',
+  contextmenu: 'contextMenu',
+  controlslist: 'controlsList',
+  crossorigin: 'crossOrigin',
+  dangerouslysetinnerhtml: 'dangerouslySetInnerHTML',
+  datetime: 'dateTime',
+  defaultchecked: 'defaultChecked',
+  defaultvalue: 'defaultValue',
+  enctype: 'encType',
+  for: 'htmlFor',
+  formmethod: 'formMethod',
+  formaction: 'formAction',
+  formenctype: 'formEncType',
+  formnovalidate: 'formNoValidate',
+  formtarget: 'formTarget',
+  frameborder: 'frameBorder',
+  hreflang: 'hrefLang',
+  htmlfor: 'htmlFor',
+  httpequiv: 'httpEquiv',
+  'http-equiv': 'httpEquiv',
+  icon: 'icon',
+  innerhtml: 'innerHTML',
+  inputmode: 'inputMode',
+  itemid: 'itemID',
+  itemprop: 'itemProp',
+  itemref: 'itemRef',
+  itemscope: 'itemScope',
+  itemtype: 'itemType',
+  keyparams: 'keyParams',
+  keytype: 'keyType',
+  marginwidth: 'marginWidth',
+  marginheight: 'marginHeight',
+  maxlength: 'maxLength',
+  mediagroup: 'mediaGroup',
+  minlength: 'minLength',
+  nomodule: 'noModule',
+  novalidate: 'noValidate',
+  playsinline: 'playsInline',
+  radiogroup: 'radioGroup',
+  readonly: 'readOnly',
+  referrerpolicy: 'referrerPolicy',
+  rowspan: 'rowSpan',
+  spellcheck: 'spellCheck',
+  srcdoc: 'srcDoc',
+  srclang: 'srcLang',
+  srcset: 'srcSet',
+  tabindex: 'tabIndex',
+  typemustmatch: 'typeMustMatch',
+  usemap: 'useMap',
+  // SVG
+  accentheight: 'accentHeight',
+  'accent-height': 'accentHeight',
+  alignmentbaseline: 'alignmentBaseline',
+  'alignment-baseline': 'alignmentBaseline',
+  allowreorder: 'allowReorder',
+  arabicform: 'arabicForm',
+  'arabic-form': 'arabicForm',
+  attributename: 'attributeName',
+  attributetype: 'attributeType',
+  autoreverse: 'autoReverse',
+  basefrequency: 'baseFrequency',
+  baselineshift: 'baselineShift',
+  'baseline-shift': 'baselineShift',
+  baseprofile: 'baseProfile',
+  calcmode: 'calcMode',
+  capheight: 'capHeight',
+  'cap-height': 'capHeight',
+  clippath: 'clipPath',
+  'clip-path': 'clipPath',
+  clippathunits: 'clipPathUnits',
+  cliprule: 'clipRule',
+  'clip-rule': 'clipRule',
+  colorinterpolation: 'colorInterpolation',
+  'color-interpolation': 'colorInterpolation',
+  colorinterpolationfilters: 'colorInterpolationFilters',
+  'color-interpolation-filters': 'colorInterpolationFilters',
+  colorprofile: 'colorProfile',
+  'color-profile': 'colorProfile',
+  colorrendering: 'colorRendering',
+  'color-rendering': 'colorRendering',
+  contentscripttype: 'contentScriptType',
+  contentstyletype: 'contentStyleType',
+  diffuseconstant: 'diffuseConstant',
+  dominantbaseline: 'dominantBaseline',
+  'dominant-baseline': 'dominantBaseline',
+  edgemode: 'edgeMode',
+  enablebackground: 'enableBackground',
+  'enable-background': 'enableBackground',
+  externalresourcesrequired: 'externalResourcesRequired',
+  fillopacity: 'fillOpacity',
+  'fill-opacity': 'fillOpacity',
+  fillrule: 'fillRule',
+  'fill-rule': 'fillRule',
+  filterres: 'filterRes',
+  filterunits: 'filterUnits',
+  floodopacity: 'floodOpacity',
+  'flood-opacity': 'floodOpacity',
+  floodcolor: 'floodColor',
+  'flood-color': 'floodColor',
+  fontfamily: 'fontFamily',
+  'font-family': 'fontFamily',
+  fontsize: 'fontSize',
+  'font-size': 'fontSize',
+  fontsizeadjust: 'fontSizeAdjust',
+  'font-size-adjust': 'fontSizeAdjust',
+  fontstretch: 'fontStretch',
+  'font-stretch': 'fontStretch',
+  fontstyle: 'fontStyle',
+  'font-style': 'fontStyle',
+  fontvariant: 'fontVariant',
+  'font-variant': 'fontVariant',
+  fontweight: 'fontWeight',
+  'font-weight': 'fontWeight',
+  glyphname: 'glyphName',
+  'glyph-name': 'glyphName',
+  glyphorientationhorizontal: 'glyphOrientationHorizontal',
+  'glyph-orientation-horizontal': 'glyphOrientationHorizontal',
+  glyphorientationvertical: 'glyphOrientationVertical',
+  'glyph-orientation-vertical': 'glyphOrientationVertical',
+  glyphref: 'glyphRef',
+  gradienttransform: 'gradientTransform',
+  gradientunits: 'gradientUnits',
+  horizadvx: 'horizAdvX',
+  'horiz-adv-x': 'horizAdvX',
+  horizoriginx: 'horizOriginX',
+  'horiz-origin-x': 'horizOriginX',
+  imagerendering: 'imageRendering',
+  'image-rendering': 'imageRendering',
+  kernelmatrix: 'kernelMatrix',
+  kernelunitlength: 'kernelUnitLength',
+  keypoints: 'keyPoints',
+  keysplines: 'keySplines',
+  keytimes: 'keyTimes',
+  lengthadjust: 'lengthAdjust',
+  letterspacing: 'letterSpacing',
+  'letter-spacing': 'letterSpacing',
+  lightingcolor: 'lightingColor',
+  'lighting-color': 'lightingColor',
+  limitingconeangle: 'limitingConeAngle',
+  markerend: 'markerEnd',
+  'marker-end': 'markerEnd',
+  markerheight: 'markerHeight',
+  markermid: 'markerMid',
+  'marker-mid': 'markerMid',
+  markerstart: 'markerStart',
+  'marker-start': 'markerStart',
+  markerunits: 'markerUnits',
+  markerwidth: 'markerWidth',
+  maskcontentunits: 'maskContentUnits',
+  maskunits: 'maskUnits',
+  numoctaves: 'numOctaves',
+  overlineposition: 'overlinePosition',
+  'overline-position': 'overlinePosition',
+  overlinethickness: 'overlineThickness',
+  'overline-thickness': 'overlineThickness',
+  paintorder: 'paintOrder',
+  'paint-order': 'paintOrder',
+  'panose-1': 'panose1',
+  pathlength: 'pathLength',
+  patterncontentunits: 'patternContentUnits',
+  patterntransform: 'patternTransform',
+  patternunits: 'patternUnits',
+  pointerevents: 'pointerEvents',
+  'pointer-events': 'pointerEvents',
+  pointsatx: 'pointsAtX',
+  pointsaty: 'pointsAtY',
+  pointsatz: 'pointsAtZ',
+  preservealpha: 'preserveAlpha',
+  preserveaspectratio: 'preserveAspectRatio',
+  primitiveunits: 'primitiveUnits',
+  refx: 'refX',
+  refy: 'refY',
+  renderingintent: 'renderingIntent',
+  'rendering-intent': 'renderingIntent',
+  repeatcount: 'repeatCount',
+  repeatdur: 'repeatDur',
+  requiredextensions: 'requiredExtensions',
+  requiredfeatures: 'requiredFeatures',
+  shaperendering: 'shapeRendering',
+  'shape-rendering': 'shapeRendering',
+  specularconstant: 'specularConstant',
+  specularexponent: 'specularExponent',
+  spreadmethod: 'spreadMethod',
+  startoffset: 'startOffset',
+  stddeviation: 'stdDeviation',
+  stitchtiles: 'stitchTiles',
+  stopcolor: 'stopColor',
+  'stop-color': 'stopColor',
+  stopopacity: 'stopOpacity',
+  'stop-opacity': 'stopOpacity',
+  strikethroughposition: 'strikethroughPosition',
+  'strikethrough-position': 'strikethroughPosition',
+  strikethroughthickness: 'strikethroughThickness',
+  'strikethrough-thickness': 'strikethroughThickness',
+  strokedasharray: 'strokeDasharray',
+  'stroke-dasharray': 'strokeDasharray',
+  strokedashoffset: 'strokeDashoffset',
+  'stroke-dashoffset': 'strokeDashoffset',
+  strokelinecap: 'strokeLinecap',
+  'stroke-linecap': 'strokeLinecap',
+  strokelinejoin: 'strokeLinejoin',
+  'stroke-linejoin': 'strokeLinejoin',
+  strokemiterlimit: 'strokeMiterlimit',
+  'stroke-miterlimit': 'strokeMiterlimit',
+  strokewidth: 'strokeWidth',
+  'stroke-width': 'strokeWidth',
+  strokeopacity: 'strokeOpacity',
+  'stroke-opacity': 'strokeOpacity',
+  suppresscontenteditablewarning: 'suppressContentEditableWarning',
+  suppresshydrationwarning: 'suppressHydrationWarning',
+  surfacescale: 'surfaceScale',
+  systemlanguage: 'systemLanguage',
+  tablevalues: 'tableValues',
+  targetx: 'targetX',
+  targety: 'targetY',
+  textanchor: 'textAnchor',
+  'text-anchor': 'textAnchor',
+  textdecoration: 'textDecoration',
+  'text-decoration': 'textDecoration',
+  textlength: 'textLength',
+  textrendering: 'textRendering',
+  'text-rendering': 'textRendering',
+  underlineposition: 'underlinePosition',
+  'underline-position': 'underlinePosition',
+  underlinethickness: 'underlineThickness',
+  'underline-thickness': 'underlineThickness',
+  unicodebidi: 'unicodeBidi',
+  'unicode-bidi': 'unicodeBidi',
+  unicoderange: 'unicodeRange',
+  'unicode-range': 'unicodeRange',
+  unitsperem: 'unitsPerEm',
+  'units-per-em': 'unitsPerEm',
+  unselectable: 'unselectable',
+  valphabetic: 'vAlphabetic',
+  'v-alphabetic': 'vAlphabetic',
+  vectoreffect: 'vectorEffect',
+  'vector-effect': 'vectorEffect',
+  vertadvy: 'vertAdvY',
+  'vert-adv-y': 'vertAdvY',
+  vertoriginx: 'vertOriginX',
+  'vert-origin-x': 'vertOriginX',
+  vertoriginy: 'vertOriginY',
+  'vert-origin-y': 'vertOriginY',
+  vhanging: 'vHanging',
+  'v-hanging': 'vHanging',
+  videographic: 'vIdeographic',
+  'v-ideographic': 'vIdeographic',
+  viewbox: 'viewBox',
+  viewtarget: 'viewTarget',
+  vmathematical: 'vMathematical',
+  'v-mathematical': 'vMathematical',
+  wordspacing: 'wordSpacing',
+  'word-spacing': 'wordSpacing',
+  writingmode: 'writingMode',
+  'writing-mode': 'writingMode',
+  xchannelselector: 'xChannelSelector',
+  xheight: 'xHeight',
+  'x-height': 'xHeight',
+  xlinkactuate: 'xlinkActuate',
+  'xlink:actuate': 'xlinkActuate',
+  xlinkarcrole: 'xlinkArcrole',
+  'xlink:arcrole': 'xlinkArcrole',
+  xlinkhref: 'xlinkHref',
+  'xlink:href': 'xlinkHref',
+  xlinkrole: 'xlinkRole',
+  'xlink:role': 'xlinkRole',
+  xlinkshow: 'xlinkShow',
+  'xlink:show': 'xlinkShow',
+  xlinktitle: 'xlinkTitle',
+  'xlink:title': 'xlinkTitle',
+  xlinktype: 'xlinkType',
+  'xlink:type': 'xlinkType',
+  xmlbase: 'xmlBase',
+  'xml:base': 'xmlBase',
+  xmllang: 'xmlLang',
+  'xml:lang': 'xmlLang',
+  'xml:space': 'xmlSpace',
+  xmlnsxlink: 'xmlnsXlink',
+  'xmlns:xlink': 'xmlnsXlink',
+  xmlspace: 'xmlSpace',
+  ychannelselector: 'yChannelSelector',
+  zoomandpan: 'zoomAndPan',
+  // event handlers
+  onblur: 'onBlur',
+  onchange: 'onChange',
+  onclick: 'onClick',
+  oncontextmenu: 'onContextMenu',
+  ondoubleclick: 'onDoubleClick',
+  ondrag: 'onDrag',
+  ondragend: 'onDragEnd',
+  ondragenter: 'onDragEnter',
+  ondragexit: 'onDragExit',
+  ondragleave: 'onDragLeave',
+  ondragover: 'onDragOver',
+  ondragstart: 'onDragStart',
+  ondrop: 'onDrop',
+  onerror: 'onError',
+  onfocus: 'onFocus',
+  oninput: 'onInput',
+  oninvalid: 'onInvalid',
+  onkeydown: 'onKeyDown',
+  onkeypress: 'onKeyPress',
+  onkeyup: 'onKeyUp',
+  onload: 'onLoad',
+  onmousedown: 'onMouseDown',
+  onmouseenter: 'onMouseEnter',
+  onmouseleave: 'onMouseLeave',
+  onmousemove: 'onMouseMove',
+  onmouseout: 'onMouseOut',
+  onmouseover: 'onMouseOver',
+  onmouseup: 'onMouseUp',
+  onscroll: 'onScroll',
+  onsubmit: 'onSubmit',
+  ontouchcancel: 'onTouchCancel',
+  ontouchend: 'onTouchEnd',
+  ontouchmove: 'onTouchMove',
+  ontouchstart: 'onTouchStart',
+  onwheel: 'onWheel'
+};
+exports.possibleStandardNames = possibleStandardNames;
+},{}],"../node_modules/react-from-dom/esm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.convertFromNode = convertFromNode;
+exports.convertFromString = convertFromString;
+exports.default = convert;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _helpers = require("./helpers");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __read = void 0 && (void 0).__read || function (o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+};
+
+var __spreadArray = void 0 && (void 0).__spreadArray || function (to, from) {
+  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) to[j] = from[i];
+
+  return to;
+};
+/* eslint-disable @typescript-eslint/no-use-before-define */
+
+
+function parseAttributes(node, reactKey) {
+  var attributes = {
+    key: reactKey
+  };
+  /* istanbul ignore else */
+
+  if (node instanceof Element) {
+    var nodeClassNames = node.getAttribute('class');
+
+    if (nodeClassNames) {
+      attributes.className = nodeClassNames;
+    }
+
+    __spreadArray([], __read(node.attributes)).forEach(function (d) {
+      switch (d.name) {
+        // this is manually handled above, so break;
+        case 'class':
+          break;
+
+        case 'style':
+          attributes[d.name] = (0, _helpers.styleToObject)(d.value);
+          break;
+
+        case 'allowfullscreen':
+        case 'allowpaymentrequest':
+        case 'async':
+        case 'autofocus':
+        case 'autoplay':
+        case 'checked':
+        case 'controls':
+        case 'default':
+        case 'defer':
+        case 'disabled':
+        case 'formnovalidate':
+        case 'hidden':
+        case 'ismap':
+        case 'itemscope':
+        case 'loop':
+        case 'multiple':
+        case 'muted':
+        case 'nomodule':
+        case 'novalidate':
+        case 'open':
+        case 'readonly':
+        case 'required':
+        case 'reversed':
+        case 'selected':
+        case 'typemustmatch':
+          attributes[_helpers.possibleStandardNames[d.name] || d.name] = true;
+          break;
+
+        default:
+          attributes[_helpers.possibleStandardNames[d.name] || d.name] = d.value;
+      }
+    });
+  }
+
+  return attributes;
+}
+
+function parseChildren(childNodeList, level, options) {
+  var children = __spreadArray([], __read(childNodeList)).map(function (node, index) {
+    return convertFromNode(node, __assign(__assign({}, options), {
+      index: index,
+      level: level + 1
+    }));
+  }).filter(Boolean);
+
+  if (!children.length) {
+    return null;
+  }
+
+  return children;
+}
+
+function parseName(nodeName) {
+  if (/[a-z]+[A-Z]+[a-z]+/.test(nodeName)) {
+    return nodeName;
+  }
+
+  return nodeName.toLowerCase();
+}
+
+function convertFromNode(input, options) {
+  var _a;
+
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (!input || !(input instanceof Node)) {
+    return null;
+  }
+
+  var _b = options.actions,
+      actions = _b === void 0 ? [] : _b,
+      _c = options.index,
+      index = _c === void 0 ? 0 : _c,
+      _d = options.level,
+      level = _d === void 0 ? 0 : _d,
+      randomKey = options.randomKey;
+  var node = input;
+  var key = level + "-" + index;
+  var result = [];
+
+  if (randomKey && level === 0) {
+    key = (0, _helpers.randomString)() + "-" + key;
+  }
+  /* istanbul ignore else */
+
+
+  if (Array.isArray(actions)) {
+    actions.forEach(function (action) {
+      if (action.condition(node, key, level)) {
+        if (typeof action.pre === 'function') {
+          node = action.pre(node, key, level);
+
+          if (!(node instanceof Node)) {
+            node = input;
+            /* istanbul ignore else */
+
+            if ("development" !== 'production') {
+              // eslint-disable-next-line no-console
+              console.warn('The `pre` method always must return a valid DomNode (instanceof Node) - your modification will be ignored (Hint: if you want to render a React-component, use the `post` method instead)');
+            }
+          }
+        }
+
+        if (typeof action.post === 'function') {
+          result.push(action.post(node, key, level));
+        }
+      }
+    });
+  }
+
+  if (result.length) {
+    return result;
+  }
+
+  switch (node.nodeType) {
+    case 1:
+      {
+        // regular dom-node
+        return React.createElement(parseName(node.nodeName), parseAttributes(node, key), parseChildren(node.childNodes, level, options));
+      }
+
+    case 3:
+      {
+        // textnode
+        var nodeText = ((_a = node.nodeValue) === null || _a === void 0 ? void 0 : _a.toString()) || '';
+        /* istanbul ignore else */
+
+        if (/^\s+$/.test(nodeText) && !/[\u202F\u00A0]/.test(nodeText)) {
+          return null;
+        }
+        /* istanbul ignore next */
+
+
+        if (!node.parentNode) {
+          return nodeText;
+        }
+
+        var parentNodeName = node.parentNode.nodeName.toLowerCase();
+
+        if (_helpers.noTextChildNodes.indexOf(parentNodeName) !== -1) {
+          /* istanbul ignore else */
+          if (/\S/.test(nodeText)) {
+            // eslint-disable-next-line no-console
+            console.warn("A textNode is not allowed inside '" + parentNodeName + "'. Your text \"" + nodeText + "\" will be ignored");
+          }
+
+          return null;
+        }
+
+        return nodeText;
+      }
+
+    case 8:
+      {
+        // html-comment
+        return null;
+      }
+
+    /* istanbul ignore next */
+
+    default:
+      {
+        return null;
+      }
+  }
+}
+
+function convertFromString(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (!input || typeof input !== 'string') {
+    return null;
+  }
+
+  var _a = options.nodeOnly,
+      nodeOnly = _a === void 0 ? false : _a,
+      _b = options.selector,
+      selector = _b === void 0 ? 'body > *' : _b,
+      _c = options.type,
+      type = _c === void 0 ? 'text/html' : _c;
+
+  try {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(input, type);
+    var node = doc.querySelector(selector);
+
+    if (!(node instanceof Node)) {
+      throw new Error('Error parsing input');
+    }
+
+    if (nodeOnly) {
+      return node;
+    }
+
+    return convertFromNode(node, options);
+  } catch (error) {
+    /* istanbul ignore else */
+    if ("development" !== 'production') {
+      // eslint-disable-next-line no-console
+      console.error(error);
+    }
+  }
+
+  return null;
+}
+
+function convert(input, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  if (typeof input === 'string') {
+    return convertFromString(input, options);
+  }
+
+  if (input instanceof Node) {
+    return convertFromNode(input, options);
+  }
+
+  return null;
+}
+},{"react":"../node_modules/react/index.js","./helpers":"../node_modules/react-from-dom/esm/helpers.js"}],"../node_modules/exenv/index.js":[function(require,module,exports) {
+var define;
+/*!
+  Copyright (c) 2015 Jed Watson.
+  Based on code that is Copyright 2013-2015, Facebook, Inc.
+  All rights reserved.
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var canUseDOM = !!(
+		typeof window !== 'undefined' &&
+		window.document &&
+		window.document.createElement
+	);
+
+	var ExecutionEnvironment = {
+
+		canUseDOM: canUseDOM,
+
+		canUseWorkers: typeof Worker !== 'undefined',
+
+		canUseEventListeners:
+			canUseDOM && !!(window.addEventListener || window.attachEvent),
+
+		canUseViewport: canUseDOM && !!window.screen
+
+	};
+
+	if (typeof define === 'function' && typeof define.amd === 'object' && define.amd) {
+		define(function () {
+			return ExecutionEnvironment;
+		});
+	} else if (typeof module !== 'undefined' && module.exports) {
+		module.exports = ExecutionEnvironment;
+	} else {
+		window.ExecutionEnvironment = ExecutionEnvironment;
+	}
+
+}());
+
+},{}],"../node_modules/react-inlinesvg/esm/helpers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.canUseDOM = canUseDOM;
+exports.isSupportedEnvironment = isSupportedEnvironment;
+exports.supportsInlineSVG = supportsInlineSVG;
+exports.randomString = randomString;
+exports.removeProperties = removeProperties;
+exports.STATUS = void 0;
+
+var _exenv = require("exenv");
+
+var STATUS = {
+  FAILED: 'failed',
+  LOADED: 'loaded',
+  LOADING: 'loading',
+  PENDING: 'pending',
+  READY: 'ready',
+  UNSUPPORTED: 'unsupported'
+};
+exports.STATUS = STATUS;
+
+function canUseDOM() {
+  return _exenv.canUseDOM;
+}
+
+function isSupportedEnvironment() {
+  return supportsInlineSVG() && typeof window !== 'undefined' && window !== null;
+}
+
+function supportsInlineSVG() {
+  /* istanbul ignore next */
+  if (!document) {
+    return false;
+  }
+
+  var div = document.createElement('div');
+  div.innerHTML = '<svg />';
+  return !!div.firstChild && div.firstChild.namespaceURI === 'http://www.w3.org/2000/svg';
+}
+
+function randomString(length) {
+  var letters = 'abcdefghijklmnopqrstuvwxyz';
+  var numbers = '1234567890';
+  var charset = "" + letters + letters.toUpperCase() + numbers;
+
+  var randomCharacter = function (character) {
+    return character[Math.floor(Math.random() * character.length)];
+  };
+
+  var R = '';
+
+  for (var i = 0; i < length; i++) {
+    R += randomCharacter(charset);
+  }
+
+  return R;
+}
+/**
+ *  Remove properties from an object
+ */
+
+
+function removeProperties(input) {
+  var filter = [];
+
+  for (var _i = 1; _i < arguments.length; _i++) {
+    filter[_i - 1] = arguments[_i];
+  }
+
+  var output = {};
+
+  for (var key in input) {
+    /* istanbul ignore else */
+    if ({}.hasOwnProperty.call(input, key)) {
+      if (!filter.includes(key)) {
+        output[key] = input[key];
+      }
+    }
+  }
+
+  return output;
+}
+},{"exenv":"../node_modules/exenv/index.js"}],"../node_modules/react-inlinesvg/esm/types.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+},{}],"../node_modules/react-inlinesvg/esm/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var _exportNames = {
+  cacheStore: true
+};
+exports.default = exports.cacheStore = void 0;
+
+var React = _interopRequireWildcard(require("react"));
+
+var _reactFromDom = _interopRequireDefault(require("react-from-dom"));
+
+var _helpers = require("./helpers");
+
+var _types = require("./types");
+
+Object.keys(_types).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  if (key in exports && exports[key] === _types[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _types[key];
+    }
+  });
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+var __extends = void 0 && (void 0).__extends || function () {
+  var extendStatics = function (d, b) {
+    extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+
+    return extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = void 0 && (void 0).__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+var __read = void 0 && (void 0).__read || function (o, n) {
+  var m = typeof Symbol === "function" && o[Symbol.iterator];
+  if (!m) return o;
+  var i = m.call(o),
+      r,
+      ar = [],
+      e;
+
+  try {
+    while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+  } catch (error) {
+    e = {
+      error: error
+    };
+  } finally {
+    try {
+      if (r && !r.done && (m = i["return"])) m.call(i);
+    } finally {
+      if (e) throw e.error;
+    }
+  }
+
+  return ar;
+};
+
+var __spreadArray = void 0 && (void 0).__spreadArray || function (to, from) {
+  for (var i = 0, il = from.length, j = to.length; i < il; i++, j++) to[j] = from[i];
+
+  return to;
+};
+
+var cacheStore = Object.create(null);
+exports.cacheStore = cacheStore;
+
+var InlineSVG = function (_super) {
+  __extends(InlineSVG, _super);
+
+  function InlineSVG(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.isActive = false;
+
+    _this.handleCacheQueue = function (content) {
+      /* istanbul ignore else */
+      if (typeof content === 'string') {
+        _this.handleLoad(content);
+
+        return;
+      }
+
+      _this.handleError(content);
+    };
+
+    _this.handleLoad = function (content) {
+      /* istanbul ignore else */
+      if (_this.isActive) {
+        _this.setState({
+          content: content,
+          status: _helpers.STATUS.LOADED
+        }, _this.getElement);
+      }
+    };
+
+    _this.handleError = function (error) {
+      var onError = _this.props.onError;
+      var status = error.message === 'Browser does not support SVG' ? _helpers.STATUS.UNSUPPORTED : _helpers.STATUS.FAILED;
+      /* istanbul ignore else */
+
+      if (_this.isActive) {
+        _this.setState({
+          status: status
+        }, function () {
+          /* istanbul ignore else */
+          if (typeof onError === 'function') {
+            onError(error);
+          }
+        });
+      }
+    };
+
+    _this.request = function () {
+      var _a = _this.props,
+          cacheRequests = _a.cacheRequests,
+          fetchOptions = _a.fetchOptions,
+          src = _a.src;
+
+      try {
+        if (cacheRequests) {
+          cacheStore[src] = {
+            content: '',
+            status: _helpers.STATUS.LOADING,
+            queue: []
+          };
+        }
+
+        return fetch(src, fetchOptions).then(function (response) {
+          var contentType = response.headers.get('content-type');
+
+          var _a = __read((contentType || '').split(/ ?; ?/), 1),
+              fileType = _a[0];
+
+          if (response.status > 299) {
+            throw new Error('Not found');
+          }
+
+          if (!['image/svg+xml', 'text/plain'].some(function (d) {
+            return fileType.indexOf(d) >= 0;
+          })) {
+            throw new Error("Content type isn't valid: " + fileType);
+          }
+
+          return response.text();
+        }).then(function (content) {
+          var currentSrc = _this.props.src; // the current src don't match the previous one, skipping...
+
+          if (src !== currentSrc) {
+            return;
+          }
+
+          _this.handleLoad(content);
+          /* istanbul ignore else */
+
+
+          if (cacheRequests) {
+            var cache = cacheStore[src];
+            /* istanbul ignore else */
+
+            if (cache) {
+              cache.content = content;
+              cache.status = _helpers.STATUS.LOADED;
+              cache.queue = cache.queue.filter(function (cb) {
+                cb(content);
+                return false;
+              });
+            }
+          }
+        }).catch(function (error) {
+          _this.handleError(error);
+          /* istanbul ignore else */
+
+
+          if (cacheRequests) {
+            var cache = cacheStore[src];
+            /* istanbul ignore else */
+
+            if (cache) {
+              cache.queue.forEach(function (cb) {
+                cb(error);
+              });
+              delete cacheStore[src];
+            }
+          }
+        });
+      } catch (error) {
+        return _this.handleError(new Error(error.message));
+      }
+    };
+
+    _this.state = {
+      content: '',
+      element: null,
+      hasCache: !!props.cacheRequests && !!cacheStore[props.src],
+      status: _helpers.STATUS.PENDING
+    };
+    _this.hash = props.uniqueHash || (0, _helpers.randomString)(8);
+    return _this;
+  }
+
+  InlineSVG.prototype.componentDidMount = function () {
+    this.isActive = true;
+
+    if (!(0, _helpers.canUseDOM)()) {
+      return;
+    }
+
+    var status = this.state.status;
+    var src = this.props.src;
+
+    try {
+      /* istanbul ignore else */
+      if (status === _helpers.STATUS.PENDING) {
+        /* istanbul ignore else */
+        if (!(0, _helpers.isSupportedEnvironment)()) {
+          throw new Error('Browser does not support SVG');
+        }
+        /* istanbul ignore else */
+
+
+        if (!src) {
+          throw new Error('Missing src');
+        }
+
+        this.load();
+      }
+    } catch (error) {
+      this.handleError(error);
+    }
+  };
+
+  InlineSVG.prototype.componentDidUpdate = function (prevProps, prevState) {
+    if (!(0, _helpers.canUseDOM)()) {
+      return;
+    }
+
+    var _a = this.state,
+        hasCache = _a.hasCache,
+        status = _a.status;
+    var _b = this.props,
+        onLoad = _b.onLoad,
+        src = _b.src;
+
+    if (prevState.status !== _helpers.STATUS.READY && status === _helpers.STATUS.READY) {
+      /* istanbul ignore else */
+      if (onLoad) {
+        onLoad(src, hasCache);
+      }
+    }
+
+    if (prevProps.src !== src) {
+      if (!src) {
+        this.handleError(new Error('Missing src'));
+        return;
+      }
+
+      this.load();
+    }
+  };
+
+  InlineSVG.prototype.componentWillUnmount = function () {
+    this.isActive = false;
+  };
+
+  InlineSVG.prototype.processSVG = function () {
+    var content = this.state.content;
+    var preProcessor = this.props.preProcessor;
+
+    if (preProcessor) {
+      return preProcessor(content);
+    }
+
+    return content;
+  };
+
+  InlineSVG.prototype.updateSVGAttributes = function (node) {
+    var _this = this;
+
+    var _a = this.props,
+        _b = _a.baseURL,
+        baseURL = _b === void 0 ? '' : _b,
+        uniquifyIDs = _a.uniquifyIDs;
+    var replaceableAttributes = ['id', 'href', 'xlink:href', 'xlink:role', 'xlink:arcrole'];
+    var linkAttributes = ['href', 'xlink:href'];
+
+    var isDataValue = function (name, value) {
+      return linkAttributes.indexOf(name) >= 0 && (value ? value.indexOf('#') < 0 : false);
+    };
+
+    if (!uniquifyIDs) {
+      return node;
+    }
+
+    __spreadArray([], __read(node.children)).map(function (d) {
+      if (d.attributes && d.attributes.length) {
+        var attributes_1 = Object.values(d.attributes).map(function (a) {
+          var attr = a;
+          var match = a.value.match(/url\((.*?)\)/);
+
+          if (match && match[1]) {
+            attr.value = a.value.replace(match[0], "url(" + baseURL + match[1] + "__" + _this.hash + ")");
+          }
+
+          return attr;
+        });
+        replaceableAttributes.forEach(function (r) {
+          var attribute = attributes_1.find(function (a) {
+            return a.name === r;
+          });
+
+          if (attribute && !isDataValue(r, attribute.value)) {
+            attribute.value = attribute.value + "__" + _this.hash;
+          }
+        });
+      }
+
+      if (d.children.length) {
+        return _this.updateSVGAttributes(d);
+      }
+
+      return d;
+    });
+
+    return node;
+  };
+
+  InlineSVG.prototype.getNode = function () {
+    var _a = this.props,
+        description = _a.description,
+        title = _a.title;
+
+    try {
+      var svgText = this.processSVG();
+      var node = (0, _reactFromDom.default)(svgText, {
+        nodeOnly: true
+      });
+
+      if (!node || !(node instanceof SVGSVGElement)) {
+        throw new Error('Could not convert the src to a DOM Node');
+      }
+
+      var svg = this.updateSVGAttributes(node);
+
+      if (description) {
+        var originalDesc = svg.querySelector('desc');
+
+        if (originalDesc && originalDesc.parentNode) {
+          originalDesc.parentNode.removeChild(originalDesc);
+        }
+
+        var descElement = document.createElement('desc');
+        descElement.innerHTML = description;
+        svg.prepend(descElement);
+      }
+
+      if (title) {
+        var originalTitle = svg.querySelector('title');
+
+        if (originalTitle && originalTitle.parentNode) {
+          originalTitle.parentNode.removeChild(originalTitle);
+        }
+
+        var titleElement = document.createElement('title');
+        titleElement.innerHTML = title;
+        svg.prepend(titleElement);
+      }
+
+      return svg;
+    } catch (error) {
+      return this.handleError(error);
+    }
+  };
+
+  InlineSVG.prototype.getElement = function () {
+    try {
+      var node = this.getNode();
+      var element = (0, _reactFromDom.default)(node);
+
+      if (!element || !React.isValidElement(element)) {
+        throw new Error('Could not convert the src to a React element');
+      }
+
+      this.setState({
+        element: element,
+        status: _helpers.STATUS.READY
+      });
+    } catch (error) {
+      this.handleError(new Error(error.message));
+    }
+  };
+
+  InlineSVG.prototype.load = function () {
+    var _this = this;
+    /* istanbul ignore else */
+
+
+    if (this.isActive) {
+      this.setState({
+        content: '',
+        element: null,
+        status: _helpers.STATUS.LOADING
+      }, function () {
+        var _a = _this.props,
+            cacheRequests = _a.cacheRequests,
+            src = _a.src;
+        var cache = cacheRequests && cacheStore[src];
+
+        if (cache) {
+          /* istanbul ignore else */
+          if (cache.status === _helpers.STATUS.LOADING) {
+            cache.queue.push(_this.handleCacheQueue);
+          } else if (cache.status === _helpers.STATUS.LOADED) {
+            _this.handleLoad(cache.content);
+          }
+
+          return;
+        }
+
+        var dataURI = src.match(/data:image\/svg[^,]*?(;base64)?,(.*)/);
+        var inlineSrc;
+
+        if (dataURI) {
+          inlineSrc = dataURI[1] ? atob(dataURI[2]) : decodeURIComponent(dataURI[2]);
+        } else if (src.indexOf('<svg') >= 0) {
+          inlineSrc = src;
+        }
+
+        if (inlineSrc) {
+          _this.handleLoad(inlineSrc);
+
+          return;
+        }
+
+        _this.request();
+      });
+    }
+  };
+
+  InlineSVG.prototype.render = function () {
+    var _a = this.state,
+        element = _a.element,
+        status = _a.status;
+    var _b = this.props,
+        _c = _b.children,
+        children = _c === void 0 ? null : _c,
+        innerRef = _b.innerRef,
+        _d = _b.loader,
+        loader = _d === void 0 ? null : _d;
+    var elementProps = (0, _helpers.removeProperties)(this.props, 'baseURL', 'cacheRequests', 'children', 'description', 'fetchOptions', 'innerRef', 'loader', 'onError', 'onLoad', 'preProcessor', 'src', 'title', 'uniqueHash', 'uniquifyIDs');
+
+    if (!(0, _helpers.canUseDOM)()) {
+      return loader;
+    }
+
+    if (element) {
+      return React.cloneElement(element, __assign({
+        ref: innerRef
+      }, elementProps));
+    }
+
+    if ([_helpers.STATUS.UNSUPPORTED, _helpers.STATUS.FAILED].indexOf(status) > -1) {
+      return children;
+    }
+
+    return loader;
+  };
+
+  InlineSVG.defaultProps = {
+    cacheRequests: true,
+    uniquifyIDs: false
+  };
+  return InlineSVG;
+}(React.PureComponent);
+
+var _default = InlineSVG;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-from-dom":"../node_modules/react-from-dom/esm/index.js","./helpers":"../node_modules/react-inlinesvg/esm/helpers.js","./types":"../node_modules/react-inlinesvg/esm/types.js"}],"assets/icons/social-website.svg":[function(require,module,exports) {
+module.exports = "/social-website.51357ff0.svg";
+},{}],"assets/icons/social-email.svg":[function(require,module,exports) {
+module.exports = "/social-email.eec20a87.svg";
+},{}],"assets/icons/social-twitter.svg":[function(require,module,exports) {
+module.exports = "/social-twitter.1f8f210b.svg";
+},{}],"assets/icons/social-facebook.svg":[function(require,module,exports) {
+module.exports = "/social-facebook.06671e21.svg";
+},{}],"assets/icons/social-linkedin.svg":[function(require,module,exports) {
+module.exports = "/social-linkedin.67c3316e.svg";
+},{}],"assets/icons/social-github.svg":[function(require,module,exports) {
+module.exports = "/social-github.ba89de4e.svg";
+},{}],"assets/icons/social-gitcoin.svg":[function(require,module,exports) {
+module.exports = "/social-gitcoin.f79ef815.svg";
+},{}],"assets/icons/social-medium.svg":[function(require,module,exports) {
+module.exports = "/social-medium.01883098.svg";
+},{}],"assets/icons/social-wechat.svg":[function(require,module,exports) {
+module.exports = "/social-wechat.01bfbc33.svg";
+},{}],"assets/icons/social-telegram.svg":[function(require,module,exports) {
+module.exports = "/social-telegram.cd3061a8.svg";
+},{}],"assets/icons/social-instagram.svg":[function(require,module,exports) {
+module.exports = "/social-instagram.591d736b.svg";
+},{}],"assets/icons/social-youtube.svg":[function(require,module,exports) {
+module.exports = "/social-youtube.47047c5e.svg";
+},{}],"assets/icons/social-discord.svg":[function(require,module,exports) {
+module.exports = "/social-discord.cb5487c3.svg";
+},{}],"assets/icons/social-reddit.svg":[function(require,module,exports) {
+module.exports = "/social-reddit.1496fbc4.svg";
+},{}],"assets/icons/social-patreon.svg":[function(require,module,exports) {
+module.exports = "/social-patreon.3c9234ca.svg";
+},{}],"assets/icons/social-paypal.svg":[function(require,module,exports) {
+module.exports = "/social-paypal.9e577d49.svg";
+},{}],"components/SocialLinks.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
+
+var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
+
+var _socialWebsite = _interopRequireDefault(require("../assets/icons/social-website.svg"));
+
+var _socialEmail = _interopRequireDefault(require("../assets/icons/social-email.svg"));
+
+var _socialTwitter = _interopRequireDefault(require("../assets/icons/social-twitter.svg"));
+
+var _socialFacebook = _interopRequireDefault(require("../assets/icons/social-facebook.svg"));
+
+var _socialLinkedin = _interopRequireDefault(require("../assets/icons/social-linkedin.svg"));
+
+var _socialGithub = _interopRequireDefault(require("../assets/icons/social-github.svg"));
+
+var _socialGitcoin = _interopRequireDefault(require("../assets/icons/social-gitcoin.svg"));
+
+var _socialMedium = _interopRequireDefault(require("../assets/icons/social-medium.svg"));
+
+var _socialWechat = _interopRequireDefault(require("../assets/icons/social-wechat.svg"));
+
+var _socialTelegram = _interopRequireDefault(require("../assets/icons/social-telegram.svg"));
+
+var _socialInstagram = _interopRequireDefault(require("../assets/icons/social-instagram.svg"));
+
+var _socialYoutube = _interopRequireDefault(require("../assets/icons/social-youtube.svg"));
+
+var _socialDiscord = _interopRequireDefault(require("../assets/icons/social-discord.svg"));
+
+var _socialReddit = _interopRequireDefault(require("../assets/icons/social-reddit.svg"));
+
+var _socialPatreon = _interopRequireDefault(require("../assets/icons/social-patreon.svg"));
+
+var _socialPaypal = _interopRequireDefault(require("../assets/icons/social-paypal.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class SocialLinks extends _react.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    const {
+      social
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-social profile-widget"
+    }, social.website ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.website,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip website",
+      title: "Website"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialWebsite.default,
+      className: "profile-social-icon icon"
+    })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `mailto:${social.email}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip email",
+      title: "Email"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialEmail.default,
+      className: "profile-social-icon icon"
+    })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://twitter.com/${social.twitter}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip twitter",
+      title: "Twitter"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialTwitter.default,
+      className: "profile-social-icon icon"
+    })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://facebook.com/${social.facebook}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip facebook",
+      title: "Facebook"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialFacebook.default,
+      className: "profile-social-icon icon"
+    })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.linkedin,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip linkedin",
+      title: "LinkedIn"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialLinkedin.default,
+      className: "profile-social-icon icon"
+    })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://github.com/${social.github}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip github",
+      title: "GitHub"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialGithub.default,
+      className: "profile-social-icon icon"
+    })) : null, social.gitcoin ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://gitcoin.com/${social.gitcoin}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip gitcoin",
+      title: "Gitcoin"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialGitcoin.default,
+      className: "profile-social-icon icon"
+    })) : null, social.medium ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.medium,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip medium",
+      title: "Medium"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialMedium.default,
+      className: "profile-social-icon icon"
+    })) : null, social.wechat ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      component: "div",
+      className: "profile-social-item c-hand tooltip medium",
+      "data-clipboard-text": social.wechat,
+      title: "Copy WeChat ID"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialWechat.default,
+      className: "profile-social-icon icon"
+    })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://t.me/${social.telegram}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip telegram",
+      title: "Telegram"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialTelegram.default,
+      className: "profile-social-icon icon"
+    })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://instagram.com/${social.instagram}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip instagram",
+      title: "Instagram"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialInstagram.default,
+      className: "profile-social-icon icon"
+    })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.youtube,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip youtube",
+      title: "YouTube"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialYoutube.default,
+      className: "profile-social-icon icon"
+    })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.discord,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip discord",
+      title: "Discord"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialDiscord.default,
+      className: "profile-social-icon icon"
+    })) : null, social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
+      href: social.reddit,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip reddit",
+      title: "Reddit"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialReddit.default,
+      className: "profile-social-icon icon"
+    })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://patreon.com/${social.patreon}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip patreon",
+      title: "Patreon"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialPatreon.default,
+      className: "profile-social-icon icon"
+    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://www.paypal.com/paypalme/${social.paypal}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "profile-social-item tooltip paypal",
+      title: "PayPal"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _socialPaypal.default,
+      className: "profile-social-icon icon"
+    })) : null);
+  }
+
+}
+
+var _default = SocialLinks;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/social-website.svg":"assets/icons/social-website.svg","../assets/icons/social-email.svg":"assets/icons/social-email.svg","../assets/icons/social-twitter.svg":"assets/icons/social-twitter.svg","../assets/icons/social-facebook.svg":"assets/icons/social-facebook.svg","../assets/icons/social-linkedin.svg":"assets/icons/social-linkedin.svg","../assets/icons/social-github.svg":"assets/icons/social-github.svg","../assets/icons/social-gitcoin.svg":"assets/icons/social-gitcoin.svg","../assets/icons/social-medium.svg":"assets/icons/social-medium.svg","../assets/icons/social-wechat.svg":"assets/icons/social-wechat.svg","../assets/icons/social-telegram.svg":"assets/icons/social-telegram.svg","../assets/icons/social-instagram.svg":"assets/icons/social-instagram.svg","../assets/icons/social-youtube.svg":"assets/icons/social-youtube.svg","../assets/icons/social-discord.svg":"assets/icons/social-discord.svg","../assets/icons/social-reddit.svg":"assets/icons/social-reddit.svg","../assets/icons/social-patreon.svg":"assets/icons/social-patreon.svg","../assets/icons/social-paypal.svg":"assets/icons/social-paypal.svg"}],"assets/icons/crypto-near.svg":[function(require,module,exports) {
+module.exports = "/crypto-near.6af70c73.svg";
+},{}],"assets/icons/crypto-btc.svg":[function(require,module,exports) {
+module.exports = "/crypto-btc.207fc2b4.svg";
+},{}],"assets/icons/crypto-eth.svg":[function(require,module,exports) {
+module.exports = "/crypto-eth.3c16830b.svg";
+},{}],"assets/icons/crypto-dot.svg":[function(require,module,exports) {
+module.exports = "/crypto-dot.29ef90cb.svg";
+},{}],"assets/icons/action-copy.svg":[function(require,module,exports) {
+module.exports = "/action-copy.cc7a0533.svg";
+},{}],"assets/icons/action-explore.svg":[function(require,module,exports) {
+module.exports = "/action-explore.67503071.svg";
+},{}],"assets/icons/action-donate.svg":[function(require,module,exports) {
+module.exports = "/action-donate.81d02392.svg";
+},{}],"components/CryptoWidgets.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
+
+var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
+
+var _cryptoNear = _interopRequireDefault(require("../assets/icons/crypto-near.svg"));
+
+var _cryptoBtc = _interopRequireDefault(require("../assets/icons/crypto-btc.svg"));
+
+var _cryptoEth = _interopRequireDefault(require("../assets/icons/crypto-eth.svg"));
+
+var _cryptoDot = _interopRequireDefault(require("../assets/icons/crypto-dot.svg"));
+
+var _actionCopy = _interopRequireDefault(require("../assets/icons/action-copy.svg"));
+
+var _actionExplore = _interopRequireDefault(require("../assets/icons/action-explore.svg"));
+
+var _actionDonate = _interopRequireDefault(require("../assets/icons/action-donate.svg"));
+
+var _config = _interopRequireDefault(require("../config"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class CryptoWidgets extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.handleCopy = this.handleCopy.bind(this);
+  }
+
+  handleCopy() {
+    console.log('Copied to clipboard');
+  }
+
+  render() {
+    const {
+      crypto,
+      handleDonateOpen
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto profile-widget"
+    }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item near"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _cryptoNear.default,
+      className: "profile-crypto-icon icon",
+      alt: "NEAR"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "NEAR"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.near))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.near,
+      onSuccess: this.handleCopy,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `${nearConfig.explorerUrl}/accounts/${crypto.near}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1 mr-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("button", {
+      onClick: handleDonateOpen,
+      className: "btn ml-1"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionDonate.default,
+      className: "icon mr-2"
+    }), " Donate"))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item btc"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _cryptoBtc.default,
+      className: "profile-crypto-icon icon",
+      alt: "BTC"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "BTC"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.btc))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.btc,
+      onSuccess: this.handleCopy,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://btc.com/btc/address/${crypto.btc}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item eth"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-content"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _cryptoEth.default,
+      className: "profile-crypto-icon icon",
+      alt: "ETH"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "ETH"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.eth))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.eth,
+      onSuccess: this.handleCopy,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://etherscan.io/address/${crypto.eth}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-item dot"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      component: "div",
+      className: "profile-crypto-content"
+    }, /*#__PURE__*/_react.default.createElement("img", {
+      src: _cryptoDot.default,
+      className: "profile-crypto-icon icon",
+      alt: "DOT"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-main"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-subtitle"
+    }, "DOT"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-title"
+    }, crypto.dot))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-crypto-action"
+    }, /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+      className: "btn btn-sm btn-link tooltip mr-1",
+      "data-clipboard-text": crypto.dot,
+      onSuccess: this.handleCopy,
+      title: "Copy to clipboard"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionCopy.default,
+      className: "icon"
+    })), /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://polkadot.subscan.io/account/${crypto.dot}`,
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "btn btn-sm btn-link tooltip ml-1",
+      title: "Open in Explorer"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionExplore.default,
+      className: "icon"
+    })))) : null);
+  }
+
+}
+
+var _default = CryptoWidgets;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg","../assets/icons/action-donate.svg":"assets/icons/action-donate.svg","../config":"config.js"}],"components/CryptoDonate.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -61285,16 +61285,26 @@ const nearConfig = (0, _config.default)("development" || 'development');
 class Modal extends _react.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      currentBalance: 0
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async componentDidMount() {
+    let currentBalance = await this.props.wallet.account().getAccountBalance().available;
+    this.setState({
+      currentBalance: currentBalance
+    });
+    console.log(this.state.currentBalance);
   }
 
   async handleSubmit(event) {
     event.preventDefault();
     let donateAmount = event.target.amount.value;
     donateAmount = nearAPI.utils.format.parseNearAmount(donateAmount);
-    let donateReceiver = this.props.receiver;
-    let donateSender = this.props.currentUser;
+    const donateReceiver = this.props.receiver;
+    const donateSender = this.props.currentUser;
 
     try {
       console.log(`Sending ${donateAmount} NEAR from ${donateSender} to ${donateReceiver}.`); // send those tokens! :)
@@ -61313,8 +61323,10 @@ class Modal extends _react.Component {
 
   render() {
     let {
+      currentBalance
+    } = this.state;
+    let {
       displayname,
-      currentBalance,
       handleDonateClose
     } = this.props;
     let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance);
@@ -61387,6 +61399,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRouterDom = require("react-router-dom");
 
+var nearAPI = _interopRequireWildcard(require("near-api-js"));
+
 var _config = _interopRequireDefault(require("./config"));
 
 var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
@@ -61409,7 +61423,6 @@ class Profile extends _react.Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      currentBalance: 0,
       loading: true,
       pageBio: new Object(),
       pageStatus: false,
@@ -61446,8 +61459,7 @@ class Profile extends _react.Component {
   async signedInFlow() {
     this.setState({
       login: true,
-      currentUser: window.accountId,
-      currentBalance: window.accountBalance.available
+      currentUser: window.accountId
     });
     const accountId = await this.props.wallet.getAccountId();
 
@@ -61490,8 +61502,7 @@ class Profile extends _react.Component {
 
     this.setState({
       login: false,
-      currentUser: null,
-      currentBalance: 0
+      currentUser: null
     });
   }
 
@@ -61515,12 +61526,14 @@ class Profile extends _react.Component {
     const {
       login,
       currentUser,
-      currentBalance,
       loading,
       pageBio,
       pageStatus,
       pageDonate
     } = this.state;
+    const {
+      wallet
+    } = this.props;
     let social = new Object(pageBio.records);
     let crypto = new Object(pageBio.crypto);
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
@@ -61572,10 +61585,9 @@ class Profile extends _react.Component {
       handleDonateOpen: this.handleDonateOpen
     }), pageDonate ? /*#__PURE__*/_react.default.createElement(_CryptoDonate.default, {
       currentUser: currentUser,
-      currentBalance: currentBalance,
       displayname: pageBio.displayname,
       receiver: pageBio.crypto.near,
-      wallet: this.props.wallet,
+      wallet: wallet,
       handleDonateClose: this.handleDonateClose
     }) : null))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover royal"
@@ -61623,7 +61635,7 @@ class Profile extends _react.Component {
 
 var _default = Profile;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/CryptoDonate":"components/CryptoDonate.js"}],"components/Toast.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","near-api-js":"../node_modules/near-api-js/lib/browser-index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/CryptoDonate":"components/CryptoDonate.js"}],"components/Toast.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -62658,9 +62670,7 @@ async function initContract() {
 
   window.walletConnection = new _nearApiJs.WalletConnection(near); // Getting the Account ID. If still unauthorized, it's just empty string
 
-  window.accountId = window.walletConnection.getAccountId();
-  const account = await near.account(window.accountId);
-  window.accountBalance = await account.getAccountBalance(); // Initializing our contract APIs by contract name and configuration
+  window.accountId = window.walletConnection.getAccountId(); // Initializing our contract APIs by contract name and configuration
 
   window.contract = await new _nearApiJs.Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.

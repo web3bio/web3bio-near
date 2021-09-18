@@ -1,6 +1,7 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import * as nearAPI from 'near-api-js'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 import CryptoWidgets from './components/CryptoWidgets'
@@ -13,7 +14,6 @@ class Profile extends Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
-      currentBalance: 0,
       loading: true,
       pageBio: new Object(),
       pageStatus: false,
@@ -51,8 +51,7 @@ class Profile extends Component {
   async signedInFlow() {
     this.setState({
       login: true,
-      currentUser: window.accountId,
-      currentBalance: window.accountBalance.available
+      currentUser: window.accountId
     })
     const accountId = await this.props.wallet.getAccountId()
     if (window.location.search.includes("account_id")) {
@@ -98,8 +97,7 @@ class Profile extends Component {
     }
     this.setState({
       login: false,
-      currentUser: null,
-      currentBalance: 0
+      currentUser: null
     })
   }
 
@@ -120,7 +118,8 @@ class Profile extends Component {
   }
 
   render() {
-    const { login, currentUser, currentBalance, loading, pageBio, pageStatus, pageDonate } = this.state
+    const { login, currentUser, loading, pageBio, pageStatus, pageDonate } = this.state
+    const { wallet } = this.props
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase()
@@ -179,10 +178,9 @@ class Profile extends Component {
                     { pageDonate ? 
                       <CryptoDonate
                         currentUser={currentUser}
-                        currentBalance={currentBalance}
                         displayname={pageBio.displayname}
                         receiver={pageBio.crypto.near}
-                        wallet={this.props.wallet}
+                        wallet={wallet}
                         handleDonateClose={this.handleDonateClose}
                       /> : null
                     }

@@ -9,10 +9,18 @@ class Modal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      currentBalance: 0
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async componentDidMount() {
+    let currentBalance = await this.props.wallet.account().getAccountBalance().available
+    this.setState({
+      currentBalance: currentBalance
+    })
+    console.log(this.state.currentBalance)
   }
 
   async handleSubmit(event) {
@@ -20,8 +28,8 @@ class Modal extends Component {
     
     let donateAmount = event.target.amount.value
         donateAmount = nearAPI.utils.format.parseNearAmount(donateAmount)
-    let donateReceiver = this.props.receiver
-    let donateSender = this.props.currentUser
+    const donateReceiver = this.props.receiver
+    const donateSender = this.props.currentUser
     
     try {
       console.log(`Sending ${donateAmount} NEAR from ${donateSender} to ${donateReceiver}.`);
@@ -39,7 +47,8 @@ class Modal extends Component {
   }
 
   render() {
-    let { displayname, currentBalance, handleDonateClose } = this.props
+    let { currentBalance } = this.state
+    let { displayname, handleDonateClose } = this.props
     let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance)
         amountInNEAR = Math.floor(amountInNEAR * 10000) / 10000
 
