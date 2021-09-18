@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 import CryptoWidgets from './components/CryptoWidgets'
+import CryptoDonate from './components/CryptoDonate'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class Profile extends Component {
@@ -12,18 +13,22 @@ class Profile extends Component {
     this.state = {
       login: false,
       currentUser: window.accountId,
+      currentBalance: 0,
       loading: true,
       pageBio: new Object(),
-      pageStatus: false
+      pageStatus: false,
+      pageDonate: false
     }
     this.signedInFlow = this.signedInFlow.bind(this);
     this.requestSignIn = this.requestSignIn.bind(this);
     this.requestSignOut = this.requestSignOut.bind(this);
     this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.handleDonateOpen = this.handleDonateOpen.bind(this);
+    this.handleDonateClose = this.handleDonateClose.bind(this);
   }
 
   async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn()
+    let isAuth = this.props.wallet.isSignedIn()
     let pageOwner = this.props.match.params.owner
 
     const pageBio = await this.getProfile(pageOwner)
@@ -36,7 +41,7 @@ class Profile extends Component {
       })
     }
     
-    if (loggedIn) {
+    if (isAuth) {
       this.signedInFlow();
     } else {
       this.signedOutFlow();
@@ -46,7 +51,8 @@ class Profile extends Component {
   async signedInFlow() {
     this.setState({
       login: true,
-      currentUser: window.accountId
+      currentUser: window.accountId,
+      currentBalance: window.accountAmount
     })
     const accountId = await this.props.wallet.getAccountId()
     if (window.location.search.includes("account_id")) {
@@ -93,11 +99,28 @@ class Profile extends Component {
     this.setState({
       login: false,
       currentUser: null,
+      currentBalance: 0
+    })
+  }
+
+  handleDonateOpen() {
+    if (this.state.login) {
+      this.setState({
+        pageDonate: true
+      })
+    } else {
+      this.requestSignIn()
+    }
+  }
+
+  handleDonateClose() {
+    this.setState({
+      pageDonate: false
     })
   }
 
   render() {
-    const { login, currentUser, loading, pageBio, pageStatus } = this.state
+    const { login, currentUser, currentBalance, loading, pageBio, pageStatus, pageDonate } = this.state
     let social = new Object(pageBio.records)
     let crypto = new Object(pageBio.crypto)
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase()
@@ -151,7 +174,18 @@ class Profile extends Component {
                     
                     <SocialLinks social={social} />
 
-                    <CryptoWidgets crypto={crypto} />
+                    <CryptoWidgets crypto={crypto} handleDonateOpen={this.handleDonateOpen} />
+
+                    { pageDonate ? 
+                      <CryptoDonate
+                        currentUser={currentUser}
+                        currentBalance={currentBalance}
+                        displayname={pageBio.displayname}
+                        receiver={pageBio.crypto.near}
+                        wallet={window.walletConnection}
+                        handleDonateClose={this.handleDonateClose}
+                      /> : null
+                    }
                   </div>
                 </div>
               </>

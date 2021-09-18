@@ -71,17 +71,21 @@
 
   .modal-header {
     color: $dark-color;
-    padding: $unit-4;
+    padding: $unit-8 $unit-8 $unit-4 $unit-8;
   }
 
   .modal-body {
     overflow-y: auto;
-    padding: $unit-4;
+    padding: $unit-4 $unit-8;
     position: relative;
+
+    &:last-child {
+      padding-bottom: $unit-8;
+    }
   }
 
   .modal-footer {
-    padding: $unit-4;
+    padding: $unit-4 $unit-8 $unit-8 $unit-8;
     text-align: right;
   }
 }

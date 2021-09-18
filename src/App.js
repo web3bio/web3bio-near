@@ -22,9 +22,9 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn()
+    let isAuth = this.props.wallet.isSignedIn()
     
-    if (loggedIn) {
+    if (isAuth) {
       this.signedInFlow();
     } else {
       this.signedOutFlow();
@@ -67,8 +67,6 @@ class App extends Component {
   }
 
   render() {
-    const { login, currentUser } = this.state
-    console.log()
 
     return (
       <div className="web3bio-container">

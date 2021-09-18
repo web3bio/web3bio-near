@@ -81,6 +81,7 @@
     border-color: darken($bg-color, 4%);
     box-shadow: 0 .1rem .4rem rgba($dark-color, .05);
     color: $dark-color;
+    min-width: $control-size-sm;
     &:focus,
     &:hover {
       background: darken($dark-color, 3%);

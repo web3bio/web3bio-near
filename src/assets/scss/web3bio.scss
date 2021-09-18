@@ -48,6 +48,7 @@ body {
   width: 100vw;
 }
 
+//- Web3.bio Cover
 .web3bio-cover {
   background: no-repeat center top;
   background-size: cover;
@@ -104,6 +105,7 @@ body {
   }
 }
 
+//- Web3.bio Header
 .web3bio-header {
   .column {
     align-items: center;
@@ -189,6 +191,7 @@ body {
   }
 }
 
+//- Web3.bio Profile
 .web3bio-profile {
   align-items: center;
   display: flex;
@@ -381,6 +384,7 @@ body {
   }
 }
 
+//- Web3.bio Hero
 .web3bio-hero {
   padding: 3rem 0;
   text-align: center;
@@ -475,6 +479,7 @@ body {
   }
 }
 
+//- Web3.bio Settings
 .web3bio-settings {
   background: $light-color;
   border-radius: $border-radius;
@@ -533,6 +538,60 @@ body {
   }
 }
 
+//- Web3.bio Modal
+.web3bio-modal {
+  bottom: 0;
+  max-width: $size-sm;
+  padding: 1rem;
+  position: fixed;
+  width: 100%;
+  z-index: 999;
+
+  .modal-overlay {
+    background: rgba($dark-color, .15);
+    display: block;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: -1;
+  }
+
+  .model-container {
+    animation: slide-up .2s ease 1;
+    max-width: $size-sm;
+    z-index: $zindex-0;
+  }
+
+  .modal-title {
+    align-items: center;
+    display: flex;
+  }
+
+  .modal-body {
+    .h1 {
+      font-size: 3.6rem;
+    }
+
+    .input-group-addon {
+      &.addon-lg {
+        font-size: .7rem;
+        padding-right: .4rem;
+
+        span {
+          color: $gray-color;
+        }
+      }
+
+      & + .form-input {
+        border-left: 0;
+      }
+    }
+  }
+}
+
+//- Web3.bio Toast
 .web3bio-toast {
   display: flex;
   justify-content: center;
@@ -556,6 +615,7 @@ body {
   backdrop-filter: blur(2rem) saturate(120%) brightness(100%);
 }
 
+//- Web3.bio Footer
 .web3bio-footer {
   padding-top: 2rem;
   position: sticky;

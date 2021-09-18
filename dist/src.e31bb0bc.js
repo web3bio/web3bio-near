@@ -34930,9 +34930,9 @@ class Home extends _react.Component {
   }
 
   async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn();
+    let isAuth = this.props.wallet.isSignedIn();
 
-    if (loggedIn) {
+    if (isAuth) {
       this.signedInFlow();
     } else {
       this.signedOutFlow();
@@ -38142,8 +38142,6 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactRouterDom = require("react-router-dom");
-
 var _reactClipboard = _interopRequireDefault(require("react-clipboard.js"));
 
 var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
@@ -38162,11 +38160,15 @@ var _actionExplore = _interopRequireDefault(require("../assets/icons/action-expl
 
 var _actionDonate = _interopRequireDefault(require("../assets/icons/action-donate.svg"));
 
+var _config = _interopRequireDefault(require("../config"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
 
 class CryptoWidgets extends _react.Component {
   constructor(props) {
@@ -38180,7 +38182,8 @@ class CryptoWidgets extends _react.Component {
 
   render() {
     const {
-      crypto
+      crypto,
+      handleDonateOpen
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto profile-widget"
@@ -38209,7 +38212,7 @@ class CryptoWidgets extends _react.Component {
       src: _actionCopy.default,
       className: "icon"
     })), /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://explorer.near.org/accounts/${crypto.near}`,
+      href: `${nearConfig.explorerUrl}/accounts/${crypto.near}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "btn btn-sm btn-link tooltip ml-1 mr-1",
@@ -38217,8 +38220,8 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionExplore.default,
       className: "icon"
-    })), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/",
+    })), /*#__PURE__*/_react.default.createElement("button", {
+      onClick: handleDonateOpen,
       className: "btn ml-1"
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionDonate.default,
@@ -38330,1351 +38333,7 @@ class CryptoWidgets extends _react.Component {
 
 var _default = CryptoWidgets;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg","../assets/icons/action-donate.svg":"assets/icons/action-donate.svg"}],"Profile.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _config = _interopRequireDefault(require("./config"));
-
-var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
-
-var _CryptoWidgets = _interopRequireDefault(require("./components/CryptoWidgets"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class Profile extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      currentUser: window.accountId,
-      loading: true,
-      pageBio: new Object(),
-      pageStatus: false
-    };
-    this.signedInFlow = this.signedInFlow.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
-    this.requestSignOut = this.requestSignOut.bind(this);
-    this.signedOutFlow = this.signedOutFlow.bind(this);
-  }
-
-  async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn();
-    let pageOwner = this.props.match.params.owner;
-    const pageBio = await this.getProfile(pageOwner);
-
-    if (!!pageBio) {
-      document.title = `${pageBio.displayname} - Web3.bio`;
-      this.setState({
-        pageBio: pageBio,
-        pageStatus: true
-      });
-    }
-
-    if (loggedIn) {
-      this.signedInFlow();
-    } else {
-      this.signedOutFlow();
-    }
-  }
-
-  async signedInFlow() {
-    this.setState({
-      login: true,
-      currentUser: window.accountId
-    });
-    const accountId = await this.props.wallet.getAccountId();
-
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-  }
-
-  async requestSignIn() {
-    const appTitle = 'Web3.bio';
-    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  async getProfile(pageOwner) {
-    try {
-      // make an update call to the smart contract
-      return await window.contract.getRecordByOwner({
-        owner: pageOwner
-      });
-    } catch (e) {
-      console.log('Something went wrong! ');
-      throw e;
-    } finally {
-      this.setState({
-        loading: false
-      });
-    }
-  }
-
-  requestSignOut() {
-    this.props.wallet.signOut();
-    setTimeout(this.signedOutFlow, 500);
-    console.log("after sign out", this.props.wallet.isSignedIn());
-  }
-
-  signedOutFlow() {
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-
-    this.setState({
-      login: false,
-      currentUser: null
-    });
-  }
-
-  render() {
-    const {
-      login,
-      currentUser,
-      loading,
-      pageBio,
-      pageStatus
-    } = this.state;
-    let social = new Object(pageBio.records);
-    let crypto = new Object(pageBio.crypto);
-    let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-header"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/",
-      className: "web3bio-logo",
-      title: "Web3.bio"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), pageBio.owner == currentUser ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-account"
-    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      className: "btn mr-1",
-      to: "/dashboard"
-    }, "Manage"), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-1",
-      onClick: this.requestSignOut
-    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn",
-      onClick: this.requestSignIn
-    }, "Login with NEAR")) : null)))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.theme}`
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile text-center"
-    }, !!pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
-      src: pageBio.avatar,
-      className: "profile-avatar avatar avatar-xl"
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-avatar avatar avatar-xl",
-      "data-initial": nameInitial
-    }), /*#__PURE__*/_react.default.createElement("h2", {
-      className: "profile-name"
-    }, pageBio.displayname), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
-      className: "profile-description"
-    }, pageBio.description) : /*#__PURE__*/_react.default.createElement("h3", {
-      className: "profile-description"
-    }, pageBio.owner), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
-      social: social
-    }), /*#__PURE__*/_react.default.createElement(_CryptoWidgets.default, {
-      crypto: crypto
-    })))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover royal"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h1"
-    }, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero-input input-group"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: `/${currentUser}`,
-      className: "input-group-addon addon-lg text-left text-dark"
-    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", null, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/dashboard",
-      className: "btn btn-lg input-group-btn"
-    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero-input input-group c-hand",
-      onClick: this.requestSignIn
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg text-left"
-    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", {
-      className: "text-gray"
-    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn btn-lg input-group-btn"
-    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h6 mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "loading loading-lg"
-    })))));
-  }
-
-}
-
-var _default = Profile;
-exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js"}],"components/Toast.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-class Toast extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      toastState: true
-    };
-  }
-
-  componentDidMount() {
-    this.timer = setTimeout(() => this.tick(), 4000);
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timer);
-  }
-
-  tick() {
-    this.setState({
-      toastState: false
-    });
-  }
-
-  render() {
-    const {
-      toastState
-    } = this.state;
-    const {
-      content
-    } = this.props;
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, toastState && !!content ? /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-toast"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "toast"
-    }, content)) : null);
-  }
-
-}
-
-var _default = Toast;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"Dashboard.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _config = _interopRequireDefault(require("./config"));
-
-var _Toast = _interopRequireDefault(require("./components/Toast"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class Dashboard extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      currentUser: window.accountId,
-      loading: true,
-      pageBio: new Object(),
-      pageStatus: false,
-      formChanged: false,
-      formLoading: false,
-      formAvatar: '',
-      formTheme: 'royal',
-      pageToast: ''
-    };
-    this.signedInFlow = this.signedInFlow.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
-    this.requestSignOut = this.requestSignOut.bind(this);
-    this.signedOutFlow = this.signedOutFlow.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.delProfile = this.delProfile.bind(this);
-  }
-
-  async componentDidMount() {
-    document.title = "Manage your profile - Web3.bio";
-    let loggedIn = this.props.wallet.isSignedIn();
-    let pageOwner = window.accountId;
-    let pageBio = await this.getProfile(pageOwner);
-
-    if (!!pageBio) {
-      this.setState({
-        pageBio: pageBio,
-        pageStatus: true,
-        formAvatar: pageBio.avatar,
-        formTheme: pageBio.theme
-      });
-    }
-
-    console.log(pageBio);
-
-    if (loggedIn) {
-      this.signedInFlow();
-    } else {
-      this.signedOutFlow();
-    }
-  }
-
-  async signedInFlow() {
-    this.setState({
-      login: true,
-      currentUser: window.accountId
-    });
-    const accountId = await this.props.wallet.getAccountId();
-
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-  }
-
-  async requestSignIn() {
-    const appTitle = 'Web3.bio';
-    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  async getProfile(pageOwner) {
-    try {
-      return await window.contract.getRecordByOwner({
-        owner: pageOwner
-      });
-    } catch (e) {
-      this.setState({
-        formLoading: false,
-        pageToast: 'Something went wrong. Try again later.'
-      });
-      throw e;
-    } finally {
-      this.setState({
-        loading: false
-      });
-    }
-  }
-
-  async setProfile(newRecords) {
-    try {
-      await window.contract.setRecordByOwner(newRecords);
-    } catch (e) {
-      this.setState({
-        formLoading: false,
-        pageToast: 'Something went wrong. Try again later.'
-      });
-      throw e;
-    }
-  }
-
-  async delProfile() {
-    if (!window.confirm(`Permanently delete your page and profile data for ${this.state.currentUser}?`)) {
-      return;
-    }
-
-    try {
-      return await window.contract.delRecordByOwner({
-        owner: this.state.currentUser
-      });
-    } catch (e) {
-      this.setState({
-        formLoading: false,
-        pageToast: 'Something went wrong. Try again later.'
-      });
-      throw e;
-    } finally {
-      // Go to home page
-      window.location.replace(window.location.origin);
-    }
-  }
-
-  requestSignOut() {
-    this.props.wallet.signOut();
-    setTimeout(this.signedOutFlow, 500);
-    console.log("after sign out", this.props.wallet.isSignedIn());
-  }
-
-  signedOutFlow() {
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-
-    this.setState({
-      login: false,
-      currentUser: null
-    });
-  }
-
-  handleChange(event) {
-    let formAvatar = this.state.formAvatar;
-    let formTheme = this.state.formTheme;
-
-    switch (event.target.id) {
-      case 'avatar':
-        formAvatar = event.target.value;
-        break;
-
-      case 'theme':
-        formTheme = event.target.value;
-        break;
-    }
-
-    this.setState({
-      formChanged: true,
-      formAvatar: formAvatar,
-      formTheme: formTheme
-    });
-  }
-
-  async handleSubmit(event) {
-    event.preventDefault();
-    this.setState({
-      formLoading: true
-    });
-    let newSocial = new Object({
-      email: event.target.email.value,
-      website: event.target.website.value,
-      twitter: event.target.twitter.value,
-      facebook: event.target.facebook.value,
-      linkedin: event.target.linkedin.value,
-      github: event.target.github.value,
-      gitcoin: event.target.gitcoin.value,
-      medium: event.target.medium.value,
-      wechat: event.target.wechat.value,
-      telegram: event.target.telegram.value,
-      instagram: event.target.instagram.value,
-      youtube: event.target.youtube.value,
-      discord: event.target.discord.value,
-      reddit: event.target.reddit.value,
-      patreon: event.target.patreon.value,
-      paypal: event.target.paypal.value
-    });
-    newSocial = Object.fromEntries(Object.entries(newSocial).filter(([_, v]) => v != "" && v != null));
-    let newCrypto = new Object({
-      btc: event.target.btc.value,
-      eth: event.target.eth.value,
-      dot: event.target.dot.value
-    });
-    newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
-    let newRecords = new Object({
-      displayname: event.target.displayname.value,
-      avatar: event.target.avatar.value,
-      description: event.target.description.value,
-      location: event.target.location.value,
-      theme: event.target.theme.value,
-      records: newSocial,
-      crypto: newCrypto
-    });
-    console.log(newRecords);
-    await this.setProfile(newRecords);
-    let pageOwner = this.state.currentUser;
-    let pageBio = await this.getProfile(pageOwner);
-
-    if (!!pageBio) {
-      this.setState({
-        pageBio: pageBio,
-        pageStatus: true,
-        formChanged: false,
-        formLoading: false,
-        formAvatar: pageBio.avatar,
-        formTheme: pageBio.theme,
-        pageToast: 'Profile updated.'
-      });
-    }
-  }
-
-  render() {
-    const {
-      login,
-      currentUser,
-      loading,
-      pageBio,
-      pageStatus,
-      formChanged,
-      formLoading,
-      formAvatar,
-      formTheme,
-      pageToast
-    } = this.state;
-    let social = new Object(pageBio.records);
-    let crypto = new Object(pageBio.crypto);
-    let nameInitial = '';
-
-    if (pageStatus) {
-      nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
-    } else {
-      nameInitial = String(currentUser).charAt(0).toUpperCase();
-    }
-
-    if (!login && !currentUser) {
-      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.Redirect, {
-        to: "/"
-      });
-    }
-
-    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Toast.default, null), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-header"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/",
-      className: "web3bio-logo",
-      title: "Web3.bio"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-account"
-    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: `/${currentUser}`,
-      className: "btn mr-1",
-      target: "_blank"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "hide-lg"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-opacity"
-    }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement("span", {
-      className: "show-lg"
-    }, "Preview")), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn ml-1",
-      onClick: this.requestSignOut
-    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn",
-      onClick: this.requestSignIn
-    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${formTheme}`
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, !pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content-title text-center mb-4"
-    }, "Hello, ", /*#__PURE__*/_react.default.createElement("strong", null, currentUser), "."), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings web3bio-placeholder"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold mb-4"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "mr-2"
-    }, "\uD83C\uDF08"), " Claim your page"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h6 mb-2"
-    }, "Complete your ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "#profile",
-      className: "btn btn-sm ml-1 mr-1"
-    }, "basic info"), ", ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "#social",
-      className: "btn btn-sm ml-1 mr-1"
-    }, "social links"), ", or ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "#crypto",
-      className: "btn btn-sm ml-1 mr-1"
-    }, "crypto addresses"), " below to claim your page."), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h6 mb-4"
-    }, "Your page will be available at: ", /*#__PURE__*/_react.default.createElement("a", {
-      href: `https://web3.bio/${currentUser}`,
-      className: "text-dark text-underline ml-1",
-      target: "_blank"
-    }, "web3.bio/", currentUser), "."))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content-title text-center mt-4 mb-4"
-    }, "Manage your profile")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings"
-    }, /*#__PURE__*/_react.default.createElement("ul", {
-      className: "tab tab-block"
-    }, /*#__PURE__*/_react.default.createElement("li", {
-      className: "tab-item"
-    }, /*#__PURE__*/_react.default.createElement("a", {
-      href: "#profile"
-    }, "Basic")), /*#__PURE__*/_react.default.createElement("li", {
-      className: "tab-item"
-    }, /*#__PURE__*/_react.default.createElement("a", {
-      href: "#social"
-    }, "Social")), /*#__PURE__*/_react.default.createElement("li", {
-      className: "tab-item"
-    }, /*#__PURE__*/_react.default.createElement("a", {
-      href: "#crypto"
-    }, "Crypto"))), /*#__PURE__*/_react.default.createElement("form", {
-      onSubmit: this.handleSubmit,
-      autoComplete: "off"
-    }, /*#__PURE__*/_react.default.createElement("fieldset", {
-      id: "profile"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold mb-2"
-    }, "Basic info"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "displayname"
-    }, "Name"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "displayname",
-      placeholder: "Name",
-      defaultValue: pageBio.displayname,
-      required: true,
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "description"
-    }, "Bio"), /*#__PURE__*/_react.default.createElement("textarea", {
-      className: "form-input input-lg",
-      id: "description",
-      placeholder: "Description",
-      defaultValue: pageBio.description,
-      maxLength: "160",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "avatar"
-    }, "Avatar"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column"
-    }, /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "url",
-      id: "avatar",
-      placeholder: "https://",
-      defaultValue: pageBio.avatar,
-      onInput: this.handleChange
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-input-hint"
-    }, "You may use free photo hostings like ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://imgur.com/",
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "text-dark"
-    }, "Imgur"), " or ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://imgbb.com/",
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "text-dark"
-    }, "IMGBB"), " for avatars.")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-auto"
-    }, formAvatar ? /*#__PURE__*/_react.default.createElement("img", {
-      src: formAvatar,
-      className: "profile-avatar avatar avatar-lg"
-    }) : /*#__PURE__*/_react.default.createElement("div", {
-      className: "profile-avatar avatar avatar-lg",
-      "data-initial": nameInitial
-    })))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "email"
-    }, "Email ", /*#__PURE__*/_react.default.createElement("small", {
-      className: "label"
-    }, "PUBLIC")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "email",
-      id: "email",
-      placeholder: "Email",
-      defaultValue: social.email,
-      onInput: this.handleChange
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-input-hint"
-    }, "Leave it blank if you don't want to make your Email address public.")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "website"
-    }, "Website"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "url",
-      id: "website",
-      placeholder: "https://",
-      defaultValue: social.website,
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "location"
-    }, "Location"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "location",
-      placeholder: "The Moon",
-      defaultValue: pageBio.location,
-      maxLength: "30",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "theme"
-    }, "Theme"), /*#__PURE__*/_react.default.createElement("select", {
-      className: "form-select select-lg",
-      id: "theme",
-      value: formTheme,
-      onInput: this.handleChange
-    }, /*#__PURE__*/_react.default.createElement("option", {
-      value: "royal"
-    }, "Royal"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "flax"
-    }, "Flax"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "witchhaze"
-    }, "Witch Haze"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "salmon"
-    }, "Salmon"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "mauve"
-    }, "Mauve"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "shalimar"
-    }, "Shalimar"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "creamwhisper"
-    }, "Cream Whisper"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "eggsour"
-    }, "Egg Sour"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "flare"
-    }, "Flare"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "snowymint"
-    }, "Snowy Mint")))), /*#__PURE__*/_react.default.createElement("fieldset", {
-      id: "social"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold mb-2"
-    }, "Social links"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "twitter"
-    }, "Twitter"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "twitter.com", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "twitter",
-      placeholder: "username",
-      defaultValue: social.twitter,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "facebook"
-    }, "Facebook"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "facebook.com", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "facebook",
-      placeholder: "username",
-      defaultValue: social.facebook,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "linkedin"
-    }, "LinkedIn"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "url",
-      id: "linkedin",
-      placeholder: "https://linkedin.com/",
-      defaultValue: social.linkedin,
-      maxLength: "120",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "github"
-    }, "GitHub"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "github.com", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "github",
-      placeholder: "username",
-      defaultValue: social.github,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "gitcoin"
-    }, "Gitcoin"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "gitcoin.com", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "gitcoin",
-      placeholder: "username",
-      defaultValue: social.gitcoin,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "medium"
-    }, "Medium"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "url",
-      id: "medium",
-      placeholder: "https://medium.com/",
-      defaultValue: social.medium,
-      maxLength: "120",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "wechat"
-    }, "WeChat"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "wechat",
-      placeholder: "WeChat ID",
-      defaultValue: social.wechat,
-      maxLength: "120",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "telegram"
-    }, "Telegram"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "t.me", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "telegram",
-      placeholder: "username",
-      defaultValue: social.telegram,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "instagram"
-    }, "Instagram"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "instagram.com", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "instagram",
-      placeholder: "username",
-      defaultValue: social.instagram,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "youtube"
-    }, "YouTube"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "url",
-      id: "youtube",
-      placeholder: "https://youtube.com/",
-      defaultValue: social.youtube,
-      maxLength: "120",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "discord"
-    }, "Discord"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "discord",
-      placeholder: "https://discord.com",
-      defaultValue: social.discord,
-      maxLength: "120",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "reddit"
-    }, "Reddit"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "url",
-      id: "reddit",
-      placeholder: "https://reddit.com/",
-      defaultValue: social.reddit,
-      maxLength: "120",
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "patreon"
-    }, "Patreon"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "patreon.com", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "patreon",
-      placeholder: "username",
-      defaultValue: social.patreon,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "paypal"
-    }, "PayPal"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "input-group"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "input-group-addon addon-lg"
-    }, "paypal.me", /*#__PURE__*/_react.default.createElement("span", {
-      className: "ml-1"
-    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "paypal",
-      placeholder: "username",
-      defaultValue: social.paypal,
-      maxLength: "120",
-      onInput: this.handleChange
-    }))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-input-hint"
-    }, "Request more social support? Please contact ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/yanzhu.near",
-      target: "_blank",
-      rel: "noopener noreferrer"
-    }, "@yanzhu.near"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
-      id: "crypto"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold mb-2"
-    }, "Crypto addresses"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "near"
-    }, "NEAR"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "near",
-      defaultValue: crypto.near ? crypto.near : currentUser,
-      readOnly: true
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "btc"
-    }, "Bitcoin"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "btc",
-      defaultValue: crypto.btc,
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "eth"
-    }, "Ethereum"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "eth",
-      defaultValue: crypto.eth,
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label",
-      htmlFor: "dot"
-    }, "Polkadot"), /*#__PURE__*/_react.default.createElement("input", {
-      className: "form-input input-lg",
-      type: "text",
-      id: "dot",
-      defaultValue: crypto.dot,
-      onInput: this.handleChange
-    })), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings-placeholder"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-bold"
-    }, "NFT Collection Widget - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings-placeholder"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-bold"
-    }, "Import ENS or DAS Records - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-input-hint"
-    }, "Request more crypto support? Please contact ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/yanzhu.near",
-      target: "_blank",
-      rel: "noopener noreferrer"
-    }, "@yanzhu.near"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-settings-footer ${formChanged ? "active" : ""}`
-    }, /*#__PURE__*/_react.default.createElement("button", {
-      className: `btn btn-lg btn-block ${formLoading ? "loading" : ""}`,
-      disabled: !formChanged,
-      type: "submit"
-    }, "Update")))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-settings",
-      id: "dangerzone"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 text-bold"
-    }, "Danger Zone"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "form-group"
-    }, /*#__PURE__*/_react.default.createElement("label", {
-      className: "form-label mb-2"
-    }, "Permanently delete your page and profile data from ", /*#__PURE__*/_react.default.createElement("strong", {
-      className: "text-error"
-    }, currentUser), ". This of course is not reversable."), /*#__PURE__*/_react.default.createElement("button", {
-      className: "btn mb-2",
-      onClick: this.delProfile
-    }, "Delete data")))))), !!pageToast ? /*#__PURE__*/_react.default.createElement(_Toast.default, {
-      content: pageToast
-    }) : null) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
-    }), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-content container grid-sm"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-profile"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "loading loading-lg"
-    })))));
-  }
-
-}
-
-var _default = Dashboard;
-exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Toast":"components/Toast.js"}],"components/Footer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-class Footer extends _react.Component {
-  render() {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-footer text-center"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-lg"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      className: "btn",
-      to: "/"
-    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
-      className: "ml-1 mr-1"
-    }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
-      className: "mt-4 mb-2"
-    }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://web3.bio",
-      className: "text-dark"
-    }, "Web3.bio"), " \xB7 Proudly Built with ", /*#__PURE__*/_react.default.createElement("a", {
-      href: "https://near.org",
-      target: "_blank",
-      rel: "noopener noreferrer",
-      className: "text-dark"
-    }, "NEAR"), " ", /*#__PURE__*/_react.default.createElement("span", {
-      className: "text-primary"
-    }, "\u2665")))))));
-  }
-
-}
-
-var _default = Footer;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"App.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _config = _interopRequireDefault(require("./config"));
-
-var _Home = _interopRequireDefault(require("./Home"));
-
-var _Profile = _interopRequireDefault(require("./Profile"));
-
-var _Dashboard = _interopRequireDefault(require("./Dashboard"));
-
-var _Footer = _interopRequireDefault(require("./components/Footer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class App extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      currentUser: window.accountId
-    };
-    this.signedInFlow = this.signedInFlow.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
-    this.requestSignOut = this.requestSignOut.bind(this);
-    this.signedOutFlow = this.signedOutFlow.bind(this);
-  }
-
-  async componentDidMount() {
-    let loggedIn = this.props.wallet.isSignedIn();
-
-    if (loggedIn) {
-      this.signedInFlow();
-    } else {
-      this.signedOutFlow();
-    }
-  }
-
-  async signedInFlow() {
-    this.setState({
-      login: true,
-      currentUser: window.accountId
-    });
-    const accountId = await this.props.wallet.getAccountId();
-
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-  }
-
-  async requestSignIn() {
-    const appTitle = 'Web3.bio';
-    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  requestSignOut() {
-    this.props.wallet.signOut();
-    setTimeout(this.signedOutFlow, 500);
-    console.log("after sign out", this.props.wallet.isSignedIn());
-  }
-
-  signedOutFlow() {
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-
-    this.setState({
-      login: false,
-      currentUser: null
-    });
-  }
-
-  render() {
-    const {
-      login,
-      currentUser
-    } = this.state;
-    console.log();
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-      path: "/",
-      exact: true,
-      render: props => /*#__PURE__*/_react.default.createElement(_Home.default, _extends({}, props, {
-        wallet: window.walletConnection
-      }))
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-      path: "/dashboard",
-      exact: true,
-      render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
-        wallet: window.walletConnection
-      }))
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-      path: "/:owner",
-      render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
-        wallet: window.walletConnection
-      }))
-    })), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
-  }
-
-}
-
-var _default = App;
-exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"assets/scss/web3bio.scss":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"./../img/bg-creamwhisper.jpg":[["bg-creamwhisper.318f6706.jpg","assets/img/bg-creamwhisper.jpg"],"assets/img/bg-creamwhisper.jpg"],"./../img/bg-eggsour.jpg":[["bg-eggsour.a0316a65.jpg","assets/img/bg-eggsour.jpg"],"assets/img/bg-eggsour.jpg"],"./../img/bg-flare.jpg":[["bg-flare.df7a95cc.jpg","assets/img/bg-flare.jpg"],"assets/img/bg-flare.jpg"],"./../img/bg-snowymint.jpg":[["bg-snowymint.0cc40fb1.jpg","assets/img/bg-snowymint.jpg"],"assets/img/bg-snowymint.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-clipboard.js":"../node_modules/react-clipboard.js/dist/react-clipboard.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/crypto-near.svg":"assets/icons/crypto-near.svg","../assets/icons/crypto-btc.svg":"assets/icons/crypto-btc.svg","../assets/icons/crypto-eth.svg":"assets/icons/crypto-eth.svg","../assets/icons/crypto-dot.svg":"assets/icons/crypto-dot.svg","../assets/icons/action-copy.svg":"assets/icons/action-copy.svg","../assets/icons/action-explore.svg":"assets/icons/action-explore.svg","../assets/icons/action-donate.svg":"assets/icons/action-donate.svg","../config":"config.js"}],"../node_modules/near-api-js/lib/key_stores/keystore.js":[function(require,module,exports) {
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.KeyStore = void 0;
@@ -62597,7 +61256,1497 @@ exports.keyStores = __importStar(require("./key_stores/browser-index"));
 __exportStar(require("./common-index"), exports);
 require("error-polyfill");
 
-},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js","error-polyfill":"../node_modules/error-polyfill/index.js"}],"util/utils.js":[function(require,module,exports) {
+},{"./key_stores/browser-index":"../node_modules/near-api-js/lib/key_stores/browser-index.js","./common-index":"../node_modules/near-api-js/lib/common-index.js","error-polyfill":"../node_modules/error-polyfill/index.js"}],"components/CryptoDonate.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var nearAPI = _interopRequireWildcard(require("near-api-js"));
+
+var _reactInlinesvg = _interopRequireDefault(require("react-inlinesvg"));
+
+var _actionDonate = _interopRequireDefault(require("../assets/icons/action-donate.svg"));
+
+var _config = _interopRequireDefault(require("../config"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class Modal extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    let donateAmount = event.target.amount.value;
+    donateAmount = nearAPI.utils.format.parseNearAmount(donateAmount);
+    let donateReceiver = this.props.receiver;
+    let donateSender = this.props.currentUser;
+
+    try {
+      console.log(`Sending ${donateAmount} NEAR from ${donateSender} to ${donateReceiver}.`); // send those tokens! :)
+
+      const result = await this.props.wallet.account().sendMoney(donateReceiver, donateAmount); // console results
+
+      console.log('Transaction Results: ', result.transaction);
+      console.log('--------------------------------------------------------------------------------------------');
+      console.log('OPEN LINK BELOW to see transaction in NEAR Explorer!');
+      console.log(`${nearConfig.explorerUrl}/transactions/${result.transaction.hash}`);
+      console.log('--------------------------------------------------------------------------------------------');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  render() {
+    let {
+      displayname,
+      currentBalance,
+      handleDonateClose
+    } = this.props;
+    let amountInNEAR = nearAPI.utils.format.formatNearAmount(currentBalance);
+    amountInNEAR = Math.floor(amountInNEAR * 10000) / 10000;
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-modal"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "modal-overlay",
+      onClick: handleDonateClose
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "modal-container text-left"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "modal-header"
+    }, /*#__PURE__*/_react.default.createElement("button", {
+      onClick: handleDonateClose,
+      className: "btn btn-sm btn-link float-right",
+      "aria-label": "Close"
+    }, "\u2717"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "modal-title h6 text-bold"
+    }, "Donate ", displayname)), /*#__PURE__*/_react.default.createElement("div", {
+      className: "modal-body"
+    }, /*#__PURE__*/_react.default.createElement("form", {
+      onSubmit: this.handleSubmit,
+      autoComplete: "off"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h1 text-center"
+    }, "\uD83C\uDF81"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mb-4"
+    }, "Your balance: ", amountInNEAR, " NEAR"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "NEAR"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "number",
+      id: "amount",
+      placeholder: "Donation amount",
+      defaultValue: "5",
+      required: true,
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-block btn-lg",
+      type: "submit"
+    }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
+      src: _actionDonate.default,
+      className: "icon mr-2"
+    }), "Donate"))))));
+  }
+
+}
+
+var _default = Modal;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","near-api-js":"../node_modules/near-api-js/lib/browser-index.js","react-inlinesvg":"../node_modules/react-inlinesvg/esm/index.js","../assets/icons/action-donate.svg":"assets/icons/action-donate.svg","../config":"config.js"}],"Profile.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _SocialLinks = _interopRequireDefault(require("./components/SocialLinks"));
+
+var _CryptoWidgets = _interopRequireDefault(require("./components/CryptoWidgets"));
+
+var _CryptoDonate = _interopRequireDefault(require("./components/CryptoDonate"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class Profile extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      currentBalance: 0,
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false,
+      pageDonate: false
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.handleDonateOpen = this.handleDonateOpen.bind(this);
+    this.handleDonateClose = this.handleDonateClose.bind(this);
+  }
+
+  async componentDidMount() {
+    let isAuth = this.props.wallet.isSignedIn();
+    let pageOwner = this.props.match.params.owner;
+    const pageBio = await this.getProfile(pageOwner);
+
+    if (!!pageBio) {
+      document.title = `${pageBio.displayname} - Web3.bio`;
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      });
+    }
+
+    if (isAuth) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId,
+      currentBalance: window.accountAmount
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  async getProfile(pageOwner) {
+    try {
+      // make an update call to the smart contract
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      });
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null,
+      currentBalance: 0
+    });
+  }
+
+  handleDonateOpen() {
+    if (this.state.login) {
+      this.setState({
+        pageDonate: true
+      });
+    } else {
+      this.requestSignIn();
+    }
+  }
+
+  handleDonateClose() {
+    this.setState({
+      pageDonate: false
+    });
+  }
+
+  render() {
+    const {
+      login,
+      currentUser,
+      currentBalance,
+      loading,
+      pageBio,
+      pageStatus,
+      pageDonate
+    } = this.state;
+    let social = new Object(pageBio.records);
+    let crypto = new Object(pageBio.crypto);
+    let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-header"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
+      className: "web3bio-logo",
+      title: "Web3.bio"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), pageBio.owner == currentUser ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-account"
+    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      className: "btn mr-1",
+      to: "/dashboard"
+    }, "Manage"), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1",
+      onClick: this.requestSignOut
+    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignIn
+    }, "Login with NEAR")) : null)))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-cover ${pageBio.theme}`
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile text-center"
+    }, !!pageBio.avatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: pageBio.avatar,
+      className: "profile-avatar avatar avatar-xl"
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-xl",
+      "data-initial": nameInitial
+    }), /*#__PURE__*/_react.default.createElement("h2", {
+      className: "profile-name"
+    }, pageBio.displayname), !!pageBio.description ? /*#__PURE__*/_react.default.createElement("h3", {
+      className: "profile-description"
+    }, pageBio.description) : /*#__PURE__*/_react.default.createElement("h3", {
+      className: "profile-description"
+    }, pageBio.owner), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
+      social: social
+    }), /*#__PURE__*/_react.default.createElement(_CryptoWidgets.default, {
+      crypto: crypto,
+      handleDonateOpen: this.handleDonateOpen
+    }), pageDonate ? /*#__PURE__*/_react.default.createElement(_CryptoDonate.default, {
+      currentUser: currentUser,
+      currentBalance: currentBalance,
+      displayname: pageBio.displayname,
+      receiver: pageBio.crypto.near,
+      wallet: window.walletConnection,
+      handleDonateClose: this.handleDonateClose
+    }) : null))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover royal"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h1"
+    }, "The page you\u2019re looking for doesn\u2019t exist."), login ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "input-group-addon addon-lg text-left text-dark"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", null, currentUser)), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/dashboard",
+      className: "btn btn-lg input-group-btn"
+    }, "Claim your page")) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero-input input-group c-hand",
+      onClick: this.requestSignIn
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg text-left"
+    }, "web3.bio/", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "text-gray"
+    }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn btn-lg input-group-btn"
+    }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mt-2"
+    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "loading loading-lg"
+    })))));
+  }
+
+}
+
+var _default = Profile;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/CryptoDonate":"components/CryptoDonate.js"}],"components/Toast.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class Toast extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      toastState: true
+    };
+  }
+
+  componentDidMount() {
+    this.timer = setTimeout(() => this.tick(), 4000);
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer);
+  }
+
+  tick() {
+    this.setState({
+      toastState: false
+    });
+  }
+
+  render() {
+    const {
+      toastState
+    } = this.state;
+    const {
+      content
+    } = this.props;
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, toastState && !!content ? /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-toast"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "toast"
+    }, content)) : null);
+  }
+
+}
+
+var _default = Toast;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"Dashboard.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _Toast = _interopRequireDefault(require("./components/Toast"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class Dashboard extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false,
+      formChanged: false,
+      formLoading: false,
+      formAvatar: '',
+      formTheme: 'royal',
+      pageToast: ''
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.delProfile = this.delProfile.bind(this);
+  }
+
+  async componentDidMount() {
+    document.title = "Manage your profile - Web3.bio";
+    let isAuth = this.props.wallet.isSignedIn();
+    let pageOwner = window.accountId;
+    let pageBio = await this.getProfile(pageOwner);
+
+    if (!!pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true,
+        formAvatar: pageBio.avatar,
+        formTheme: pageBio.theme
+      });
+    }
+
+    console.log(pageBio);
+
+    if (isAuth) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  async getProfile(pageOwner) {
+    try {
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      });
+    } catch (e) {
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      });
+      throw e;
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  async setProfile(newRecords) {
+    try {
+      await window.contract.setRecordByOwner(newRecords);
+    } catch (e) {
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      });
+      throw e;
+    }
+  }
+
+  async delProfile() {
+    if (!window.confirm(`Permanently delete your page and profile data for ${this.state.currentUser}?`)) {
+      return;
+    }
+
+    try {
+      return await window.contract.delRecordByOwner({
+        owner: this.state.currentUser
+      });
+    } catch (e) {
+      this.setState({
+        formLoading: false,
+        pageToast: 'Something went wrong. Try again later.'
+      });
+      throw e;
+    } finally {
+      // Go to home page
+      window.location.replace(window.location.origin);
+    }
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  handleChange(event) {
+    let formAvatar = this.state.formAvatar;
+    let formTheme = this.state.formTheme;
+
+    switch (event.target.id) {
+      case 'avatar':
+        formAvatar = event.target.value;
+        break;
+
+      case 'theme':
+        formTheme = event.target.value;
+        break;
+    }
+
+    this.setState({
+      formChanged: true,
+      formAvatar: formAvatar,
+      formTheme: formTheme
+    });
+  }
+
+  async handleSubmit(event) {
+    event.preventDefault();
+    this.setState({
+      formLoading: true
+    });
+    let newSocial = new Object({
+      email: event.target.email.value,
+      website: event.target.website.value,
+      twitter: event.target.twitter.value,
+      facebook: event.target.facebook.value,
+      linkedin: event.target.linkedin.value,
+      github: event.target.github.value,
+      gitcoin: event.target.gitcoin.value,
+      medium: event.target.medium.value,
+      wechat: event.target.wechat.value,
+      telegram: event.target.telegram.value,
+      instagram: event.target.instagram.value,
+      youtube: event.target.youtube.value,
+      discord: event.target.discord.value,
+      reddit: event.target.reddit.value,
+      patreon: event.target.patreon.value,
+      paypal: event.target.paypal.value
+    });
+    newSocial = Object.fromEntries(Object.entries(newSocial).filter(([_, v]) => v != "" && v != null));
+    let newCrypto = new Object({
+      btc: event.target.btc.value,
+      eth: event.target.eth.value,
+      dot: event.target.dot.value
+    });
+    newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
+    let newRecords = new Object({
+      displayname: event.target.displayname.value,
+      avatar: event.target.avatar.value,
+      description: event.target.description.value,
+      location: event.target.location.value,
+      theme: event.target.theme.value,
+      records: newSocial,
+      crypto: newCrypto
+    });
+    console.log(newRecords);
+    await this.setProfile(newRecords);
+    let pageOwner = this.state.currentUser;
+    let pageBio = await this.getProfile(pageOwner);
+
+    if (!!pageBio) {
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true,
+        formChanged: false,
+        formLoading: false,
+        formAvatar: pageBio.avatar,
+        formTheme: pageBio.theme,
+        pageToast: 'Profile updated.'
+      });
+    }
+  }
+
+  render() {
+    const {
+      login,
+      currentUser,
+      loading,
+      pageBio,
+      pageStatus,
+      formChanged,
+      formLoading,
+      formAvatar,
+      formTheme,
+      pageToast
+    } = this.state;
+    let social = new Object(pageBio.records);
+    let crypto = new Object(pageBio.crypto);
+    let nameInitial = '';
+
+    if (pageStatus) {
+      nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
+    } else {
+      nameInitial = String(currentUser).charAt(0).toUpperCase();
+    }
+
+    if (!login && !currentUser) {
+      return /*#__PURE__*/_react.default.createElement(_reactRouterDom.Redirect, {
+        to: "/"
+      });
+    }
+
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_Toast.default, null), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-header"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/",
+      className: "web3bio-logo",
+      title: "Web3.bio"
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "WEB3", /*#__PURE__*/_react.default.createElement("br", null), "BIO")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-account"
+    }, login ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: `/${currentUser}`,
+      className: "btn mr-1",
+      target: "_blank"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "hide-lg"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-opacity"
+    }, "web3.bio/"), currentUser), /*#__PURE__*/_react.default.createElement("span", {
+      className: "show-lg"
+    }, "Preview")), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn ml-1",
+      onClick: this.requestSignOut
+    }, "Logout")) : /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn",
+      onClick: this.requestSignIn
+    }, "Login with NEAR")))))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-cover ${formTheme}`
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, !pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content-title text-center mb-4"
+    }, "Hello, ", /*#__PURE__*/_react.default.createElement("strong", null, currentUser), "."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings web3bio-placeholder"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-4"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "mr-2"
+    }, "\uD83C\uDF08"), " Claim your page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mb-2"
+    }, "Complete your ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "#profile",
+      className: "btn btn-sm ml-1 mr-1"
+    }, "basic info"), ", ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "#social",
+      className: "btn btn-sm ml-1 mr-1"
+    }, "social links"), ", or ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "#crypto",
+      className: "btn btn-sm ml-1 mr-1"
+    }, "crypto addresses"), " below to claim your page."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mb-4"
+    }, "Your page will be available at: ", /*#__PURE__*/_react.default.createElement("a", {
+      href: `https://web3.bio/${currentUser}`,
+      className: "text-dark text-underline ml-1",
+      target: "_blank"
+    }, "web3.bio/", currentUser), "."))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content-title text-center mt-4 mb-4"
+    }, "Manage your profile")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings"
+    }, /*#__PURE__*/_react.default.createElement("ul", {
+      className: "tab tab-block"
+    }, /*#__PURE__*/_react.default.createElement("li", {
+      className: "tab-item"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#profile"
+    }, "Basic")), /*#__PURE__*/_react.default.createElement("li", {
+      className: "tab-item"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#social"
+    }, "Social")), /*#__PURE__*/_react.default.createElement("li", {
+      className: "tab-item"
+    }, /*#__PURE__*/_react.default.createElement("a", {
+      href: "#crypto"
+    }, "Crypto"))), /*#__PURE__*/_react.default.createElement("form", {
+      onSubmit: this.handleSubmit,
+      disabled: formLoading,
+      autoComplete: "off"
+    }, /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "profile"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-2"
+    }, "Basic info"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "displayname"
+    }, "Name"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "displayname",
+      placeholder: "Name",
+      defaultValue: pageBio.displayname,
+      required: true,
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "description"
+    }, "Bio"), /*#__PURE__*/_react.default.createElement("textarea", {
+      className: "form-input input-lg",
+      id: "description",
+      placeholder: "Description",
+      defaultValue: pageBio.description,
+      maxLength: "160",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "avatar"
+    }, "Avatar"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column"
+    }, /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "url",
+      id: "avatar",
+      placeholder: "https://",
+      defaultValue: pageBio.avatar,
+      onInput: this.handleChange
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-input-hint"
+    }, "You may use free photo hostings like ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://imgur.com/",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "Imgur"), " or ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://imgbb.com/",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "IMGBB"), " for avatars.")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-auto"
+    }, formAvatar ? /*#__PURE__*/_react.default.createElement("img", {
+      src: formAvatar,
+      className: "profile-avatar avatar avatar-lg"
+    }) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "profile-avatar avatar avatar-lg",
+      "data-initial": nameInitial
+    })))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "email"
+    }, "Email ", /*#__PURE__*/_react.default.createElement("small", {
+      className: "label"
+    }, "PUBLIC")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "email",
+      id: "email",
+      placeholder: "Email",
+      defaultValue: social.email,
+      onInput: this.handleChange
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-input-hint"
+    }, "Leave it blank if you don't want to make your Email address public.")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "website"
+    }, "Website"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "url",
+      id: "website",
+      placeholder: "https://",
+      defaultValue: social.website,
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "location"
+    }, "Location"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "location",
+      placeholder: "The Moon",
+      defaultValue: pageBio.location,
+      maxLength: "30",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "theme"
+    }, "Theme"), /*#__PURE__*/_react.default.createElement("select", {
+      className: "form-select select-lg",
+      id: "theme",
+      value: formTheme,
+      onInput: this.handleChange
+    }, /*#__PURE__*/_react.default.createElement("option", {
+      value: "royal"
+    }, "Royal"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "flax"
+    }, "Flax"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "witchhaze"
+    }, "Witch Haze"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "salmon"
+    }, "Salmon"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "mauve"
+    }, "Mauve"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "shalimar"
+    }, "Shalimar"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "creamwhisper"
+    }, "Cream Whisper"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "eggsour"
+    }, "Egg Sour"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "flare"
+    }, "Flare"), /*#__PURE__*/_react.default.createElement("option", {
+      value: "snowymint"
+    }, "Snowy Mint")))), /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "social"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-2"
+    }, "Social links"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "twitter"
+    }, "Twitter"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "twitter.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "twitter",
+      placeholder: "username",
+      defaultValue: social.twitter,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "facebook"
+    }, "Facebook"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "facebook.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "facebook",
+      placeholder: "username",
+      defaultValue: social.facebook,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "linkedin"
+    }, "LinkedIn"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "url",
+      id: "linkedin",
+      placeholder: "https://linkedin.com/",
+      defaultValue: social.linkedin,
+      maxLength: "120",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "github"
+    }, "GitHub"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "github.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "github",
+      placeholder: "username",
+      defaultValue: social.github,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "gitcoin"
+    }, "Gitcoin"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "gitcoin.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "gitcoin",
+      placeholder: "username",
+      defaultValue: social.gitcoin,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "medium"
+    }, "Medium"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "url",
+      id: "medium",
+      placeholder: "https://medium.com/",
+      defaultValue: social.medium,
+      maxLength: "120",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "wechat"
+    }, "WeChat"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "wechat",
+      placeholder: "WeChat ID",
+      defaultValue: social.wechat,
+      maxLength: "120",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "telegram"
+    }, "Telegram"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "t.me", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "telegram",
+      placeholder: "username",
+      defaultValue: social.telegram,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "instagram"
+    }, "Instagram"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "instagram.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "instagram",
+      placeholder: "username",
+      defaultValue: social.instagram,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "youtube"
+    }, "YouTube"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "url",
+      id: "youtube",
+      placeholder: "https://youtube.com/",
+      defaultValue: social.youtube,
+      maxLength: "120",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "discord"
+    }, "Discord"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "discord",
+      placeholder: "https://discord.com",
+      defaultValue: social.discord,
+      maxLength: "120",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "reddit"
+    }, "Reddit"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "url",
+      id: "reddit",
+      placeholder: "https://reddit.com/",
+      defaultValue: social.reddit,
+      maxLength: "120",
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "patreon"
+    }, "Patreon"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "patreon.com", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "patreon",
+      placeholder: "username",
+      defaultValue: social.patreon,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "paypal"
+    }, "PayPal"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "input-group"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "input-group-addon addon-lg"
+    }, "paypal.me", /*#__PURE__*/_react.default.createElement("span", {
+      className: "ml-1"
+    }, "/")), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "paypal",
+      placeholder: "username",
+      defaultValue: social.paypal,
+      maxLength: "120",
+      onInput: this.handleChange
+    }))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-input-hint"
+    }, "Request more social support? Please contact ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yanzhu.near",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "@yanzhu.near"), "."))), /*#__PURE__*/_react.default.createElement("fieldset", {
+      id: "crypto"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold mb-2"
+    }, "Crypto addresses"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "near"
+    }, "NEAR"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "near",
+      defaultValue: crypto.near ? crypto.near : currentUser,
+      readOnly: true
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "btc"
+    }, "Bitcoin"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "btc",
+      defaultValue: crypto.btc,
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "eth"
+    }, "Ethereum"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "eth",
+      defaultValue: crypto.eth,
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label",
+      htmlFor: "dot"
+    }, "Polkadot"), /*#__PURE__*/_react.default.createElement("input", {
+      className: "form-input input-lg",
+      type: "text",
+      id: "dot",
+      defaultValue: crypto.dot,
+      onInput: this.handleChange
+    })), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-placeholder"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-bold"
+    }, "NFT Collection Widget - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-placeholder"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-bold"
+    }, "Import ENS or DAS Records - COMING SOON")), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-input-hint"
+    }, "Request more crypto support? Please contact ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yanzhu.near",
+      target: "_blank",
+      rel: "noopener noreferrer"
+    }, "@yanzhu.near"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), /*#__PURE__*/_react.default.createElement("div", {
+      className: `web3bio-settings-footer ${formChanged ? "active" : ""}`
+    }, /*#__PURE__*/_react.default.createElement("button", {
+      className: `btn btn-lg btn-block ${formLoading ? "loading" : ""}`,
+      disabled: !formChanged,
+      type: "submit"
+    }, "Update")))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings",
+      id: "dangerzone"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "h5 text-bold"
+    }, "Danger Zone"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "form-group"
+    }, /*#__PURE__*/_react.default.createElement("label", {
+      className: "form-label mb-2"
+    }, "Permanently delete your page and profile data from ", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "text-error"
+    }, currentUser), ". This of course is not reversable."), /*#__PURE__*/_react.default.createElement("button", {
+      className: "btn mb-2",
+      onClick: this.delProfile
+    }, "Delete data")))))), !!pageToast ? /*#__PURE__*/_react.default.createElement(_Toast.default, {
+      content: pageToast
+    }) : null) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover"
+    }), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-sm"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "loading loading-lg"
+    })))));
+  }
+
+}
+
+var _default = Dashboard;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./components/Toast":"components/Toast.js"}],"components/Footer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+class Footer extends _react.Component {
+  render() {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-footer text-center"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      className: "btn",
+      to: "/"
+    }, "Claim your ", /*#__PURE__*/_react.default.createElement("strong", {
+      className: "ml-1 mr-1"
+    }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
+      className: "mt-4 mb-2"
+    }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://web3.bio",
+      className: "text-dark"
+    }, "Web3.bio"), " \xB7 Proudly Built with ", /*#__PURE__*/_react.default.createElement("a", {
+      href: "https://near.org",
+      target: "_blank",
+      rel: "noopener noreferrer",
+      className: "text-dark"
+    }, "NEAR"), " ", /*#__PURE__*/_react.default.createElement("span", {
+      className: "text-primary"
+    }, "\u2665")))))));
+  }
+
+}
+
+var _default = Footer;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"App.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _config = _interopRequireDefault(require("./config"));
+
+var _Home = _interopRequireDefault(require("./Home"));
+
+var _Profile = _interopRequireDefault(require("./Profile"));
+
+var _Dashboard = _interopRequireDefault(require("./Dashboard"));
+
+var _Footer = _interopRequireDefault(require("./components/Footer"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class App extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId
+    };
+    this.signedInFlow = this.signedInFlow.bind(this);
+    this.requestSignIn = this.requestSignIn.bind(this);
+    this.requestSignOut = this.requestSignOut.bind(this);
+    this.signedOutFlow = this.signedOutFlow.bind(this);
+  }
+
+  async componentDidMount() {
+    let isAuth = this.props.wallet.isSignedIn();
+
+    if (isAuth) {
+      this.signedInFlow();
+    } else {
+      this.signedOutFlow();
+    }
+  }
+
+  async signedInFlow() {
+    this.setState({
+      login: true,
+      currentUser: window.accountId
+    });
+    const accountId = await this.props.wallet.getAccountId();
+
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+  }
+
+  async requestSignIn() {
+    const appTitle = 'Web3.bio';
+    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  render() {
+    return /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-container"
+    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      path: "/",
+      exact: true,
+      render: props => /*#__PURE__*/_react.default.createElement(_Home.default, _extends({}, props, {
+        wallet: window.walletConnection
+      }))
+    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      path: "/dashboard",
+      exact: true,
+      render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
+        wallet: window.walletConnection
+      }))
+    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+      path: "/:owner",
+      render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
+        wallet: window.walletConnection
+      }))
+    })), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
+  }
+
+}
+
+var _default = App;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)?\/[^/]+(?:\?.*)?$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"assets/scss/web3bio.scss":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"./../img/bg-royal.jpg":[["bg-royal.6d0b558c.jpg","assets/img/bg-royal.jpg"],"assets/img/bg-royal.jpg"],"./../img/bg-shalimar.jpg":[["bg-shalimar.c8c9e51c.jpg","assets/img/bg-shalimar.jpg"],"assets/img/bg-shalimar.jpg"],"./../img/bg-mauve.jpg":[["bg-mauve.9667c10c.jpg","assets/img/bg-mauve.jpg"],"assets/img/bg-mauve.jpg"],"./../img/bg-salmon.jpg":[["bg-salmon.93f2487d.jpg","assets/img/bg-salmon.jpg"],"assets/img/bg-salmon.jpg"],"./../img/bg-witchhaze.jpg":[["bg-witchhaze.a41bf097.jpg","assets/img/bg-witchhaze.jpg"],"assets/img/bg-witchhaze.jpg"],"./../img/bg-flax.jpg":[["bg-flax.39742261.jpg","assets/img/bg-flax.jpg"],"assets/img/bg-flax.jpg"],"./../img/bg-creamwhisper.jpg":[["bg-creamwhisper.318f6706.jpg","assets/img/bg-creamwhisper.jpg"],"assets/img/bg-creamwhisper.jpg"],"./../img/bg-eggsour.jpg":[["bg-eggsour.a0316a65.jpg","assets/img/bg-eggsour.jpg"],"assets/img/bg-eggsour.jpg"],"./../img/bg-flare.jpg":[["bg-flare.df7a95cc.jpg","assets/img/bg-flare.jpg"],"assets/img/bg-flare.jpg"],"./../img/bg-snowymint.jpg":[["bg-snowymint.0cc40fb1.jpg","assets/img/bg-snowymint.jpg"],"assets/img/bg-snowymint.jpg"],"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js"}],"util/utils.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -62626,7 +62775,8 @@ async function initContract() {
 
   window.walletConnection = new _nearApiJs.WalletConnection(near); // Getting the Account ID. If still unauthorized, it's just empty string
 
-  window.accountId = window.walletConnection.getAccountId(); // Initializing our contract APIs by contract name and configuration
+  window.accountId = window.walletConnection.getAccountId();
+  window.accountAmount = (await window.walletConnection.account().state()).amount; // Initializing our contract APIs by contract name and configuration
 
   window.contract = await new _nearApiJs.Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.
@@ -62663,12 +62813,6 @@ var _history = require("history");
 
 var _App = _interopRequireDefault(require("./App"));
 
-var _Home = _interopRequireDefault(require("./Home"));
-
-var _Profile = _interopRequireDefault(require("./Profile"));
-
-var _Dashboard = _interopRequireDefault(require("./Dashboard"));
-
 require("./assets/scss/web3bio.scss");
 
 var _utils = require("./util/utils");
@@ -62683,7 +62827,7 @@ window.nearInitPromise = (0, _utils.initContract)().then(() => {
     wallet: window.walletConnection
   })), document.querySelector('#root'));
 }).catch(console.error);
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

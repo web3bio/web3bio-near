@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import Clipboard from 'react-clipboard.js'
 import SVG from 'react-inlinesvg'
 import IconNear from '../assets/icons/crypto-near.svg'
@@ -9,6 +8,9 @@ import IconDot from '../assets/icons/crypto-dot.svg'
 import IconCopy from '../assets/icons/action-copy.svg'
 import IconExplore from '../assets/icons/action-explore.svg'
 import IconDonate from '../assets/icons/action-donate.svg'
+
+import getConfig from '../config'
+const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
 class CryptoWidgets extends Component {
   constructor(props) {
@@ -21,7 +23,7 @@ class CryptoWidgets extends Component {
   }
 
   render() {
-    const { crypto } = this.props
+    const { crypto, handleDonateOpen } = this.props
 
     return (
       <div className="profile-crypto profile-widget">
@@ -38,12 +40,12 @@ class CryptoWidgets extends Component {
               <Clipboard className="btn btn-sm btn-link tooltip mr-1" data-clipboard-text={crypto.near} onSuccess={this.handleCopy} title="Copy to clipboard">
                 <SVG src={IconCopy} className="icon" />
               </Clipboard>
-              <a href={`https://explorer.near.org/accounts/${crypto.near}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1 mr-1" title="Open in Explorer">
+              <a href={`${nearConfig.explorerUrl}/accounts/${crypto.near}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm btn-link tooltip ml-1 mr-1" title="Open in Explorer">
                 <SVG src={IconExplore} className="icon" />
               </a>
-              <Link to="/" className="btn ml-1">
+              <button onClick={handleDonateOpen} className="btn ml-1">
                 <SVG src={IconDonate} className="icon mr-2" /> Donate
-              </Link>
+              </button>
             </div>
           </div> : null
         }

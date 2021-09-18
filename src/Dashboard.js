@@ -32,7 +32,7 @@ class Dashboard extends Component {
   async componentDidMount() {
     document.title = "Manage your profile - Web3.bio"
 
-    let loggedIn = this.props.wallet.isSignedIn()
+    let isAuth = this.props.wallet.isSignedIn()
     let pageOwner = window.accountId
 
     let pageBio = await this.getProfile(pageOwner)
@@ -46,7 +46,7 @@ class Dashboard extends Component {
     }
     console.log(pageBio)
     
-    if (loggedIn) {
+    if (isAuth) {
       this.signedInFlow();
     } else {
       this.signedOutFlow();
@@ -306,7 +306,7 @@ class Dashboard extends Component {
                         <a href="#crypto">Crypto</a>
                       </li>
                     </ul>
-                    <form onSubmit={this.handleSubmit} autoComplete="off">
+                    <form onSubmit={this.handleSubmit} disabled={formLoading} autoComplete="off">
                       <fieldset id="profile">
                         <div className="h5 text-bold mb-2">Basic info</div>
                         <div className="form-group">
@@ -500,7 +500,7 @@ class Dashboard extends Component {
               </div>
             </div>
             
-            { !!pageToast ? <Toast content={pageToast} />:null }
+            { !!pageToast ? <Toast content={pageToast} /> : null }
             
           </>
           :
