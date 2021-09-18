@@ -182,7 +182,7 @@ class Profile extends Component {
                         currentBalance={currentBalance}
                         displayname={pageBio.displayname}
                         receiver={pageBio.crypto.near}
-                        wallet={window.walletConnection}
+                        wallet={this.props.wallet}
                         handleDonateClose={this.handleDonateClose}
                       /> : null
                     }

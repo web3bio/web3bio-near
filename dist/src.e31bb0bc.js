@@ -61575,7 +61575,7 @@ class Profile extends _react.Component {
       currentBalance: currentBalance,
       displayname: pageBio.displayname,
       receiver: pageBio.crypto.near,
-      wallet: window.walletConnection,
+      wallet: this.props.wallet,
       handleDonateClose: this.handleDonateClose
     }) : null))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-cover royal"
@@ -62557,125 +62557,7 @@ class Footer extends _react.Component {
 
 var _default = Footer;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"App.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-require("regenerator-runtime/runtime");
-
-var _react = _interopRequireWildcard(require("react"));
-
-var _reactRouterDom = require("react-router-dom");
-
-var _config = _interopRequireDefault(require("./config"));
-
-var _Home = _interopRequireDefault(require("./Home"));
-
-var _Profile = _interopRequireDefault(require("./Profile"));
-
-var _Dashboard = _interopRequireDefault(require("./Dashboard"));
-
-var _Footer = _interopRequireDefault(require("./components/Footer"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
-
-const nearConfig = (0, _config.default)("development" || 'development');
-
-class App extends _react.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      login: false,
-      currentUser: window.accountId
-    };
-    this.signedInFlow = this.signedInFlow.bind(this);
-    this.requestSignIn = this.requestSignIn.bind(this);
-    this.requestSignOut = this.requestSignOut.bind(this);
-    this.signedOutFlow = this.signedOutFlow.bind(this);
-  }
-
-  async componentDidMount() {
-    let isAuth = this.props.wallet.isSignedIn();
-
-    if (isAuth) {
-      this.signedInFlow();
-    } else {
-      this.signedOutFlow();
-    }
-  }
-
-  async signedInFlow() {
-    this.setState({
-      login: true,
-      currentUser: window.accountId
-    });
-    const accountId = await this.props.wallet.getAccountId();
-
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-  }
-
-  async requestSignIn() {
-    const appTitle = 'Web3.bio';
-    await this.props.wallet.requestSignIn(nearConfig.contractName, appTitle);
-  }
-
-  requestSignOut() {
-    this.props.wallet.signOut();
-    setTimeout(this.signedOutFlow, 500);
-    console.log("after sign out", this.props.wallet.isSignedIn());
-  }
-
-  signedOutFlow() {
-    if (window.location.search.includes("account_id")) {
-      window.location.replace(window.location.origin + window.location.pathname);
-    }
-
-    this.setState({
-      login: false,
-      currentUser: null
-    });
-  }
-
-  render() {
-    return /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-container"
-    }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-      path: "/",
-      exact: true,
-      render: props => /*#__PURE__*/_react.default.createElement(_Home.default, _extends({}, props, {
-        wallet: window.walletConnection
-      }))
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-      path: "/dashboard",
-      exact: true,
-      render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
-        wallet: window.walletConnection
-      }))
-    }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-      path: "/:owner",
-      render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
-        wallet: window.walletConnection
-      }))
-    })), /*#__PURE__*/_react.default.createElement(_Footer.default, null));
-  }
-
-}
-
-var _default = App;
-exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","./config":"config.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js"}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
 var bundleURL = null;
 
 function getBundleURLCached() {
@@ -62812,7 +62694,13 @@ var _reactRouterDom = require("react-router-dom");
 
 var _history = require("history");
 
-var _App = _interopRequireDefault(require("./App"));
+var _Home = _interopRequireDefault(require("./Home"));
+
+var _Profile = _interopRequireDefault(require("./Profile"));
+
+var _Dashboard = _interopRequireDefault(require("./Dashboard"));
+
+var _Footer = _interopRequireDefault(require("./components/Footer"));
 
 require("./assets/scss/web3bio.scss");
 
@@ -62820,15 +62708,34 @@ var _utils = require("./util/utils");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
 const history = (0, _history.createBrowserHistory)();
 window.nearInitPromise = (0, _utils.initContract)().then(() => {
   _reactDom.default.render( /*#__PURE__*/_react.default.createElement(_reactRouterDom.Router, {
     history: history
-  }, /*#__PURE__*/_react.default.createElement(_App.default, {
-    wallet: window.walletConnection
-  })), document.querySelector('#root'));
+  }, /*#__PURE__*/_react.default.createElement("div", {
+    className: "web3bio-container"
+  }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Switch, null, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/",
+    exact: true,
+    render: props => /*#__PURE__*/_react.default.createElement(_Home.default, _extends({}, props, {
+      wallet: window.walletConnection
+    }))
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/dashboard",
+    exact: true,
+    render: props => /*#__PURE__*/_react.default.createElement(_Dashboard.default, _extends({}, props, {
+      wallet: window.walletConnection
+    }))
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/:owner",
+    render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
+      wallet: window.walletConnection
+    }))
+  })), /*#__PURE__*/_react.default.createElement(_Footer.default, null))), document.querySelector('#root'));
 }).catch(console.error);
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./App":"App.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -62856,7 +62763,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61329" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56416" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
