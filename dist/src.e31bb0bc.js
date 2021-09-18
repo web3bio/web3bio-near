@@ -61447,7 +61447,7 @@ class Profile extends _react.Component {
     this.setState({
       login: true,
       currentUser: window.accountId,
-      currentBalance: window.accountAmount
+      currentBalance: window.accountBalance.available
     });
     const accountId = await this.props.wallet.getAccountId();
 
@@ -62659,7 +62659,8 @@ async function initContract() {
   window.walletConnection = new _nearApiJs.WalletConnection(near); // Getting the Account ID. If still unauthorized, it's just empty string
 
   window.accountId = window.walletConnection.getAccountId();
-  window.accountAmount = (await window.walletConnection.account().state()).amount; // Initializing our contract APIs by contract name and configuration
+  const account = await near.account(window.accountId);
+  window.accountBalance = await account.getAccountBalance(); // Initializing our contract APIs by contract name and configuration
 
   window.contract = await new _nearApiJs.Contract(window.walletConnection.account(), nearConfig.contractName, {
     // View methods are read only. They don't modify the state, but usually return some value.

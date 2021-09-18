@@ -52,7 +52,7 @@ class Profile extends Component {
     this.setState({
       login: true,
       currentUser: window.accountId,
-      currentBalance: window.accountAmount
+      currentBalance: window.accountBalance.available
     })
     const accountId = await this.props.wallet.getAccountId()
     if (window.location.search.includes("account_id")) {
