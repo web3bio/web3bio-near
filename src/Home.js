@@ -18,6 +18,7 @@ class Home extends Component {
   }
 
   async componentDidMount() {
+    document.title = 'Web3.bio'
     let isAuth = this.props.wallet.isSignedIn()
     
     if (isAuth) {
