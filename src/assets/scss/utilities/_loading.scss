@@ -31,4 +31,11 @@
       width: $unit-8;
     }
   }
+
+  &.loading-dark {
+    &::after {
+      border-bottom-color: $dark-color;
+      border-left-color: $dark-color;
+    }
+  }
 }

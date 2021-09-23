@@ -61618,13 +61618,13 @@ class Profile extends _react.Component {
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-2"
     }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
+      className: "web3bio-cover royal"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "loading loading-lg"
+      className: "loading loading-lg loading-dark"
     })))));
   }
 
@@ -62502,13 +62502,13 @@ class Dashboard extends _react.Component {
     }, "Delete data")))))), !!pageToast ? /*#__PURE__*/_react.default.createElement(_Toast.default, {
       content: pageToast
     }) : null) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover"
+      className: "web3bio-cover royal"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-profile"
     }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "loading loading-lg"
+      className: "loading loading-lg loading-dark"
     })))));
   }
 
@@ -62771,7 +62771,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56416" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52438" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

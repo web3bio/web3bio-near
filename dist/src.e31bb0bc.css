@@ -2180,6 +2180,9 @@ a.text-error:visited {
       margin-left: -0.8rem;
       margin-top: -0.8rem;
       width: 1.6rem; }
+  .loading.loading-dark::after {
+    border-bottom-color: #202020;
+    border-left-color: #202020; }
 
 .clearfix::after {
   clear: both;

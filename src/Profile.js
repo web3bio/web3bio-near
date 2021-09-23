@@ -219,10 +219,10 @@ class Profile extends Component {
           </>
           :
           <>
-            <div className="web3bio-cover"></div>
+            <div className="web3bio-cover royal"></div>
             <div className="web3bio-content container grid-sm">
               <div className="web3bio-profile">
-                <div className="loading loading-lg"></div>
+                <div className="loading loading-lg loading-dark"></div>
               </div>
             </div>
           </>
