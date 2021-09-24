@@ -62479,13 +62479,17 @@ class Dashboard extends _react.Component {
       to: "/yanzhu.near",
       target: "_blank",
       rel: "noopener noreferrer"
-    }, "@yanzhu.near"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "@yanzhu.near"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
       className: `web3bio-settings-footer ${formChanged ? "active" : ""}`
     }, /*#__PURE__*/_react.default.createElement("button", {
-      className: `btn btn-lg btn-block ${formLoading ? "loading" : ""}`,
-      disabled: !formChanged,
+      className: `btn btn-lg btn-block ${formLoading ? "loading" : null}`,
       type: "submit"
-    }, "Update")))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Update")) : /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-settings-footer active"
+    }, /*#__PURE__*/_react.default.createElement("button", {
+      className: `btn btn-lg btn-block ${formLoading ? "loading" : null}`,
+      type: "submit"
+    }, "Claim")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings",
       id: "dangerzone"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -62771,7 +62775,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52438" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64906" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -483,9 +483,16 @@ class Dashboard extends Component {
                         </div>
                       </fieldset>
 
-                      <div className={`web3bio-settings-footer ${formChanged ? "active" : ""}`}>
-                        <button className={`btn btn-lg btn-block ${formLoading ? "loading" : ""}`} disabled={!formChanged} type="submit">Update</button>
-                      </div>
+                      { pageStatus ? 
+                        <div className={`web3bio-settings-footer ${formChanged ? "active" : ""}`}>
+                          <button className={`btn btn-lg btn-block ${formLoading ? "loading" : null}`} type="submit">Update</button>
+                        </div>
+                        :
+                        <div className="web3bio-settings-footer active">
+                          <button className={`btn btn-lg btn-block ${formLoading ? "loading" : null}`} type="submit">Claim</button>
+                        </div>                   
+                      }
+                      
                     </form>
                   </div>
 
