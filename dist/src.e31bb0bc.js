@@ -61436,7 +61436,7 @@ class Profile extends _react.Component {
 
   async componentDidMount() {
     let isAuth = this.props.wallet.isSignedIn();
-    let pageOwner = this.props.match.params.owner;
+    let pageOwner = this.props.match.params.owner + '.' + this.props.match.params[0];
     const pageBio = await this.getProfile(pageOwner);
 
     if (!!pageBio) {
@@ -61632,7 +61632,131 @@ class Profile extends _react.Component {
 
 var _default = Profile;
 exports.default = _default;
-},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","near-api-js":"../node_modules/near-api-js/lib/browser-index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/CryptoDonate":"components/CryptoDonate.js"}],"components/Toast.js":[function(require,module,exports) {
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","near-api-js":"../node_modules/near-api-js/lib/browser-index.js","./config":"config.js","./components/SocialLinks":"components/SocialLinks.js","./components/CryptoWidgets":"components/CryptoWidgets.js","./components/CryptoDonate":"components/CryptoDonate.js"}],"ProfileDAS.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+require("regenerator-runtime/runtime");
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var nearAPI = _interopRequireWildcard(require("near-api-js"));
+
+var _config = _interopRequireDefault(require("./config"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
+
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+const nearConfig = (0, _config.default)("development" || 'development');
+
+class ProfileDAS extends _react.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      login: false,
+      currentUser: window.accountId,
+      loading: true,
+      pageBio: new Object(),
+      pageStatus: false,
+      pageDonate: false
+    };
+  }
+
+  async componentDidMount() {
+    let isAuth = this.props.wallet.isSignedIn();
+    let pageOwner = this.props.match.params.owner;
+    const pageBio = await this.getProfile(pageOwner);
+
+    if (!!pageBio) {
+      document.title = `${pageBio.displayname} - Web3.bio`;
+      this.setState({
+        pageBio: pageBio,
+        pageStatus: true
+      });
+    }
+  }
+
+  async getProfile(pageOwner) {
+    try {
+      // make an update call to the smart contract
+      return await window.contract.getRecordByOwner({
+        owner: pageOwner
+      });
+    } catch (e) {
+      console.log('Something went wrong! ');
+      throw e;
+    } finally {
+      this.setState({
+        loading: false
+      });
+    }
+  }
+
+  requestSignOut() {
+    this.props.wallet.signOut();
+    setTimeout(this.signedOutFlow, 500);
+    console.log("after sign out", this.props.wallet.isSignedIn());
+  }
+
+  signedOutFlow() {
+    if (window.location.search.includes("account_id")) {
+      window.location.replace(window.location.origin + window.location.pathname);
+    }
+
+    this.setState({
+      login: false,
+      currentUser: null
+    });
+  }
+
+  handleDonateOpen() {
+    if (this.state.login) {
+      this.setState({
+        pageDonate: true
+      });
+    } else {
+      this.requestSignIn();
+    }
+  }
+
+  handleDonateClose() {
+    this.setState({
+      pageDonate: false
+    });
+  }
+
+  render() {
+    const {
+      login,
+      currentUser,
+      loading,
+      pageBio,
+      pageStatus,
+      pageDonate
+    } = this.state;
+    return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-content container grid-lg"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-profile text-center"
+    }, /*#__PURE__*/_react.default.createElement("h2", {
+      className: "profile-name"
+    }, pageBio.displayname), /*#__PURE__*/_react.default.createElement("h3", null, "DAS"))));
+  }
+
+}
+
+var _default = ProfileDAS;
+exports.default = _default;
+},{"regenerator-runtime/runtime":"../node_modules/regenerator-runtime/runtime.js","react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","near-api-js":"../node_modules/near-api-js/lib/browser-index.js","./config":"config.js"}],"components/Toast.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -62710,6 +62834,8 @@ var _Home = _interopRequireDefault(require("./Home"));
 
 var _Profile = _interopRequireDefault(require("./Profile"));
 
+var _ProfileDAS = _interopRequireDefault(require("./ProfileDAS"));
+
 var _Dashboard = _interopRequireDefault(require("./Dashboard"));
 
 var _Footer = _interopRequireDefault(require("./components/Footer"));
@@ -62741,13 +62867,16 @@ window.nearInitPromise = (0, _utils.initContract)().then(() => {
       wallet: window.walletConnection
     }))
   }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
-    path: "/:owner",
+    path: "/:owner.(near|testnet)",
     render: props => /*#__PURE__*/_react.default.createElement(_Profile.default, _extends({}, props, {
       wallet: window.walletConnection
     }))
+  }), /*#__PURE__*/_react.default.createElement(_reactRouterDom.Route, {
+    path: "/:owner.bit",
+    render: props => /*#__PURE__*/_react.default.createElement(_ProfileDAS.default, props)
   })), /*#__PURE__*/_react.default.createElement(_Footer.default, null))), document.querySelector('#root'));
 }).catch(console.error);
-},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./Home":"Home.js","./Profile":"Profile.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","react-dom":"../node_modules/react-dom/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","history":"../node_modules/history/esm/history.js","./Home":"Home.js","./Profile":"Profile.js","./ProfileDAS":"ProfileDAS.js","./Dashboard":"Dashboard.js","./components/Footer":"components/Footer.js","./assets/scss/web3bio.scss":"assets/scss/web3bio.scss","./util/utils":"util/utils.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -62775,7 +62904,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64906" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52192" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

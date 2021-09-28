@@ -1,6 +1,6 @@
 import { context, PersistentMap } from "near-sdk-as";
 
-const PROTOCOL_VERSION = "6";
+const PROTOCOL_VERSION = "7";
 
 @nearBindgen
 export class Profile {

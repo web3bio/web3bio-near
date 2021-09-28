@@ -29,7 +29,7 @@ class Profile extends Component {
 
   async componentDidMount() {
     let isAuth = this.props.wallet.isSignedIn()
-    let pageOwner = this.props.match.params.owner
+    let pageOwner = this.props.match.params.owner + '.' + this.props.match.params[0]
 
     const pageBio = await this.getProfile(pageOwner)
     if (!!pageBio) {
@@ -230,7 +230,6 @@ class Profile extends Component {
       </>
     )
   }
-
 }
 
 export default Profile;

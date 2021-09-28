@@ -4,6 +4,7 @@ import { Router, Switch, Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import Home from './Home'
 import Profile from './Profile'
+import ProfileDAS from './ProfileDAS'
 import Dashboard from './Dashboard'
 import Footer from './components/Footer'
 import './assets/scss/web3bio.scss'
@@ -23,8 +24,11 @@ window.nearInitPromise = initContract()
               <Route path="/dashboard" exact render={(props) => (
                 <Dashboard {...props} wallet={window.walletConnection} />
               )} />
-              <Route path="/:owner" render={(props) => (
+              <Route path="/:owner.(near|testnet)" render={(props) => (
                 <Profile {...props} wallet={window.walletConnection} />
+              )} />
+              <Route path="/:owner.bit" render={(props) => (
+                <ProfileDAS {...props} />
               )} />
             </Switch>
             <Footer />
