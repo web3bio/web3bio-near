@@ -119,8 +119,7 @@ class Profile extends Component {
   render() {
     const { login, currentUser, loading, pageBio, pageStatus, pageDonate } = this.state
     const { wallet } = this.props
-    let social = new Object(pageBio.records)
-    let crypto = new Object(pageBio.crypto)
+    let records = new Object(pageBio.records)
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase()
 
     return (
@@ -155,7 +154,7 @@ class Profile extends Component {
           <>
             { pageStatus ? 
               <>
-                <div className={`web3bio-cover ${pageBio.theme}`}></div>
+                <div className={`web3bio-cover ${pageBio.records.theme}`}></div>
                 <div className="web3bio-content container grid-lg">
                   <div className="web3bio-profile text-center">
                     { !!pageBio.avatar ? 
@@ -170,15 +169,14 @@ class Profile extends Component {
                       <h3 className="profile-description">{pageBio.owner}</h3>
                     }
                     
-                    <SocialLinks social={social} />
-
-                    <CryptoWidgets crypto={crypto} handleDonateOpen={this.handleDonateOpen} />
+                    <SocialLinks social={records} />
+                    <CryptoWidgets crypto={records} handleDonateOpen={this.handleDonateOpen} />
 
                     { pageDonate ? 
                       <CryptoDonate
                         currentUser={currentUser}
                         displayname={pageBio.displayname}
-                        receiver={pageBio.crypto.near}
+                        receiver={pageBio.records.near}
                         wallet={wallet}
                         handleDonateClose={this.handleDonateClose}
                       /> : null

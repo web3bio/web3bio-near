@@ -60892,7 +60892,7 @@ class SocialLinks extends _react.Component {
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-social profile-widget"
-    }, social.website ? /*#__PURE__*/_react.default.createElement("a", {
+    }, !!social.website ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.website,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60901,7 +60901,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialWebsite.default,
       className: "profile-social-icon icon"
-    })) : null, social.email ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.email ? /*#__PURE__*/_react.default.createElement("a", {
       href: `mailto:${social.email}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60910,7 +60910,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialEmail.default,
       className: "profile-social-icon icon"
-    })) : null, social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.twitter ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://twitter.com/${social.twitter}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60919,7 +60919,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialTwitter.default,
       className: "profile-social-icon icon"
-    })) : null, social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.facebook ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://facebook.com/${social.facebook}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60928,7 +60928,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialFacebook.default,
       className: "profile-social-icon icon"
-    })) : null, social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.linkedin,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60937,7 +60937,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialLinkedin.default,
       className: "profile-social-icon icon"
-    })) : null, social.github ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.github ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://github.com/${social.github}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60946,7 +60946,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialGithub.default,
       className: "profile-social-icon icon"
-    })) : null, social.gitcoin ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.gitcoin ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://gitcoin.com/${social.gitcoin}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60955,7 +60955,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialGitcoin.default,
       className: "profile-social-icon icon"
-    })) : null, social.medium ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.medium ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.medium,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60964,7 +60964,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialMedium.default,
       className: "profile-social-icon icon"
-    })) : null, social.wechat ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
+    })) : null, !!social.wechat ? /*#__PURE__*/_react.default.createElement(_reactClipboard.default, {
       component: "div",
       className: "profile-social-item c-hand tooltip medium",
       "data-clipboard-text": social.wechat,
@@ -60972,7 +60972,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialWechat.default,
       className: "profile-social-icon icon"
-    })) : null, social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.telegram ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://t.me/${social.telegram}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60981,7 +60981,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialTelegram.default,
       className: "profile-social-icon icon"
-    })) : null, social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.instagram ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://instagram.com/${social.instagram}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60990,7 +60990,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialInstagram.default,
       className: "profile-social-icon icon"
-    })) : null, social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.youtube,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -60999,7 +60999,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialYoutube.default,
       className: "profile-social-icon icon"
-    })) : null, social.discord ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.discord ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.discord,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -61008,7 +61008,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialDiscord.default,
       className: "profile-social-icon icon"
-    })) : null, social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
       href: social.reddit,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -61017,7 +61017,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialReddit.default,
       className: "profile-social-icon icon"
-    })) : null, social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.patreon ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://patreon.com/${social.patreon}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -61026,7 +61026,7 @@ class SocialLinks extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _socialPatreon.default,
       className: "profile-social-icon icon"
-    })) : null, social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
+    })) : null, !!social.paypal ? /*#__PURE__*/_react.default.createElement("a", {
       href: `https://www.paypal.com/paypalme/${social.paypal}`,
       target: "_blank",
       rel: "noopener noreferrer",
@@ -61111,7 +61111,7 @@ class CryptoWidgets extends _react.Component {
     } = this.props;
     return /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto profile-widget"
-    }, crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
+    }, !!crypto.near ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item near"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-content"
@@ -61150,7 +61150,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionDonate.default,
       className: "icon mr-2"
-    }), " Donate"))) : null, crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
+    }), " Donate"))) : null, !!crypto.btc ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item btc"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-content"
@@ -61183,7 +61183,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionExplore.default,
       className: "icon"
-    })))) : null, crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
+    })))) : null, !!crypto.eth ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item eth"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-content"
@@ -61216,7 +61216,7 @@ class CryptoWidgets extends _react.Component {
     }, /*#__PURE__*/_react.default.createElement(_reactInlinesvg.default, {
       src: _actionExplore.default,
       className: "icon"
-    })))) : null, crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
+    })))) : null, !!crypto.dot ? /*#__PURE__*/_react.default.createElement("div", {
       className: "profile-crypto-item dot"
     }, /*#__PURE__*/_react.default.createElement("div", {
       component: "div",
@@ -61531,8 +61531,7 @@ class Profile extends _react.Component {
     const {
       wallet
     } = this.props;
-    let social = new Object(pageBio.records);
-    let crypto = new Object(pageBio.crypto);
+    let records = new Object(pageBio.records);
     let nameInitial = String(pageBio.displayname).charAt(0).toUpperCase();
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
@@ -61558,7 +61557,7 @@ class Profile extends _react.Component {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")) : null)))), !loading ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, pageStatus ? /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-cover ${pageBio.theme}`
+      className: `web3bio-cover ${pageBio.records.theme}`
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -61576,14 +61575,14 @@ class Profile extends _react.Component {
     }, pageBio.description) : /*#__PURE__*/_react.default.createElement("h3", {
       className: "profile-description"
     }, pageBio.owner), /*#__PURE__*/_react.default.createElement(_SocialLinks.default, {
-      social: social
+      social: records
     }), /*#__PURE__*/_react.default.createElement(_CryptoWidgets.default, {
-      crypto: crypto,
+      crypto: records,
       handleDonateOpen: this.handleDonateOpen
     }), pageDonate ? /*#__PURE__*/_react.default.createElement(_CryptoDonate.default, {
       currentUser: currentUser,
       displayname: pageBio.displayname,
-      receiver: pageBio.crypto.near,
+      receiver: pageBio.records.near,
       wallet: wallet,
       handleDonateClose: this.handleDonateClose
     }) : null))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
@@ -61871,7 +61870,7 @@ class Dashboard extends _react.Component {
         pageBio: pageBio,
         pageStatus: true,
         formAvatar: pageBio.avatar,
-        formTheme: pageBio.theme
+        formTheme: pageBio.records.theme
       });
     }
 
@@ -61995,7 +61994,9 @@ class Dashboard extends _react.Component {
     this.setState({
       formLoading: true
     });
-    let newSocial = new Object({
+    let newRecords = new Object({
+      location: event.target.location.value,
+      theme: event.target.theme.value,
       email: event.target.email.value,
       website: event.target.website.value,
       twitter: event.target.twitter.value,
@@ -62011,26 +62012,21 @@ class Dashboard extends _react.Component {
       discord: event.target.discord.value,
       reddit: event.target.reddit.value,
       patreon: event.target.patreon.value,
-      paypal: event.target.paypal.value
-    });
-    newSocial = Object.fromEntries(Object.entries(newSocial).filter(([_, v]) => v != "" && v != null));
-    let newCrypto = new Object({
+      paypal: event.target.paypal.value,
+      near: event.target.near.value,
       btc: event.target.btc.value,
       eth: event.target.eth.value,
       dot: event.target.dot.value
     });
-    newCrypto = Object.fromEntries(Object.entries(newCrypto).filter(([_, v]) => v != "" && v != null));
-    let newRecords = new Object({
+    newRecords = Object.fromEntries(Object.entries(newRecords).filter(([_, v]) => v != "" && v != null));
+    let newProfile = new Object({
       displayname: event.target.displayname.value,
       avatar: event.target.avatar.value,
       description: event.target.description.value,
-      location: event.target.location.value,
-      theme: event.target.theme.value,
-      records: newSocial,
-      crypto: newCrypto
+      records: newRecords
     });
-    console.log(newRecords);
-    await this.setProfile(newRecords);
+    console.log(newProfile);
+    await this.setProfile(newProfile);
     let pageOwner = this.state.currentUser;
     let pageBio = await this.getProfile(pageOwner);
 
@@ -62041,7 +62037,7 @@ class Dashboard extends _react.Component {
         formChanged: false,
         formLoading: false,
         formAvatar: pageBio.avatar,
-        formTheme: pageBio.theme,
+        formTheme: pageBio.records.theme,
         pageToast: 'Profile updated.'
       });
     }
@@ -62060,8 +62056,7 @@ class Dashboard extends _react.Component {
       formTheme,
       pageToast
     } = this.state;
-    let social = new Object(pageBio.records);
-    let crypto = new Object(pageBio.crypto);
+    let records = new Object(pageBio.records);
     let nameInitial = '';
 
     if (pageStatus) {
@@ -62238,7 +62233,7 @@ class Dashboard extends _react.Component {
       type: "email",
       id: "email",
       placeholder: "Email",
-      defaultValue: social.email,
+      defaultValue: records.email,
       onInput: this.handleChange
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-input-hint"
@@ -62252,7 +62247,7 @@ class Dashboard extends _react.Component {
       type: "url",
       id: "website",
       placeholder: "https://",
-      defaultValue: social.website,
+      defaultValue: records.website,
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -62264,7 +62259,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "location",
       placeholder: "The Moon",
-      defaultValue: pageBio.location,
+      defaultValue: records.location,
       maxLength: "30",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62317,7 +62312,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "twitter",
       placeholder: "username",
-      defaultValue: social.twitter,
+      defaultValue: records.twitter,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62336,7 +62331,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "facebook",
       placeholder: "username",
-      defaultValue: social.facebook,
+      defaultValue: records.facebook,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62349,7 +62344,7 @@ class Dashboard extends _react.Component {
       type: "url",
       id: "linkedin",
       placeholder: "https://linkedin.com/",
-      defaultValue: social.linkedin,
+      defaultValue: records.linkedin,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62368,7 +62363,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "github",
       placeholder: "username",
-      defaultValue: social.github,
+      defaultValue: records.github,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62387,7 +62382,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "gitcoin",
       placeholder: "username",
-      defaultValue: social.gitcoin,
+      defaultValue: records.gitcoin,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62400,7 +62395,7 @@ class Dashboard extends _react.Component {
       type: "url",
       id: "medium",
       placeholder: "https://medium.com/",
-      defaultValue: social.medium,
+      defaultValue: records.medium,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62413,7 +62408,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "wechat",
       placeholder: "WeChat ID",
-      defaultValue: social.wechat,
+      defaultValue: records.wechat,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62432,7 +62427,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "telegram",
       placeholder: "username",
-      defaultValue: social.telegram,
+      defaultValue: records.telegram,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62451,7 +62446,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "instagram",
       placeholder: "username",
-      defaultValue: social.instagram,
+      defaultValue: records.instagram,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62464,7 +62459,7 @@ class Dashboard extends _react.Component {
       type: "url",
       id: "youtube",
       placeholder: "https://youtube.com/",
-      defaultValue: social.youtube,
+      defaultValue: records.youtube,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62477,7 +62472,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "discord",
       placeholder: "https://discord.com",
-      defaultValue: social.discord,
+      defaultValue: records.discord,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62490,7 +62485,7 @@ class Dashboard extends _react.Component {
       type: "url",
       id: "reddit",
       placeholder: "https://reddit.com/",
-      defaultValue: social.reddit,
+      defaultValue: records.reddit,
       maxLength: "120",
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
@@ -62509,7 +62504,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "patreon",
       placeholder: "username",
-      defaultValue: social.patreon,
+      defaultValue: records.patreon,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62528,7 +62523,7 @@ class Dashboard extends _react.Component {
       type: "text",
       id: "paypal",
       placeholder: "username",
-      defaultValue: social.paypal,
+      defaultValue: records.paypal,
       maxLength: "120",
       onInput: this.handleChange
     }))), /*#__PURE__*/_react.default.createElement("div", {
@@ -62552,7 +62547,7 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "near",
-      defaultValue: crypto.near ? crypto.near : currentUser,
+      defaultValue: !!records.near ? records.near : currentUser,
       readOnly: true
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -62563,7 +62558,7 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "btc",
-      defaultValue: crypto.btc,
+      defaultValue: records.btc,
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -62574,7 +62569,7 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "eth",
-      defaultValue: crypto.eth,
+      defaultValue: records.eth,
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "form-group"
@@ -62585,7 +62580,7 @@ class Dashboard extends _react.Component {
       className: "form-input input-lg",
       type: "text",
       id: "dot",
-      defaultValue: crypto.dot,
+      defaultValue: records.dot,
       onInput: this.handleChange
     })), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-settings-placeholder"
@@ -62604,7 +62599,7 @@ class Dashboard extends _react.Component {
       target: "_blank",
       rel: "noopener noreferrer"
     }, "@yanzhu.near"), ".", /*#__PURE__*/_react.default.createElement("br", null)))), pageStatus ? /*#__PURE__*/_react.default.createElement("div", {
-      className: `web3bio-settings-footer ${formChanged ? "active" : ""}`
+      className: `web3bio-settings-footer ${formChanged ? "active" : null}`
     }, /*#__PURE__*/_react.default.createElement("button", {
       className: `btn btn-lg btn-block ${formLoading ? "loading" : null}`,
       type: "submit"
@@ -62904,7 +62899,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52192" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50697" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

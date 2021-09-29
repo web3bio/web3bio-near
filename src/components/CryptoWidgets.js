@@ -27,7 +27,7 @@ class CryptoWidgets extends Component {
 
     return (
       <div className="profile-crypto profile-widget">
-        { crypto.near? 
+        { !!crypto.near? 
           <div className="profile-crypto-item near">
             <div className="profile-crypto-content">
               <SVG src={IconNear} className="profile-crypto-icon icon" alt="NEAR" />
@@ -49,7 +49,7 @@ class CryptoWidgets extends Component {
             </div>
           </div> : null
         }
-        { crypto.btc? 
+        { !!crypto.btc? 
           <div className="profile-crypto-item btc">
             <div className="profile-crypto-content">
               <SVG src={IconBtc} className="profile-crypto-icon icon" alt="BTC" />
@@ -68,7 +68,7 @@ class CryptoWidgets extends Component {
             </div>
           </div> : null
         }
-        { crypto.eth? 
+        { !!crypto.eth? 
           <div className="profile-crypto-item eth">
             <div className="profile-crypto-content">
               <SVG src={IconEth} className="profile-crypto-icon icon" alt="ETH" />
@@ -87,7 +87,7 @@ class CryptoWidgets extends Component {
             </div>
           </div> : null
         }
-        { crypto.dot? 
+        { !!crypto.dot? 
           <div className="profile-crypto-item dot">
             <div component="div" className="profile-crypto-content">
               <img src={IconDot} className="profile-crypto-icon icon" alt="DOT" />

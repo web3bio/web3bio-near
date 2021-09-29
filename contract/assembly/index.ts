@@ -1,5 +1,5 @@
 import { Context, logging } from 'near-sdk-as'
-import { Profile, Records, Crypto, recordsByOwner } from "./models"
+import { Profile, recordsByOwner } from "./models"
 
 const DEBUG = false;
 
@@ -18,10 +18,7 @@ export function setRecordByOwner(
   displayname: string,
   avatar: string,
   description: string,
-  location: string,
-  theme: string,
-  records: Records,
-  crypto: Crypto
+  records: Map<string, string>,
 ): void {
   const owner = Context.sender;
 
@@ -29,10 +26,7 @@ export function setRecordByOwner(
     displayname,
     avatar,
     description,
-    location,
-    theme,
-    records,
-    crypto
+    records
   );
 
   recordsByOwner.set(owner, newRecordList);
