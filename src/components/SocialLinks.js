@@ -49,7 +49,7 @@ class SocialLinks extends Component {
           </a> : null
         }
         { !!social.linkedin? 
-          <a href={social.linkedin} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip linkedin" title="LinkedIn">
+          <a href={`https://linkedin.com/in/${social.linkedin}`} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip linkedin" title="LinkedIn">
             <SVG src={IconLinkedin} className="profile-social-icon icon" />
           </a> : null
         }
@@ -64,7 +64,7 @@ class SocialLinks extends Component {
           </a> : null
         }
         { !!social.medium? 
-          <a href={social.medium} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip medium" title="Medium">
+          <a href={`https://medium.com/${social.medium}`} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip medium" title="Medium">
             <SVG src={IconMeidum} className="profile-social-icon icon" />
           </a> : null
         }
@@ -84,7 +84,7 @@ class SocialLinks extends Component {
           </a> : null
         }
         { !!social.youtube? 
-          <a href={social.youtube} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip youtube" title="YouTube">
+          <a href={`https://youtube.com/c/${social.youtube}`} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip youtube" title="YouTube">
             <SVG src={IconYoutube} className="profile-social-icon icon" />
           </a> : null
         }
@@ -94,7 +94,7 @@ class SocialLinks extends Component {
           </a> : null
         }
         { !!social.reddit? 
-          <a href={social.reddit} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip reddit" title="Reddit">
+          <a href={`https://reddit.com/user/${social.reddit}`} target="_blank" rel="noopener noreferrer" className="profile-social-item tooltip reddit" title="Reddit">
             <SVG src={IconReddit} className="profile-social-icon icon" />
           </a> : null
         }
