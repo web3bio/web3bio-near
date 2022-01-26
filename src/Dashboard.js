@@ -376,7 +376,10 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="linkedin">LinkedIn</label>
-                          <input className="form-input input-lg" type="url" id="linkedin" placeholder="https://linkedin.com/" defaultValue={records.linkedin} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">linkedin.com<span className="ml-1 mr-1">/</span>in<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="linkedin" placeholder="username" defaultValue={records.linkedin} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="github">GitHub</label>
@@ -394,11 +397,10 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="medium">Medium</label>
-                          <input className="form-input input-lg" type="url" id="medium" placeholder="https://medium.com/" defaultValue={records.medium} maxLength="120" onInput={this.handleChange} />
-                        </div>
-                        <div className="form-group">
-                          <label className="form-label" htmlFor="wechat">WeChat</label>
-                          <input className="form-input input-lg" type="text" id="wechat" placeholder="WeChat ID" defaultValue={records.wechat} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">medium.com<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="medium" placeholder="username" defaultValue={records.medium} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="telegram">Telegram</label>
@@ -416,7 +418,10 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="youtube">YouTube</label>
-                          <input className="form-input input-lg" type="url" id="youtube" placeholder="https://youtube.com/" defaultValue={records.youtube} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">youtube.com<span className="ml-1 mr-1">/</span>c<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="youtube" placeholder="channel" defaultValue={records.youtube} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="discord">Discord</label>
@@ -424,7 +429,10 @@ class Dashboard extends Component {
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="reddit">Reddit</label>
-                          <input className="form-input input-lg" type="url" id="reddit" placeholder="https://reddit.com/" defaultValue={records.reddit} maxLength="120" onInput={this.handleChange} />
+                          <div className="input-group">
+                            <span className="input-group-addon addon-lg">reddit.com<span className="ml-1 mr-1">/</span>user<span className="ml-1">/</span></span>
+                            <input className="form-input input-lg" type="text" id="reddit" placeholder="username" defaultValue={records.reddit} maxLength="120" onInput={this.handleChange} />
+                          </div>
                         </div>
                         <div className="form-group">
                           <label className="form-label" htmlFor="patreon">Patreon</label>
@@ -439,6 +447,10 @@ class Dashboard extends Component {
                             <span className="input-group-addon addon-lg">paypal.me<span className="ml-1">/</span></span>
                             <input className="form-input input-lg" type="text" id="paypal" placeholder="username" defaultValue={records.paypal} maxLength="120" onInput={this.handleChange} />
                           </div>
+                        </div>
+                        <div className="form-group">
+                          <label className="form-label" htmlFor="wechat">WeChat</label>
+                          <input className="form-input input-lg" type="text" id="wechat" placeholder="WeChat ID" defaultValue={records.wechat} maxLength="120" onInput={this.handleChange} />
                         </div>
                         <div className="form-group">
                           <div className="form-input-hint">

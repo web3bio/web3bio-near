@@ -1,14 +1,14 @@
 import 'regenerator-runtime/runtime'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import * as nearAPI from 'near-api-js'
+// import * as nearAPI from 'near-api-js'
 import getConfig from './config'
 import SocialLinks from './components/SocialLinks'
 import CryptoWidgets from './components/CryptoWidgets'
 import CryptoDonate from './components/CryptoDonate'
 const nearConfig = getConfig(process.env.NODE_ENV || 'development')
 
-class Profile extends Component {
+class ProfileNEAR extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -230,4 +230,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default ProfileNEAR;

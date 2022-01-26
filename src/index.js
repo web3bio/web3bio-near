@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { Router, Switch, Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import Home from './Home'
-import Profile from './Profile'
+import ProfileNEAR from './ProfileNEAR'
 import ProfileDAS from './ProfileDAS'
 import Dashboard from './Dashboard'
 import Footer from './components/Footer'
@@ -25,7 +25,7 @@ window.nearInitPromise = initContract()
                 <Dashboard {...props} wallet={window.walletConnection} />
               )} />
               <Route path="/:owner.(near|testnet)" render={(props) => (
-                <Profile {...props} wallet={window.walletConnection} />
+                <ProfileNEAR {...props} wallet={window.walletConnection} />
               )} />
               <Route path="/:owner.bit" render={(props) => (
                 <ProfileDAS {...props} />
