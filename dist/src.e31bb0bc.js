@@ -35007,8 +35007,6 @@ class Home extends _react.Component {
     } = this.state;
     console.log();
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover flare"
-    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35032,6 +35030,8 @@ class Home extends _react.Component {
       className: "btn",
       onClick: this.requestSignIn
     }, "Login with NEAR")))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-cover flare"
+    }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
@@ -35039,7 +35039,7 @@ class Home extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Page For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "Your Web 3 profile, social accounts, crypto addresses and NFT collections on one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, /*#__PURE__*/_react.default.createElement("span", null, "One Page For Your"), " ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " ", /*#__PURE__*/_react.default.createElement("span", null, "Profile")), /*#__PURE__*/_react.default.createElement("h2", null, "Your Web 3 profile, social accounts, crypto addresses and NFT collections on one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: `/${currentUser}`,
@@ -35058,17 +35058,12 @@ class Home extends _react.Component {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-4 mb-4"
-    }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+    }, /*#__PURE__*/_react.default.createElement("code", {
+      className: "text-large"
+    }, "\u21AA"), " See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: "/yan.near",
       className: "btn btn-sm ml-1 mr-1"
-    }, "Yan Zhu"), "is using Web3.bio."), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-actionbar"
-    }, /*#__PURE__*/_react.default.createElement("a", {
-      href: "#help",
-      className: "web3bio-action mx-auto"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "action-icon"
-    }, "\u2305"))))))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Yan Zhu"), "is using Web3.bio."))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-sm"
@@ -35101,7 +35096,7 @@ class Home extends _react.Component {
       className: "column col-12"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h1 text-bold"
-    }, "OK, I\u2019m Ready."), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("span", null, "OK, I\u2019m Ready.")), /*#__PURE__*/_react.default.createElement("div", {
       className: "h5"
     }, "Claim your page with NEAR account in seconds."))), /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
@@ -35185,7 +35180,7 @@ class Home extends _react.Component {
       className: "column col-12"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "h1 text-bold"
-    }, "What's Next?"), /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("span", null, "What's Next?")), /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 mt-4 mb-4"
     }, "We're helping Web3-native adopters, buidlers, NFT collectors, and teams better control their universal Web3 identities online."), /*#__PURE__*/_react.default.createElement("div", {
       className: "h4 text-bold mt-4 mb-4"
