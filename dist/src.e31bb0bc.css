@@ -2749,7 +2749,7 @@ body {
   .web3bio-hero h1 strong {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    background-image: linear-gradient(45deg, #303FE5 0, #7355E5 50%, #E57486 125%);
+    background-image: linear-gradient(225deg, #303FE5 0, #7355E5 50%, #E57486 150%);
     font-weight: 900; }
   .web3bio-hero h2 {
     font-size: 1rem;
@@ -2773,10 +2773,10 @@ body {
       flex: 1 1 auto;
       user-select: all; }
     .web3bio-hero .web3bio-hero-input .btn-lg {
-      background-image: linear-gradient(45deg, #303FE5 0, #7355E5 50%, #E57486 100%);
+      background-image: linear-gradient(225deg, #303FE5 0, #7355E5 50%, #E57486 100%);
       border-color: rgba(32, 32, 32, 0.75); }
       .web3bio-hero .web3bio-hero-input .btn-lg:focus, .web3bio-hero .web3bio-hero-input .btn-lg:hover {
-        background-image: linear-gradient(45deg, #303FE5 -25%, #7355E5 50%, #E57486 125%); }
+        background-image: linear-gradient(225deg, #303FE5 -25%, #7355E5 50%, #E57486 125%); }
   .web3bio-hero .card {
     margin-bottom: 2rem;
     margin-top: 2rem; }

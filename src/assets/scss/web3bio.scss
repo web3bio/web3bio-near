@@ -408,7 +408,7 @@ body {
     strong {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(45deg, $primary-color 0, #7355E5 50%, #E57486 125%);
+      background-image: linear-gradient(225deg, $primary-color 0, #7355E5 50%, #E57486 150%);
       font-weight: 900;
     }
   }
@@ -444,12 +444,12 @@ body {
     }
 
     .btn-lg {
-      background-image: linear-gradient(45deg, $primary-color 0, #7355E5 50%, #E57486 100%);
+      background-image: linear-gradient(225deg, $primary-color 0, #7355E5 50%, #E57486 100%);
       border-color: rgba($dark-color, .75);
 
       &:focus,
       &:hover {
-        background-image: linear-gradient(45deg, $primary-color -25%, #7355E5 50%, #E57486 125%);
+        background-image: linear-gradient(225deg, $primary-color -25%, #7355E5 50%, #E57486 125%);
       }
     }
   }

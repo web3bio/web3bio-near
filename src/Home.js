@@ -114,7 +114,10 @@ class Home extends Component {
                     <button className="btn btn-lg input-group-btn">Login and Claim</button>
                   </div>
                 }
-                <div className="h6 mt-2">Claim your page with <strong>NEAR account</strong> in seconds.</div>
+                <div className="h6 mt-4 mb-4">&#10132; See how the maker
+                  <Link to="/yan.near" className="btn btn-sm ml-1 mr-1">Yan Zhu</Link> 
+                  is using Web3.bio.
+                </div>
                 
                 <div className="web3bio-actionbar">
                   <a href="#help" className="web3bio-action mx-auto"><span className="action-icon">⌅</span></a>
@@ -130,10 +133,6 @@ class Home extends Component {
               <div className="column col-12">
                 <div className="h1">Your Profile<br/>Decentralized<br/>On NEAR</div>
                 <div className="h5 mt-4 mb-4">Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action.</div>
-                <div className="h5 mt-4 mb-4">&#10132; See how the maker
-                  <Link to="/yan.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
-                  is using Web3.bio.
-                </div>
               </div>
             </div>
           </div>
@@ -142,17 +141,6 @@ class Home extends Component {
               <div className="column col-12">
                 <div className="h5 text-bold mt-4">Trusted by</div>
                 <div className="emoji">👩‍🎓 👩‍🔧 👩‍🎨 👩‍🏭 🐳 👨‍💻 👩‍🏫 👮‍♂️ 🧑‍🔬 🧑‍🚀 🦸‍♂️ 🦍 🕵️‍♂️ 👨‍🍳 👨‍🌾 🦄 🧝‍♂️ 🦹‍♀️ 🧙‍♂️ 🧛🏼‍♂️ 🥷</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="web3bio-hero web3bio-data">
-          <div className="container grid-md">
-            <div className="columns">
-              <div className="column col-12 text-left">
-                <span className="h2 text-bold text-title mr-2">Data Policy.</span>
-                <span className="h2 text-bold text-subtitle mr-2">You control your data. You can delete profile data from your account anytime. Web3.bio has no ads. Web3.bio will not sell your data. Your data is securely stored on NEAR blockchain.</span>
               </div>
             </div>
           </div>
@@ -203,6 +191,17 @@ class Home extends Component {
                   <button className="btn btn-primary btn-lg" onClick={this.requestSignIn}>Login and claim <strong className="ml-1 mr-1">Web3.bio</strong> page</button>
                 }
                 <div className="h6 mt-4">New to NEAR Protocol? <a href="https://near.org" target="_blank" rel="noopener noreferrer" className="text-dark"><u>Learn more at NEAR.org</u></a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="web3bio-hero web3bio-data">
+          <div className="container grid-md">
+            <div className="columns">
+              <div className="column col-12 text-left">
+                <span className="h2 text-bold text-title mr-2">Data Policy.</span>
+                <span className="h2 text-bold text-subtitle mr-2">You control your data. You can delete profile data from your account anytime. Web3.bio has no ads. Web3.bio will not sell your data. Your data is securely stored on NEAR blockchain.</span>
               </div>
             </div>
           </div>

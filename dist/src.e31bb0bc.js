@@ -35057,8 +35057,11 @@ class Home extends _react.Component {
     }, "name.near")), /*#__PURE__*/_react.default.createElement("button", {
       className: "btn btn-lg input-group-btn"
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h6 mt-2"
-    }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."), /*#__PURE__*/_react.default.createElement("div", {
+      className: "h6 mt-4 mb-4"
+    }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
+      to: "/yan.near",
+      className: "btn btn-sm ml-1 mr-1"
+    }, "Yan Zhu"), "is using Web3.bio."), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-actionbar"
     }, /*#__PURE__*/_react.default.createElement("a", {
       href: "#help",
@@ -35077,12 +35080,7 @@ class Home extends _react.Component {
       className: "h1"
     }, "Your Profile", /*#__PURE__*/_react.default.createElement("br", null), "Decentralized", /*#__PURE__*/_react.default.createElement("br", null), "On NEAR"), /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 mt-4 mb-4"
-    }, "Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action."), /*#__PURE__*/_react.default.createElement("div", {
-      className: "h5 mt-4 mb-4"
-    }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/yan.near",
-      className: "btn btn-sm btn-primary ml-1 mr-1"
-    }, "Yan Zhu"), "is using Web3.bio.")))), /*#__PURE__*/_react.default.createElement("div", {
+    }, "Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action.")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "columns"
@@ -35093,18 +35091,6 @@ class Home extends _react.Component {
     }, "Trusted by"), /*#__PURE__*/_react.default.createElement("div", {
       className: "emoji"
     }, "\uD83D\uDC69\u200D\uD83C\uDF93 \uD83D\uDC69\u200D\uD83D\uDD27 \uD83D\uDC69\u200D\uD83C\uDFA8 \uD83D\uDC69\u200D\uD83C\uDFED \uD83D\uDC33 \uD83D\uDC68\u200D\uD83D\uDCBB \uD83D\uDC69\u200D\uD83C\uDFEB \uD83D\uDC6E\u200D\u2642\uFE0F \uD83E\uDDD1\u200D\uD83D\uDD2C \uD83E\uDDD1\u200D\uD83D\uDE80 \uD83E\uDDB8\u200D\u2642\uFE0F \uD83E\uDD8D \uD83D\uDD75\uFE0F\u200D\u2642\uFE0F \uD83D\uDC68\u200D\uD83C\uDF73 \uD83D\uDC68\u200D\uD83C\uDF3E \uD83E\uDD84 \uD83E\uDDDD\u200D\u2642\uFE0F \uD83E\uDDB9\u200D\u2640\uFE0F \uD83E\uDDD9\u200D\u2642\uFE0F \uD83E\uDDDB\uD83C\uDFFC\u200D\u2642\uFE0F \uD83E\uDD77"))))), /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-hero web3bio-data"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "container grid-md"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "columns"
-    }, /*#__PURE__*/_react.default.createElement("div", {
-      className: "column col-12 text-left"
-    }, /*#__PURE__*/_react.default.createElement("span", {
-      className: "h2 text-bold text-title mr-2"
-    }, "Data Policy."), /*#__PURE__*/_react.default.createElement("span", {
-      className: "h2 text-bold text-subtitle mr-2"
-    }, "You control your data. You can delete profile data from your account anytime. Web3.bio has no ads. Web3.bio will not sell your data. Your data is securely stored on NEAR blockchain."))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero",
       id: "help"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35177,6 +35163,18 @@ class Home extends _react.Component {
       rel: "noopener noreferrer",
       className: "text-dark"
     }, /*#__PURE__*/_react.default.createElement("u", null, "Learn more at NEAR.org"))))))), /*#__PURE__*/_react.default.createElement("div", {
+      className: "web3bio-hero web3bio-data"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "container grid-md"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "columns"
+    }, /*#__PURE__*/_react.default.createElement("div", {
+      className: "column col-12 text-left"
+    }, /*#__PURE__*/_react.default.createElement("span", {
+      className: "h2 text-bold text-title mr-2"
+    }, "Data Policy."), /*#__PURE__*/_react.default.createElement("span", {
+      className: "h2 text-bold text-subtitle mr-2"
+    }, "You control your data. You can delete profile data from your account anytime. Web3.bio has no ads. Web3.bio will not sell your data. Your data is securely stored on NEAR blockchain."))))), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero",
       id: "features"
     }, /*#__PURE__*/_react.default.createElement("div", {
