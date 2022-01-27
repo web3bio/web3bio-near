@@ -408,7 +408,7 @@ body {
     strong {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      background-image: linear-gradient(233deg, #3718b5 0, #DB35A6 100%);
+      background-image: linear-gradient(45deg, $primary-color 0, #7355E5 50%, #E57486 125%);
       font-weight: 900;
     }
   }
@@ -425,6 +425,8 @@ body {
   }
 
   .web3bio-hero-input {
+    border-radius: $border-radius;
+    box-shadow: 0 .1rem 1.6rem rgba($dark-color, .25);
     display: flex;
     margin: 2rem auto;
     max-width: 24rem;
@@ -442,10 +444,12 @@ body {
     }
 
     .btn-lg {
+      background-image: linear-gradient(45deg, $primary-color 0, #7355E5 50%, #E57486 100%);
+      border-color: rgba($dark-color, .75);
+
       &:focus,
       &:hover {
-        background-image: linear-gradient(233deg, #3718b5 0, #DB35A6 100%);
-        border-color: $dark-color;
+        background-image: linear-gradient(45deg, $primary-color -25%, #7355E5 50%, #E57486 125%);
       }
     }
   }
@@ -462,7 +466,11 @@ body {
   }
 
   &.web3bio-data {
-    line-height: 1.25;
+    line-height: 1.15;
+
+    .h2 {
+      font-size: 2rem;
+    }
 
     .text-title {
       color: $dark-color;
@@ -610,7 +618,7 @@ body {
 }
 
 .web3bio-placeholder {
-  background: rgba(darken($primary-color, 30%), .1);
+  background: rgba(darken($primary-color, 10%), .01);
   box-shadow: inset 0 0 4rem rgba($dark-color, .2);
   backdrop-filter: blur(2rem) saturate(120%) brightness(100%);
 }

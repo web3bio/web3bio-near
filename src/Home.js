@@ -69,7 +69,7 @@ class Home extends Component {
 
     return (
       <>
-        <div className="web3bio-cover royal"></div>
+        <div className="web3bio-cover flare"></div>
 
         <div className="web3bio-header">
           <div className="container grid-lg">
@@ -97,8 +97,8 @@ class Home extends Component {
           <div className="container grid-sm">
             <div className="columns">
               <div className="column col-12">
-                <h1>One Link For Your <strong>Web3</strong> Profile</h1>
-                <h2>All your Web 3 profile, social accounts, crypto addresses and NFT collections on one page.</h2>
+                <h1>One Page For Your <strong>Web3</strong> Profile</h1>
+                <h2>Your Web 3 profile, social accounts, crypto addresses and NFT collections on one page.</h2>
                 { login ? 
                   <div className="web3bio-hero-input input-group">
                     <Link to={`/${currentUser}`} className="input-group-addon addon-lg text-left text-dark">web3.bio/
@@ -131,7 +131,7 @@ class Home extends Component {
                 <div className="h1">Your Profile<br/>Decentralized<br/>On NEAR</div>
                 <div className="h5 mt-4 mb-4">Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action.</div>
                 <div className="h5 mt-4 mb-4">&#10132; See how the maker
-                  <Link to="/yanzhu.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
+                  <Link to="/yan.near" className="btn btn-sm btn-primary ml-1 mr-1">Yan Zhu</Link> 
                   is using Web3.bio.
                 </div>
               </div>
@@ -216,18 +216,16 @@ class Home extends Component {
                 <div className="h5 mt-4 mb-4">We're helping Web3-native adopters, buidlers, NFT collectors, and teams better control their universal Web3 identities online.</div>
                 <div className="h4 text-bold mt-4 mb-4">Features Request</div>
                 <div className="h5 mt-4 mb-4">We're gradually making updates to Web3.bio. You may expect new features like
-                  <span className="label label-feature ml-1 mr-1">Emoji fun</span>, 
-                  <span className="label label-feature ml-1 mr-1">Tips and funding</span>,
-                  <span className="label label-feature ml-1 mr-1">NFT collection showcase</span>,
-                  <span className="label label-feature ml-1 mr-1">Premium tier</span>,
-                  <span className="label label-feature ml-1 mr-1">Cryptocurrency transactions</span>,
-                  <span className="label label-feature ml-1 mr-1">More social links</span>, 
-                  <span className="label label-feature ml-1 mr-1">Widgets for creators</span>, 
-                  <span className="label label-feature ml-1 mr-1">More crypto supports</span>,
-                  <span className="label label-feature ml-1 mr-1">Naming service support</span>,
-                  <span className="label label-feature ml-1 mr-1">SDK for wallets and DApps</span>, etc.
+                  <span className="label label-feature ml-1 mr-1">😀 Emoji fun</span>, 
+                  <span className="label label-feature ml-1 mr-1">💸 Tips and funding</span>,
+                  <span className="label label-feature ml-1 mr-1">🖼 NFT collection showcase</span>,
+                  <span className="label label-feature ml-1 mr-1">🏵 Premium tier</span>,
+                  <span className="label label-feature ml-1 mr-1">🗂 More social & crypto support</span>, 
+                  <span className="label label-feature ml-1 mr-1">📃 Widgets for creators</span>, 
+                  <span className="label label-feature ml-1 mr-1">🔮 Naming service support</span>,
+                  <span className="label label-feature ml-1 mr-1">🛠 SDK for wallets and DApps</span>, etc.
                 </div>
-                <div className="h5 mt-4">We’d love to know what you think. Please reach out to <Link to="/yanzhu.near" className="btn btn-sm ml-1 mr-1">Yan Zhu</Link>.</div>
+                <div className="h5 mt-4">We’d love to know what you think. Please reach out to <Link to="/yan.near" className="btn btn-sm ml-1 mr-1">Yan Zhu</Link>.</div>
               </div>
             </div>
           </div>

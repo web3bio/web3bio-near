@@ -186,7 +186,7 @@ class ProfileNEAR extends Component {
               </>
               :
               <>
-                <div className="web3bio-cover royal"></div>
+                <div className="web3bio-cover flare"></div>
                 <div className="web3bio-hero container grid-sm">
                   <div className="container grid-sm">
                     <div className="columns">
@@ -217,7 +217,7 @@ class ProfileNEAR extends Component {
           </>
           :
           <>
-            <div className="web3bio-cover royal"></div>
+            <div className="web3bio-cover"></div>
             <div className="web3bio-content container grid-sm">
               <div className="web3bio-profile">
                 <div className="loading loading-lg loading-dark"></div>

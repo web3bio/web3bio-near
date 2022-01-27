@@ -1,5 +1,5 @@
 // Core colors
-$primary-color: #4620E1 !default;
+$primary-color: #303FE5 !default;
 $primary-color-dark: darken($primary-color, 3%) !default;
 $primary-color-light: lighten($primary-color, 3%) !default;
 $secondary-color: lighten($primary-color, 40%) !default;
@@ -81,7 +81,7 @@ $control-size: $unit-9 !default;
 $control-size-sm: $unit-7 !default;
 $control-size-lg: $unit-12 !default;
 $control-padding-x: $unit-3 !default;
-$control-padding-x-sm: $unit-2 * .5 !default;
+$control-padding-x-sm: $unit-2 * .75 !default;
 $control-padding-x-lg: $unit-2 * 2 !default;
 $control-padding-y: ($control-size - $line-height) / 2 - $border-width !default;
 $control-padding-y-sm: ($control-size-sm - $line-height) / 2 - $border-width !default;

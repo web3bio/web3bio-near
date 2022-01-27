@@ -35007,7 +35007,7 @@ class Home extends _react.Component {
     } = this.state;
     console.log();
     return /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover royal"
+      className: "web3bio-cover flare"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-header"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -35039,7 +35039,7 @@ class Home extends _react.Component {
       className: "columns"
     }, /*#__PURE__*/_react.default.createElement("div", {
       className: "column col-12"
-    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Link For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "All your Web 3 profile, social accounts, crypto addresses and NFT collections on one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
+    }, /*#__PURE__*/_react.default.createElement("h1", null, "One Page For Your ", /*#__PURE__*/_react.default.createElement("strong", null, "Web3"), " Profile"), /*#__PURE__*/_react.default.createElement("h2", null, "Your Web 3 profile, social accounts, crypto addresses and NFT collections on one page."), login ? /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero-input input-group"
     }, /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
       to: `/${currentUser}`,
@@ -35080,7 +35080,7 @@ class Home extends _react.Component {
     }, "Web3.bio brings your Web3 profile closer to your Web 2.0 audiences to discover and action."), /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 mt-4 mb-4"
     }, "\u2794 See how the maker", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/yanzhu.near",
+      to: "/yan.near",
       className: "btn btn-sm btn-primary ml-1 mr-1"
     }, "Yan Zhu"), "is using Web3.bio.")))), /*#__PURE__*/_react.default.createElement("div", {
       className: "container grid-lg"
@@ -35195,28 +35195,24 @@ class Home extends _react.Component {
       className: "h5 mt-4 mb-4"
     }, "We're gradually making updates to Web3.bio. You may expect new features like", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "Emoji fun"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83D\uDE00 Emoji fun"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "Tips and funding"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83D\uDCB8 Tips and funding"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "NFT collection showcase"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83D\uDDBC NFT collection showcase"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "Premium tier"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83C\uDFF5 Premium tier"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "Cryptocurrency transactions"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83D\uDDC2 More social & crypto support"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "More social links"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83D\uDCC3 Widgets for creators"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "Widgets for creators"), ",", /*#__PURE__*/_react.default.createElement("span", {
+    }, "\uD83D\uDD2E Naming service support"), ",", /*#__PURE__*/_react.default.createElement("span", {
       className: "label label-feature ml-1 mr-1"
-    }, "More crypto supports"), ",", /*#__PURE__*/_react.default.createElement("span", {
-      className: "label label-feature ml-1 mr-1"
-    }, "Naming service support"), ",", /*#__PURE__*/_react.default.createElement("span", {
-      className: "label label-feature ml-1 mr-1"
-    }, "SDK for wallets and DApps"), ", etc."), /*#__PURE__*/_react.default.createElement("div", {
+    }, "\uD83D\uDEE0 SDK for wallets and DApps"), ", etc."), /*#__PURE__*/_react.default.createElement("div", {
       className: "h5 mt-4"
     }, "We\u2019d love to know what you think. Please reach out to ", /*#__PURE__*/_react.default.createElement(_reactRouterDom.Link, {
-      to: "/yanzhu.near",
+      to: "/yan.near",
       className: "btn btn-sm ml-1 mr-1"
     }, "Yan Zhu"), "."))))));
   }
@@ -38035,7 +38031,7 @@ class SocialLinks extends _react.Component {
       src: _socialFacebook.default,
       className: "profile-social-icon icon"
     })) : null, !!social.linkedin ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.linkedin,
+      href: `https://linkedin.com/in/${social.linkedin}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip linkedin",
@@ -38062,7 +38058,7 @@ class SocialLinks extends _react.Component {
       src: _socialGitcoin.default,
       className: "profile-social-icon icon"
     })) : null, !!social.medium ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.medium,
+      href: `https://medium.com/${social.medium}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip medium",
@@ -38097,7 +38093,7 @@ class SocialLinks extends _react.Component {
       src: _socialInstagram.default,
       className: "profile-social-icon icon"
     })) : null, !!social.youtube ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.youtube,
+      href: `https://youtube.com/c/${social.youtube}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip youtube",
@@ -38115,7 +38111,7 @@ class SocialLinks extends _react.Component {
       src: _socialDiscord.default,
       className: "profile-social-icon icon"
     })) : null, !!social.reddit ? /*#__PURE__*/_react.default.createElement("a", {
-      href: social.reddit,
+      href: `https://reddit.com/user/${social.reddit}`,
       target: "_blank",
       rel: "noopener noreferrer",
       className: "profile-social-item tooltip reddit",
@@ -65161,7 +65157,7 @@ class ProfileNEAR extends _react.Component {
       wallet: wallet,
       handleDonateClose: this.handleDonateClose
     }) : null))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover royal"
+      className: "web3bio-cover flare"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-hero container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -65192,7 +65188,7 @@ class ProfileNEAR extends _react.Component {
     }, "Login and Claim")), /*#__PURE__*/_react.default.createElement("div", {
       className: "h6 mt-2"
     }, "Claim your page with ", /*#__PURE__*/_react.default.createElement("strong", null, "NEAR account"), " in seconds."))))))) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover royal"
+      className: "web3bio-cover"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -65422,7 +65418,7 @@ class Dashboard extends _react.Component {
       formChanged: false,
       formLoading: false,
       formAvatar: '',
-      formTheme: 'royal',
+      formTheme: 'flare',
       pageToast: ''
     };
     this.signedInFlow = this.signedInFlow.bind(this);
@@ -65851,6 +65847,8 @@ class Dashboard extends _react.Component {
       value: formTheme,
       onInput: this.handleChange
     }, /*#__PURE__*/_react.default.createElement("option", {
+      value: "flare"
+    }, "Flare"), /*#__PURE__*/_react.default.createElement("option", {
       value: "royal"
     }, "Royal"), /*#__PURE__*/_react.default.createElement("option", {
       value: "flax"
@@ -65867,8 +65865,6 @@ class Dashboard extends _react.Component {
     }, "Cream Whisper"), /*#__PURE__*/_react.default.createElement("option", {
       value: "eggsour"
     }, "Egg Sour"), /*#__PURE__*/_react.default.createElement("option", {
-      value: "flare"
-    }, "Flare"), /*#__PURE__*/_react.default.createElement("option", {
       value: "snowymint"
     }, "Snowy Mint")))), /*#__PURE__*/_react.default.createElement("fieldset", {
       id: "social"
@@ -66233,7 +66229,7 @@ class Dashboard extends _react.Component {
     }, "Delete data")))))), !!pageToast ? /*#__PURE__*/_react.default.createElement(_Toast.default, {
       content: pageToast
     }) : null) : /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("div", {
-      className: "web3bio-cover royal"
+      className: "web3bio-cover flare"
     }), /*#__PURE__*/_react.default.createElement("div", {
       className: "web3bio-content container grid-sm"
     }, /*#__PURE__*/_react.default.createElement("div", {
@@ -66280,7 +66276,7 @@ class Footer extends _react.Component {
       className: "ml-1 mr-1"
     }, "Web3.bio"), " page"), /*#__PURE__*/_react.default.createElement("div", {
       className: "mt-4 mb-2"
-    }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2021 ", /*#__PURE__*/_react.default.createElement("a", {
+    }, /*#__PURE__*/_react.default.createElement("strong", null, "\xA9 2022 ", /*#__PURE__*/_react.default.createElement("a", {
       href: "https://web3.bio",
       className: "text-dark"
     }, "Web3.bio"), " \xB7 Proudly Built with ", /*#__PURE__*/_react.default.createElement("a", {
@@ -66507,7 +66503,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65309" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60006" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

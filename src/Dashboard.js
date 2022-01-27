@@ -17,7 +17,7 @@ class Dashboard extends Component {
       formChanged: false,
       formLoading: false,
       formAvatar: '',
-      formTheme: 'royal',
+      formTheme: 'flare',
       pageToast: ''
     }
     this.signedInFlow = this.signedInFlow.bind(this);
@@ -344,6 +344,7 @@ class Dashboard extends Component {
                         <div className="form-group">
                           <label className="form-label" htmlFor="theme">Theme</label>
                           <select className="form-select select-lg" id="theme" value={formTheme} onInput={this.handleChange}>
+                            <option value="flare">Flare</option>
                             <option value="royal">Royal</option>
                             <option value="flax">Flax</option>
                             <option value="witchhaze">Witch Haze</option>
@@ -352,7 +353,6 @@ class Dashboard extends Component {
                             <option value="shalimar">Shalimar</option>
                             <option value="creamwhisper">Cream Whisper</option>
                             <option value="eggsour">Egg Sour</option>
-                            <option value="flare">Flare</option>
                             <option value="snowymint">Snowy Mint</option>
                           </select>
                         </div>
@@ -519,7 +519,7 @@ class Dashboard extends Component {
           </>
           :
           <>
-            <div className="web3bio-cover royal"></div>
+            <div className="web3bio-cover flare"></div>
             <div className="web3bio-content container grid-sm">
               <div className="web3bio-profile">
                 <div className="loading loading-lg loading-dark"></div>
