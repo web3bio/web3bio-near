@@ -69,8 +69,6 @@ class Home extends Component {
 
     return (
       <>
-        <div className="web3bio-cover flare"></div>
-
         <div className="web3bio-header">
           <div className="container grid-lg">
             <div className="columns">
@@ -93,11 +91,13 @@ class Home extends Component {
           </div>
         </div>
 
+        <div className="web3bio-cover flare"></div>
+
         <div className="web3bio-hero">
           <div className="container grid-sm">
             <div className="columns">
               <div className="column col-12">
-                <h1>One Page For Your <strong>Web3</strong> Profile</h1>
+                <h1><span>One Page For Your</span> <strong>Web3</strong> <span>Profile</span></h1>
                 <h2>Your Web 3 profile, social accounts, crypto addresses and NFT collections on one page.</h2>
                 { login ? 
                   <div className="web3bio-hero-input input-group">
@@ -114,14 +114,14 @@ class Home extends Component {
                     <button className="btn btn-lg input-group-btn">Login and Claim</button>
                   </div>
                 }
-                <div className="h6 mt-4 mb-4">&#10132; See how the maker
+                <div className="h6 mt-4 mb-4"><code className="text-large">↪</code> See how the maker
                   <Link to="/yan.near" className="btn btn-sm ml-1 mr-1">Yan Zhu</Link> 
                   is using Web3.bio.
                 </div>
-                
+                {/*                 
                 <div className="web3bio-actionbar">
                   <a href="#help" className="web3bio-action mx-auto"><span className="action-icon">⌅</span></a>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ class Home extends Component {
           <div className="container grid-lg">
             <div className="columns">
               <div className="column col-12">
-                <div className="h1 text-bold">OK, I’m Ready.</div>
+                <div className="h1 text-bold"><span>OK, I’m Ready.</span></div>
                 <div className="h5">Claim your page with NEAR account in seconds.</div>
               </div>
             </div>
@@ -211,7 +211,7 @@ class Home extends Component {
           <div className="container grid-sm">
             <div className="columns">
               <div className="column col-12">
-                <div className="h1 text-bold">What's Next?</div>
+                <div className="h1 text-bold"><span>What's Next?</span></div>
                 <div className="h5 mt-4 mb-4">We're helping Web3-native adopters, buidlers, NFT collectors, and teams better control their universal Web3 identities online.</div>
                 <div className="h4 text-bold mt-4 mb-4">Features Request</div>
                 <div className="h5 mt-4 mb-4">We're gradually making updates to Web3.bio. You may expect new features like
