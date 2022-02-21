@@ -4,7 +4,7 @@ import { Router, Switch, Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import Home from './Home'
 import ProfileNEAR from './ProfileNEAR'
-import ProfileDAS from './ProfileDAS'
+import ProfileENS from './ProfileENS'
 import Dashboard from './Dashboard'
 import Footer from './components/Footer'
 import './assets/scss/web3bio.scss'
@@ -27,8 +27,8 @@ window.nearInitPromise = initContract()
               <Route path="/:owner.(near|testnet)" render={(props) => (
                 <ProfileNEAR {...props} wallet={window.walletConnection} />
               )} />
-              <Route path="/:owner.bit" render={(props) => (
-                <ProfileDAS {...props} />
+              <Route path="/:owner.eth" render={(props) => (
+                <ProfileENS {...props} />
               )} />
             </Switch>
             <Footer />
